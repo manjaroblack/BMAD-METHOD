@@ -12,6 +12,12 @@ workflow:
   elicitation: advanced-elicitation
 
 sections:
+  - id: initial-setup
+    instruction: |
+      This template creates a comprehensive game architecture document specifically for Unity + C# projects. This should provide the technical foundation for all game development stories and epics.
+
+    If available, review any provided documents: Game Design Document (GDD), Technical Preferences. This architecture should support all game mechanics defined in the GDD.
+
   - id: introduction
     title: Introduction
     instruction: |
