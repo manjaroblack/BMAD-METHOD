@@ -106,7 +106,7 @@ For example, if you say "Add payment processing to user service":
    - **Option A**: Paste your GitHub repository URL directly
    - **Option B**: Upload up to 1000 files from your src/project folder
    - **Option C**: Zip your project and upload the archive
-3. **Load the analyst agent**: Upload `dist/agents/analyst.txt`
+3. **Load the analyst agent**: Upload `bundles/agents/analyst.txt`
 4. **Run documentation**: Type `*document-project`
 
 The analyst will generate comprehensive documentation of everything.

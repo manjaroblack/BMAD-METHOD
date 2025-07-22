@@ -131,7 +131,7 @@ graph TD
 
 If you want to do the planning in the Web with Claude (Sonnet 4 or Opus), Gemini Gem (2.5 Pro), or Custom GPT's:
 
-1. Navigate to `dist/teams/`
+1. Navigate to `bundles/teams/`
 2. Copy `team-fullstack.txt` content
 3. Create new Gemini Gem or CustomGPT
 4. Upload file with instructions: "Your critical operating instructions are attached, do not break character as directed"

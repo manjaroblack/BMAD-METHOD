@@ -6,7 +6,7 @@ const yamlUtils = require("../lib/yaml-utils");
 class WebBuilder {
   constructor(options = {}) {
     this.rootDir = options.rootDir || process.cwd();
-    this.outputDirs = options.outputDirs || [path.join(this.rootDir, "dist")];
+    this.outputDirs = options.outputDirs || [path.join(this.rootDir, "bundles")];
     this.resolver = new DependencyResolver(this.rootDir);
     this.templatePath = path.join(
       this.rootDir,
@@ -26,7 +26,7 @@ class WebBuilder {
     // All resources get installed under the bundle root, so use that path
     const relativePath = path.relative(this.rootDir, filePath);
     const pathParts = relativePath.split(path.sep);
-    
+
     let resourcePath;
     if (pathParts[0] === 'expansion-packs') {
       // For expansion packs, remove 'expansion-packs/packname' and use the rest
@@ -35,7 +35,7 @@ class WebBuilder {
       // For bmad-core, common, etc., remove the first part
       resourcePath = pathParts.slice(1).join('/');
     }
-    
+
     return `.${bundleRoot}/${resourcePath}`;
   }
 
@@ -192,7 +192,7 @@ These references map directly to bundle sections:
 
     const yamlMatch = content.match(/```ya?ml\n([\s\S]*?)\n```/);
     if (!yamlMatch) return content;
-    
+
     const yamlStartIndex = content.indexOf(yamlMatch[0]);
     const yamlEndIndex = yamlStartIndex + yamlMatch[0].length;
 
@@ -300,7 +300,7 @@ These references map directly to bundle sections:
 
   async buildExpansionPack(packName, options = {}) {
     const packDir = path.join(this.rootDir, "expansion-packs", packName);
-    const outputDirs = [path.join(this.rootDir, "dist", "expansion-packs", packName)];
+    const outputDirs = [path.join(this.rootDir, "bundles", "expansion-packs", packName)];
 
     // Clean output directories if requested
     if (options.clean !== false) {

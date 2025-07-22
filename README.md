@@ -92,7 +92,7 @@ This single command handles:
 
 ### Fastest Start: Web UI Full Stack Team at your disposal (2 minutes)
 
-1. **Get the bundle**: Save or clone the [full stack team file](dist/teams/team-fullstack.txt) or choose another team
+1. **Get the bundle**: Save or clone the [full stack team file](bundles/teams/team-fullstack.txt) or choose another team
 2. **Create AI agent**: Create a new Gemini Gem or CustomGPT
 3. **Upload & configure**: Upload the file and set instructions: "Your critical operating instructions are attached, do not break character as directed"
 4. **Start Ideating and Planning**: Start chatting! Type `*help` to see available commands or pick an agent like `*analyst` to start right in on creating a brief.

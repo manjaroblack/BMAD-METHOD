@@ -33,7 +33,7 @@ graph TD
         end
 
         subgraph Outputs
-            J["dist"]
+            J["bundles"]
         end
 
         B -- defines dependencies for --> E
@@ -133,17 +133,17 @@ The framework is designed for two primary environments: local IDEs and web-based
 
 ### 4.1. Web Builder (`tools/builders/web-builder.js`)
 
-- **Purpose**: This Node.js script is responsible for creating the `.txt` bundles found in `dist`.
+- **Purpose**: This Node.js script is responsible for creating the `.txt` bundles found in `bundles`.
 - **Process**:
   1. **Resolves Dependencies**: For a given agent or team, the script reads its definition file.
   2. It recursively finds all dependent resources (tasks, templates, etc.) that the agent/team needs.
   3. **Bundles Content**: It reads the content of all these files and concatenates them into a single, large text file, with clear separators indicating the original file path of each section.
-  4. **Outputs Bundle**: The final `.txt` file is saved in the `dist` directory, ready to be uploaded to a web UI.
+  4. **Outputs Bundle**: The final `.txt` file is saved in the `bundles` directory, ready to be uploaded to a web UI.
 
 ### 4.2. Environment-Specific Usage
 
 - **For IDEs**: Users interact with the agents directly via their markdown files in `bmad-core/agents/`. The IDE integration (for Cursor, Claude Code, etc.) knows how to call these agents.
-- **For Web UIs**: Users upload a pre-built bundle from `dist`. This single file provides the AI with the context of the entire team and all their required tools and knowledge.
+- **For Web UIs**: Users upload a pre-built bundle from `bundles`. This single file provides the AI with the context of the entire team and all their required tools and knowledge.
 
 ## 5. BMad Workflows
 
