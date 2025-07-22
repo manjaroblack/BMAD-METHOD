@@ -39,21 +39,26 @@ These references map directly to bundle sections:
 ---
 
 
-==================== START: .bmad-core/agent-teams/team-no-ui.yaml ====================
+==================== START: .bmad-core/agent-teams/team-fullstack.yaml ====================
 bundle:
-  name: Team No UI
-  icon: 🔧
-  description: Team with no UX or UI Planning.
+  name: Team Fullstack
+  icon: 🚀
+  description: Team capable of full stack, front end only, or service development.
 agents:
   - bmad-orchestrator
   - analyst
   - pm
+  - ux-expert
   - architect
   - po
 workflows:
-  - greenfield-service.yaml
+  - brownfield-fullstack.yaml
   - brownfield-service.yaml
-==================== END: .bmad-core/agent-teams/team-no-ui.yaml ====================
+  - brownfield-ui.yaml
+  - greenfield-fullstack.yaml
+  - greenfield-service.yaml
+  - greenfield-ui.yaml
+==================== END: .bmad-core/agent-teams/team-fullstack.yaml ====================
 
 ==================== START: .bmad-core/agents/bmad-orchestrator.md ====================
 # bmad-orchestrator
@@ -308,6 +313,58 @@ dependencies:
     - technical-preferences.md
 ```
 ==================== END: .bmad-core/agents/pm.md ====================
+
+==================== START: .bmad-core/agents/ux-expert.md ====================
+# ux-expert
+
+CRITICAL: Read the full YAML, start activation to alter your state of being, follow startup section instructions, stay in this being until told to exit this mode:
+
+```yaml
+activation-instructions:
+  - ONLY load dependency files when user selects them for execution via command or request of a task
+  - The agent.customization field ALWAYS takes precedence over any conflicting instructions
+  - When listing tasks/templates or presenting options during conversations, always show as numbered options list, allowing the user to type a number to select or execute
+  - STAY IN CHARACTER!
+agent:
+  name: Sally
+  id: ux-expert
+  title: UX Expert
+  icon: 🎨
+  whenToUse: Use for UI/UX design, wireframes, prototypes, front-end specifications, and user experience optimization
+  customization: null
+persona:
+  role: User Experience Designer & UI Specialist
+  style: Empathetic, creative, detail-oriented, user-obsessed, data-informed
+  identity: UX Expert specializing in user experience design and creating intuitive interfaces
+  focus: User research, interaction design, visual design, accessibility, AI-powered UI generation
+  core_principles:
+    - User-Centric above all - Every design decision must serve user needs
+    - Simplicity Through Iteration - Start simple, refine based on feedback
+    - Delight in the Details - Thoughtful micro-interactions create memorable experiences
+    - Design for Real Scenarios - Consider edge cases, errors, and loading states
+    - Collaborate, Don't Dictate - Best solutions emerge from cross-functional work
+    - You have a keen eye for detail and a deep empathy for users.
+    - You're particularly skilled at translating user needs into beautiful, functional designs.
+    - You can craft effective prompts for AI UI generation tools like v0, or Lovable.
+commands:
+  - help: Show numbered list of the following commands to allow selection
+  - create-doc {template}: execute task create-doc (no template = ONLY show available templates listed under dependencies/templates below)
+  - generate-ui-prompt: Create AI frontend generation prompt
+  - research {topic}: Execute create-deep-research-prompt task to generate a prompt to init UX deep research
+  - execute-checklist {checklist}: Run task execute-checklist (default->po-master-checklist)
+  - exit: Say goodbye as the UX Expert, and then abandon inhabiting this persona
+dependencies:
+  tasks:
+    - generate-ai-frontend-prompt.md
+    - create-deep-research-prompt.md
+    - create-doc.md
+    - execute-checklist.md
+  templates:
+    - front-end-spec-tmpl.yaml
+  data:
+    - technical-preferences.md
+```
+==================== END: .bmad-core/agents/ux-expert.md ====================
 
 ==================== START: .bmad-core/agents/architect.md ====================
 # architect
@@ -811,7 +868,7 @@ BMad transforms you into a "Vibe CEO" - directing a team of specialized AI agent
 
 **Best for**: ChatGPT, Claude, Gemini users who want to start immediately
 
-1. Navigate to `dist/teams/`
+1. Navigate to `bundles/teams/`
 2. Copy `team-fullstack.txt` content
 3. Create new Gemini Gem or CustomGPT
 4. Upload file with instructions: "Your critical operating instructions are attached, do not break character as directed"
@@ -1131,8 +1188,8 @@ The BMad-Method is built around a modular architecture centered on the `bmad-cor
 
 #### Web UI Environment
 
-- Uses pre-built bundles from `dist/teams` for stand alone 1 upload files for all agents and their assets with an orchestrating agent
-- Single text files containing all agent dependencies are in `dist/agents/` - these are unnecessary unless you want to create a web agent that is only a single agent and not a team
+- Uses pre-built bundles from `bundles/teams` for stand alone 1 upload files for all agents and their assets with an orchestrating agent
+- Single text files containing all agent dependencies are in `bundles/agents/` - these are unnecessary unless you want to create a web agent that is only a single agent and not a team
 - Created by the web-builder tool for upload to web interfaces
 - Provides complete context in one package
 
@@ -1279,7 +1336,7 @@ Each status change requires user verification and approval before proceeding.
 #### Greenfield Development
 
 - Business analysis and market research
-- Product requirements and feature definition  
+- Product requirements and feature definition
 - System architecture and design
 - Development execution
 - Testing and deployment
@@ -1388,7 +1445,7 @@ Templates with Level 2 headings (`##`) can be automatically sharded:
 
 ```markdown
 ## Goals and Background Context
-## Requirements  
+## Requirements
 ## User Interface Design Goals
 ## Success Metrics
 ```
@@ -1795,7 +1852,7 @@ If user selects Option 1, present numbered list of techniques from the brainstor
 1. Apply selected technique according to data file description
 2. Keep engaging with technique until user indicates they want to:
    - Choose a different technique
-   - Apply current ideas to a new technique  
+   - Apply current ideas to a new technique
    - Move to convergent phase
    - End session
 
@@ -2555,12 +2612,12 @@ sections:
   - id: introduction
     instruction: |
       This template guides creation of a comprehensive Project Brief that serves as the foundational input for product development.
-      
+
       Start by asking the user which mode they prefer:
-      
+
       1. **Interactive Mode** - Work through each section collaboratively
       2. **YOLO Mode** - Generate complete draft for review and refinement
-      
+
       Before beginning, understand what inputs are available (brainstorming results, market research, competitive analysis, initial ideas) and gather project context.
 
   - id: executive-summary
@@ -2881,7 +2938,7 @@ sections:
         instruction: Map the end-to-end customer experience for primary segments
         template: |
           For primary customer segment:
-          
+
           1. **Awareness:** {{discovery_process}}
           2. **Consideration:** {{evaluation_criteria}}
           3. **Purchase:** {{decision_triggers}}
@@ -3082,7 +3139,7 @@ sections:
         title: Competitor Prioritization Matrix
         instruction: |
           Help categorize competitors by market share and strategic threat level
-          
+
           Create a 2x2 matrix:
           - Priority 1 (Core Competitors): High Market Share + High Threat
           - Priority 2 (Emerging Threats): Low Market Share + High Threat
@@ -3186,7 +3243,7 @@ sections:
         title: Positioning Map
         instruction: |
           Describe competitor positions on key dimensions
-          
+
           Create a positioning description using 2 key dimensions relevant to the market, such as:
           - Price vs. Features
           - Ease of Use vs. Power
@@ -3221,7 +3278,7 @@ sections:
         title: Blue Ocean Opportunities
         instruction: |
           Identify uncontested market spaces
-          
+
           List opportunities to create new market space:
           - Underserved segments
           - Unaddressed use cases
@@ -3325,11 +3382,11 @@ sections:
       - id: summary-details
         template: |
           **Topic:** {{session_topic}}
-          
+
           **Session Goals:** {{stated_goals}}
-          
+
           **Techniques Used:** {{techniques_list}}
-          
+
           **Total Ideas Generated:** {{total_ideas}}
       - id: key-themes
         title: "Key Themes Identified:"
@@ -3454,7 +3511,7 @@ sections:
   - id: footer
     content: |
       ---
-      
+
       *Session facilitated using the BMAD-METHOD brainstorming framework*
 ==================== END: .bmad-core/templates/brainstorming-output-tmpl.yaml ====================
 
@@ -4228,7 +4285,7 @@ sections:
     condition: PRD has UX/UI requirements
     instruction: |
       Capture high-level UI/UX vision to guide Design Architect and to inform story creation. Steps:
-      
+
       1. Pre-fill all subsections with educated guesses based on project context
       2. Present the complete rendered section to user
       3. Clearly let the user know where assumptions were made
@@ -4270,7 +4327,7 @@ sections:
     title: Technical Assumptions
     instruction: |
       Gather technical decisions that will guide the Architect. Steps:
-      
+
       1. Check if .bmad-core/data/technical-preferences.yaml or an attached technical-preferences file exists - use it to pre-populate choices
       2. Ask user about: languages, frameworks, starter templates, libraries, APIs, deployment targets
       3. For unknowns, offer guidance based on project goals and MVP scope
@@ -4298,9 +4355,9 @@ sections:
     title: Epic List
     instruction: |
       Present a high-level list of all epics for user approval. Each epic should have a title and a short (1 sentence) goal statement. This allows the user to review the overall structure before diving into details.
-      
+
       CRITICAL: Epics MUST be logically sequential following agile best practices:
-      
+
       - Each epic should deliver a significant, end-to-end, fully deployable increment of testable functionality
       - Epic 1 must establish foundational project infrastructure (app setup, Git, CI/CD, core services) unless we are adding new functionality to an existing app, while also delivering an initial piece of functionality, even as simple as a health-check route or display of a simple canary page - remember this when we produce the stories for the first epic!
       - Each subsequent epic builds upon previous epics' functionality delivering major blocks of functionality that provide tangible value to users or business when deployed
@@ -4319,11 +4376,11 @@ sections:
     repeatable: true
     instruction: |
       After the epic list is approved, present each epic with all its stories and acceptance criteria as a complete review unit.
-      
+
       For each epic provide expanded goal (2-3 sentences describing the objective and value all the stories will achieve).
-      
+
       CRITICAL STORY SEQUENCING REQUIREMENTS:
-      
+
       - Stories within each epic MUST be logically sequential
       - Each story should be a "vertical slice" delivering complete functionality aside from early enabler stories for project foundation
       - No story should depend on work from a later story or epic
@@ -4351,7 +4408,7 @@ sections:
             repeatable: true
             instruction: |
               Define clear, comprehensive, and testable acceptance criteria that:
-              
+
               - Precisely define what "done" means from a functional perspective
               - Are unambiguous and serve as basis for verification
               - Include any critical non-functional requirements from the PRD
@@ -4393,19 +4450,19 @@ sections:
     title: Intro Project Analysis and Context
     instruction: |
       IMPORTANT - SCOPE ASSESSMENT REQUIRED:
-      
+
       This PRD is for SIGNIFICANT enhancements to existing projects that require comprehensive planning and multiple stories. Before proceeding:
-      
+
       1. **Assess Enhancement Complexity**: If this is a simple feature addition or bug fix that could be completed in 1-2 focused development sessions, STOP and recommend: "For simpler changes, consider using the brownfield-create-epic or brownfield-create-story task with the Product Owner instead. This full PRD process is designed for substantial enhancements that require architectural planning and multiple coordinated stories."
-      
+
       2. **Project Context**: Determine if we're working in an IDE with the project already loaded or if the user needs to provide project information. If project files are available, analyze existing documentation in the docs folder. If insufficient documentation exists, recommend running the document-project task first.
-      
+
       3. **Deep Assessment Requirement**: You MUST thoroughly analyze the existing project structure, patterns, and constraints before making ANY suggestions. Every recommendation must be grounded in actual project analysis, not assumptions.
-      
+
       Gather comprehensive information about the existing project. This section must be completed before proceeding with requirements.
-      
+
       CRITICAL: Throughout this analysis, explicitly confirm your understanding with the user. For every assumption you make about the existing project, ask: "Based on my analysis, I understand that [assumption]. Is this correct?"
-      
+
       Do not proceed with any recommendations until the user has validated your understanding of the existing system.
     sections:
       - id: existing-project-overview
@@ -4431,7 +4488,7 @@ sections:
           - Note: "Document-project analysis available - using existing technical documentation"
           - List key documents created by document-project
           - Skip the missing documentation check below
-          
+
           Otherwise, check for existing documentation:
         sections:
           - id: available-docs
@@ -4555,7 +4612,7 @@ sections:
           If document-project output available:
           - Extract from "Actual Tech Stack" table in High Level Architecture section
           - Include version numbers and any noted constraints
-          
+
           Otherwise, document the current technology stack:
         template: |
           **Languages**: {{languages}}
@@ -4594,7 +4651,7 @@ sections:
           - Reference "Technical Debt and Known Issues" section
           - Include "Workarounds and Gotchas" that might impact enhancement
           - Note any identified constraints from "Critical Technical Debt"
-          
+
           Build risk assessment incorporating existing known issues:
         template: |
           **Technical Risks**: {{technical_risks}}
@@ -4617,7 +4674,7 @@ sections:
     title: "Epic 1: {{enhancement_title}}"
     instruction: |
       Comprehensive epic that delivers the brownfield enhancement while maintaining existing functionality
-      
+
       CRITICAL STORY SEQUENCING FOR BROWNFIELD:
       - Stories must ensure existing functionality remains intact
       - Each story should include verification that existing features still work
@@ -4630,7 +4687,7 @@ sections:
       - Each story must deliver value while maintaining system integrity
     template: |
       **Epic Goal**: {{epic_goal}}
-      
+
       **Integration Requirements**: {{integration_requirements}}
     sections:
       - id: story
@@ -5226,6 +5283,412 @@ Keep it action-oriented and forward-looking.]]
 None Listed
 ==================== END: .bmad-core/data/technical-preferences.md ====================
 
+==================== START: .bmad-core/tasks/generate-ai-frontend-prompt.md ====================
+# Create AI Frontend Prompt Task
+
+## Purpose
+
+To generate a masterful, comprehensive, and optimized prompt that can be used with any AI-driven frontend development tool (e.g., Vercel v0, Lovable.ai, or similar) to scaffold or generate significant portions of a frontend application.
+
+## Inputs
+
+- Completed UI/UX Specification (`front-end-spec.md`)
+- Completed Frontend Architecture Document (`front-end-architecture`) or a full stack combined architecture such as `architecture.md`
+- Main System Architecture Document (`architecture` - for API contracts and tech stack to give further context)
+
+## Key Activities & Instructions
+
+### 1. Core Prompting Principles
+
+Before generating the prompt, you must understand these core principles for interacting with a generative AI for code.
+
+- **Be Explicit and Detailed**: The AI cannot read your mind. Provide as much detail and context as possible. Vague requests lead to generic or incorrect outputs.
+- **Iterate, Don't Expect Perfection**: Generating an entire complex application in one go is rare. The most effective method is to prompt for one component or one section at a time, then build upon the results.
+- **Provide Context First**: Always start by providing the AI with the necessary context, such as the tech stack, existing code snippets, and overall project goals.
+- **Mobile-First Approach**: Frame all UI generation requests with a mobile-first design mindset. Describe the mobile layout first, then provide separate instructions for how it should adapt for tablet and desktop.
+
+### 2. The Structured Prompting Framework
+
+To ensure the highest quality output, you MUST structure every prompt using the following four-part framework.
+
+1. **High-Level Goal**: Start with a clear, concise summary of the overall objective. This orients the AI on the primary task.
+   - _Example: "Create a responsive user registration form with client-side validation and API integration."_
+2. **Detailed, Step-by-Step Instructions**: Provide a granular, numbered list of actions the AI should take. Break down complex tasks into smaller, sequential steps. This is the most critical part of the prompt.
+   - _Example: "1. Create a new file named `RegistrationForm.js`. 2. Use React hooks for state management. 3. Add styled input fields for 'Name', 'Email', and 'Password'. 4. For the email field, ensure it is a valid email format. 5. On submission, call the API endpoint defined below."_
+3. **Code Examples, Data Structures & Constraints**: Include any relevant snippets of existing code, data structures, or API contracts. This gives the AI concrete examples to work with. Crucially, you must also state what _not_ to do.
+   - _Example: "Use this API endpoint: `POST /api/register`. The expected JSON payload is `{ "name": "string", "email": "string", "password": "string" }`. Do NOT include a 'confirm password' field. Use Tailwind CSS for all styling."_
+4. **Define a Strict Scope**: Explicitly define the boundaries of the task. Tell the AI which files it can modify and, more importantly, which files to leave untouched to prevent unintended changes across the codebase.
+   - _Example: "You should only create the `RegistrationForm.js` component and add it to the `pages/register.js` file. Do NOT alter the `Navbar.js` component or any other existing page or component."_
+
+### 3. Assembling the Master Prompt
+
+You will now synthesize the inputs and the above principles into a final, comprehensive prompt.
+
+1. **Gather Foundational Context**:
+   - Start the prompt with a preamble describing the overall project purpose, the full tech stack (e.g., Next.js, TypeScript, Tailwind CSS), and the primary UI component library being used.
+2. **Describe the Visuals**:
+   - If the user has design files (Figma, etc.), instruct them to provide links or screenshots.
+   - If not, describe the visual style: color palette, typography, spacing, and overall aesthetic (e.g., "minimalist", "corporate", "playful").
+3. **Build the Prompt using the Structured Framework**:
+   - Follow the four-part framework from Section 2 to build out the core request, whether it's for a single component or a full page.
+4. **Present and Refine**:
+   - Output the complete, generated prompt in a clear, copy-pasteable format (e.g., a large code block).
+   - Explain the structure of the prompt and why certain information was included, referencing the principles above.
+   - <important_note>Conclude by reminding the user that all AI-generated code will require careful human review, testing, and refinement to be considered production-ready.</important_note>
+==================== END: .bmad-core/tasks/generate-ai-frontend-prompt.md ====================
+
+==================== START: .bmad-core/templates/front-end-spec-tmpl.yaml ====================
+template:
+  id: frontend-spec-template-v2
+  name: UI/UX Specification
+  version: 2.0
+  output:
+    format: markdown
+    filename: docs/front-end-spec.md
+    title: "{{project_name}} UI/UX Specification"
+
+workflow:
+  mode: interactive
+  elicitation: advanced-elicitation
+
+sections:
+  - id: introduction
+    title: Introduction
+    instruction: |
+      Review provided documents including Project Brief, PRD, and any user research to gather context. Focus on understanding user needs, pain points, and desired outcomes before beginning the specification.
+
+      Establish the document's purpose and scope. Keep the content below but ensure project name is properly substituted.
+    content: |
+      This document defines the user experience goals, information architecture, user flows, and visual design specifications for {{project_name}}'s user interface. It serves as the foundation for visual design and frontend development, ensuring a cohesive and user-centered experience.
+    sections:
+      - id: ux-goals-principles
+        title: Overall UX Goals & Principles
+        instruction: |
+          Work with the user to establish and document the following. If not already defined, facilitate a discussion to determine:
+
+          1. Target User Personas - elicit details or confirm existing ones from PRD
+          2. Key Usability Goals - understand what success looks like for users
+          3. Core Design Principles - establish 3-5 guiding principles
+        elicit: true
+        sections:
+          - id: user-personas
+            title: Target User Personas
+            template: "{{persona_descriptions}}"
+            examples:
+              - "**Power User:** Technical professionals who need advanced features and efficiency"
+              - "**Casual User:** Occasional users who prioritize ease of use and clear guidance"
+              - "**Administrator:** System managers who need control and oversight capabilities"
+          - id: usability-goals
+            title: Usability Goals
+            template: "{{usability_goals}}"
+            examples:
+              - "Ease of learning: New users can complete core tasks within 5 minutes"
+              - "Efficiency of use: Power users can complete frequent tasks with minimal clicks"
+              - "Error prevention: Clear validation and confirmation for destructive actions"
+              - "Memorability: Infrequent users can return without relearning"
+          - id: design-principles
+            title: Design Principles
+            template: "{{design_principles}}"
+            type: numbered-list
+            examples:
+              - "**Clarity over cleverness** - Prioritize clear communication over aesthetic innovation"
+              - "**Progressive disclosure** - Show only what's needed, when it's needed"
+              - "**Consistent patterns** - Use familiar UI patterns throughout the application"
+              - "**Immediate feedback** - Every action should have a clear, immediate response"
+              - "**Accessible by default** - Design for all users from the start"
+      - id: changelog
+        title: Change Log
+        type: table
+        columns: [Date, Version, Description, Author]
+        instruction: Track document versions and changes
+
+  - id: information-architecture
+    title: Information Architecture (IA)
+    instruction: |
+      Collaborate with the user to create a comprehensive information architecture:
+
+      1. Build a Site Map or Screen Inventory showing all major areas
+      2. Define the Navigation Structure (primary, secondary, breadcrumbs)
+      3. Use Mermaid diagrams for visual representation
+      4. Consider user mental models and expected groupings
+    elicit: true
+    sections:
+      - id: sitemap
+        title: Site Map / Screen Inventory
+        type: mermaid
+        mermaid_type: graph
+        template: "{{sitemap_diagram}}"
+        examples:
+          - |
+            graph TD
+                A[Homepage] --> B[Dashboard]
+                A --> C[Products]
+                A --> D[Account]
+                B --> B1[Analytics]
+                B --> B2[Recent Activity]
+                C --> C1[Browse]
+                C --> C2[Search]
+                C --> C3[Product Details]
+                D --> D1[Profile]
+                D --> D2[Settings]
+                D --> D3[Billing]
+      - id: navigation-structure
+        title: Navigation Structure
+        template: |
+          **Primary Navigation:** {{primary_nav_description}}
+
+          **Secondary Navigation:** {{secondary_nav_description}}
+
+          **Breadcrumb Strategy:** {{breadcrumb_strategy}}
+
+  - id: user-flows
+    title: User Flows
+    instruction: |
+      For each critical user task identified in the PRD:
+
+      1. Define the user's goal clearly
+      2. Map out all steps including decision points
+      3. Consider edge cases and error states
+      4. Use Mermaid flow diagrams for clarity
+      5. Link to external tools (Figma/Miro) if detailed flows exist there
+
+      Create subsections for each major flow.
+    elicit: true
+    repeatable: true
+    sections:
+      - id: flow
+        title: "{{flow_name}}"
+        template: |
+          **User Goal:** {{flow_goal}}
+
+          **Entry Points:** {{entry_points}}
+
+          **Success Criteria:** {{success_criteria}}
+        sections:
+          - id: flow-diagram
+            title: Flow Diagram
+            type: mermaid
+            mermaid_type: graph
+            template: "{{flow_diagram}}"
+          - id: edge-cases
+            title: "Edge Cases & Error Handling:"
+            type: bullet-list
+            template: "- {{edge_case}}"
+          - id: notes
+            template: "**Notes:** {{flow_notes}}"
+
+  - id: wireframes-mockups
+    title: Wireframes & Mockups
+    instruction: |
+      Clarify where detailed visual designs will be created (Figma, Sketch, etc.) and how to reference them. If low-fidelity wireframes are needed, offer to help conceptualize layouts for key screens.
+    elicit: true
+    sections:
+      - id: design-files
+        template: "**Primary Design Files:** {{design_tool_link}}"
+      - id: key-screen-layouts
+        title: Key Screen Layouts
+        repeatable: true
+        sections:
+          - id: screen
+            title: "{{screen_name}}"
+            template: |
+              **Purpose:** {{screen_purpose}}
+
+              **Key Elements:**
+              - {{element_1}}
+              - {{element_2}}
+              - {{element_3}}
+
+              **Interaction Notes:** {{interaction_notes}}
+
+              **Design File Reference:** {{specific_frame_link}}
+
+  - id: component-library
+    title: Component Library / Design System
+    instruction: |
+      Discuss whether to use an existing design system or create a new one. If creating new, identify foundational components and their key states. Note that detailed technical specs belong in front-end-architecture.
+    elicit: true
+    sections:
+      - id: design-system-approach
+        template: "**Design System Approach:** {{design_system_approach}}"
+      - id: core-components
+        title: Core Components
+        repeatable: true
+        sections:
+          - id: component
+            title: "{{component_name}}"
+            template: |
+              **Purpose:** {{component_purpose}}
+
+              **Variants:** {{component_variants}}
+
+              **States:** {{component_states}}
+
+              **Usage Guidelines:** {{usage_guidelines}}
+
+  - id: branding-style
+    title: Branding & Style Guide
+    instruction: Link to existing style guide or define key brand elements. Ensure consistency with company brand guidelines if they exist.
+    elicit: true
+    sections:
+      - id: visual-identity
+        title: Visual Identity
+        template: "**Brand Guidelines:** {{brand_guidelines_link}}"
+      - id: color-palette
+        title: Color Palette
+        type: table
+        columns: ["Color Type", "Hex Code", "Usage"]
+        rows:
+          - ["Primary", "{{primary_color}}", "{{primary_usage}}"]
+          - ["Secondary", "{{secondary_color}}", "{{secondary_usage}}"]
+          - ["Accent", "{{accent_color}}", "{{accent_usage}}"]
+          - ["Success", "{{success_color}}", "Positive feedback, confirmations"]
+          - ["Warning", "{{warning_color}}", "Cautions, important notices"]
+          - ["Error", "{{error_color}}", "Errors, destructive actions"]
+          - ["Neutral", "{{neutral_colors}}", "Text, borders, backgrounds"]
+      - id: typography
+        title: Typography
+        sections:
+          - id: font-families
+            title: Font Families
+            template: |
+              - **Primary:** {{primary_font}}
+              - **Secondary:** {{secondary_font}}
+              - **Monospace:** {{mono_font}}
+          - id: type-scale
+            title: Type Scale
+            type: table
+            columns: ["Element", "Size", "Weight", "Line Height"]
+            rows:
+              - ["H1", "{{h1_size}}", "{{h1_weight}}", "{{h1_line}}"]
+              - ["H2", "{{h2_size}}", "{{h2_weight}}", "{{h2_line}}"]
+              - ["H3", "{{h3_size}}", "{{h3_weight}}", "{{h3_line}}"]
+              - ["Body", "{{body_size}}", "{{body_weight}}", "{{body_line}}"]
+              - ["Small", "{{small_size}}", "{{small_weight}}", "{{small_line}}"]
+      - id: iconography
+        title: Iconography
+        template: |
+          **Icon Library:** {{icon_library}}
+
+          **Usage Guidelines:** {{icon_guidelines}}
+      - id: spacing-layout
+        title: Spacing & Layout
+        template: |
+          **Grid System:** {{grid_system}}
+
+          **Spacing Scale:** {{spacing_scale}}
+
+  - id: accessibility
+    title: Accessibility Requirements
+    instruction: Define specific accessibility requirements based on target compliance level and user needs. Be comprehensive but practical.
+    elicit: true
+    sections:
+      - id: compliance-target
+        title: Compliance Target
+        template: "**Standard:** {{compliance_standard}}"
+      - id: key-requirements
+        title: Key Requirements
+        template: |
+          **Visual:**
+          - Color contrast ratios: {{contrast_requirements}}
+          - Focus indicators: {{focus_requirements}}
+          - Text sizing: {{text_requirements}}
+
+          **Interaction:**
+          - Keyboard navigation: {{keyboard_requirements}}
+          - Screen reader support: {{screen_reader_requirements}}
+          - Touch targets: {{touch_requirements}}
+
+          **Content:**
+          - Alternative text: {{alt_text_requirements}}
+          - Heading structure: {{heading_requirements}}
+          - Form labels: {{form_requirements}}
+      - id: testing-strategy
+        title: Testing Strategy
+        template: "{{accessibility_testing}}"
+
+  - id: responsiveness
+    title: Responsiveness Strategy
+    instruction: Define breakpoints and adaptation strategies for different device sizes. Consider both technical constraints and user contexts.
+    elicit: true
+    sections:
+      - id: breakpoints
+        title: Breakpoints
+        type: table
+        columns: ["Breakpoint", "Min Width", "Max Width", "Target Devices"]
+        rows:
+          - ["Mobile", "{{mobile_min}}", "{{mobile_max}}", "{{mobile_devices}}"]
+          - ["Tablet", "{{tablet_min}}", "{{tablet_max}}", "{{tablet_devices}}"]
+          - ["Desktop", "{{desktop_min}}", "{{desktop_max}}", "{{desktop_devices}}"]
+          - ["Wide", "{{wide_min}}", "-", "{{wide_devices}}"]
+      - id: adaptation-patterns
+        title: Adaptation Patterns
+        template: |
+          **Layout Changes:** {{layout_adaptations}}
+
+          **Navigation Changes:** {{nav_adaptations}}
+
+          **Content Priority:** {{content_adaptations}}
+
+          **Interaction Changes:** {{interaction_adaptations}}
+
+  - id: animation
+    title: Animation & Micro-interactions
+    instruction: Define motion design principles and key interactions. Keep performance and accessibility in mind.
+    elicit: true
+    sections:
+      - id: motion-principles
+        title: Motion Principles
+        template: "{{motion_principles}}"
+      - id: key-animations
+        title: Key Animations
+        repeatable: true
+        template: "- **{{animation_name}}:** {{animation_description}} (Duration: {{duration}}, Easing: {{easing}})"
+
+  - id: performance
+    title: Performance Considerations
+    instruction: Define performance goals and strategies that impact UX design decisions.
+    sections:
+      - id: performance-goals
+        title: Performance Goals
+        template: |
+          - **Page Load:** {{load_time_goal}}
+          - **Interaction Response:** {{interaction_goal}}
+          - **Animation FPS:** {{animation_goal}}
+      - id: design-strategies
+        title: Design Strategies
+        template: "{{performance_strategies}}"
+
+  - id: next-steps
+    title: Next Steps
+    instruction: |
+      After completing the UI/UX specification:
+
+      1. Recommend review with stakeholders
+      2. Suggest creating/updating visual designs in design tool
+      3. Prepare for handoff to Design Architect for frontend architecture
+      4. Note any open questions or decisions needed
+    sections:
+      - id: immediate-actions
+        title: Immediate Actions
+        type: numbered-list
+        template: "{{action}}"
+      - id: design-handoff-checklist
+        title: Design Handoff Checklist
+        type: checklist
+        items:
+          - "All user flows documented"
+          - "Component inventory complete"
+          - "Accessibility requirements defined"
+          - "Responsive strategy clear"
+          - "Brand guidelines incorporated"
+          - "Performance goals established"
+
+  - id: checklist-results
+    title: Checklist Results
+    instruction: If a UI/UX checklist exists, run it against this document and report results here.
+==================== END: .bmad-core/templates/front-end-spec-tmpl.yaml ====================
+
 ==================== START: .bmad-core/templates/architecture-tmpl.yaml ====================
 template:
   id: architecture-template-v2
@@ -5249,20 +5712,20 @@ sections:
       - id: intro-content
         content: |
           This document outlines the overall project architecture for {{project_name}}, including backend systems, shared services, and non-UI specific concerns. Its primary goal is to serve as the guiding architectural blueprint for AI-driven development, ensuring consistency and adherence to chosen patterns and technologies.
-          
+
           **Relationship to Frontend Architecture:**
           If the project includes a significant user interface, a separate Frontend Architecture Document will detail the frontend-specific design and MUST be used in conjunction with this document. Core technology stack choices documented herein (see "Tech Stack") are definitive for the entire project, including any frontend components.
       - id: starter-template
         title: Starter Template or Existing Project
         instruction: |
           Before proceeding further with architecture design, check if the project is based on a starter template or existing codebase:
-          
+
           1. Review the PRD and brainstorming brief for any mentions of:
           - Starter templates (e.g., Create React App, Next.js, Vue CLI, Angular CLI, etc.)
           - Existing projects or codebases being used as a foundation
           - Boilerplate projects or scaffolding tools
           - Previous projects to be cloned or adapted
-          
+
           2. If a starter template or existing project is mentioned:
           - Ask the user to provide access via one of these methods:
             - Link to the starter template documentation
@@ -5275,16 +5738,16 @@ sections:
             - Existing architectural patterns and conventions
             - Any limitations or constraints imposed by the starter
           - Use this analysis to inform and align your architecture decisions
-          
+
           3. If no starter template is mentioned but this is a greenfield project:
           - Suggest appropriate starter templates based on the tech stack preferences
           - Explain the benefits (faster setup, best practices, community support)
           - Let the user decide whether to use one
-          
+
           4. If the user confirms no starter template will be used:
           - Proceed with architecture design from scratch
           - Note that manual setup will be required for all tooling and configuration
-          
+
           Document the decision here before proceeding with the architecture design. If none, just say N/A
         elicit: true
       - id: changelog
@@ -5312,7 +5775,7 @@ sections:
         title: High Level Overview
         instruction: |
           Based on the PRD's Technical Assumptions section, describe:
-          
+
           1. The main architectural style (e.g., Monolith, Microservices, Serverless, Event-Driven)
           2. Repository structure decision from PRD (Monorepo/Polyrepo)
           3. Service architecture decision from PRD
@@ -5329,17 +5792,17 @@ sections:
           - Data flow directions
           - External integrations
           - User entry points
-          
+
       - id: architectural-patterns
         title: Architectural and Design Patterns
         instruction: |
           List the key high-level patterns that will guide the architecture. For each pattern:
-          
+
           1. Present 2-3 viable options if multiple exist
           2. Provide your recommendation with clear rationale
           3. Get user confirmation before finalizing
           4. These patterns should align with the PRD's technical assumptions and project goals
-          
+
           Common patterns to consider:
           - Architectural style patterns (Serverless, Event-Driven, Microservices, CQRS, Hexagonal)
           - Code organization patterns (Dependency Injection, Repository, Module, Factory)
@@ -5355,23 +5818,23 @@ sections:
     title: Tech Stack
     instruction: |
       This is the DEFINITIVE technology selection section. Work with the user to make specific choices:
-      
+
       1. Review PRD technical assumptions and any preferences from .bmad-core/data/technical-preferences.yaml or an attached technical-preferences
       2. For each category, present 2-3 viable options with pros/cons
       3. Make a clear recommendation based on project needs
       4. Get explicit user approval for each selection
       5. Document exact versions (avoid "latest" - pin specific versions)
       6. This table is the single source of truth - all other docs must reference these choices
-      
+
       Key decisions to finalize - before displaying the table, ensure you are aware of or ask the user about - let the user know if they are not sure on any that you can also provide suggestions with rationale:
-      
+
       - Starter templates (if any)
       - Languages and runtimes with exact versions
       - Frameworks and libraries / packages
       - Cloud provider and key services choices
       - Database and storage solutions - if unclear suggest sql or nosql or other types depending on the project and depending on cloud provider offer a suggestion
       - Development tools
-      
+
       Upon render of the table, ensure the user is aware of the importance of this sections choices, should also look for gaps or disagreements with anything, ask for any clarifications if something is unclear why its in the list, and also right away elicit feedback - this statement and the options should be rendered and then prompt right all before allowing user input.
     elicit: true
     sections:
@@ -5395,13 +5858,13 @@ sections:
     title: Data Models
     instruction: |
       Define the core data models/entities:
-      
+
       1. Review PRD requirements and identify key business entities
       2. For each model, explain its purpose and relationships
       3. Include key attributes and data types
       4. Show relationships between models
       5. Discuss design decisions with user
-      
+
       Create a clear conceptual model before moving to database schema.
     elicit: true
     repeatable: true
@@ -5410,11 +5873,11 @@ sections:
         title: "{{model_name}}"
         template: |
           **Purpose:** {{model_purpose}}
-          
+
           **Key Attributes:**
           - {{attribute_1}}: {{type_1}} - {{description_1}}
           - {{attribute_2}}: {{type_2}} - {{description_2}}
-          
+
           **Relationships:**
           - {{relationship_1}}
           - {{relationship_2}}
@@ -5423,7 +5886,7 @@ sections:
     title: Components
     instruction: |
       Based on the architectural patterns, tech stack, and data models from above:
-      
+
       1. Identify major logical components/services and their responsibilities
       2. Consider the repository structure (monorepo/polyrepo) from PRD
       3. Define clear boundaries and interfaces between components
@@ -5432,7 +5895,7 @@ sections:
       - Key interfaces/APIs exposed
       - Dependencies on other components
       - Technology specifics based on tech stack choices
-      
+
       5. Create component diagrams where helpful
     elicit: true
     sections:
@@ -5441,13 +5904,13 @@ sections:
         title: "{{component_name}}"
         template: |
           **Responsibility:** {{component_description}}
-          
+
           **Key Interfaces:**
           - {{interface_1}}
           - {{interface_2}}
-          
+
           **Dependencies:** {{dependencies}}
-          
+
           **Technology Stack:** {{component_tech_details}}
       - id: component-diagrams
         title: Component Diagrams
@@ -5464,13 +5927,13 @@ sections:
     condition: Project requires external API integrations
     instruction: |
       For each external service integration:
-      
+
       1. Identify APIs needed based on PRD requirements and component design
       2. If documentation URLs are unknown, ask user for specifics
       3. Document authentication methods and security considerations
       4. List specific endpoints that will be used
       5. Note any rate limits or usage constraints
-      
+
       If no external APIs are needed, state this explicitly and skip to next section.
     elicit: true
     repeatable: true
@@ -5483,10 +5946,10 @@ sections:
           - **Base URL(s):** {{api_base_url}}
           - **Authentication:** {{auth_method}}
           - **Rate Limits:** {{rate_limits}}
-          
+
           **Key Endpoints Used:**
           - `{{method}} {{endpoint_path}}` - {{endpoint_purpose}}
-          
+
           **Integration Notes:** {{integration_considerations}}
 
   - id: core-workflows
@@ -5495,13 +5958,13 @@ sections:
     mermaid_type: sequence
     instruction: |
       Illustrate key system workflows using sequence diagrams:
-      
+
       1. Identify critical user journeys from PRD
       2. Show component interactions including external APIs
       3. Include error handling paths
       4. Document async operations
       5. Create both high-level and detailed diagrams as needed
-      
+
       Focus on workflows that clarify architecture decisions or complex interactions.
     elicit: true
 
@@ -5512,13 +5975,13 @@ sections:
     language: yaml
     instruction: |
       If the project includes a REST API:
-      
+
       1. Create an OpenAPI 3.0 specification
       2. Include all endpoints from epics/stories
       3. Define request/response schemas based on data models
       4. Document authentication requirements
       5. Include example requests/responses
-      
+
       Use YAML format for better readability. If no REST API, skip this section.
     elicit: true
     template: |
@@ -5535,13 +5998,13 @@ sections:
     title: Database Schema
     instruction: |
       Transform the conceptual data models into concrete database schemas:
-      
+
       1. Use the database type(s) selected in Tech Stack
       2. Create schema definitions using appropriate notation
       3. Include indexes, constraints, and relationships
       4. Consider performance and scalability
       5. For NoSQL, show document structures
-      
+
       Present schema in format appropriate to database type (SQL DDL, JSON schema, etc.)
     elicit: true
 
@@ -5551,14 +6014,14 @@ sections:
     language: plaintext
     instruction: |
       Create a project folder structure that reflects:
-      
+
       1. The chosen repository structure (monorepo/polyrepo)
       2. The service architecture (monolith/microservices/serverless)
       3. The selected tech stack and languages
       4. Component organization from above
       5. Best practices for the chosen frameworks
       6. Clear separation of concerns
-      
+
       Adapt the structure based on project needs. For monorepos, show service separation. For serverless, show function organization. Include language-specific conventions.
     elicit: true
     examples:
@@ -5576,13 +6039,13 @@ sections:
     title: Infrastructure and Deployment
     instruction: |
       Define the deployment architecture and practices:
-      
+
       1. Use IaC tool selected in Tech Stack
       2. Choose deployment strategy appropriate for the architecture
       3. Define environments and promotion flow
       4. Establish rollback procedures
       5. Consider security, monitoring, and cost optimization
-      
+
       Get user input on deployment preferences and CI/CD tool choices.
     elicit: true
     sections:
@@ -5618,13 +6081,13 @@ sections:
     title: Error Handling Strategy
     instruction: |
       Define comprehensive error handling approach:
-      
+
       1. Choose appropriate patterns for the language/framework from Tech Stack
       2. Define logging standards and tools
       3. Establish error categories and handling rules
       4. Consider observability and debugging needs
       5. Ensure security (no sensitive data in logs)
-      
+
       This section guides both AI and human developers in consistent error handling.
     elicit: true
     sections:
@@ -5671,13 +6134,13 @@ sections:
     title: Coding Standards
     instruction: |
       These standards are MANDATORY for AI agents. Work with user to define ONLY the critical rules needed to prevent bad code. Explain that:
-      
+
       1. This section directly controls AI developer behavior
       2. Keep it minimal - assume AI knows general best practices
       3. Focus on project-specific conventions and gotchas
       4. Overly detailed standards bloat context and slow development
       5. Standards will be extracted to separate file for dev agent use
-      
+
       For each standard, get explicit user confirmation it's necessary.
     elicit: true
     sections:
@@ -5699,7 +6162,7 @@ sections:
           - "Never use console.log in production code - use logger"
           - "All API responses must use ApiResponse wrapper type"
           - "Database queries must use repository pattern, never direct ORM"
-          
+
           Avoid obvious rules like "use SOLID principles" or "write clean code"
         repeatable: true
         template: "- **{{rule_name}}:** {{rule_description}}"
@@ -5717,14 +6180,14 @@ sections:
     title: Test Strategy and Standards
     instruction: |
       Work with user to define comprehensive test strategy:
-      
+
       1. Use test frameworks from Tech Stack
       2. Decide on TDD vs test-after approach
       3. Define test organization and naming
       4. Establish coverage goals
       5. Determine integration test infrastructure
       6. Plan for test data and external dependencies
-      
+
       Note: Basic info goes in Coding Standards for dev agent. This detailed section is for QA agent and team reference.
     elicit: true
     sections:
@@ -5745,7 +6208,7 @@ sections:
               - **Location:** {{unit_test_location}}
               - **Mocking Library:** {{mocking_library}}
               - **Coverage Requirement:** {{unit_coverage}}
-              
+
               **AI Agent Requirements:**
               - Generate tests for all public methods
               - Cover edge cases and error conditions
@@ -5787,7 +6250,7 @@ sections:
     title: Security
     instruction: |
       Define MANDATORY security requirements for AI and human developers:
-      
+
       1. Focus on implementation-specific rules
       2. Reference security tools from Tech Stack
       3. Define clear patterns for common scenarios
@@ -5856,16 +6319,16 @@ sections:
     title: Next Steps
     instruction: |
       After completing the architecture:
-      
+
       1. If project has UI components:
       - Use "Frontend Architecture Mode"
       - Provide this document as input
-      
+
       2. For all projects:
       - Review with Product Owner
       - Begin story implementation with Dev agent
       - Set up infrastructure with DevOps agent
-      
+
       3. Include specific prompts for next agents if needed
     sections:
       - id: architect-prompt
@@ -5898,16 +6361,16 @@ sections:
     title: Template and Framework Selection
     instruction: |
       Review provided documents including PRD, UX-UI Specification, and main Architecture Document. Focus on extracting technical implementation details needed for AI frontend tools and developer agents. Ask the user for any of these documents if you are unable to locate and were not provided.
-      
+
       Before proceeding with frontend architecture design, check if the project is using a frontend starter template or existing codebase:
-      
+
       1. Review the PRD, main architecture document, and brainstorming brief for mentions of:
          - Frontend starter templates (e.g., Create React App, Next.js, Vite, Vue CLI, Angular CLI, etc.)
          - UI kit or component library starters
          - Existing frontend projects being used as a foundation
          - Admin dashboard templates or other specialized starters
          - Design system implementations
-      
+
       2. If a frontend starter template or existing project is mentioned:
          - Ask the user to provide access via one of these methods:
            - Link to the starter template documentation
@@ -5923,7 +6386,7 @@ sections:
            - Testing setup and patterns
            - Build and development scripts
          - Use this analysis to ensure your frontend architecture aligns with the starter's patterns
-      
+
       3. If no frontend starter is mentioned but this is a new UI, ensure we know what the ui language and framework is:
          - Based on the framework choice, suggest appropriate starters:
            - React: Create React App, Next.js, Vite + React
@@ -5931,11 +6394,11 @@ sections:
            - Angular: Angular CLI
            - Or suggest popular UI templates if applicable
          - Explain benefits specific to frontend development
-      
+
       4. If the user confirms no starter template will be used:
          - Note that all tooling, bundling, and configuration will need manual setup
          - Proceed with frontend architecture from scratch
-      
+
       Document the starter template decision and any constraints it imposes before proceeding.
     sections:
       - id: changelog
@@ -6110,33 +6573,33 @@ sections:
     elicit: true
     content: |
       This document outlines the complete fullstack architecture for {{project_name}}, including backend systems, frontend implementation, and their integration. It serves as the single source of truth for AI-driven development, ensuring consistency across the entire technology stack.
-      
+
       This unified approach combines what would traditionally be separate backend and frontend architecture documents, streamlining the development process for modern fullstack applications where these concerns are increasingly intertwined.
     sections:
       - id: starter-template
         title: Starter Template or Existing Project
         instruction: |
           Before proceeding with architecture design, check if the project is based on any starter templates or existing codebases:
-          
+
           1. Review the PRD and other documents for mentions of:
           - Fullstack starter templates (e.g., T3 Stack, MEAN/MERN starters, Django + React templates)
           - Monorepo templates (e.g., Nx, Turborepo starters)
           - Platform-specific starters (e.g., Vercel templates, AWS Amplify starters)
           - Existing projects being extended or cloned
-          
+
           2. If starter templates or existing projects are mentioned:
           - Ask the user to provide access (links, repos, or files)
           - Analyze to understand pre-configured choices and constraints
           - Note any architectural decisions already made
           - Identify what can be modified vs what must be retained
-          
+
           3. If no starter is mentioned but this is greenfield:
           - Suggest appropriate fullstack starters based on tech preferences
           - Consider platform-specific options (Vercel, AWS, etc.)
           - Let user decide whether to use one
-          
+
           4. Document the decision and any constraints it imposes
-          
+
           If none, state "N/A - Greenfield project"
       - id: changelog
         title: Change Log
@@ -6162,17 +6625,17 @@ sections:
         title: Platform and Infrastructure Choice
         instruction: |
           Based on PRD requirements and technical assumptions, make a platform recommendation:
-          
+
           1. Consider common patterns (not an exhaustive list, use your own best judgement and search the web as needed for emerging trends):
           - **Vercel + Supabase**: For rapid development with Next.js, built-in auth/storage
           - **AWS Full Stack**: For enterprise scale with Lambda, API Gateway, S3, Cognito
           - **Azure**: For .NET ecosystems or enterprise Microsoft environments
           - **Google Cloud**: For ML/AI heavy applications or Google ecosystem integration
-          
+
           2. Present 2-3 viable options with clear pros/cons
           3. Make a recommendation with rationale
           4. Get explicit user confirmation
-          
+
           Document the choice and key services that will be used.
         template: |
           **Platform:** {{selected_platform}}
@@ -6182,7 +6645,7 @@ sections:
         title: Repository Structure
         instruction: |
           Define the repository approach based on PRD requirements and platform choice, explain your rationale or ask questions to the user if unsure:
-          
+
           1. For modern fullstack apps, monorepo is often preferred
           2. Consider tooling (Nx, Turborepo, Lerna, npm workspaces)
           3. Define package/app boundaries
@@ -6204,7 +6667,7 @@ sections:
           - Databases and storage
           - External integrations
           - CDN and caching layers
-          
+
           Use appropriate diagram type for clarity.
       - id: architectural-patterns
         title: Architectural Patterns
@@ -6214,7 +6677,7 @@ sections:
           - Frontend patterns (e.g., Component-based, State management)
           - Backend patterns (e.g., Repository, CQRS, Event-driven)
           - Integration patterns (e.g., BFF, API Gateway)
-          
+
           For each pattern, provide recommendation and rationale.
         repeatable: true
         template: "- **{{pattern_name}}:** {{pattern_description}} - _Rationale:_ {{rationale}}"
@@ -6228,7 +6691,7 @@ sections:
     title: Tech Stack
     instruction: |
       This is the DEFINITIVE technology selection for the entire project. Work with user to finalize all choices. This table is the single source of truth - all development must use these exact versions.
-      
+
       Key areas to cover:
       - Frontend and backend languages/frameworks
       - Databases and caching
@@ -6237,7 +6700,7 @@ sections:
       - Testing tools for both frontend and backend
       - Build and deployment tools
       - Monitoring and logging
-      
+
       Upon render, elicit feedback immediately.
     elicit: true
     sections:
@@ -6272,14 +6735,14 @@ sections:
     title: Data Models
     instruction: |
       Define the core data models/entities that will be shared between frontend and backend:
-      
+
       1. Review PRD requirements and identify key business entities
       2. For each model, explain its purpose and relationships
       3. Include key attributes and data types
       4. Show relationships between models
       5. Create TypeScript interfaces that can be shared
       6. Discuss design decisions with user
-      
+
       Create a clear conceptual model before moving to database schema.
     elicit: true
     repeatable: true
@@ -6288,7 +6751,7 @@ sections:
         title: "{{model_name}}"
         template: |
           **Purpose:** {{model_purpose}}
-          
+
           **Key Attributes:**
           - {{attribute_1}}: {{type_1}} - {{description_1}}
           - {{attribute_2}}: {{type_2}} - {{description_2}}
@@ -6307,7 +6770,7 @@ sections:
     title: API Specification
     instruction: |
       Based on the chosen API style from Tech Stack:
-      
+
       1. If REST API, create an OpenAPI 3.0 specification
       2. If GraphQL, provide the GraphQL schema
       3. If tRPC, show router definitions
@@ -6315,7 +6778,7 @@ sections:
       5. Define request/response schemas based on data models
       6. Document authentication requirements
       7. Include example requests/responses
-      
+
       Use appropriate format for the chosen API style. If no API (e.g., static site), skip this section.
     elicit: true
     sections:
@@ -6350,7 +6813,7 @@ sections:
     title: Components
     instruction: |
       Based on the architectural patterns, tech stack, and data models from above:
-      
+
       1. Identify major logical components/services across the fullstack
       2. Consider both frontend and backend components
       3. Define clear boundaries and interfaces between components
@@ -6359,7 +6822,7 @@ sections:
       - Key interfaces/APIs exposed
       - Dependencies on other components
       - Technology specifics based on tech stack choices
-      
+
       5. Create component diagrams where helpful
     elicit: true
     sections:
@@ -6368,13 +6831,13 @@ sections:
         title: "{{component_name}}"
         template: |
           **Responsibility:** {{component_description}}
-          
+
           **Key Interfaces:**
           - {{interface_1}}
           - {{interface_2}}
-          
+
           **Dependencies:** {{dependencies}}
-          
+
           **Technology Stack:** {{component_tech_details}}
       - id: component-diagrams
         title: Component Diagrams
@@ -6391,13 +6854,13 @@ sections:
     condition: Project requires external API integrations
     instruction: |
       For each external service integration:
-      
+
       1. Identify APIs needed based on PRD requirements and component design
       2. If documentation URLs are unknown, ask user for specifics
       3. Document authentication methods and security considerations
       4. List specific endpoints that will be used
       5. Note any rate limits or usage constraints
-      
+
       If no external APIs are needed, state this explicitly and skip to next section.
     elicit: true
     repeatable: true
@@ -6410,10 +6873,10 @@ sections:
           - **Base URL(s):** {{api_base_url}}
           - **Authentication:** {{auth_method}}
           - **Rate Limits:** {{rate_limits}}
-          
+
           **Key Endpoints Used:**
           - `{{method}} {{endpoint_path}}` - {{endpoint_purpose}}
-          
+
           **Integration Notes:** {{integration_considerations}}
 
   - id: core-workflows
@@ -6422,14 +6885,14 @@ sections:
     mermaid_type: sequence
     instruction: |
       Illustrate key system workflows using sequence diagrams:
-      
+
       1. Identify critical user journeys from PRD
       2. Show component interactions including external APIs
       3. Include both frontend and backend flows
       4. Include error handling paths
       5. Document async operations
       6. Create both high-level and detailed diagrams as needed
-      
+
       Focus on workflows that clarify architecture decisions or complex interactions.
     elicit: true
 
@@ -6437,13 +6900,13 @@ sections:
     title: Database Schema
     instruction: |
       Transform the conceptual data models into concrete database schemas:
-      
+
       1. Use the database type(s) selected in Tech Stack
       2. Create schema definitions using appropriate notation
       3. Include indexes, constraints, and relationships
       4. Consider performance and scalability
       5. For NoSQL, show document structures
-      
+
       Present schema in format appropriate to database type (SQL DDL, JSON schema, etc.)
     elicit: true
 
@@ -6659,13 +7122,13 @@ sections:
             template: |
               # Start all services
               {{start_all_command}}
-              
+
               # Start frontend only
               {{start_frontend_command}}
-              
+
               # Start backend only
               {{start_backend_command}}
-              
+
               # Run tests
               {{test_commands}}
       - id: environment-config
@@ -6678,10 +7141,10 @@ sections:
             template: |
               # Frontend (.env.local)
               {{frontend_env_vars}}
-              
+
               # Backend (.env)
               {{backend_env_vars}}
-              
+
               # Shared
               {{shared_env_vars}}
 
@@ -6698,7 +7161,7 @@ sections:
           - **Build Command:** {{frontend_build_command}}
           - **Output Directory:** {{frontend_output_dir}}
           - **CDN/Edge:** {{cdn_strategy}}
-          
+
           **Backend Deployment:**
           - **Platform:** {{backend_deploy_platform}}
           - **Build Command:** {{backend_build_command}}
@@ -6729,12 +7192,12 @@ sections:
           - CSP Headers: {{csp_policy}}
           - XSS Prevention: {{xss_strategy}}
           - Secure Storage: {{storage_strategy}}
-          
+
           **Backend Security:**
           - Input Validation: {{validation_approach}}
           - Rate Limiting: {{rate_limit_config}}
           - CORS Policy: {{cors_config}}
-          
+
           **Authentication Security:**
           - Token Storage: {{token_strategy}}
           - Session Management: {{session_approach}}
@@ -6746,7 +7209,7 @@ sections:
           - Bundle Size Target: {{bundle_size}}
           - Loading Strategy: {{loading_approach}}
           - Caching Strategy: {{fe_cache_strategy}}
-          
+
           **Backend Performance:**
           - Response Time Target: {{response_target}}
           - Database Optimization: {{db_optimization}}
@@ -6884,7 +7347,7 @@ sections:
           - JavaScript errors
           - API response times
           - User interactions
-          
+
           **Backend Metrics:**
           - Request rate
           - Error rate
@@ -6915,40 +7378,40 @@ sections:
     title: Introduction
     instruction: |
       IMPORTANT - SCOPE AND ASSESSMENT REQUIRED:
-      
+
       This architecture document is for SIGNIFICANT enhancements to existing projects that require comprehensive architectural planning. Before proceeding:
-      
+
       1. **Verify Complexity**: Confirm this enhancement requires architectural planning. For simple additions, recommend: "For simpler changes that don't require architectural planning, consider using the brownfield-create-epic or brownfield-create-story task with the Product Owner instead."
-      
+
       2. **REQUIRED INPUTS**:
          - Completed brownfield-prd.md
          - Existing project technical documentation (from docs folder or user-provided)
          - Access to existing project structure (IDE or uploaded files)
-      
+
       3. **DEEP ANALYSIS MANDATE**: You MUST conduct thorough analysis of the existing codebase, architecture patterns, and technical constraints before making ANY architectural recommendations. Every suggestion must be based on actual project analysis, not assumptions.
-      
+
       4. **CONTINUOUS VALIDATION**: Throughout this process, explicitly validate your understanding with the user. For every architectural decision, confirm: "Based on my analysis of your existing system, I recommend [decision] because [evidence from actual project]. Does this align with your system's reality?"
-      
+
       If any required inputs are missing, request them before proceeding.
     elicit: true
     sections:
       - id: intro-content
         content: |
           This document outlines the architectural approach for enhancing {{project_name}} with {{enhancement_description}}. Its primary goal is to serve as the guiding architectural blueprint for AI-driven development of new features while ensuring seamless integration with the existing system.
-          
+
           **Relationship to Existing Architecture:**
           This document supplements existing project architecture by defining how new components will integrate with current systems. Where conflicts arise between new and existing patterns, this document provides guidance on maintaining consistency while implementing enhancements.
       - id: existing-project-analysis
         title: Existing Project Analysis
         instruction: |
           Analyze the existing project structure and architecture:
-          
+
           1. Review existing documentation in docs folder
           2. Examine current technology stack and versions
           3. Identify existing architectural patterns and conventions
           4. Note current deployment and infrastructure setup
           5. Document any constraints or limitations
-          
+
           CRITICAL: After your analysis, explicitly validate your findings: "Based on my analysis of your project, I've identified the following about your existing system: [key findings]. Please confirm these observations are accurate before I proceed with architectural recommendations."
         elicit: true
         sections:
@@ -6977,12 +7440,12 @@ sections:
     title: Enhancement Scope and Integration Strategy
     instruction: |
       Define how the enhancement will integrate with the existing system:
-      
+
       1. Review the brownfield PRD enhancement scope
       2. Identify integration points with existing code
       3. Define boundaries between new and existing functionality
       4. Establish compatibility requirements
-      
+
       VALIDATION CHECKPOINT: Before presenting the integration strategy, confirm: "Based on my analysis, the integration approach I'm proposing takes into account [specific existing system characteristics]. These integration points and boundaries respect your current architecture patterns. Is this assessment accurate?"
     elicit: true
     sections:
@@ -7011,7 +7474,7 @@ sections:
     title: Tech Stack Alignment
     instruction: |
       Ensure new components align with existing technology choices:
-      
+
       1. Use existing technology stack as the foundation
       2. Only introduce new technologies if absolutely necessary
       3. Justify any new additions with clear rationale
@@ -7034,7 +7497,7 @@ sections:
     title: Data Models and Schema Changes
     instruction: |
       Define new data models and how they integrate with existing schema:
-      
+
       1. Identify new entities required for the enhancement
       2. Define relationships with existing data models
       3. Plan database schema changes (additions, modifications)
@@ -7050,11 +7513,11 @@ sections:
             template: |
               **Purpose:** {{model_purpose}}
               **Integration:** {{integration_with_existing}}
-              
+
               **Key Attributes:**
               - {{attribute_1}}: {{type_1}} - {{description_1}}
               - {{attribute_2}}: {{type_2}} - {{description_2}}
-              
+
               **Relationships:**
               - **With Existing:** {{existing_relationships}}
               - **With New:** {{new_relationships}}
@@ -7066,7 +7529,7 @@ sections:
           - **Modified Tables:** {{modified_tables_list}}
           - **New Indexes:** {{new_indexes_list}}
           - **Migration Strategy:** {{migration_approach}}
-          
+
           **Backward Compatibility:**
           - {{compatibility_measure_1}}
           - {{compatibility_measure_2}}
@@ -7075,12 +7538,12 @@ sections:
     title: Component Architecture
     instruction: |
       Define new components and their integration with existing architecture:
-      
+
       1. Identify new components required for the enhancement
       2. Define interfaces with existing components
       3. Establish clear boundaries and responsibilities
       4. Plan integration points and data flow
-      
+
       MANDATORY VALIDATION: Before presenting component architecture, confirm: "The new components I'm proposing follow the existing architectural patterns I identified in your codebase: [specific patterns]. The integration interfaces respect your current component structure and communication patterns. Does this match your project's reality?"
     elicit: true
     sections:
@@ -7093,15 +7556,15 @@ sections:
             template: |
               **Responsibility:** {{component_description}}
               **Integration Points:** {{integration_points}}
-              
+
               **Key Interfaces:**
               - {{interface_1}}
               - {{interface_2}}
-              
+
               **Dependencies:**
               - **Existing Components:** {{existing_dependencies}}
               - **New Components:** {{new_dependencies}}
-              
+
               **Technology Stack:** {{component_tech_details}}
       - id: interaction-diagram
         title: Component Interaction Diagram
@@ -7114,7 +7577,7 @@ sections:
     condition: Enhancement requires API changes
     instruction: |
       Define new API endpoints and integration with existing APIs:
-      
+
       1. Plan new API endpoints required for the enhancement
       2. Ensure consistency with existing API patterns
       3. Define authentication and authorization integration
@@ -7164,17 +7627,17 @@ sections:
           - **Base URL:** {{api_base_url}}
           - **Authentication:** {{auth_method}}
           - **Integration Method:** {{integration_approach}}
-          
+
           **Key Endpoints Used:**
           - `{{method}} {{endpoint_path}}` - {{endpoint_purpose}}
-          
+
           **Error Handling:** {{error_handling_strategy}}
 
   - id: source-tree-integration
     title: Source Tree Integration
     instruction: |
       Define how new code will integrate with existing project structure:
-      
+
       1. Follow existing project organization patterns
       2. Identify where new files/folders will be placed
       3. Ensure consistency with existing naming conventions
@@ -7213,7 +7676,7 @@ sections:
     title: Infrastructure and Deployment Integration
     instruction: |
       Define how the enhancement will be deployed alongside existing infrastructure:
-      
+
       1. Use existing deployment pipeline and infrastructure
       2. Identify any infrastructure changes needed
       3. Plan deployment strategy to minimize risk
@@ -7243,7 +7706,7 @@ sections:
     title: Coding Standards and Conventions
     instruction: |
       Ensure new code follows existing project conventions:
-      
+
       1. Document existing coding standards from project analysis
       2. Identify any enhancement-specific requirements
       3. Ensure consistency with existing codebase patterns
@@ -7274,7 +7737,7 @@ sections:
     title: Testing Strategy
     instruction: |
       Define testing approach for the enhancement:
-      
+
       1. Integrate with existing test suite
       2. Ensure existing functionality remains intact
       3. Plan for testing new features
@@ -7314,7 +7777,7 @@ sections:
     title: Security Integration
     instruction: |
       Ensure security consistency with existing system:
-      
+
       1. Follow existing security patterns and tools
       2. Ensure new features don't introduce vulnerabilities
       3. Maintain existing security posture
@@ -7349,7 +7812,7 @@ sections:
     title: Next Steps
     instruction: |
       After completing the brownfield architecture:
-      
+
       1. Review integration points with existing system
       2. Begin story implementation with Dev agent
       3. Set up deployment pipeline integration
@@ -7973,7 +8436,7 @@ workflow:
   elicitation: advanced-elicitation
 
 agent_config:
-  editable_sections: 
+  editable_sections:
     - Status
     - Story
     - Acceptance Criteria
@@ -7990,7 +8453,7 @@ sections:
     instruction: Select the current status of the story
     owner: scrum-master
     editors: [scrum-master, dev-agent]
-    
+
   - id: story
     title: Story
     type: template-text
@@ -8002,7 +8465,7 @@ sections:
     elicit: true
     owner: scrum-master
     editors: [scrum-master]
-    
+
   - id: acceptance-criteria
     title: Acceptance Criteria
     type: numbered-list
@@ -8010,7 +8473,7 @@ sections:
     elicit: true
     owner: scrum-master
     editors: [scrum-master]
-    
+
   - id: tasks-subtasks
     title: Tasks / Subtasks
     type: bullet-list
@@ -8027,7 +8490,7 @@ sections:
     elicit: true
     owner: scrum-master
     editors: [scrum-master, dev-agent]
-    
+
   - id: dev-notes
     title: Dev Notes
     instruction: |
@@ -8051,7 +8514,7 @@ sections:
         elicit: true
         owner: scrum-master
         editors: [scrum-master]
-        
+
   - id: change-log
     title: Change Log
     type: table
@@ -8059,7 +8522,7 @@ sections:
     instruction: Track changes made to this story document
     owner: scrum-master
     editors: [scrum-master, dev-agent, qa-agent]
-    
+
   - id: dev-agent-record
     title: Dev Agent Record
     instruction: This section is populated by the development agent during implementation
@@ -8072,25 +8535,25 @@ sections:
         instruction: Record the specific AI agent model and version used for development
         owner: dev-agent
         editors: [dev-agent]
-        
+
       - id: debug-log-references
         title: Debug Log References
         instruction: Reference any debug logs or traces generated during development
         owner: dev-agent
         editors: [dev-agent]
-        
+
       - id: completion-notes
         title: Completion Notes List
         instruction: Notes about the completion of tasks and any issues encountered
         owner: dev-agent
         editors: [dev-agent]
-        
+
       - id: file-list
         title: File List
         instruction: List all files created, modified, or affected during story implementation
         owner: dev-agent
         editors: [dev-agent]
-        
+
   - id: qa-results
     title: QA Results
     instruction: Results from QA Agent QA review of the completed story implementation
@@ -8542,6 +9005,939 @@ After presenting the report, ask if the user wants:
 - **REJECTED**: The plan requires significant revision to address critical deficiencies.
 ==================== END: .bmad-core/checklists/po-master-checklist.md ====================
 
+==================== START: .bmad-core/workflows/brownfield-fullstack.yaml ====================
+workflow:
+  id: brownfield-fullstack
+  name: Brownfield Full-Stack Enhancement
+  description: >-
+    Agent workflow for enhancing existing full-stack applications with new features,
+    modernization, or significant changes. Handles existing system analysis and safe integration.
+  type: brownfield
+  project_types:
+    - feature-addition
+    - refactoring
+    - modernization
+    - integration-enhancement
+
+  sequence:
+    - step: enhancement_classification
+      agent: analyst
+      action: classify enhancement scope
+      notes: |
+        Determine enhancement complexity to route to appropriate path:
+        - Single story (< 4 hours) → Use brownfield-create-story task
+        - Small feature (1-3 stories) → Use brownfield-create-epic task
+        - Major enhancement (multiple epics) → Continue with full workflow
+
+        Ask user: "Can you describe the enhancement scope? Is this a small fix, a feature addition, or a major enhancement requiring architectural changes?"
+
+    - step: routing_decision
+      condition: based_on_classification
+      routes:
+        single_story:
+          agent: pm
+          uses: brownfield-create-story
+          notes: "Create single story for immediate implementation. Exit workflow after story creation."
+        small_feature:
+          agent: pm
+          uses: brownfield-create-epic
+          notes: "Create focused epic with 1-3 stories. Exit workflow after epic creation."
+        major_enhancement:
+          continue: to_next_step
+          notes: "Continue with comprehensive planning workflow below."
+
+    - step: documentation_check
+      agent: analyst
+      action: check existing documentation
+      condition: major_enhancement_path
+      notes: |
+        Check if adequate project documentation exists:
+        - Look for existing architecture docs, API specs, coding standards
+        - Assess if documentation is current and comprehensive
+        - If adequate: Skip document-project, proceed to PRD
+        - If inadequate: Run document-project first
+
+    - step: project_analysis
+      agent: architect
+      action: analyze existing project and use task document-project
+      creates: brownfield-architecture.md (or multiple documents)
+      condition: documentation_inadequate
+      notes: "Run document-project to capture current system state, technical debt, and constraints. Pass findings to PRD creation."
+
+    - agent: pm
+      creates: prd.md
+      uses: brownfield-prd-tmpl
+      requires: existing_documentation_or_analysis
+      notes: |
+        Creates PRD for major enhancement. If document-project was run, reference its output to avoid re-analysis.
+        If skipped, use existing project documentation.
+        SAVE OUTPUT: Copy final prd.md to your project's docs/ folder.
+
+    - step: architecture_decision
+      agent: pm/architect
+      action: determine if architecture document needed
+      condition: after_prd_creation
+      notes: |
+        Review PRD to determine if architectural planning is needed:
+        - New architectural patterns → Create architecture doc
+        - New libraries/frameworks → Create architecture doc
+        - Platform/infrastructure changes → Create architecture doc
+        - Following existing patterns → Skip to story creation
+
+    - agent: architect
+      creates: architecture.md
+      uses: brownfield-architecture-tmpl
+      requires: prd.md
+      condition: architecture_changes_needed
+      notes: "Creates architecture ONLY for significant architectural changes. SAVE OUTPUT: Copy final architecture.md to your project's docs/ folder."
+
+    - agent: po
+      validates: all_artifacts
+      uses: po-master-checklist
+      notes: "Validates all documents for integration safety and completeness. May require updates to any document."
+
+    - agent: various
+      updates: any_flagged_documents
+      condition: po_checklist_issues
+      notes: "If PO finds issues, return to relevant agent to fix and re-export updated documents to docs/ folder."
+
+    - agent: po
+      action: shard_documents
+      creates: sharded_docs
+      requires: all_artifacts_in_project
+      notes: |
+        Shard documents for IDE development:
+        - Option A: Use PO agent to shard: @po then ask to shard docs/prd.md
+        - Option B: Manual: Drag shard-doc task + docs/prd.md into chat
+        - Creates docs/prd/ and docs/architecture/ folders with sharded content
+
+    - agent: sm
+      action: create_story
+      creates: story.md
+      requires: sharded_docs_or_brownfield_docs
+      repeats: for_each_epic_or_enhancement
+      notes: |
+        Story creation cycle:
+        - For sharded PRD: @sm → *create (uses create-next-story)
+        - For brownfield docs: @sm → use create-brownfield-story task
+        - Creates story from available documentation
+        - Story starts in "Draft" status
+        - May require additional context gathering for brownfield
+
+    - agent: analyst/pm
+      action: review_draft_story
+      updates: story.md
+      requires: story.md
+      optional: true
+      condition: user_wants_story_review
+      notes: |
+        OPTIONAL: Review and approve draft story
+        - NOTE: story-review task coming soon
+        - Review story completeness and alignment
+        - Update story status: Draft → Approved
+
+    - agent: dev
+      action: implement_story
+      creates: implementation_files
+      requires: story.md
+      notes: |
+        Dev Agent (New Chat): @dev
+        - Implements approved story
+        - Updates File List with all changes
+        - Marks story as "Review" when complete
+
+    - agent: qa
+      action: review_implementation
+      updates: implementation_files
+      requires: implementation_files
+      optional: true
+      notes: |
+        OPTIONAL: QA Agent (New Chat): @qa → review-story
+        - Senior dev review with refactoring ability
+        - Fixes small issues directly
+        - Leaves checklist for remaining items
+        - Updates story status (Review → Done or stays Review)
+
+    - agent: dev
+      action: address_qa_feedback
+      updates: implementation_files
+      condition: qa_left_unchecked_items
+      notes: |
+        If QA left unchecked items:
+        - Dev Agent (New Chat): Address remaining items
+        - Return to QA for final approval
+
+    - repeat_development_cycle:
+      action: continue_for_all_stories
+      notes: |
+        Repeat story cycle (SM → Dev → QA) for all epic stories
+        Continue until all stories in PRD are complete
+
+    - agent: po
+      action: epic_retrospective
+      creates: epic-retrospective.md
+      condition: epic_complete
+      optional: true
+      notes: |
+        OPTIONAL: After epic completion
+        - NOTE: epic-retrospective task coming soon
+        - Validate epic was completed correctly
+        - Document learnings and improvements
+
+    - workflow_end:
+      action: project_complete
+      notes: |
+        All stories implemented and reviewed!
+        Project development phase complete.
+
+        Reference: .bmad-core/data/bmad-kb.md#IDE Development Workflow
+
+  flow_diagram: |
+    ```mermaid
+    graph TD
+        A[Start: Brownfield Enhancement] --> B[analyst: classify enhancement scope]
+        B --> C{Enhancement Size?}
+
+        C -->|Single Story| D[pm: brownfield-create-story]
+        C -->|1-3 Stories| E[pm: brownfield-create-epic]
+        C -->|Major Enhancement| F[analyst: check documentation]
+
+        D --> END1[To Dev Implementation]
+        E --> END2[To Story Creation]
+
+        F --> G{Docs Adequate?}
+        G -->|No| H[architect: document-project]
+        G -->|Yes| I[pm: brownfield PRD]
+        H --> I
+
+        I --> J{Architecture Needed?}
+        J -->|Yes| K[architect: architecture.md]
+        J -->|No| L[po: validate artifacts]
+        K --> L
+
+        L --> M{PO finds issues?}
+        M -->|Yes| N[Fix issues]
+        M -->|No| O[po: shard documents]
+        N --> L
+
+        O --> P[sm: create story]
+        P --> Q{Story Type?}
+        Q -->|Sharded PRD| R[create-next-story]
+        Q -->|Brownfield Docs| S[create-brownfield-story]
+
+        R --> T{Review draft?}
+        S --> T
+        T -->|Yes| U[review & approve]
+        T -->|No| V[dev: implement]
+        U --> V
+
+        V --> W{QA review?}
+        W -->|Yes| X[qa: review]
+        W -->|No| Y{More stories?}
+        X --> Z{Issues?}
+        Z -->|Yes| AA[dev: fix]
+        Z -->|No| Y
+        AA --> X
+        Y -->|Yes| P
+        Y -->|No| AB{Retrospective?}
+        AB -->|Yes| AC[po: retrospective]
+        AB -->|No| AD[Complete]
+        AC --> AD
+
+        style AD fill:#90EE90
+        style END1 fill:#90EE90
+        style END2 fill:#90EE90
+        style D fill:#87CEEB
+        style E fill:#87CEEB
+        style I fill:#FFE4B5
+        style K fill:#FFE4B5
+        style O fill:#ADD8E6
+        style P fill:#ADD8E6
+        style V fill:#ADD8E6
+        style U fill:#F0E68C
+        style X fill:#F0E68C
+        style AC fill:#F0E68C
+    ```
+
+  decision_guidance:
+    when_to_use:
+      - Enhancement requires coordinated stories
+      - Architectural changes are needed
+      - Significant integration work required
+      - Risk assessment and mitigation planning necessary
+      - Multiple team members will work on related changes
+
+  handoff_prompts:
+    classification_complete: |
+      Enhancement classified as: {{enhancement_type}}
+      {{if single_story}}: Proceeding with brownfield-create-story task for immediate implementation.
+      {{if small_feature}}: Creating focused epic with brownfield-create-epic task.
+      {{if major_enhancement}}: Continuing with comprehensive planning workflow.
+
+    documentation_assessment: |
+      Documentation assessment complete:
+      {{if adequate}}: Existing documentation is sufficient. Proceeding directly to PRD creation.
+      {{if inadequate}}: Running document-project to capture current system state before PRD.
+
+    document_project_to_pm: |
+      Project analysis complete. Key findings documented in:
+      - {{document_list}}
+      Use these findings to inform PRD creation and avoid re-analyzing the same aspects.
+
+    pm_to_architect_decision: |
+      PRD complete and saved as docs/prd.md.
+      Architectural changes identified: {{yes/no}}
+      {{if yes}}: Proceeding to create architecture document for: {{specific_changes}}
+      {{if no}}: No architectural changes needed. Proceeding to validation.
+
+    architect_to_po: "Architecture complete. Save it as docs/architecture.md. Please validate all artifacts for integration safety."
+
+    po_to_sm: |
+      All artifacts validated.
+      Documentation type available: {{sharded_prd / brownfield_docs}}
+      {{if sharded}}: Use standard create-next-story task.
+      {{if brownfield}}: Use create-brownfield-story task to handle varied documentation formats.
+
+    sm_story_creation: |
+      Creating story from {{documentation_type}}.
+      {{if missing_context}}: May need to gather additional context from user during story creation.
+
+    complete: "All planning artifacts validated and development can begin. Stories will be created based on available documentation format."
+==================== END: .bmad-core/workflows/brownfield-fullstack.yaml ====================
+
+==================== START: .bmad-core/workflows/brownfield-service.yaml ====================
+workflow:
+  id: brownfield-service
+  name: Brownfield Service/API Enhancement
+  description: >-
+    Agent workflow for enhancing existing backend services and APIs with new features,
+    modernization, or performance improvements. Handles existing system analysis and safe integration.
+  type: brownfield
+  project_types:
+    - service-modernization
+    - api-enhancement
+    - microservice-extraction
+    - performance-optimization
+    - integration-enhancement
+
+  sequence:
+    - step: service_analysis
+      agent: architect
+      action: analyze existing project and use task document-project
+      creates: multiple documents per the document-project template
+      notes: "Review existing service documentation, codebase, performance metrics, and identify integration dependencies."
+
+    - agent: pm
+      creates: prd.md
+      uses: brownfield-prd-tmpl
+      requires: existing_service_analysis
+      notes: "Creates comprehensive PRD focused on service enhancement with existing system analysis. SAVE OUTPUT: Copy final prd.md to your project's docs/ folder."
+
+    - agent: architect
+      creates: architecture.md
+      uses: brownfield-architecture-tmpl
+      requires: prd.md
+      notes: "Creates architecture with service integration strategy and API evolution planning. SAVE OUTPUT: Copy final architecture.md to your project's docs/ folder."
+
+    - agent: po
+      validates: all_artifacts
+      uses: po-master-checklist
+      notes: "Validates all documents for service integration safety and API compatibility. May require updates to any document."
+
+    - agent: various
+      updates: any_flagged_documents
+      condition: po_checklist_issues
+      notes: "If PO finds issues, return to relevant agent to fix and re-export updated documents to docs/ folder."
+
+    - agent: po
+      action: shard_documents
+      creates: sharded_docs
+      requires: all_artifacts_in_project
+      notes: |
+        Shard documents for IDE development:
+        - Option A: Use PO agent to shard: @po then ask to shard docs/prd.md
+        - Option B: Manual: Drag shard-doc task + docs/prd.md into chat
+        - Creates docs/prd/ and docs/architecture/ folders with sharded content
+
+    - agent: sm
+      action: create_story
+      creates: story.md
+      requires: sharded_docs
+      repeats: for_each_epic
+      notes: |
+        Story creation cycle:
+        - SM Agent (New Chat): @sm → *create
+        - Creates next story from sharded docs
+        - Story starts in "Draft" status
+
+    - agent: analyst/pm
+      action: review_draft_story
+      updates: story.md
+      requires: story.md
+      optional: true
+      condition: user_wants_story_review
+      notes: |
+        OPTIONAL: Review and approve draft story
+        - NOTE: story-review task coming soon
+        - Review story completeness and alignment
+        - Update story status: Draft → Approved
+
+    - agent: dev
+      action: implement_story
+      creates: implementation_files
+      requires: story.md
+      notes: |
+        Dev Agent (New Chat): @dev
+        - Implements approved story
+        - Updates File List with all changes
+        - Marks story as "Review" when complete
+
+    - agent: qa
+      action: review_implementation
+      updates: implementation_files
+      requires: implementation_files
+      optional: true
+      notes: |
+        OPTIONAL: QA Agent (New Chat): @qa → review-story
+        - Senior dev review with refactoring ability
+        - Fixes small issues directly
+        - Leaves checklist for remaining items
+        - Updates story status (Review → Done or stays Review)
+
+    - agent: dev
+      action: address_qa_feedback
+      updates: implementation_files
+      condition: qa_left_unchecked_items
+      notes: |
+        If QA left unchecked items:
+        - Dev Agent (New Chat): Address remaining items
+        - Return to QA for final approval
+
+    - repeat_development_cycle:
+      action: continue_for_all_stories
+      notes: |
+        Repeat story cycle (SM → Dev → QA) for all epic stories
+        Continue until all stories in PRD are complete
+
+    - agent: po
+      action: epic_retrospective
+      creates: epic-retrospective.md
+      condition: epic_complete
+      optional: true
+      notes: |
+        OPTIONAL: After epic completion
+        - NOTE: epic-retrospective task coming soon
+        - Validate epic was completed correctly
+        - Document learnings and improvements
+
+    - workflow_end:
+      action: project_complete
+      notes: |
+        All stories implemented and reviewed!
+        Project development phase complete.
+
+        Reference: .bmad-core/data/bmad-kb.md#IDE Development Workflow
+
+  flow_diagram: |
+    ```mermaid
+    graph TD
+        A[Start: Service Enhancement] --> B[analyst: analyze existing service]
+        B --> C[pm: prd.md]
+        C --> D[architect: architecture.md]
+        D --> E[po: validate with po-master-checklist]
+        E --> F{PO finds issues?}
+        F -->|Yes| G[Return to relevant agent for fixes]
+        F -->|No| H[po: shard documents]
+        G --> E
+
+        H --> I[sm: create story]
+        I --> J{Review draft story?}
+        J -->|Yes| K[analyst/pm: review & approve story]
+        J -->|No| L[dev: implement story]
+        K --> L
+        L --> M{QA review?}
+        M -->|Yes| N[qa: review implementation]
+        M -->|No| O{More stories?}
+        N --> P{QA found issues?}
+        P -->|Yes| Q[dev: address QA feedback]
+        P -->|No| O
+        Q --> N
+        O -->|Yes| I
+        O -->|No| R{Epic retrospective?}
+        R -->|Yes| S[po: epic retrospective]
+        R -->|No| T[Project Complete]
+        S --> T
+
+        style T fill:#90EE90
+        style H fill:#ADD8E6
+        style I fill:#ADD8E6
+        style L fill:#ADD8E6
+        style C fill:#FFE4B5
+        style D fill:#FFE4B5
+        style K fill:#F0E68C
+        style N fill:#F0E68C
+        style S fill:#F0E68C
+    ```
+
+  decision_guidance:
+    when_to_use:
+      - Service enhancement requires coordinated stories
+      - API versioning or breaking changes needed
+      - Database schema changes required
+      - Performance or scalability improvements needed
+      - Multiple integration points affected
+
+  handoff_prompts:
+    analyst_to_pm: "Service analysis complete. Create comprehensive PRD with service integration strategy."
+    pm_to_architect: "PRD ready. Save it as docs/prd.md, then create the service architecture."
+    architect_to_po: "Architecture complete. Save it as docs/architecture.md. Please validate all artifacts for service integration safety."
+    po_issues: "PO found issues with [document]. Please return to [agent] to fix and re-save the updated document."
+    complete: "All planning artifacts validated and saved in docs/ folder. Move to IDE environment to begin development."
+==================== END: .bmad-core/workflows/brownfield-service.yaml ====================
+
+==================== START: .bmad-core/workflows/brownfield-ui.yaml ====================
+workflow:
+  id: brownfield-ui
+  name: Brownfield UI/Frontend Enhancement
+  description: >-
+    Agent workflow for enhancing existing frontend applications with new features,
+    modernization, or design improvements. Handles existing UI analysis and safe integration.
+  type: brownfield
+  project_types:
+    - ui-modernization
+    - framework-migration
+    - design-refresh
+    - frontend-enhancement
+
+  sequence:
+    - step: ui_analysis
+      agent: architect
+      action: analyze existing project and use task document-project
+      creates: multiple documents per the document-project template
+      notes: "Review existing frontend application, user feedback, analytics data, and identify improvement areas."
+
+    - agent: pm
+      creates: prd.md
+      uses: brownfield-prd-tmpl
+      requires: existing_ui_analysis
+      notes: "Creates comprehensive PRD focused on UI enhancement with existing system analysis. SAVE OUTPUT: Copy final prd.md to your project's docs/ folder."
+
+    - agent: ux-expert
+      creates: front-end-spec.md
+      uses: front-end-spec-tmpl
+      requires: prd.md
+      notes: "Creates UI/UX specification that integrates with existing design patterns. SAVE OUTPUT: Copy final front-end-spec.md to your project's docs/ folder."
+
+    - agent: architect
+      creates: architecture.md
+      uses: brownfield-architecture-tmpl
+      requires:
+        - prd.md
+        - front-end-spec.md
+      notes: "Creates frontend architecture with component integration strategy and migration planning. SAVE OUTPUT: Copy final architecture.md to your project's docs/ folder."
+
+    - agent: po
+      validates: all_artifacts
+      uses: po-master-checklist
+      notes: "Validates all documents for UI integration safety and design consistency. May require updates to any document."
+
+    - agent: various
+      updates: any_flagged_documents
+      condition: po_checklist_issues
+      notes: "If PO finds issues, return to relevant agent to fix and re-export updated documents to docs/ folder."
+
+    - agent: po
+      action: shard_documents
+      creates: sharded_docs
+      requires: all_artifacts_in_project
+      notes: |
+        Shard documents for IDE development:
+        - Option A: Use PO agent to shard: @po then ask to shard docs/prd.md
+        - Option B: Manual: Drag shard-doc task + docs/prd.md into chat
+        - Creates docs/prd/ and docs/architecture/ folders with sharded content
+
+    - agent: sm
+      action: create_story
+      creates: story.md
+      requires: sharded_docs
+      repeats: for_each_epic
+      notes: |
+        Story creation cycle:
+        - SM Agent (New Chat): @sm → *create
+        - Creates next story from sharded docs
+        - Story starts in "Draft" status
+
+    - agent: analyst/pm
+      action: review_draft_story
+      updates: story.md
+      requires: story.md
+      optional: true
+      condition: user_wants_story_review
+      notes: |
+        OPTIONAL: Review and approve draft story
+        - NOTE: story-review task coming soon
+        - Review story completeness and alignment
+        - Update story status: Draft → Approved
+
+    - agent: dev
+      action: implement_story
+      creates: implementation_files
+      requires: story.md
+      notes: |
+        Dev Agent (New Chat): @dev
+        - Implements approved story
+        - Updates File List with all changes
+        - Marks story as "Review" when complete
+
+    - agent: qa
+      action: review_implementation
+      updates: implementation_files
+      requires: implementation_files
+      optional: true
+      notes: |
+        OPTIONAL: QA Agent (New Chat): @qa → review-story
+        - Senior dev review with refactoring ability
+        - Fixes small issues directly
+        - Leaves checklist for remaining items
+        - Updates story status (Review → Done or stays Review)
+
+    - agent: dev
+      action: address_qa_feedback
+      updates: implementation_files
+      condition: qa_left_unchecked_items
+      notes: |
+        If QA left unchecked items:
+        - Dev Agent (New Chat): Address remaining items
+        - Return to QA for final approval
+
+    - repeat_development_cycle:
+      action: continue_for_all_stories
+      notes: |
+        Repeat story cycle (SM → Dev → QA) for all epic stories
+        Continue until all stories in PRD are complete
+
+    - agent: po
+      action: epic_retrospective
+      creates: epic-retrospective.md
+      condition: epic_complete
+      optional: true
+      notes: |
+        OPTIONAL: After epic completion
+        - NOTE: epic-retrospective task coming soon
+        - Validate epic was completed correctly
+        - Document learnings and improvements
+
+    - workflow_end:
+      action: project_complete
+      notes: |
+        All stories implemented and reviewed!
+        Project development phase complete.
+
+        Reference: .bmad-core/data/bmad-kb.md#IDE Development Workflow
+
+  flow_diagram: |
+    ```mermaid
+    graph TD
+        A[Start: UI Enhancement] --> B[analyst: analyze existing UI]
+        B --> C[pm: prd.md]
+        C --> D[ux-expert: front-end-spec.md]
+        D --> E[architect: architecture.md]
+        E --> F[po: validate with po-master-checklist]
+        F --> G{PO finds issues?}
+        G -->|Yes| H[Return to relevant agent for fixes]
+        G -->|No| I[po: shard documents]
+        H --> F
+
+        I --> J[sm: create story]
+        J --> K{Review draft story?}
+        K -->|Yes| L[analyst/pm: review & approve story]
+        K -->|No| M[dev: implement story]
+        L --> M
+        M --> N{QA review?}
+        N -->|Yes| O[qa: review implementation]
+        N -->|No| P{More stories?}
+        O --> Q{QA found issues?}
+        Q -->|Yes| R[dev: address QA feedback]
+        Q -->|No| P
+        R --> O
+        P -->|Yes| J
+        P -->|No| S{Epic retrospective?}
+        S -->|Yes| T[po: epic retrospective]
+        S -->|No| U[Project Complete]
+        T --> U
+
+        style U fill:#90EE90
+        style I fill:#ADD8E6
+        style J fill:#ADD8E6
+        style M fill:#ADD8E6
+        style C fill:#FFE4B5
+        style D fill:#FFE4B5
+        style E fill:#FFE4B5
+        style L fill:#F0E68C
+        style O fill:#F0E68C
+        style T fill:#F0E68C
+    ```
+
+  decision_guidance:
+    when_to_use:
+      - UI enhancement requires coordinated stories
+      - Design system changes needed
+      - New component patterns required
+      - User research and testing needed
+      - Multiple team members will work on related changes
+
+  handoff_prompts:
+    analyst_to_pm: "UI analysis complete. Create comprehensive PRD with UI integration strategy."
+    pm_to_ux: "PRD ready. Save it as docs/prd.md, then create the UI/UX specification."
+    ux_to_architect: "UI/UX spec complete. Save it as docs/front-end-spec.md, then create the frontend architecture."
+    architect_to_po: "Architecture complete. Save it as docs/architecture.md. Please validate all artifacts for UI integration safety."
+    po_issues: "PO found issues with [document]. Please return to [agent] to fix and re-save the updated document."
+    complete: "All planning artifacts validated and saved in docs/ folder. Move to IDE environment to begin development."
+==================== END: .bmad-core/workflows/brownfield-ui.yaml ====================
+
+==================== START: .bmad-core/workflows/greenfield-fullstack.yaml ====================
+workflow:
+  id: greenfield-fullstack
+  name: Greenfield Full-Stack Application Development
+  description: >-
+    Agent workflow for building full-stack applications from concept to development.
+    Supports both comprehensive planning for complex projects and rapid prototyping for simple ones.
+  type: greenfield
+  project_types:
+    - web-app
+    - saas
+    - enterprise-app
+    - prototype
+    - mvp
+
+  sequence:
+    - agent: analyst
+      creates: project-brief.md
+      optional_steps:
+        - brainstorming_session
+        - market_research_prompt
+      notes: "Can do brainstorming first, then optional deep research before creating project brief. SAVE OUTPUT: Copy final project-brief.md to your project's docs/ folder."
+
+    - agent: pm
+      creates: prd.md
+      requires: project-brief.md
+      notes: "Creates PRD from project brief using prd-tmpl. SAVE OUTPUT: Copy final prd.md to your project's docs/ folder."
+
+    - agent: ux-expert
+      creates: front-end-spec.md
+      requires: prd.md
+      optional_steps:
+        - user_research_prompt
+      notes: "Creates UI/UX specification using front-end-spec-tmpl. SAVE OUTPUT: Copy final front-end-spec.md to your project's docs/ folder."
+
+    - agent: ux-expert
+      creates: v0_prompt (optional)
+      requires: front-end-spec.md
+      condition: user_wants_ai_generation
+      notes: "OPTIONAL BUT RECOMMENDED: Generate AI UI prompt for tools like v0, Lovable, etc. Use the generate-ai-frontend-prompt task. User can then generate UI in external tool and download project structure."
+
+    - agent: architect
+      creates: fullstack-architecture.md
+      requires:
+        - prd.md
+        - front-end-spec.md
+      optional_steps:
+        - technical_research_prompt
+        - review_generated_ui_structure
+      notes: "Creates comprehensive architecture using fullstack-architecture-tmpl. If user generated UI with v0/Lovable, can incorporate the project structure into architecture. May suggest changes to PRD stories or new stories. SAVE OUTPUT: Copy final fullstack-architecture.md to your project's docs/ folder."
+
+    - agent: pm
+      updates: prd.md (if needed)
+      requires: fullstack-architecture.md
+      condition: architecture_suggests_prd_changes
+      notes: "If architect suggests story changes, update PRD and re-export the complete unredacted prd.md to docs/ folder."
+
+    - agent: po
+      validates: all_artifacts
+      uses: po-master-checklist
+      notes: "Validates all documents for consistency and completeness. May require updates to any document."
+
+    - agent: various
+      updates: any_flagged_documents
+      condition: po_checklist_issues
+      notes: "If PO finds issues, return to relevant agent to fix and re-export updated documents to docs/ folder."
+
+    - project_setup_guidance:
+      action: guide_project_structure
+      condition: user_has_generated_ui
+      notes: "If user generated UI with v0/Lovable: For polyrepo setup, place downloaded project in separate frontend repo alongside backend repo. For monorepo, place in apps/web or packages/frontend directory. Review architecture document for specific guidance."
+
+    - development_order_guidance:
+      action: guide_development_sequence
+      notes: "Based on PRD stories: If stories are frontend-heavy, start with frontend project/directory first. If backend-heavy or API-first, start with backend. For tightly coupled features, follow story sequence in monorepo setup. Reference sharded PRD epics for development order."
+
+    - agent: po
+      action: shard_documents
+      creates: sharded_docs
+      requires: all_artifacts_in_project
+      notes: |
+        Shard documents for IDE development:
+        - Option A: Use PO agent to shard: @po then ask to shard docs/prd.md
+        - Option B: Manual: Drag shard-doc task + docs/prd.md into chat
+        - Creates docs/prd/ and docs/architecture/ folders with sharded content
+
+    - agent: sm
+      action: create_story
+      creates: story.md
+      requires: sharded_docs
+      repeats: for_each_epic
+      notes: |
+        Story creation cycle:
+        - SM Agent (New Chat): @sm → *create
+        - Creates next story from sharded docs
+        - Story starts in "Draft" status
+
+    - agent: analyst/pm
+      action: review_draft_story
+      updates: story.md
+      requires: story.md
+      optional: true
+      condition: user_wants_story_review
+      notes: |
+        OPTIONAL: Review and approve draft story
+        - NOTE: story-review task coming soon
+        - Review story completeness and alignment
+        - Update story status: Draft → Approved
+
+    - agent: dev
+      action: implement_story
+      creates: implementation_files
+      requires: story.md
+      notes: |
+        Dev Agent (New Chat): @dev
+        - Implements approved story
+        - Updates File List with all changes
+        - Marks story as "Review" when complete
+
+    - agent: qa
+      action: review_implementation
+      updates: implementation_files
+      requires: implementation_files
+      optional: true
+      notes: |
+        OPTIONAL: QA Agent (New Chat): @qa → review-story
+        - Senior dev review with refactoring ability
+        - Fixes small issues directly
+        - Leaves checklist for remaining items
+        - Updates story status (Review → Done or stays Review)
+
+    - agent: dev
+      action: address_qa_feedback
+      updates: implementation_files
+      condition: qa_left_unchecked_items
+      notes: |
+        If QA left unchecked items:
+        - Dev Agent (New Chat): Address remaining items
+        - Return to QA for final approval
+
+    - repeat_development_cycle:
+      action: continue_for_all_stories
+      notes: |
+        Repeat story cycle (SM → Dev → QA) for all epic stories
+        Continue until all stories in PRD are complete
+
+    - agent: po
+      action: epic_retrospective
+      creates: epic-retrospective.md
+      condition: epic_complete
+      optional: true
+      notes: |
+        OPTIONAL: After epic completion
+        - NOTE: epic-retrospective task coming soon
+        - Validate epic was completed correctly
+        - Document learnings and improvements
+
+    - workflow_end:
+      action: project_complete
+      notes: |
+        All stories implemented and reviewed!
+        Project development phase complete.
+
+        Reference: .bmad-core/data/bmad-kb.md#IDE Development Workflow
+
+  flow_diagram: |
+    ```mermaid
+    graph TD
+        A[Start: Greenfield Project] --> B[analyst: project-brief.md]
+        B --> C[pm: prd.md]
+        C --> D[ux-expert: front-end-spec.md]
+        D --> D2{Generate v0 prompt?}
+        D2 -->|Yes| D3[ux-expert: create v0 prompt]
+        D2 -->|No| E[architect: fullstack-architecture.md]
+        D3 --> D4[User: generate UI in v0/Lovable]
+        D4 --> E
+        E --> F{Architecture suggests PRD changes?}
+        F -->|Yes| G[pm: update prd.md]
+        F -->|No| H[po: validate all artifacts]
+        G --> H
+        H --> I{PO finds issues?}
+        I -->|Yes| J[Return to relevant agent for fixes]
+        I -->|No| K[po: shard documents]
+        J --> H
+
+        K --> L[sm: create story]
+        L --> M{Review draft story?}
+        M -->|Yes| N[analyst/pm: review & approve story]
+        M -->|No| O[dev: implement story]
+        N --> O
+        O --> P{QA review?}
+        P -->|Yes| Q[qa: review implementation]
+        P -->|No| R{More stories?}
+        Q --> S{QA found issues?}
+        S -->|Yes| T[dev: address QA feedback]
+        S -->|No| R
+        T --> Q
+        R -->|Yes| L
+        R -->|No| U{Epic retrospective?}
+        U -->|Yes| V[po: epic retrospective]
+        U -->|No| W[Project Complete]
+        V --> W
+
+        B -.-> B1[Optional: brainstorming]
+        B -.-> B2[Optional: market research]
+        D -.-> D1[Optional: user research]
+        E -.-> E1[Optional: technical research]
+
+        style W fill:#90EE90
+        style K fill:#ADD8E6
+        style L fill:#ADD8E6
+        style O fill:#ADD8E6
+        style D3 fill:#E6E6FA
+        style D4 fill:#E6E6FA
+        style B fill:#FFE4B5
+        style C fill:#FFE4B5
+        style D fill:#FFE4B5
+        style E fill:#FFE4B5
+        style N fill:#F0E68C
+        style Q fill:#F0E68C
+        style V fill:#F0E68C
+    ```
+
+  decision_guidance:
+    when_to_use:
+      - Building production-ready applications
+      - Multiple team members will be involved
+      - Complex feature requirements
+      - Need comprehensive documentation
+      - Long-term maintenance expected
+      - Enterprise or customer-facing applications
+
+  handoff_prompts:
+    analyst_to_pm: "Project brief is complete. Save it as docs/project-brief.md in your project, then create the PRD."
+    pm_to_ux: "PRD is ready. Save it as docs/prd.md in your project, then create the UI/UX specification."
+    ux_to_architect: "UI/UX spec complete. Save it as docs/front-end-spec.md in your project, then create the fullstack architecture."
+    architect_review: "Architecture complete. Save it as docs/fullstack-architecture.md. Do you suggest any changes to the PRD stories or need new stories added?"
+    architect_to_pm: "Please update the PRD with the suggested story changes, then re-export the complete prd.md to docs/."
+    updated_to_po: "All documents ready in docs/ folder. Please validate all artifacts for consistency."
+    po_issues: "PO found issues with [document]. Please return to [agent] to fix and re-save the updated document."
+    complete: "All planning artifacts validated and saved in docs/ folder. Move to IDE environment to begin development."
+==================== END: .bmad-core/workflows/greenfield-fullstack.yaml ====================
+
 ==================== START: .bmad-core/workflows/greenfield-service.yaml ====================
 workflow:
   id: greenfield-service
@@ -8680,7 +10076,7 @@ workflow:
       notes: |
         All stories implemented and reviewed!
         Service development phase complete.
-        
+
         Reference: .bmad-core/data/bmad-kb.md#IDE Development Workflow
 
   flow_diagram: |
@@ -8697,7 +10093,7 @@ workflow:
         H -->|Yes| I[Return to relevant agent for fixes]
         H -->|No| J[po: shard documents]
         I --> G
-        
+
         J --> K[sm: create story]
         K --> L{Review draft story?}
         L -->|Yes| M[analyst/pm: review & approve story]
@@ -8751,49 +10147,76 @@ workflow:
     complete: "All planning artifacts validated and saved in docs/ folder. Move to IDE environment to begin development."
 ==================== END: .bmad-core/workflows/greenfield-service.yaml ====================
 
-==================== START: .bmad-core/workflows/brownfield-service.yaml ====================
+==================== START: .bmad-core/workflows/greenfield-ui.yaml ====================
 workflow:
-  id: brownfield-service
-  name: Brownfield Service/API Enhancement
+  id: greenfield-ui
+  name: Greenfield UI/Frontend Development
   description: >-
-    Agent workflow for enhancing existing backend services and APIs with new features,
-    modernization, or performance improvements. Handles existing system analysis and safe integration.
-  type: brownfield
+    Agent workflow for building frontend applications from concept to development.
+    Supports both comprehensive planning for complex UIs and rapid prototyping for simple interfaces.
+  type: greenfield
   project_types:
-    - service-modernization
-    - api-enhancement
-    - microservice-extraction
-    - performance-optimization
-    - integration-enhancement
+    - spa
+    - mobile-app
+    - micro-frontend
+    - static-site
+    - ui-prototype
+    - simple-interface
 
   sequence:
-    - step: service_analysis
-      agent: architect
-      action: analyze existing project and use task document-project
-      creates: multiple documents per the document-project template
-      notes: "Review existing service documentation, codebase, performance metrics, and identify integration dependencies."
+    - agent: analyst
+      creates: project-brief.md
+      optional_steps:
+        - brainstorming_session
+        - market_research_prompt
+      notes: "Can do brainstorming first, then optional deep research before creating project brief. SAVE OUTPUT: Copy final project-brief.md to your project's docs/ folder."
 
     - agent: pm
       creates: prd.md
-      uses: brownfield-prd-tmpl
-      requires: existing_service_analysis
-      notes: "Creates comprehensive PRD focused on service enhancement with existing system analysis. SAVE OUTPUT: Copy final prd.md to your project's docs/ folder."
+      requires: project-brief.md
+      notes: "Creates PRD from project brief using prd-tmpl, focused on UI/frontend requirements. SAVE OUTPUT: Copy final prd.md to your project's docs/ folder."
+
+    - agent: ux-expert
+      creates: front-end-spec.md
+      requires: prd.md
+      optional_steps:
+        - user_research_prompt
+      notes: "Creates UI/UX specification using front-end-spec-tmpl. SAVE OUTPUT: Copy final front-end-spec.md to your project's docs/ folder."
+
+    - agent: ux-expert
+      creates: v0_prompt (optional)
+      requires: front-end-spec.md
+      condition: user_wants_ai_generation
+      notes: "OPTIONAL BUT RECOMMENDED: Generate AI UI prompt for tools like v0, Lovable, etc. Use the generate-ai-frontend-prompt task. User can then generate UI in external tool and download project structure."
 
     - agent: architect
-      creates: architecture.md
-      uses: brownfield-architecture-tmpl
-      requires: prd.md
-      notes: "Creates architecture with service integration strategy and API evolution planning. SAVE OUTPUT: Copy final architecture.md to your project's docs/ folder."
+      creates: front-end-architecture.md
+      requires: front-end-spec.md
+      optional_steps:
+        - technical_research_prompt
+        - review_generated_ui_structure
+      notes: "Creates frontend architecture using front-end-architecture-tmpl. If user generated UI with v0/Lovable, can incorporate the project structure into architecture. May suggest changes to PRD stories or new stories. SAVE OUTPUT: Copy final front-end-architecture.md to your project's docs/ folder."
+
+    - agent: pm
+      updates: prd.md (if needed)
+      requires: front-end-architecture.md
+      condition: architecture_suggests_prd_changes
+      notes: "If architect suggests story changes, update PRD and re-export the complete unredacted prd.md to docs/ folder."
 
     - agent: po
       validates: all_artifacts
       uses: po-master-checklist
-      notes: "Validates all documents for service integration safety and API compatibility. May require updates to any document."
+      notes: "Validates all documents for consistency and completeness. May require updates to any document."
 
     - agent: various
       updates: any_flagged_documents
       condition: po_checklist_issues
       notes: "If PO finds issues, return to relevant agent to fix and re-export updated documents to docs/ folder."
+
+    - project_setup_guidance:
+      action: guide_project_structure
+      condition: user_has_generated_ui
+      notes: "If user generated UI with v0/Lovable: For polyrepo setup, place downloaded project in separate frontend repo. For monorepo, place in apps/web or frontend/ directory. Review architecture document for specific guidance."
 
     - agent: po
       action: shard_documents
@@ -8881,62 +10304,83 @@ workflow:
       notes: |
         All stories implemented and reviewed!
         Project development phase complete.
-        
+
         Reference: .bmad-core/data/bmad-kb.md#IDE Development Workflow
 
   flow_diagram: |
     ```mermaid
     graph TD
-        A[Start: Service Enhancement] --> B[analyst: analyze existing service]
+        A[Start: UI Development] --> B[analyst: project-brief.md]
         B --> C[pm: prd.md]
-        C --> D[architect: architecture.md]
-        D --> E[po: validate with po-master-checklist]
-        E --> F{PO finds issues?}
-        F -->|Yes| G[Return to relevant agent for fixes]
-        F -->|No| H[po: shard documents]
-        G --> E
-        
-        H --> I[sm: create story]
-        I --> J{Review draft story?}
-        J -->|Yes| K[analyst/pm: review & approve story]
-        J -->|No| L[dev: implement story]
-        K --> L
-        L --> M{QA review?}
-        M -->|Yes| N[qa: review implementation]
-        M -->|No| O{More stories?}
-        N --> P{QA found issues?}
-        P -->|Yes| Q[dev: address QA feedback]
-        P -->|No| O
-        Q --> N
-        O -->|Yes| I
-        O -->|No| R{Epic retrospective?}
-        R -->|Yes| S[po: epic retrospective]
-        R -->|No| T[Project Complete]
-        S --> T
+        C --> D[ux-expert: front-end-spec.md]
+        D --> D2{Generate v0 prompt?}
+        D2 -->|Yes| D3[ux-expert: create v0 prompt]
+        D2 -->|No| E[architect: front-end-architecture.md]
+        D3 --> D4[User: generate UI in v0/Lovable]
+        D4 --> E
+        E --> F{Architecture suggests PRD changes?}
+        F -->|Yes| G[pm: update prd.md]
+        F -->|No| H[po: validate all artifacts]
+        G --> H
+        H --> I{PO finds issues?}
+        I -->|Yes| J[Return to relevant agent for fixes]
+        I -->|No| K[po: shard documents]
+        J --> H
 
-        style T fill:#90EE90
-        style H fill:#ADD8E6
-        style I fill:#ADD8E6
+        K --> L[sm: create story]
+        L --> M{Review draft story?}
+        M -->|Yes| N[analyst/pm: review & approve story]
+        M -->|No| O[dev: implement story]
+        N --> O
+        O --> P{QA review?}
+        P -->|Yes| Q[qa: review implementation]
+        P -->|No| R{More stories?}
+        Q --> S{QA found issues?}
+        S -->|Yes| T[dev: address QA feedback]
+        S -->|No| R
+        T --> Q
+        R -->|Yes| L
+        R -->|No| U{Epic retrospective?}
+        U -->|Yes| V[po: epic retrospective]
+        U -->|No| W[Project Complete]
+        V --> W
+
+        B -.-> B1[Optional: brainstorming]
+        B -.-> B2[Optional: market research]
+        D -.-> D1[Optional: user research]
+        E -.-> E1[Optional: technical research]
+
+        style W fill:#90EE90
+        style K fill:#ADD8E6
         style L fill:#ADD8E6
+        style O fill:#ADD8E6
+        style D3 fill:#E6E6FA
+        style D4 fill:#E6E6FA
+        style B fill:#FFE4B5
         style C fill:#FFE4B5
         style D fill:#FFE4B5
-        style K fill:#F0E68C
+        style E fill:#FFE4B5
         style N fill:#F0E68C
-        style S fill:#F0E68C
+        style Q fill:#F0E68C
+        style V fill:#F0E68C
     ```
 
   decision_guidance:
     when_to_use:
-      - Service enhancement requires coordinated stories
-      - API versioning or breaking changes needed
-      - Database schema changes required
-      - Performance or scalability improvements needed
-      - Multiple integration points affected
+      - Building production frontend applications
+      - Multiple views/pages with complex interactions
+      - Need comprehensive UI/UX design and testing
+      - Multiple team members will be involved
+      - Long-term maintenance expected
+      - Customer-facing applications
 
   handoff_prompts:
-    analyst_to_pm: "Service analysis complete. Create comprehensive PRD with service integration strategy."
-    pm_to_architect: "PRD ready. Save it as docs/prd.md, then create the service architecture."
-    architect_to_po: "Architecture complete. Save it as docs/architecture.md. Please validate all artifacts for service integration safety."
+    analyst_to_pm: "Project brief is complete. Save it as docs/project-brief.md in your project, then create the PRD."
+    pm_to_ux: "PRD is ready. Save it as docs/prd.md in your project, then create the UI/UX specification."
+    ux_to_architect: "UI/UX spec complete. Save it as docs/front-end-spec.md in your project, then create the frontend architecture."
+    architect_review: "Frontend architecture complete. Save it as docs/front-end-architecture.md. Do you suggest any changes to the PRD stories or need new stories added?"
+    architect_to_pm: "Please update the PRD with the suggested story changes, then re-export the complete prd.md to docs/."
+    updated_to_po: "All documents ready in docs/ folder. Please validate all artifacts for consistency."
     po_issues: "PO found issues with [document]. Please return to [agent] to fix and re-save the updated document."
     complete: "All planning artifacts validated and saved in docs/ folder. Move to IDE environment to begin development."
-==================== END: .bmad-core/workflows/brownfield-service.yaml ====================
+==================== END: .bmad-core/workflows/greenfield-ui.yaml ====================

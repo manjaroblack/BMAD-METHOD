@@ -551,7 +551,7 @@ BMad transforms you into a "Vibe CEO" - directing a team of specialized AI agent
 
 **Best for**: ChatGPT, Claude, Gemini users who want to start immediately
 
-1. Navigate to `dist/teams/`
+1. Navigate to `bundles/teams/`
 2. Copy `team-fullstack.txt` content
 3. Create new Gemini Gem or CustomGPT
 4. Upload file with instructions: "Your critical operating instructions are attached, do not break character as directed"
@@ -871,8 +871,8 @@ The BMad-Method is built around a modular architecture centered on the `bmad-cor
 
 #### Web UI Environment
 
-- Uses pre-built bundles from `dist/teams` for stand alone 1 upload files for all agents and their assets with an orchestrating agent
-- Single text files containing all agent dependencies are in `dist/agents/` - these are unnecessary unless you want to create a web agent that is only a single agent and not a team
+- Uses pre-built bundles from `bundles/teams` for stand alone 1 upload files for all agents and their assets with an orchestrating agent
+- Single text files containing all agent dependencies are in `bundles/agents/` - these are unnecessary unless you want to create a web agent that is only a single agent and not a team
 - Created by the web-builder tool for upload to web interfaces
 - Provides complete context in one package
 
@@ -1019,7 +1019,7 @@ Each status change requires user verification and approval before proceeding.
 #### Greenfield Development
 
 - Business analysis and market research
-- Product requirements and feature definition  
+- Product requirements and feature definition
 - System architecture and design
 - Development execution
 - Testing and deployment
@@ -1128,7 +1128,7 @@ Templates with Level 2 headings (`##`) can be automatically sharded:
 
 ```markdown
 ## Goals and Background Context
-## Requirements  
+## Requirements
 ## User Interface Design Goals
 ## Success Metrics
 ```
