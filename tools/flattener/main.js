@@ -496,24 +496,35 @@ program
   .name('bmad-flatten')
   .description('BMad-Method codebase flattener tool')
   .version('1.0.0')
+  .option('-i, --input <path>', 'Input directory to flatten', process.cwd())
   .option('-o, --output <path>', 'Output file path', 'flattened-codebase.xml')
   .action(async (options) => {
-    console.log(`Flattening codebase to: ${options.output}`);
+    const inputDir = path.resolve(options.input);
+    const outputPath = path.resolve(options.output);
+    
+    console.log(`Flattening codebase from: ${inputDir}`);
+    console.log(`Output file: ${outputPath}`);
 
     try {
+      // Verify input directory exists
+      if (!await fs.pathExists(inputDir)) {
+        console.error(`❌ Error: Input directory does not exist: ${inputDir}`);
+        process.exit(1);
+      }
+
       // Import ora dynamically
       const { default: ora } = await import('ora');
 
       // Start file discovery with spinner
       const discoverySpinner = ora('🔍 Discovering files...').start();
-      const files = await discoverFiles(process.cwd());
-      const filteredFiles = await filterFiles(files, process.cwd());
+      const files = await discoverFiles(inputDir);
+      const filteredFiles = await filterFiles(files, inputDir);
       discoverySpinner.succeed(`📁 Found ${filteredFiles.length} files to include`);
 
       // Process files with progress tracking
       console.log('Reading file contents');
       const processingSpinner = ora('📄 Processing files...').start();
-      const aggregatedContent = await aggregateFileContents(filteredFiles, process.cwd(), processingSpinner);
+      const aggregatedContent = await aggregateFileContents(filteredFiles, inputDir, processingSpinner);
       processingSpinner.succeed(`✅ Processed ${aggregatedContent.processedFiles}/${filteredFiles.length} files`);
 
       // Log processing results for test validation
@@ -528,17 +539,17 @@ program
 
       // Generate XML output using streaming
       const xmlSpinner = ora('🔧 Generating XML output...').start();
-      await generateXMLOutput(aggregatedContent, options.output);
+      await generateXMLOutput(aggregatedContent, outputPath);
       xmlSpinner.succeed('📝 XML generation completed');
 
       // Calculate and display statistics
-      const outputStats = await fs.stat(options.output);
+      const outputStats = await fs.stat(outputPath);
       const stats = calculateStatistics(aggregatedContent, outputStats.size);
 
       // Display completion summary
       console.log('\n📊 Completion Summary:');
-      console.log(`✅ Successfully processed ${filteredFiles.length} files into ${options.output}`);
-      console.log(`📁 Output file: ${path.resolve(options.output)}`);
+      console.log(`✅ Successfully processed ${filteredFiles.length} files into ${path.basename(outputPath)}`);
+      console.log(`📁 Output file: ${outputPath}`);
       console.log(`📏 Total source size: ${stats.totalSize}`);
       console.log(`📄 Generated XML size: ${stats.xmlSize}`);
       console.log(`📝 Total lines of code: ${stats.totalLines.toLocaleString()}`);

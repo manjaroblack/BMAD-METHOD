@@ -126,11 +126,18 @@ The BMad-Method includes a powerful codebase flattener tool designed to prepare 
 
 ```bash
 # Basic usage - creates flattened-codebase.xml in current directory
-npm run flatten
+npx bmad-method flatten
+
+# Specify custom input directory
+npx bmad-method flatten --input /path/to/source/directory
+npx bmad-method flatten -i /path/to/source/directory
 
 # Specify custom output file
-npm run flatten -- --output my-project.xml
-npm run flatten -- -o /path/to/output/codebase.xml
+npx bmad-method flatten --output my-project.xml
+npx bmad-method flatten -o /path/to/output/codebase.xml
+
+# Combine input and output options
+npx bmad-method flatten --input /path/to/source --output /path/to/output/codebase.xml
 ```
 
 ### Example Output

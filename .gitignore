@@ -3,6 +3,7 @@ node_modules/
 pnpm-lock.yaml
 bun.lock
 deno.lock
+package-lock.json
 
 # Logs
 logs/
