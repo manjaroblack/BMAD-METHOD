@@ -41,10 +41,10 @@ async function discoverFiles(rootDir) {
       'debug/**',
 
       // Environment and config
-      '.env',
-      '.env.*',
-      '*.env',
-      '.config',
+      '**/.env',
+      '**/.env.*',
+      '**/*.env',
+      '**/.config',
 
       // Logs
       'logs/**',
@@ -72,33 +72,33 @@ async function discoverFiles(rootDir) {
       '.stylelintcache',
 
       // OS generated files
-      '.DS_Store',
-      '.DS_Store?',
-      '._*',
-      '.Spotlight-V100',
-      '.Trashes',
-      'ehthumbs.db',
-      'Thumbs.db',
-      'desktop.ini',
+      '**/.DS_Store',
+      '**/.DS_Store?',
+      '**/._*',
+      '**/.Spotlight-V100',
+      '**/.Trashes',
+      '**/ehthumbs.db',
+      '**/Thumbs.db',
+      '**/desktop.ini',
 
       // IDE and editor files
       '.vscode/**',
       '.idea/**',
-      '*.swp',
-      '*.swo',
-      '*~',
-      '.project',
-      '.classpath',
+      '**/*.swp',
+      '**/*.swo',
+      '**/*~',
+      '**/.project',
+      '**/.classpath',
       '.settings/**',
-      '*.sublime-project',
-      '*.sublime-workspace',
+      '**/*.sublime-project',
+      '**/*.sublime-workspace',
 
       // Package manager files
-      'package-lock.json',
-      'yarn.lock',
-      'pnpm-lock.yaml',
-      'composer.lock',
-      'Pipfile.lock',
+      '**/package-lock.json',
+      '**/yarn.lock',
+      '**/pnpm-lock.yaml',
+      '**/composer.lock',
+      '**/Pipfile.lock',
 
       // Runtime and compiled files
       '*.pyc',
@@ -117,11 +117,11 @@ async function discoverFiles(rootDir) {
       // Documentation build
       '_site/**',
       '.jekyll-cache/**',
-      '.jekyll-metadata',
+      '**/.jekyll-metadata',
 
       // Flattener specific outputs
-      'flattened-codebase.xml',
-      'repomix-output.xml'
+      '**/flattened-codebase.xml',
+      '**/repomix-output.xml'
     ];
 
     const combinedIgnores = [
@@ -436,59 +436,7 @@ function calculateStatistics(aggregatedContent, xmlFileSize) {
   };
 }
 
-/**
- * Filter files based on .gitignore patterns
- * @param {string[]} files - Array of file paths
- * @param {string} rootDir - The root directory
- * @returns {Promise<string[]>} Filtered array of file paths
- */
-async function filterFiles(files, rootDir) {
-  const gitignorePath = path.join(rootDir, '.gitignore');
-  const ignorePatterns = await parseGitignore(gitignorePath);
 
-  if (ignorePatterns.length === 0) {
-    return files;
-  }
-
-  // Convert absolute paths to relative for pattern matching
-  const relativeFiles = files.map(file => path.relative(rootDir, file));
-
-  // Separate positive and negative patterns
-  const positivePatterns = ignorePatterns.filter(p => !p.startsWith('!'));
-  const negativePatterns = ignorePatterns.filter(p => p.startsWith('!')).map(p => p.slice(1));
-
-  // Filter out files that match ignore patterns
-  const filteredRelative = [];
-
-  for (const file of relativeFiles) {
-    let shouldIgnore = false;
-
-    // First check positive patterns (ignore these files)
-    for (const pattern of positivePatterns) {
-      if (minimatch(file, pattern)) {
-        shouldIgnore = true;
-        break;
-      }
-    }
-
-    // Then check negative patterns (don't ignore these files even if they match positive patterns)
-    if (shouldIgnore) {
-      for (const pattern of negativePatterns) {
-        if (minimatch(file, pattern)) {
-          shouldIgnore = false;
-          break;
-        }
-      }
-    }
-
-    if (!shouldIgnore) {
-      filteredRelative.push(file);
-    }
-  }
-
-  // Convert back to absolute paths
-  return filteredRelative.map(file => path.resolve(rootDir, file));
-}
 
 const program = new Command();
 
@@ -517,8 +465,7 @@ program
 
       // Start file discovery with spinner
       const discoverySpinner = ora('🔍 Discovering files...').start();
-      const files = await discoverFiles(inputDir);
-      const filteredFiles = await filterFiles(files, inputDir);
+      const filteredFiles = await discoverFiles(inputDir);
       discoverySpinner.succeed(`📁 Found ${filteredFiles.length} files to include`);
 
       // Process files with progress tracking
