@@ -29,6 +29,15 @@ If you have just completed an MVP with BMad, and you want to continue with post-
 1. **Follow the [<ins>User Guide - Installation</ins>](user-guide.md#installation) steps to setup your agent in the web.**
 2. **Generate a 'flattened' single file of your entire codebase** run: ```npx bmad-method flatten```
 
+### BMad Core Directory Structure
+
+The BMad Method installs a `.bmad-core` directory containing all agent definitions and workflows. In brownfield projects, this directory works alongside your existing codebase without requiring structural changes.
+
+**Key Configuration Files**:
+
+1. **Core Configuration** (`.bmad-core/core-config.yaml`)
+2. **Technical Preferences** (`.bmad-core/data/technical-preferences.md`)
+
 ### Choose Your Approach
 
 #### Approach A: PRD-First (Recommended if adding very large and complex new features, single or multiple epics or massive changes)

@@ -1,0 +1,53 @@
+{
+  "version": "4.32.0",
+  "name": "bmad-method",
+  "exports": "./tooling/cli/cli.ts",
+  "tasks": {
+    "build": "deno run --allow-read --allow-write --allow-env tooling/cli/cli.ts build",
+    "build:agents": "deno run --allow-read --allow-write --allow-env tooling/cli/cli.ts build --agents-only",
+    "build:teams": "deno run --allow-read --allow-write --allow-env tooling/cli/cli.ts build --teams-only",
+    "build:expansions": "deno run --allow-read --allow-write --allow-env tooling/cli/cli.ts build:expansions",
+    "list:agents": "deno run --allow-read tooling/cli/cli.ts list:agents",
+    "list:teams": "deno run --allow-read tooling/cli/cli.ts list:teams",
+    "list:expansions": "deno run --allow-read tooling/cli/cli.ts list:expansions",
+    "validate": "deno run --allow-read tooling/cli/cli.ts validate",
+    "upgrade": "deno run --allow-read --allow-write --allow-env tooling/cli/cli.ts upgrade",
+    "flatten": "deno run --allow-read --allow-write tooling/user-tools/flattener/main.ts",
+    "install:bmad": "deno run --allow-read --allow-write --allow-env --allow-run tooling/installers/bin/bmad.ts install",
+    "version:patch": "deno run --allow-read --allow-write --allow-env tooling/version-management/version-bump.ts patch",
+    "version:minor": "deno run --allow-read --allow-write --allow-env tooling/version-management/version-bump.ts minor",
+    "version:major": "deno run --allow-read --allow-write --allow-env tooling/version-management/version-bump.ts major",
+    "version:expansion": "deno run --allow-read --allow-write --allow-env tooling/version-management/bump-expansion-version.ts",
+    "version:expansion:set": "deno run --allow-read --allow-write --allow-env tooling/version-management/update-expansion-version.ts",
+    "version:all": "deno run --allow-read --allow-write --allow-env tooling/version-management/bump-all-versions.ts",
+    "test": "deno test --allow-read --allow-write --allow-env",
+    "fmt": "deno fmt",
+    "lint": "deno lint",
+    "check": "deno check **/*.ts"
+  },
+  "imports": {
+    "@std/": "https://deno.land/std@0.208.0/",
+    "@cliffy/": "https://deno.land/x/cliffy@v1.0.0-rc.3/"
+  },
+  "compilerOptions": {
+    "allowJs": false,
+    "strict": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true
+  },
+  "fmt": {
+    "useTabs": false,
+    "lineWidth": 100,
+    "indentWidth": 2,
+    "semiColons": true,
+    "singleQuote": false,
+    "proseWrap": "preserve"
+  },
+  "lint": {
+    "rules": {
+      "tags": ["recommended"]
+    }
+  }
+}

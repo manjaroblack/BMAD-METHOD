@@ -13,11 +13,11 @@ The agent files have been refactored to eliminate duplication and improve mainta
 ## Directory Structure
 
 ```
-bmad-core/
+src/core/ (installed as .bmad-core/)
 ├── agents/                     # Generated agent files (final output)
-│   ├── backup/                 # Backup of original agent files
 │   ├── analyst.md
 │   ├── architect.md
+│   ├── master.md
 │   ├── dev.md
 │   ├── pm.md
 │   ├── qa.md
@@ -44,6 +44,7 @@ bmad-core/
 ### 1. Base Template (`templates/agent-base-tmpl.yaml`)
 
 Contains all common boilerplate:
+
 - Standard activation notice
 - IDE file resolution patterns
 - Request resolution template
@@ -53,6 +54,7 @@ Contains all common boilerplate:
 ### 2. Agent Configurations (`agent-configs/*.yaml`)
 
 Each agent has a configuration file defining:
+
 - Request resolution examples
 - Agent definition (name, ID, title, icon, whenToUse)
 - Persona details (role, style, identity, focus, core principles)
@@ -81,7 +83,7 @@ node utils/generate-agent.js dev agents/dev.md
 ### Regenerating All Agents
 
 ```bash
-# From bmad-core directory
+# From src/core directory
 node utils/generate-agent.js analyst agents/analyst.md
 node utils/generate-agent.js architect agents/architect.md
 node utils/generate-agent.js dev agents/dev.md

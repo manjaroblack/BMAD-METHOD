@@ -23,7 +23,7 @@ Foundations in Agentic Agile Driven Development, known as the Breakthrough Metho
 
 This two-phase approach eliminates both **planning inconsistency** and **context loss** - the biggest problems in AI-assisted development. Your Dev agent opens a story file with complete understanding of what to build, how to build it, and why.
 
-**📖 [See the complete workflow in the User Guide](bmad-core/user-guide.md)** - Planning phase, development cycle, and all agent roles
+**📖 [See the complete workflow in the User Guide](docs/user/user-guide.md)** - Planning phase, development cycle, and all agent roles
 
 ## Quick Navigation
 
@@ -31,20 +31,22 @@ This two-phase approach eliminates both **planning inconsistency** and **context
 
 **Before diving in, review these critical workflow diagrams that explain how BMad works:**
 
-1. **[Planning Workflow (Web UI)](bmad-core/user-guide.md#the-planning-workflow-web-ui)** - How to create PRD and Architecture documents
-2. **[Core Development Cycle (IDE)](bmad-core/user-guide.md#the-core-development-cycle-ide)** - How SM, Dev, and QA agents collaborate through story files
+1. **[Planning Workflow (Web UI)](docs/user/user-guide.md#the-planning-workflow-web-ui)** - How to create PRD and Architecture documents
+2. **[Core Development Cycle (IDE)](docs/user/user-guide.md#the-core-development-cycle-ide)** - How SM, Dev, and QA agents collaborate through story files
 
 > ⚠️ **These diagrams explain 90% of BMad Method Agentic Agile flow confusion** - Understanding the PRD+Architecture creation and the SM/Dev/QA workflow and how agents pass notes through story files is essential - and also explains why this is NOT taskmaster or just a simple task runner!
 
 ### What would you like to do?
 
+> 📋 **New!** [View Refactoring Documentation](REFACTORING.md) - See the improved project structure and organization
+
 - **[Install and Build software with Full Stack Agile AI Team](#quick-start)** → Quick Start Instruction
-- **[Learn how to use BMad](bmad-core/user-guide.md)** → Complete user guide and walkthrough
+- **[Learn how to use BMad](docs/user/user-guide.md)** → Complete user guide and walkthrough
 - **[See available AI agents](#available-agents)** → Specialized roles for your team
 - **[Explore non-technical uses](#-beyond-software-development---expansion-packs)** → Creative writing, business, wellness, education
 - **[Create my own AI agents](#creating-your-own-expansion-pack)** → Build agents for your domain
-- **[Browse ready-made expansion packs](expansion-packs/)** → Game dev, DevOps, infrastructure and get inspired with ideas and examples
-- **[Understand the architecture](docs/core-architecture.md)** → Technical deep dive
+- **[Browse ready-made extensions](extensions/)** → Game dev, DevOps, infrastructure and get inspired with ideas and examples
+- **[Understand the architecture](docs/developer/core-architecture.md)** → Technical deep dive
 - **[Join the community](https://discord.gg/gk8jAdXWmj)** → Get help and share ideas
 
 ## Important: Keep Your BMad Installation Updated
@@ -97,7 +99,7 @@ This single command handles:
 3. **Upload & configure**: Upload the file and set instructions: "Your critical operating instructions are attached, do not break character as directed"
 4. **Start Ideating and Planning**: Start chatting! Type `*help` to see available commands or pick an agent like `*analyst` to start right in on creating a brief.
 5. **CRITICAL**: Talk to BMad Orchestrator in the web at ANY TIME (#bmad-orchestrator command) and ask it questions about how this all works!
-6. **When to move to the IDE**: Once you have your PRD, Architecture, optional UX and Briefs - its time to switch over to the IDE to shard your docs, and start implementing the actual code! See the [User guide](bmad-core/user-guide.md) for more details
+6. **When to move to the IDE**: Once you have your PRD, Architecture, optional UX and Briefs - its time to switch over to the IDE to shard your docs, and start implementing the actual code! See the [User guide](docs/user/user-guide.md) for more details
 
 ### Alternative: Clone and Build
 
@@ -108,7 +110,7 @@ npm run install:bmad # build and install all to a destination folder
 
 ## 🌟 Beyond Software Development - Expansion Packs
 
-BMad's natural language framework works in ANY domain. Expansion packs provide specialized AI agents for creative writing, business strategy, health & wellness, education, and more. Also expansion packs can expand the core BMad-Method with specific functionality that is not generic for all cases. [See the Expansion Packs Guide](docs/expansion-packs.md) and learn to create your own!
+BMad's natural language framework works in ANY domain. Expansion packs provide specialized AI agents for creative writing, business strategy, health & wellness, education, and more. Also expansion packs can expand the core BMad-Method with specific functionality that is not generic for all cases. [See the Expansion Packs Guide](docs/reference/expansion-packs.md) and learn to create your own!
 
 ## Codebase Flattener Tool
 
@@ -161,9 +163,9 @@ The generated XML file contains all your project's source code in a structured f
 
 ### Essential Guides
 
-- 📖 **[User Guide](bmad-core/user-guide.md)** - Complete walkthrough from project inception to completion
-- 🏗️ **[Core Architecture](docs/core-architecture.md)** - Technical deep dive and system design
-- 🚀 **[Expansion Packs Guide](docs/expansion-packs.md)** - Extend BMad to any domain beyond software development
+- 📖 **[User Guide](docs/user/user-guide.md)** - Complete walkthrough from project inception to completion
+- 🏗️ **[Core Architecture](docs/developer/core-architecture.md)** - Technical deep dive and system design
+- 🚀 **[Expansion Packs Guide](docs/reference/expansion-packs.md)** - Extend BMad to any domain beyond software development
 
 ## Support
 

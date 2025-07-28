@@ -1,0 +1,18 @@
+bundle:
+  name: Team Fullstack
+  icon: 🚀
+  description: Team capable of full stack, front end only, or service development.
+agents:
+  - bmad-orchestrator-config
+  - analyst-config
+  - pm-config
+  - ux-expert-config
+  - architect-config
+  - po-config
+workflows:
+  - brownfield-fullstack.yaml
+  - brownfield-service.yaml
+  - brownfield-ui.yaml
+  - greenfield-fullstack.yaml
+  - greenfield-service.yaml
+  - greenfield-ui.yaml

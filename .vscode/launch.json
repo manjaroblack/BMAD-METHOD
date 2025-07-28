@@ -1,0 +1,147 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "🚀 Debug BMAD CLI (Deno)",
+      "type": "node",
+      "request": "launch",
+      "program": "deno",
+      "args": [
+        "run",
+        "--allow-read",
+        "--allow-write",
+        "--allow-env",
+        "--inspect-wait",
+        "${workspaceFolder}/tooling/cli/cli.ts",
+        "build"
+      ],
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "DENO_ENV": "development"
+      },
+      "console": "integratedTerminal",
+      "restart": true
+    },
+    {
+      "name": "🚀 Debug BMAD CLI (Node.js - Legacy)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/tooling/cli/cli.js",
+      "args": ["build"],
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "NODE_ENV": "development",
+        "DEBUG": "bmad:*"
+      },
+      "console": "integratedTerminal",
+      "restart": true,
+      "skipFiles": [
+        "<node_internals>/**",
+        "**/node_modules/**"
+      ]
+    },
+    {
+      "name": "🔧 Debug Current File (Deno)",
+      "type": "node",
+      "request": "launch",
+      "program": "deno",
+      "args": [
+        "run",
+        "--allow-read",
+        "--allow-write",
+        "--allow-env",
+        "--inspect-wait",
+        "${file}"
+      ],
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "DENO_ENV": "development"
+      },
+      "console": "integratedTerminal",
+      "restart": true
+    },
+    {
+      "name": "🏗️ Debug Web Builder",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/tooling/build-tools/web-builder.js",
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "NODE_ENV": "development",
+        "DEBUG": "bmad:builder"
+      },
+      "console": "integratedTerminal",
+      "restart": true,
+      "skipFiles": [
+        "<node_internals>/**",
+        "**/node_modules/**"
+      ]
+    },
+    {
+      "name": "📦 Debug Version Management",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/tooling/version-management/version-bump.js",
+      "args": ["patch"],
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "console": "integratedTerminal",
+      "restart": true,
+      "skipFiles": [
+        "<node_internals>/**",
+        "**/node_modules/**"
+      ]
+    },
+    {
+      "name": "🧪 Debug with npm test",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/.bin/jest",
+      "args": ["--runInBand"],
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "NODE_ENV": "test"
+      },
+      "console": "integratedTerminal",
+      "restart": true,
+      "skipFiles": [
+        "<node_internals>/**",
+        "**/node_modules/**"
+      ]
+    },
+    {
+      "name": "🔗 Attach to Node Process",
+      "type": "node",
+      "request": "attach",
+      "port": 9229,
+      "restart": true,
+      "skipFiles": [
+        "<node_internals>/**",
+        "**/node_modules/**"
+      ]
+    },
+    {
+      "name": "⚙️ Debug Installer",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/tooling/installers/bin/bmad.js",
+      "args": ["install"],
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "NODE_ENV": "development",
+        "DEBUG": "bmad:installer"
+      },
+      "console": "integratedTerminal",
+      "restart": true,
+      "skipFiles": [
+        "<node_internals>/**",
+        "**/node_modules/**"
+      ]
+    }
+  ]
+}

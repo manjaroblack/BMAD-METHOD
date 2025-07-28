@@ -40,7 +40,7 @@ The BMad Method is a natural language framework for AI-assisted software develop
 - Heavy documentation or knowledge bases
 - Anything that would bloat core agents
 
-See [Expansion Packs Guide](../docs/expansion-packs.md) for detailed examples and ideas.
+See [Expansion Packs Guide](reference/expansion-packs.md) for detailed examples and ideas.
 
 ### Agent Design Rules
 

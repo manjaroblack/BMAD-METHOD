@@ -1,0 +1,43 @@
+version: 4.32.0
+name: bmad-method
+description: Breakthrough Method of Agile AI-driven Development
+directories:
+  core: src/core
+  agents: src/core/agents
+  templates: src/core/templates
+  workflows: src/core/workflows
+  extensions: extensions
+  tooling: tooling
+  docs: docs
+  dist: dist
+core:
+  configFile: src/core/core-config.yaml
+  markdownExploder: true
+  slashPrefix: BMad
+build:
+  outputDir: dist
+  cleanBeforeBuild: true
+  includeExpansions: true
+dev:
+  debugLog: .ai/debug-log.md
+  storyLocation: docs/stories
+  loadAlwaysFiles:
+    - docs/architecture/coding-standards.md
+    - docs/architecture/tech-stack.md
+    - docs/architecture/source-tree.md
+documentation:
+  prd:
+    file: docs/prd.md
+    version: v4
+    sharded: true
+    shardedLocation: docs/prd
+    epicFilePattern: epic-{n}*.md
+  architecture:
+    file: docs/architecture.md
+    version: v4
+    sharded: true
+    shardedLocation: docs/architecture
+extensions:
+  autoLoad: true
+  searchPaths:
+    - extensions
