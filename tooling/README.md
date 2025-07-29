@@ -454,13 +454,13 @@ All scripts include performance monitoring:
 - `BMAD_PARALLEL_LIMIT` - Parallel processing limit
 - `BMAD_PERFORMANCE_MONITORING` - Enable/disable performance monitoring
 
-### Package.json Scripts
+### Deno Tasks
 
-Add these scripts to your package.json:
+Add these tasks to your deno.json:
 
 ```json
 {
-  "scripts": {
+  "tasks": {
     "optimize": "deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/master-optimizer.ts",
     "optimize:full": "deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/master-optimizer.ts --update-dependencies --consolidate-dependencies --report optimization-report.json",
     "validate": "deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/master-optimizer.ts validate",
@@ -491,7 +491,7 @@ Add these scripts to your package.json:
    ```bash
    # Clean and reinstall
    deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/manage-dependencies.ts --cleanup
-   npm install
+   deno cache deps.ts
    ```
 
 4. **Cache Issues:**

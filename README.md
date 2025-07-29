@@ -1,8 +1,7 @@
 # BMad-Method: Universal AI Agent Framework
 
-[![Version](https://img.shields.io/npm/v/bmad-method?color=blue&label=version)](https://www.npmjs.com/package/bmad-method)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Node.js Version](https://img.shields.io/badge/node-%3E%3D20.0.0-brightgreen)](https://nodejs.org)
+[![Deno Version](https://img.shields.io/badge/deno-%3E%3D1.40.0-brightgreen)](https://deno.land)
 [![Discord](https://img.shields.io/badge/Discord-Join%20Community-7289da?logo=discord&logoColor=white)](https://discord.gg/gk8jAdXWmj)
 
 Foundations in Agentic Agile Driven Development, known as the Breakthrough Method of Agile AI-Driven Development, yet so much more. Transform any domain with specialized AI expertise: software development, entertainment, creative writing, business strategy to personal wellness just to name a few.
@@ -54,10 +53,10 @@ This two-phase approach eliminates both **planning inconsistency** and **context
 **Stay up-to-date effortlessly!** If you already have BMad-Method installed in your project, simply run:
 
 ```bash
-npx bmad-method install
+deno task install
 # OR
 git pull
-npm run install:bmad
+deno task install:bmad
 ```
 
 This will:
@@ -76,21 +75,21 @@ This makes it easy to benefit from the latest improvements, bug fixes, and new a
 **Just run one of these commands:**
 
 ```bash
-npx bmad-method install
+deno task install
 # OR if you already have BMad installed:
 git pull
-npm run install:bmad
+deno task install:bmad
 ```
 
 This single command handles:
 
 - **New installations** - Sets up BMad in your project
 - **Upgrades** - Updates existing installations automatically
-- **Expansion packs** - Installs any expansion packs you've added to package.json
+- **Expansion packs** - Installs any expansion packs you've added to deno.json
 
 > **That's it!** Whether you're installing for the first time, upgrading, or adding expansion packs - these commands do everything.
 
-**Prerequisites**: [Node.js](https://nodejs.org) v20+ required
+**Prerequisites**: [Deno](https://deno.land) v1.40+ required
 
 ### Fastest Start: Web UI Full Stack Team at your disposal (2 minutes)
 
@@ -105,7 +104,7 @@ This single command handles:
 
 ```bash
 git clone https://github.com/bmadcode/bmad-method.git
-npm run install:bmad # build and install all to a destination folder
+deno task install:bmad # build and install all to a destination folder
 ```
 
 ## 🌟 Beyond Software Development - Expansion Packs
@@ -128,18 +127,18 @@ The BMad-Method includes a powerful codebase flattener tool designed to prepare 
 
 ```bash
 # Basic usage - creates flattened-codebase.xml in current directory
-npx bmad-method flatten
+deno task flatten
 
 # Specify custom input directory
-npx bmad-method flatten --input /path/to/source/directory
-npx bmad-method flatten -i /path/to/source/directory
+deno task flatten --input /path/to/source/directory
+deno task flatten -i /path/to/source/directory
 
 # Specify custom output file
-npx bmad-method flatten --output my-project.xml
-npx bmad-method flatten -o /path/to/output/codebase.xml
+deno task flatten --output my-project.xml
+deno task flatten -o /path/to/output/codebase.xml
 
 # Combine input and output options
-npx bmad-method flatten --input /path/to/source --output /path/to/output/codebase.xml
+deno task flatten --input /path/to/source --output /path/to/output/codebase.xml
 ```
 
 ### Example Output

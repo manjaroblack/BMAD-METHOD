@@ -19,10 +19,10 @@ feat!: redesign CLI interface              # → major release (4.1.0 → 5.0.0)
 When you push commits with `fix:` or `feat:`, GitHub Actions will:
 
 1. ✅ Analyze your commit messages
-2. ✅ Bump version in `package.json`
+2. ✅ Bump version in `deno.json`
 3. ✅ Generate changelog
 4. ✅ Create git tag
-5. ✅ **Publish to NPM automatically**
+5. ✅ **Create GitHub release automatically**
 6. ✅ Create GitHub release with notes
 
 ### Your Simple Workflow
@@ -34,7 +34,7 @@ git commit -m "feat: add team collaboration mode"
 git push
 
 # That's it! Release happens automatically 🎉
-# Users can now run: npx bmad-method (and get the new version)
+# Users can now run: deno task install (and get the new version)
 ```
 
 ### Commits That DON'T Trigger Releases
