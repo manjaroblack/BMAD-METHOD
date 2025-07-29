@@ -789,39 +789,39 @@ sections:
     elicit: true
     examples:
       - |
-        ProjectName/
-        ├── Assets/
-        │   └── _Project/                   # Main project folder
-        │       ├── Scenes/                 # Game scenes
-        │       │   ├── Gameplay/           # Level scenes
-        │       │   ├── UI/                 # UI-only scenes
-        │       │   └── Loading/            # Loading scenes
-        │       ├── Scripts/                # C# scripts
-        │       │   ├── Core/               # Core systems
-        │       │   ├── Gameplay/           # Gameplay mechanics
-        │       │   ├── UI/                 # UI controllers
-        │       │   └── Data/               # ScriptableObjects
-        │       ├── Prefabs/                # Reusable game objects
-        │       │   ├── Characters/         # Player, enemies
-        │       │   ├── Environment/        # Level elements
-        │       │   └── UI/                 # UI prefabs
-        │       ├── Art/                    # Visual assets
-        │       │   ├── Sprites/            # 2D sprites
-        │       │   ├── Materials/          # Unity materials
-        │       │   └── Shaders/            # Custom shaders
-        │       ├── Audio/                  # Audio assets
-        │       │   ├── Music/              # Background music
-        │       │   ├── SFX/                # Sound effects
-        │       │   └── Mixers/             # Audio mixers
-        │       ├── Data/                   # Game data
-        │       │   ├── Settings/           # Game settings
-        │       │   └── Balance/            # Balance data
-        │       └── Tests/                  # Unity tests
-        │           ├── EditMode/           # Edit mode tests
-        │           └── PlayMode/           # Play mode tests
-        ├── Packages/                       # Package Manager
-        │   └── manifest.json               # Package dependencies
-        └── ProjectSettings/                # Unity project settings
+          ProjectName/
+          ├── Assets/
+          │   └── _Project/                   # Main project folder
+          │       ├── Scenes/                 # Game scenes
+          │       │   ├── Gameplay/           # Level scenes
+          │       │   ├── UI/                 # UI-only scenes
+          │       │   └── Loading/            # Loading scenes
+          │       ├── Scripts/                # C# scripts
+          │       │   ├── Core/               # Core systems
+          │       │   ├── Gameplay/           # Gameplay mechanics
+          │       │   ├── UI/                 # UI controllers
+          │       │   └── Data/               # ScriptableObjects
+          │       ├── Prefabs/                # Reusable game objects
+          │       │   ├── Characters/         # Player, enemies
+          │       │   ├── Environment/        # Level elements
+          │       │   └── UI/                 # UI prefabs
+          │       ├── Art/                    # Visual assets
+          │       │   ├── Sprites/            # 2D sprites
+          │       │   ├── Materials/          # Unity materials
+          │       │   └── Shaders/            # Custom shaders
+          │       ├── Audio/                  # Audio assets
+          │       │   ├── Music/              # Background music
+          │       │   ├── SFX/                # Sound effects
+          │       │   └── Mixers/             # Audio mixers
+          │       ├── Data/                   # Game data
+          │       │   ├── Settings/           # Game settings
+          │       │   └── Balance/            # Balance data
+          │       └── Tests/                  # Unity tests
+          │           ├── EditMode/           # Edit mode tests
+          │           └── PlayMode/           # Play mode tests
+          ├── Packages/                       # Package Manager
+          │   └── manifest.json               # Package dependencies
+          └── ProjectSettings/                # Unity project settings
 
   - id: infrastructure-deployment
     title: Infrastructure and Deployment

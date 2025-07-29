@@ -11,12 +11,12 @@ Create detailed, implementation-ready stories for brownfield projects where trad
 - Working on brownfield projects with non-standard documentation
 - Stories need to be created from document-project output
 - Working from brownfield epics without full PRD/architecture
-- Existing project documentation doesn't follow BMad v4+ structure
+- Existing project documentation doesn't follow BMad v5+ structure
 - Need to gather additional context from user during story creation
 
 **Use create-next-story when:**
 
-- Working with properly sharded PRD and v4 architecture documents
+- Working with properly sharded PRD and v5 architecture documents
 - Following standard greenfield or well-documented brownfield workflow
 - All technical context is available in structured format
 
@@ -128,7 +128,7 @@ Critical: For brownfield, ALWAYS include criteria about maintaining existing fun
 Standard structure:
 
 1. New functionality works as specified
-2. Existing {{affected feature}} continues to work unchanged  
+2. Existing {{affected feature}} continues to work unchanged
 3. Integration with {{existing system}} maintains current behavior
 4. No regression in {{related area}}
 5. Performance remains within acceptable bounds
@@ -139,16 +139,19 @@ Critical: This is where you'll need to be interactive with the user if informati
 
 Create Dev Technical Guidance section with available information:
 
-```markdown
+````markdown
 ## Dev Technical Guidance
 
 ### Existing System Context
+
 [Extract from available documentation]
 
 ### Integration Approach
+
 [Based on patterns found or ask user]
 
 ### Technical Constraints
+
 [From documentation or user input]
 
 ### Missing Information
@@ -191,6 +194,7 @@ Example task structure for brownfield:
   - [ ] Integration test for {{integration point}}
   - [ ] Update existing tests if needed
 ```
+````
 
 ### 5. Risk Assessment and Mitigation
 
@@ -202,14 +206,17 @@ Add section for brownfield-specific risks:
 ## Risk Assessment
 
 ### Implementation Risks
+
 - **Primary Risk**: {{main risk to existing system}}
 - **Mitigation**: {{how to address}}
 - **Verification**: {{how to confirm safety}}
 
 ### Rollback Plan
+
 - {{Simple steps to undo changes if needed}}
 
 ### Safety Checks
+
 - [ ] Existing {{feature}} tested before changes
 - [ ] Changes can be feature-flagged or isolated
 - [ ] Rollback procedure documented
@@ -252,6 +259,7 @@ Include header noting documentation context:
 <!-- Context: Brownfield enhancement to {{existing system}} -->
 
 ## Status: Draft
+
 [Rest of story content...]
 ```
 

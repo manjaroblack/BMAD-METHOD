@@ -102,10 +102,10 @@ For each extracted section:
    - All subsection levels decrease by 1:
 
    ```txt
-     - ### → ##
-     - #### → ###
-     - ##### → ####
-     - etc.
+   - ### → ##
+   - #### → ###
+   - ##### → ####
+   - etc.
    ```
 
 3. **Write content**: Save the adjusted content to the new file

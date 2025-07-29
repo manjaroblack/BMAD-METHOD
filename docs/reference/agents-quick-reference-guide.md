@@ -4,9 +4,9 @@ This guide provides a quick overview of all available agents in the BMAD-METHOD 
 
 ## 🎭 BMad Orchestrator
 
-**Agent ID:** `bmad-orchestrator`  
-**Name:** BMad Orchestrator  
-**Icon:** 🎭  
+**Agent ID:** `bmad-orchestrator`\
+**Name:** BMad Orchestrator\
+**Icon:** 🎭
 
 **When to Use:** Workflow coordination, multi-agent tasks, role switching guidance, and when unsure which specialist to consult
 
@@ -24,9 +24,9 @@ This guide provides a quick overview of all available agents in the BMAD-METHOD 
 
 ## 🧙 BMad Master
 
-**Agent ID:** `bmad-master`  
-**Name:** BMad Master  
-**Icon:** 🧙  
+**Agent ID:** `bmad-master`\
+**Name:** BMad Master\
+**Icon:** 🧙
 
 **When to Use:** Comprehensive expertise across all domains, running one-off tasks without persona transformation, or using the same agent for multiple things
 
@@ -44,9 +44,9 @@ This guide provides a quick overview of all available agents in the BMAD-METHOD 
 
 ## 📊 Business Analyst (Mary)
 
-**Agent ID:** `analyst`  
-**Name:** Mary  
-**Icon:** 📊  
+**Agent ID:** `analyst`\
+**Name:** Mary\
+**Icon:** 📊
 
 **When to Use:** Market research, brainstorming, competitive analysis, creating project briefs, initial project discovery, and documenting existing projects (brownfield)
 
@@ -64,9 +64,9 @@ This guide provides a quick overview of all available agents in the BMAD-METHOD 
 
 ## 🏗️ Architect (Winston)
 
-**Agent ID:** `architect`  
-**Name:** Winston  
-**Icon:** 🏗️  
+**Agent ID:** `architect`\
+**Name:** Winston\
+**Icon:** 🏗️
 
 **When to Use:** System design, architecture documents, technology selection, API design, and infrastructure planning
 
@@ -85,9 +85,9 @@ This guide provides a quick overview of all available agents in the BMAD-METHOD 
 
 ## 📋 Product Manager (John)
 
-**Agent ID:** `pm`  
-**Name:** John  
-**Icon:** 📋  
+**Agent ID:** `pm`\
+**Name:** John\
+**Icon:** 📋
 
 **When to Use:** Creating PRDs, product strategy, feature prioritization, roadmap planning, and stakeholder communication
 
@@ -105,9 +105,9 @@ This guide provides a quick overview of all available agents in the BMAD-METHOD 
 
 ## 📝 Product Owner (Sarah)
 
-**Agent ID:** `po`  
-**Name:** Sarah  
-**Icon:** 📝  
+**Agent ID:** `po`\
+**Name:** Sarah\
+**Icon:** 📝
 
 **When to Use:** Backlog management, story refinement, acceptance criteria, sprint planning, and prioritization decisions
 
@@ -125,9 +125,9 @@ This guide provides a quick overview of all available agents in the BMAD-METHOD 
 
 ## 🏃 Scrum Master (Bob)
 
-**Agent ID:** `sm`  
-**Name:** Bob  
-**Icon:** 🏃  
+**Agent ID:** `sm`\
+**Name:** Bob\
+**Icon:** 🏃
 
 **When to Use:** Story creation, epic management, retrospectives in party-mode, and agile process guidance
 
@@ -142,9 +142,9 @@ This guide provides a quick overview of all available agents in the BMAD-METHOD 
 
 ## 💻 Full Stack Developer (James)
 
-**Agent ID:** `dev`  
-**Name:** James  
-**Icon:** 💻  
+**Agent ID:** `dev`\
+**Name:** James\
+**Icon:** 💻
 
 **When to Use:** Code implementation, debugging, refactoring, and development best practices
 
@@ -164,9 +164,9 @@ This guide provides a quick overview of all available agents in the BMAD-METHOD 
 
 ## 🧪 Senior Developer & QA (Quinn)
 
-**Agent ID:** `qa`  
-**Name:** Quinn  
-**Icon:** 🧪  
+**Agent ID:** `qa`\
+**Name:** Quinn\
+**Icon:** 🧪
 
 **When to Use:** Senior code review, refactoring, test planning, quality assurance, and mentoring through code improvements
 
@@ -185,9 +185,9 @@ This guide provides a quick overview of all available agents in the BMAD-METHOD 
 
 ## 🎨 UX Expert (Sally)
 
-**Agent ID:** `ux-expert`  
-**Name:** Sally  
-**Icon:** 🎨  
+**Agent ID:** `ux-expert`\
+**Name:** Sally\
+**Icon:** 🎨
 
 **When to Use:** UI/UX design, wireframes, prototypes, front-end specifications, and user experience optimization
 
@@ -226,4 +226,4 @@ This guide provides a quick overview of all available agents in the BMAD-METHOD 
 
 ---
 
-*This reference guide covers the core BMAD-METHOD agents. Each agent has additional capabilities and dependencies - use `*help` within any agent for detailed command lists.*
+_This reference guide covers the core BMAD-METHOD agents. Each agent has additional capabilities and dependencies - use `*help` within any agent for detailed command lists._

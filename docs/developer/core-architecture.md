@@ -29,7 +29,7 @@ graph TD
         end
 
         subgraph Tooling
-            I["tools/build-tools/web-builder.js"]
+            I["tooling/build-tools/web-builder.ts"]
         end
 
         subgraph Outputs
@@ -129,9 +129,9 @@ Users are encouraged to continuously update this file with discoveries from proj
 
 ## 4. The Build & Delivery Process
 
-The framework is designed for two primary environments: local IDEs and web-based AI chat interfaces. The `web-builder.js` script is the key to supporting the latter.
+The framework is designed for two primary environments: local IDEs and web-based AI chat interfaces. The `web-builder.ts` script is the key to supporting the latter.
 
-### 4.1. Web Builder (`tools/build-tools/web-builder.js`)
+### 4.1. Web Builder (`tooling/build-tools/web-builder.ts`)
 
 - **Purpose**: This Node.js script is responsible for creating the `.txt` bundles found in `dist`.
 - **Process**:

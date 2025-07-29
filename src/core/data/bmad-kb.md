@@ -2,7 +2,7 @@
 
 ## Overview
 
-BMad-Method (Breakthrough Method of Agile AI-driven Development) is a framework that combines AI agents with Agile development methodologies. The v4 system introduces a modular architecture with improved dependency management, bundle optimization, and support for both web and IDE environments.
+BMad-Method (Breakthrough Method of Agile AI-driven Development) is a framework that combines AI agents with Agile development methodologies. The v5 system introduces a modular architecture with improved dependency management, bundle optimization, and support for both web and IDE environments.
 
 ### Key Features
 
@@ -178,13 +178,13 @@ npx bmad-method install
 
 ## Core Configuration (core-config.yaml)
 
-**New in V4**: The `.bmad-core/core-config.yaml` file is a critical innovation that enables BMad to work seamlessly with any project structure, providing maximum flexibility and backwards compatibility.
+**New in V5**: The `.bmad-core/core-config.yaml` file is a critical innovation that enables BMad to work seamlessly with any project structure, providing maximum flexibility and backwards compatibility.
 
 ### What is core-config.yaml?
 
 This configuration file acts as a map for BMad agents, telling them exactly where to find your project documents and how they're structured. It enables:
 
-- **Version Flexibility**: Work with V3, V4, or custom document structures
+- **Version Flexibility**: Work with V3, V5, or custom document structures
 - **Custom Locations**: Define where your documents and shards live
 - **Developer Context**: Specify which files the dev agent should always load
 - **Debug Support**: Built-in logging for troubleshooting
@@ -193,14 +193,14 @@ This configuration file acts as a map for BMad agents, telling them exactly wher
 
 #### PRD Configuration
 
-- **prdVersion**: Tells agents if PRD follows v3 or v4 conventions
+- **prdVersion**: Tells agents if PRD follows v3 or v5 conventions
 - **prdSharded**: Whether epics are embedded (false) or in separate files (true)
 - **prdShardedLocation**: Where to find sharded epic files
 - **epicFilePattern**: Pattern for epic filenames (e.g., `epic-{n}*.md`)
 
 #### Architecture Configuration
 
-- **architectureVersion**: v3 (monolithic) or v4 (sharded)
+- **architectureVersion**: v3 (monolithic) or v5 (sharded)
 - **architectureSharded**: Whether architecture is split into components
 - **architectureShardedLocation**: Where sharded architecture files live
 
@@ -213,7 +213,7 @@ This configuration file acts as a map for BMad agents, telling them exactly wher
 ### Why It Matters
 
 1. **No Forced Migrations**: Keep your existing document structure
-2. **Gradual Adoption**: Start with V3 and migrate to V4 at your pace
+2. **Gradual Adoption**: Start with V3 and migrate to V5 at your pace
 3. **Custom Workflows**: Configure BMad to match your team's process
 4. **Intelligent Agents**: Agents automatically adapt to your configuration
 
@@ -228,13 +228,13 @@ architectureVersion: v3
 architectureSharded: false
 ```
 
-**V4 Optimized Project**:
+**V5 Optimized Project**:
 
 ```yaml
-prdVersion: v4
+prdVersion: v5
 prdSharded: true
 prdShardedLocation: docs/prd
-architectureVersion: v4
+architectureVersion: v5
 architectureSharded: true
 architectureShardedLocation: docs/architecture
 ```
@@ -418,7 +418,7 @@ The `technical-preferences.md` file serves as a persistent technical profile tha
 
 ### Build and Delivery Process
 
-The `web-builder.js` tool creates web-ready bundles by:
+The `web-builder.ts` tool creates web-ready bundles by:
 
 1. Reading agent or team definition files
 2. Recursively resolving all dependencies
@@ -542,7 +542,7 @@ Each status change requires user verification and approval before proceeding.
 #### Greenfield Development
 
 - Business analysis and market research
-- Product requirements and feature definition  
+- Product requirements and feature definition
 - System architecture and design
 - Development execution
 - Testing and deployment
@@ -651,8 +651,11 @@ Templates with Level 2 headings (`##`) can be automatically sharded:
 
 ```markdown
 ## Goals and Background Context
-## Requirements  
+
+## Requirements
+
 ## User Interface Design Goals
+
 ## Success Metrics
 ```
 

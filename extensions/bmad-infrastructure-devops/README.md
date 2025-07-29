@@ -146,4 +146,4 @@ You can customize this expansion pack by:
 ---
 
 _Version: 1.0_
-_Compatible with: BMad Method v4_
+_Compatible with: BMad Method v5_

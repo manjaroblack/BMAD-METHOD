@@ -6,9 +6,9 @@
 - [Version 2](https://github.com/bmadcode/BMad-Method/tree/V2)
 - [Version 1](https://github.com/bmadcode/BMad-Method/tree/V1)
 
-## Current Version: V4 - Alpha
+## Current Version: V5 - Alpha
 
-Guiding Principles of V4:
+Guiding Principles of V5:
 
 - Simple to understand, install and start using
 - Support Greenfield and Brownfield Scenarios

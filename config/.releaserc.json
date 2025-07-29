@@ -5,11 +5,15 @@
     "@semantic-release/release-notes-generator",
     "@semantic-release/changelog",
     "@semantic-release/npm",
-    "./tools/semantic-release-sync-installer.js",
+    "./tooling/scripts/semantic-release-sync-installer.ts",
     [
       "@semantic-release/git",
       {
-        "assets": ["package.json", "package-lock.json", "tools/installer/package.json", "CHANGELOG.md"],
+        "assets": [
+          "deno.json",
+          "tooling/installers/deno.json",
+          "CHANGELOG.md"
+        ],
         "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
       }
     ],

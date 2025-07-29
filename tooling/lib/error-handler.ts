@@ -3,9 +3,7 @@
  * Provides consistent error patterns, logging, and exit codes
  */
 
-import { colors } from "@std/fmt/colors";
-import { ensureDir, exists } from "@std/fs";
-import { dirname } from "@std/path";
+import { blue, dirname, ensureDir, exists, gray, red, yellow } from "deps";
 
 // Standard exit codes
 export const EXIT_CODES = {
@@ -92,16 +90,16 @@ export class Logger {
     let formattedMessage: string;
     switch (level) {
       case LOG_LEVELS.ERROR:
-        formattedMessage = colors.red(`[${levelName}] ${message}`);
+        formattedMessage = red(`[${levelName}] ${message}`);
         break;
       case LOG_LEVELS.WARN:
-        formattedMessage = colors.yellow(`[${levelName}] ${message}`);
+        formattedMessage = yellow(`[${levelName}] ${message}`);
         break;
       case LOG_LEVELS.INFO:
-        formattedMessage = colors.blue(`[${levelName}] ${message}`);
+        formattedMessage = blue(`[${levelName}] ${message}`);
         break;
       case LOG_LEVELS.DEBUG:
-        formattedMessage = colors.gray(`[${levelName}] ${message}`);
+        formattedMessage = gray(`[${levelName}] ${message}`);
         break;
       default:
         formattedMessage = `[${levelName}] ${message}`;
@@ -109,16 +107,18 @@ export class Logger {
 
     console.log(formattedMessage);
     if (data) {
-      console.log(colors.gray(JSON.stringify(data, null, 2)));
+      console.log(gray(JSON.stringify(data, null, 2)));
     }
 
     // Write to log file if configured
     if (this.logFile) {
-      const logEntry = `${timestamp} [${levelName}] ${message}${data ? '\n' + JSON.stringify(data, null, 2) : ''}\n`;
+      const logEntry = `${timestamp} [${levelName}] ${message}${
+        data ? "\n" + JSON.stringify(data, null, 2) : ""
+      }\n`;
       try {
         await Deno.writeTextFile(this.logFile, logEntry, { append: true });
       } catch (error) {
-        console.error(colors.red(`Failed to write to log file: ${error.message}`));
+        console.error(red(`Failed to write to log file: ${(error as Error).message}`));
       }
     }
   }
@@ -141,15 +141,18 @@ export class Logger {
 }
 
 // Global error handler
-export async function handleError(error: Error | BMadError, logger: Logger | null = null): Promise<void> {
-  const message = error instanceof BMadError 
+export async function handleError(
+  error: Error | BMadError,
+  logger: Logger | null = null,
+): Promise<void> {
+  const message = error instanceof BMadError
     ? `${error.message} (Code: ${error.code})`
     : error.message;
-  
+
   if (logger) {
     await logger.error(message, error instanceof BMadError ? error.details : null);
   } else {
-    console.error(colors.red(`Error: ${message}`));
+    console.error(red(`Error: ${message}`));
   }
 
   const exitCode = error instanceof BMadError ? error.code : EXIT_CODES.GENERAL_ERROR;
@@ -158,7 +161,7 @@ export async function handleError(error: Error | BMadError, logger: Logger | nul
 
 // Async wrapper for error handling
 export function asyncHandler<T extends unknown[], R>(
-  fn: (...args: T) => Promise<R>
+  fn: (...args: T) => Promise<R>,
 ): (...args: T) => Promise<R> {
   return async (...args: T): Promise<R> => {
     try {
@@ -176,7 +179,7 @@ export function validateRequired(
   fields: string[],
   errorMessage = "Missing required fields",
 ): void {
-  const missing = fields.filter(field => !(field in obj) || obj[field] == null);
+  const missing = fields.filter((field) => !(field in obj) || obj[field] == null);
   if (missing.length > 0) {
     throw new ValidationError(`${errorMessage}: ${missing.join(", ")}`);
   }
@@ -186,7 +189,7 @@ export async function validateFileExists(filePath: string, errorMessage?: string
   const fileExists = await exists(filePath, { isFile: true });
   if (!fileExists) {
     throw new ValidationError(
-      errorMessage || `File not found: ${filePath}`
+      errorMessage || `File not found: ${filePath}`,
     );
   }
 }
@@ -195,7 +198,7 @@ export async function validateDirectory(dirPath: string, errorMessage?: string):
   const dirExists = await exists(dirPath, { isDirectory: true });
   if (!dirExists) {
     throw new ValidationError(
-      errorMessage || `Directory not found: ${dirPath}`
+      errorMessage || `Directory not found: ${dirPath}`,
     );
   }
 }
@@ -203,26 +206,26 @@ export async function validateDirectory(dirPath: string, errorMessage?: string):
 // Graceful shutdown handler
 export function setupGracefulShutdown(cleanup?: () => Promise<void> | void): void {
   const handleShutdown = async (signal: string) => {
-    console.log(colors.yellow(`\nReceived ${signal}, shutting down gracefully...`));
-    
+    console.log(yellow(`\nReceived ${signal}, shutting down gracefully...`));
+
     if (cleanup) {
       try {
         await cleanup();
       } catch (error) {
-        console.error(colors.red(`Cleanup failed: ${error.message}`));
+        console.error(red(`Cleanup failed: ${(error as Error).message}`));
       }
     }
-    
+
     Deno.exit(EXIT_CODES.SUCCESS);
   };
 
   // Handle various shutdown signals
   Deno.addSignalListener("SIGINT", () => handleShutdown("SIGINT"));
   Deno.addSignalListener("SIGTERM", () => handleShutdown("SIGTERM"));
-  
+
   // Handle unhandled promise rejections
   globalThis.addEventListener("unhandledrejection", (event) => {
-    console.error(colors.red("Unhandled promise rejection:"), event.reason);
+    console.error(red("Unhandled promise rejection:"), event.reason);
     Deno.exit(EXIT_CODES.GENERAL_ERROR);
   });
 }

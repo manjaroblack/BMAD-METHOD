@@ -63,7 +63,7 @@ commands:
 help_display_template: |
   **BMad Orchestrator Commands:**
   {numbered_commands}
-  
+
   **Fuzzy Matching:** Type partial commands for suggestions
   **Current Workflow:** {current_workflow_status}
 

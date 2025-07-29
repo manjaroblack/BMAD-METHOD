@@ -1,5 +1,5 @@
 name: Release
-'on':
+"on":
   push:
     branches:
       - main
@@ -24,23 +24,28 @@ jobs:
     runs-on: ubuntu-latest
     if: '!contains(github.event.head_commit.message, ''[skip ci]'')'
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
         with:
-          node-version: '18'
-          cache: npm
-          registry-url: https://registry.npmjs.org
-      - name: Install dependencies
-        run: npm ci
+          deno-version: v1.x
+      - name: Cache Deno dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/deno
+          key: ${{ runner.os }}-deno-${{ hashFiles('**/deps.ts', '**/deno.json') }}
+          restore-keys: |
+            ${{ runner.os }}-deno-
       - name: Run tests and validation
         run: |
-          npm run validate
-          npm run format
+          deno task validate
+          deno task fmt --check
+          deno task lint
+          deno task check
       - name: Debug permissions
         run: |
           echo "Testing git permissions..."
@@ -49,11 +54,12 @@ jobs:
           echo "Git config set successfully"
       - name: Manual version bump
         if: github.event_name == 'workflow_dispatch'
-        run: npm run version:${{ github.event.inputs.version_type }}
+        run: deno task version:${{ github.event.inputs.version_type }}
       - name: Semantic Release
         if: github.event_name == 'push'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm run release
+        run: |
+          # Install semantic-release with Node.js for now (until Deno version available)
+          npm install -g semantic-release @semantic-release/changelog @semantic-release/git @semantic-release/github
+          npx semantic-release

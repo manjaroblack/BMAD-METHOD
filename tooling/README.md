@@ -10,10 +10,10 @@ Run the complete optimization suite:
 
 ```bash
 # Full optimization with all phases
-node tooling/scripts/master-optimizer.js
+deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/master-optimizer.ts
 
 # With custom options
-node tooling/scripts/master-optimizer.js \
+deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/master-optimizer.ts \
   --project-root /path/to/project \
   --update-dependencies \
   --consolidate-dependencies \
@@ -21,25 +21,25 @@ node tooling/scripts/master-optimizer.js \
   --verbose
 
 # Skip specific phases
-node tooling/scripts/master-optimizer.js \
+deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/master-optimizer.ts \
   --skip-dependencies \
   --skip-build
 
 # Force optimization despite critical issues
-node tooling/scripts/master-optimizer.js --force
+deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/master-optimizer.ts --force
 ```
 
 ### Individual Phase Commands
 
 ```bash
 # Run only validation
-node tooling/scripts/master-optimizer.js validate --verbose
+deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/master-optimizer.ts validate --verbose
 
 # Run only dependency management
-node tooling/scripts/master-optimizer.js dependencies --update --consolidate
+deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/master-optimizer.ts dependencies --update --consolidate
 
 # Run only build optimization
-node tooling/scripts/master-optimizer.js build --source-dir src --output-dir dist
+deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/master-optimizer.ts build --source-dir src --output-dir dist
 ```
 
 ## 📁 Directory Structure
@@ -47,21 +47,21 @@ node tooling/scripts/master-optimizer.js build --source-dir src --output-dir dis
 ```
 tooling/
 ├── lib/                          # Core utility libraries
-│   ├── error-handler.js          # Standardized error handling
-│   ├── performance-optimizer.js  # Performance optimization utilities
-│   └── node-version-manager.js   # Node.js version management
+│   ├── error-handler.ts          # Standardized error handling
+│   ├── performance-optimizer.ts  # Performance optimization utilities
+│   └── node-version-manager.ts   # Deno version management
 ├── scripts/                      # Optimization scripts
-│   ├── master-optimizer.js       # Main orchestration script
-│   ├── optimize-build.js         # Build process optimization
-│   ├── validate-installation.js  # Installation validation
-│   └── manage-dependencies.js    # Dependency management
+│   ├── master-optimizer.ts       # Main orchestration script
+│   ├── optimize-build.ts         # Build process optimization
+│   ├── validate-installation.ts  # Installation validation
+│   └── manage-dependencies.ts    # Dependency management
 ├── build-tools/                  # Build system tools
-│   └── web-builder.js           # Enhanced web builder with optimizations
+│   └── web-builder.ts           # Enhanced web builder with optimizations
 ├── installers/                   # Installation tools
 │   ├── lib/
-│   │   ├── installer.js          # Enhanced installer with validation
-│   │   ├── installer-validator.js # Installation validation utilities
-│   │   └── incremental-updater.js # Incremental update utilities
+│   │   ├── installer.ts          # Enhanced installer with validation
+│   │   ├── installer-validator.ts # Installation validation utilities
+│   │   └── incremental-updater.ts # Incremental update utilities
 │   └── package.json             # Installer dependencies
 ├── development-tools/            # Development and maintenance utilities
 └── package.json                 # Main tooling dependencies
@@ -69,44 +69,49 @@ tooling/
 
 ## 🛠️ Core Libraries
 
-### Error Handler (`lib/error-handler.js`)
+### Error Handler (`lib/error-handler.ts`)
 
 Standardized error handling across all tooling:
 
 ```javascript
-const { Logger, BMadError } = require('./lib/error-handler.js');
+import { BMadError, Logger } from "./lib/error-handler.ts";
 
 // Create logger with different levels
-const logger = new Logger('debug'); // debug, info, warn, error
+const logger = new Logger("debug"); // debug, info, warn, error
 
 // Throw standardized errors
-throw new BMadError('VALIDATION_FAILED', 'Custom error message');
+throw new BMadError("VALIDATION_FAILED", "Custom error message");
 
 // Handle errors gracefully
 try {
   // risky operation
 } catch (error) {
-  logger.error('Operation failed:', error);
+  logger.error("Operation failed:", error);
   process.exit(1);
 }
 ```
 
 **Features:**
+
 - Consistent error types and codes
 - Structured logging with levels
 - Graceful shutdown handling
 - Performance monitoring integration
 
-### Performance Optimizer (`lib/performance-optimizer.js`)
+### Performance Optimizer (`lib/performance-optimizer.ts`)
 
 Performance optimization utilities:
 
 ```javascript
-const { CacheManager, ParallelProcessor, PerformanceMonitor } = require('./lib/performance-optimizer.js');
+import {
+  CacheManager,
+  ParallelProcessor,
+  PerformanceMonitor,
+} from "./lib/performance-optimizer.ts";
 
 // Caching
 const cache = new CacheManager();
-const result = await cache.get('key', async () => {
+const result = await cache.get("key", async () => {
   return expensiveOperation();
 });
 
@@ -118,25 +123,26 @@ const results = await processor.processInParallel(items, async (item) => {
 
 // Performance monitoring
 const monitor = new PerformanceMonitor();
-monitor.startTimer('operation');
+monitor.startTimer("operation");
 // ... do work ...
-monitor.endTimer('operation');
-console.log(monitor.getTimer('operation')); // milliseconds
+monitor.endTimer("operation");
+console.log(monitor.getTimer("operation")); // milliseconds
 ```
 
 **Features:**
+
 - In-memory and file-based caching
 - Parallel task processing with concurrency control
 - Performance timing and monitoring
 - Batch file operations
 - Dependency caching
 
-### Node Version Manager (`lib/node-version-manager.js`)
+### Deno Version Manager (`lib/node-version-manager.ts`)
 
-Node.js version management and validation:
+Deno version management and validation:
 
 ```javascript
-const NodeVersionManager = require('./lib/node-version-manager.js');
+import { NodeVersionManager } from "./lib/node-version-manager.ts";
 
 const manager = new NodeVersionManager();
 
@@ -145,16 +151,17 @@ const versionInfo = manager.getVersionInfo();
 console.log(versionInfo.compatible); // true/false
 
 // Update package.json engines
-await manager.updatePackageEngines('/path/to/package.json');
+await manager.updatePackageEngines("/path/to/package.json");
 
 // Generate .nvmrc file
-await manager.generateNvmrc('/path/to/project');
+await manager.generateNvmrc("/path/to/project");
 
 // Create Dockerfile with specific Node version
-await manager.generateDockerfile('/path/to/project', '18.17.0');
+await manager.generateDockerfile("/path/to/project", "18.17.0");
 ```
 
 **Features:**
+
 - Version compatibility checking
 - Package.json engine field updates
 - .nvmrc file generation
@@ -168,6 +175,7 @@ await manager.generateDockerfile('/path/to/project', '18.17.0');
 Orchestrates all optimization phases:
 
 **Phases:**
+
 1. **Pre-optimization validation** - Checks system readiness
 2. **Dependency management** - Updates, audits, and consolidates dependencies
 3. **Build optimization** - Enhances build performance with caching and parallel processing
@@ -175,6 +183,7 @@ Orchestrates all optimization phases:
 5. **Comprehensive reporting** - Generates detailed reports
 
 **Options:**
+
 - `--project-root <path>` - Project root directory
 - `--skip-dependencies` - Skip dependency management
 - `--skip-build` - Skip build optimization
@@ -185,16 +194,16 @@ Orchestrates all optimization phases:
 - `--verbose` - Detailed output
 - `--json` - JSON output format
 
-### Build Optimizer (`scripts/optimize-build.js`)
+### Build Optimizer (`scripts/optimize-build.ts`)
 
 Optimizes build processes:
 
 ```bash
 # Basic optimization
-node tooling/scripts/optimize-build.js
+deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/optimize-build.ts
 
 # With custom directories
-node tooling/scripts/optimize-build.js \
+deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/optimize-build.ts \
   --source-dir src \
   --output-dir dist \
   --dependencies \
@@ -202,52 +211,55 @@ node tooling/scripts/optimize-build.js \
 ```
 
 **Features:**
+
 - Dependency optimization and caching
 - Build process enhancement
 - Performance monitoring
 - Parallel processing
 - Cache management
 
-### Installation Validator (`scripts/validate-installation.js`)
+### Installation Validator (`scripts/validate-installation.ts`)
 
 Validates installation integrity:
 
 ```bash
 # Full validation
-node tooling/scripts/validate-installation.js
+deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/validate-installation.ts
 
 # Quick validation
-node tooling/scripts/validate-installation.js --quick
+deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/validate-installation.ts --quick
 
 # Generate report
-node tooling/scripts/validate-installation.js --report validation-report.json
+deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/validate-installation.ts --report validation-report.json
 ```
 
 **Validation Categories:**
+
 - **Environment** - Node.js version, disk space, permissions
 - **Installation** - Core files, expansion packs, configuration
 - **Configuration** - Settings validation, path resolution
 - **Performance** - Load times, memory usage
 
-### Dependency Manager (`scripts/manage-dependencies.js`)
+### Dependency Manager (`scripts/manage-dependencies.ts`)
 
 Manages project dependencies:
 
 ```bash
 # Audit dependencies
-node tooling/scripts/manage-dependencies.js --audit
+deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/manage-dependencies.ts --audit
 
 # Update and consolidate
-node tooling/scripts/manage-dependencies.js \
+deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/manage-dependencies.ts \
   --update \
   --consolidate \
   --install
 
 # Clean up
-node tooling/scripts/manage-dependencies.js --cleanup
+deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/manage-dependencies.ts --cleanup
 ```
 
 **Features:**
+
 - Security vulnerability scanning
 - Outdated package detection
 - Duplicate dependency identification
@@ -256,11 +268,12 @@ node tooling/scripts/manage-dependencies.js --cleanup
 
 ## 🔧 Enhanced Build Tools
 
-### Web Builder (`build-tools/web-builder.js`)
+### Web Builder (`build-tools/web-builder.ts`)
 
 Enhanced with performance optimizations:
 
 **New Features:**
+
 - File caching with `CacheManager`
 - Parallel file processing
 - Performance monitoring
@@ -268,16 +281,17 @@ Enhanced with performance optimizations:
 - Batch operations
 
 **Usage:**
+
 ```javascript
-const WebBuilder = require('./build-tools/web-builder.js');
+import { WebBuilder } from "./build-tools/web-builder.ts";
 
 const builder = new WebBuilder({
   enableCache: true,
-  enableParallelProcessing: true
+  enableParallelProcessing: true,
 });
 
 // Use cached file reading
-const content = await builder.readFileWithCache('/path/to/file');
+const content = await builder.readFileWithCache("/path/to/file");
 
 // Process files in parallel
 const results = await builder.processFilesInParallel(files, processor);
@@ -285,32 +299,35 @@ const results = await builder.processFilesInParallel(files, processor);
 
 ## 🚀 Enhanced Installers
 
-### Installer (`installers/lib/installer.js`)
+### Installer (`installers/lib/installer.ts`)
 
 Enhanced with validation and performance monitoring:
 
 **New Features:**
+
 - Prerequisite validation
 - Installation integrity checks
 - Performance monitoring
 - Error handling standardization
 - Incremental updates
 
-### Installer Validator (`installers/lib/installer-validator.js`)
+### Installer Validator (`installers/lib/installer-validator.ts`)
 
 Comprehensive installation validation:
 
 **Validation Types:**
+
 - **Prerequisites** - System requirements
 - **Installation Integrity** - File validation
 - **Configuration** - Settings verification
 - **Performance** - System performance checks
 
-### Incremental Updater (`installers/lib/incremental-updater.js`)
+### Incremental Updater (`installers/lib/incremental-updater.ts`)
 
 Optimized update processes:
 
 **Features:**
+
 - Manifest-based updates
 - File change detection
 - Incremental copying
@@ -324,6 +341,7 @@ Optimized update processes:
 All scripts generate comprehensive reports:
 
 **JSON Report Structure:**
+
 ```json
 {
   "metadata": {
@@ -332,9 +350,9 @@ All scripts generate comprehensive reports:
     "optimizationTime": 45000
   },
   "results": {
-    "validation": { /* validation results */ },
-    "dependencies": { /* dependency results */ },
-    "build": { /* build results */ },
+    "validation": {/* validation results */},
+    "dependencies": {/* dependency results */},
+    "build": {/* build results */},
     "overall": {
       "success": true,
       "score": 95,
@@ -344,14 +362,15 @@ All scripts generate comprehensive reports:
   },
   "performance": {
     "totalTime": 45000,
-    "phaseBreakdown": { /* timing details */ },
-    "memoryUsage": { /* memory stats */ }
+    "phaseBreakdown": {/* timing details */},
+    "memoryUsage": {/* memory stats */}
   }
 }
 ```
 
 **Markdown Summary:**
 Each JSON report includes a companion markdown file with:
+
 - Executive summary
 - Key metrics
 - Recommendations
@@ -398,17 +417,17 @@ All scripts include performance monitoring:
 
 1. **Start with validation:**
    ```bash
-   node tooling/scripts/master-optimizer.js validate --verbose
+   deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/master-optimizer.ts validate --verbose
    ```
 
 2. **Run full optimization:**
    ```bash
-   node tooling/scripts/master-optimizer.js --report optimization-report.json
+   deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/master-optimizer.ts --report optimization-report.json
    ```
 
 3. **Address issues and re-run:**
    ```bash
-   node tooling/scripts/master-optimizer.js --force
+   deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/master-optimizer.ts --force
    ```
 
 ### Maintenance Schedule
@@ -442,12 +461,12 @@ Add these scripts to your package.json:
 ```json
 {
   "scripts": {
-    "optimize": "node tooling/scripts/master-optimizer.js",
-    "optimize:full": "node tooling/scripts/master-optimizer.js --update-dependencies --consolidate-dependencies --report optimization-report.json",
-    "validate": "node tooling/scripts/master-optimizer.js validate",
-    "deps:audit": "node tooling/scripts/manage-dependencies.js --audit",
-    "deps:update": "node tooling/scripts/manage-dependencies.js --update --install",
-    "build:optimize": "node tooling/scripts/optimize-build.js"
+    "optimize": "deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/master-optimizer.ts",
+    "optimize:full": "deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/master-optimizer.ts --update-dependencies --consolidate-dependencies --report optimization-report.json",
+    "validate": "deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/master-optimizer.ts validate",
+    "deps:audit": "deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/manage-dependencies.ts --audit",
+    "deps:update": "deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/manage-dependencies.ts --update --install",
+    "build:optimize": "deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/optimize-build.ts"
   }
 }
 ```
@@ -459,19 +478,19 @@ Add these scripts to your package.json:
 1. **Permission Errors:**
    ```bash
    # Fix file permissions
-   chmod +x tooling/scripts/*.js
+   chmod +x tooling/scripts/*.ts
    ```
 
-2. **Node Version Issues:**
+2. **Deno Version Issues:**
    ```bash
-   # Check Node version
-   node tooling/scripts/master-optimizer.js validate
+   # Check Deno version
+   deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/master-optimizer.ts validate
    ```
 
 3. **Dependency Conflicts:**
    ```bash
    # Clean and reinstall
-   node tooling/scripts/manage-dependencies.js --cleanup
+   deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/manage-dependencies.ts --cleanup
    npm install
    ```
 
@@ -490,7 +509,7 @@ Enable verbose logging for troubleshooting:
 export BMAD_LOG_LEVEL=debug
 
 # Or use --verbose flag
-node tooling/scripts/master-optimizer.js --verbose
+deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/master-optimizer.ts --verbose
 ```
 
 ### Getting Help
@@ -523,10 +542,10 @@ Integrate with CI/CD pipelines:
 # GitHub Actions example
 - name: Run BMAD Optimization
   run: |
-    node tooling/scripts/master-optimizer.js \
+    deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/master-optimizer.ts \
       --report optimization-report.json \
       --json > optimization-results.json
-    
+
 - name: Upload Reports
   uses: actions/upload-artifact@v3
   with:
@@ -555,4 +574,4 @@ When contributing to the tooling:
 
 ---
 
-*Generated by BMAD Method Tooling Documentation Generator*
+_Generated by BMAD Method Tooling Documentation Generator_

@@ -5,6 +5,7 @@ Welcome to the BMad Method documentation! This directory is organized to help yo
 ## Documentation Structure
 
 ### 📚 User Documentation (`user/`)
+
 Documentation for end users of the BMad Method:
 
 - **[Quick Start Guide](user/quick-start.md)** - Get up and running in minutes
@@ -12,6 +13,7 @@ Documentation for end users of the BMad Method:
 - **[Workflow Management](user/workflow-management.md)** - Advanced workflow features and management
 
 ### 🛠️ Developer Documentation (`developer/`)
+
 Documentation for contributors and developers:
 
 - **[Contributing Guide](developer/contributing.md)** - How to contribute to BMad
@@ -19,12 +21,14 @@ Documentation for contributors and developers:
 - **[Pull Request Guide](developer/how-to-contribute-with-pull-requests.md)** - Detailed PR submission process
 
 ### 📖 Reference Materials (`reference/`)
+
 Quick reference guides and detailed specifications:
 
 - **[Agents Quick Reference](reference/agents-quick-reference-guide.md)** - Agent roles and capabilities
 - **[Expansion Packs Guide](reference/expansion-packs.md)** - Extend BMad to any domain
 
 ### 📋 Project Documentation (root level)
+
 Project-wide documentation and guides:
 
 - **[Agent Refactoring README](agent-refactoring-readme.md)** - Agent refactoring guidelines
@@ -37,16 +41,19 @@ Project-wide documentation and guides:
 ## Getting Started
 
 ### New to BMad?
+
 1. Start with the [Quick Start Guide](user/quick-start.md)
 2. Read the [User Guide](user/user-guide.md) for detailed workflows
 3. Explore [Expansion Packs](reference/expansion-packs.md) for domain-specific features
 
 ### Want to Contribute?
+
 1. Read our [Contributing Guide](developer/contributing.md)
 2. Understand the [Core Architecture](developer/core-architecture.md)
 3. Follow the [Pull Request Guide](developer/how-to-contribute-with-pull-requests.md)
 
 ### Need Quick Reference?
+
 - [Agents Quick Reference](reference/agents-quick-reference-guide.md) - Agent capabilities
 - [Expansion Packs](reference/expansion-packs.md) - Available extensions
 

@@ -222,22 +222,22 @@ choices:
 examples:
   - "FR6: The system must authenticate users within 2 seconds"
   - |
-    ```mermaid
-    sequenceDiagram
-        participant User
-        participant API
-        participant DB
-        User->>API: POST /login
-        API->>DB: Validate credentials
-        DB-->>API: User data
-        API-->>User: JWT token
-    ```
+      ```mermaid
+      sequenceDiagram
+          participant User
+          participant API
+          participant DB
+          User->>API: POST /login
+          API->>DB: Validate credentials
+          DB-->>API: User data
+          API-->>User: JWT token
+      ```
   - |
-    **Architecture Decision Record**
+      **Architecture Decision Record**
 
-    **Decision**: Use PostgreSQL for primary database
-    **Rationale**: ACID compliance and JSON support needed
-    **Consequences**: Requires database management expertise
+      **Decision**: Use PostgreSQL for primary database
+      **Rationale**: ACID compliance and JSON support needed
+      **Consequences**: Requires database management expertise
 ````
 
 ## Section Hierarchy

@@ -14,7 +14,7 @@
         "--allow-read",
         "--allow-write",
         "--allow-env",
-        "--inspect-wait",
+        "--inspect-brk",
         "${workspaceFolder}/tooling/cli/cli.ts",
         "build"
       ],
@@ -26,24 +26,6 @@
       "restart": true
     },
     {
-      "name": "🚀 Debug BMAD CLI (Node.js - Legacy)",
-      "type": "node",
-      "request": "launch",
-      "program": "${workspaceFolder}/tooling/cli/cli.js",
-      "args": ["build"],
-      "cwd": "${workspaceFolder}",
-      "env": {
-        "NODE_ENV": "development",
-        "DEBUG": "bmad:*"
-      },
-      "console": "integratedTerminal",
-      "restart": true,
-      "skipFiles": [
-        "<node_internals>/**",
-        "**/node_modules/**"
-      ]
-    },
-    {
       "name": "🔧 Debug Current File (Deno)",
       "type": "node",
       "request": "launch",
@@ -53,7 +35,7 @@
         "--allow-read",
         "--allow-write",
         "--allow-env",
-        "--inspect-wait",
+        "--inspect-brk",
         "${file}"
       ],
       "cwd": "${workspaceFolder}",
@@ -64,84 +46,68 @@
       "restart": true
     },
     {
-      "name": "🏗️ Debug Web Builder",
+      "name": "🏗️ Debug Web Builder (Deno)",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceFolder}/tooling/build-tools/web-builder.js",
+      "program": "deno",
+      "args": [
+        "run",
+        "--allow-read",
+        "--allow-write",
+        "--allow-env",
+        "--inspect-brk",
+        "${workspaceFolder}/tooling/build-tools/web-builder.ts"
+      ],
       "cwd": "${workspaceFolder}",
       "env": {
-        "NODE_ENV": "development",
-        "DEBUG": "bmad:builder"
+        "DENO_ENV": "development"
       },
       "console": "integratedTerminal",
-      "restart": true,
-      "skipFiles": [
-        "<node_internals>/**",
-        "**/node_modules/**"
-      ]
+      "restart": true
     },
     {
-      "name": "📦 Debug Version Management",
+      "name": "📦 Debug Version Management (Deno)",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceFolder}/tooling/version-management/version-bump.js",
-      "args": ["patch"],
+      "program": "deno",
+      "args": [
+        "run",
+        "--allow-read",
+        "--allow-write",
+        "--allow-env",
+        "--inspect-brk",
+        "${workspaceFolder}/tooling/version-management/version-bump.ts",
+        "patch"
+      ],
       "cwd": "${workspaceFolder}",
       "env": {
-        "NODE_ENV": "development"
+        "DENO_ENV": "development"
       },
       "console": "integratedTerminal",
-      "restart": true,
-      "skipFiles": [
-        "<node_internals>/**",
-        "**/node_modules/**"
-      ]
+      "restart": true
     },
+
     {
-      "name": "🧪 Debug with npm test",
+      "name": "⚙️ Debug Installer (Deno)",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceFolder}/node_modules/.bin/jest",
-      "args": ["--runInBand"],
+      "program": "deno",
+      "args": [
+        "run",
+        "--allow-read",
+        "--allow-write",
+        "--allow-env",
+        "--allow-run",
+        "--inspect-brk",
+        "${workspaceFolder}/tooling/installers/bin/bmad.ts",
+        "install"
+      ],
       "cwd": "${workspaceFolder}",
       "env": {
-        "NODE_ENV": "test"
+        "DENO_ENV": "development"
       },
       "console": "integratedTerminal",
-      "restart": true,
-      "skipFiles": [
-        "<node_internals>/**",
-        "**/node_modules/**"
-      ]
-    },
-    {
-      "name": "🔗 Attach to Node Process",
-      "type": "node",
-      "request": "attach",
-      "port": 9229,
-      "restart": true,
-      "skipFiles": [
-        "<node_internals>/**",
-        "**/node_modules/**"
-      ]
-    },
-    {
-      "name": "⚙️ Debug Installer",
-      "type": "node",
-      "request": "launch",
-      "program": "${workspaceFolder}/tooling/installers/bin/bmad.js",
-      "args": ["install"],
-      "cwd": "${workspaceFolder}",
-      "env": {
-        "NODE_ENV": "development",
-        "DEBUG": "bmad:installer"
-      },
-      "console": "integratedTerminal",
-      "restart": true,
-      "skipFiles": [
-        "<node_internals>/**",
-        "**/node_modules/**"
-      ]
+      "restart": true
     }
   ]
 }

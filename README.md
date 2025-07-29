@@ -62,7 +62,7 @@ npm run install:bmad
 
 This will:
 
-- ✅ Automatically detect your existing v4 installation
+- ✅ Automatically detect your existing v5 installation
 - ✅ Update only the files that have changed and add new files
 - ✅ Create `.bak` backup files for any custom modifications you've made
 - ✅ Preserve your project-specific configurations

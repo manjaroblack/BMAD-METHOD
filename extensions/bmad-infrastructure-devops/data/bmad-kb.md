@@ -6,8 +6,8 @@ This knowledge base is part of the BMad Infrastructure & DevOps extension. It pr
 
 The BMad Infrastructure DevOps expansion pack extends the BMad Method framework with comprehensive infrastructure and DevOps capabilities. It enables teams to design, implement, validate, and maintain modern cloud-native infrastructure alongside their application development efforts.
 
-**Version**: 1.7.0  
-**BMad Compatibility**: v4+  
+**Version**: 1.7.0\
+**BMad Compatibility**: v5+\
 **Author**: Brian (BMad)
 
 ## Core Purpose
@@ -36,7 +36,7 @@ Use the BMad Infrastructure DevOps expansion pack when your project involves:
 
 ### 1. DevOps Agent: Alex
 
-**Role**: DevOps Infrastructure Specialist  
+**Role**: DevOps Infrastructure Specialist\
 **Experience**: 15+ years in infrastructure and platform engineering
 
 **Core Principles**:
@@ -62,7 +62,7 @@ Use the BMad Infrastructure DevOps expansion pack when your project involves:
 
 #### Infrastructure Architecture Template
 
-**Purpose**: Design comprehensive infrastructure architecture  
+**Purpose**: Design comprehensive infrastructure architecture\
 **Key Sections**:
 
 - Infrastructure Overview (providers, regions, environments)
@@ -77,7 +77,7 @@ Use the BMad Infrastructure DevOps expansion pack when your project involves:
 
 #### Platform Implementation Template
 
-**Purpose**: Implement platform infrastructure based on approved architecture  
+**Purpose**: Implement platform infrastructure based on approved architecture\
 **Key Sections**:
 
 - Foundation Infrastructure Layer
@@ -92,7 +92,7 @@ Use the BMad Infrastructure DevOps expansion pack when your project involves:
 
 #### Review Infrastructure Task
 
-**Purpose**: Systematic infrastructure review process  
+**Purpose**: Systematic infrastructure review process\
 **Features**:
 
 - Incremental or rapid assessment modes
@@ -103,7 +103,7 @@ Use the BMad Infrastructure DevOps expansion pack when your project involves:
 
 #### Validate Infrastructure Task
 
-**Purpose**: Comprehensive infrastructure validation  
+**Purpose**: Comprehensive infrastructure validation\
 **Features**:
 
 - 16-section validation checklist
@@ -187,7 +187,7 @@ This knowledge base integrates with the core BMad system through:
 
 ### 1. New Project Infrastructure
 
-**Scenario**: Starting a new cloud-native application  
+**Scenario**: Starting a new cloud-native application\
 **Process**:
 
 1. Use Infrastructure Architecture template for design
@@ -198,7 +198,7 @@ This knowledge base integrates with the core BMad system through:
 
 ### 2. Infrastructure Modernization
 
-**Scenario**: Migrating legacy infrastructure to cloud  
+**Scenario**: Migrating legacy infrastructure to cloud\
 **Process**:
 
 1. Review existing infrastructure
@@ -209,7 +209,7 @@ This knowledge base integrates with the core BMad system through:
 
 ### 3. Platform Engineering Initiative
 
-**Scenario**: Building internal developer platform  
+**Scenario**: Building internal developer platform\
 **Process**:
 
 1. Assess developer needs
@@ -220,7 +220,7 @@ This knowledge base integrates with the core BMad system through:
 
 ### 4. Multi-Cloud Strategy
 
-**Scenario**: Implementing multi-cloud architecture  
+**Scenario**: Implementing multi-cloud architecture\
 **Process**:
 
 1. Define cloud strategy and requirements

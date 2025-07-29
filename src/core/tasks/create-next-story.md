@@ -39,7 +39,7 @@ To identify the next logical story based on project progress and epic definition
 
 #### 3.1 Determine Architecture Reading Strategy
 
-- **If `architectureVersion: >= v4` and `architectureSharded: true`**: Read `{architectureShardedLocation}/index.md` then follow structured reading order below
+- **If `architectureVersion: >= v5` and `architectureSharded: true`**: Read `{architectureShardedLocation}/index.md` then follow structured reading order below
 - **Else**: Use monolithic `architectureFile` for similar sections
 
 #### 3.2 Read Architecture Documents Based on Story Type

@@ -1,4 +1,4 @@
-version: 4.32.0
+version: 5.0.0
 name: bmad-method
 description: Breakthrough Method of Agile AI-driven Development
 directories:
@@ -28,13 +28,13 @@ dev:
 documentation:
   prd:
     file: docs/prd.md
-    version: v4
+    version: v5
     sharded: true
     shardedLocation: docs/prd
     epicFilePattern: epic-{n}*.md
   architecture:
     file: docs/architecture.md
-    version: v4
+    version: v5
     sharded: true
     shardedLocation: docs/architecture
 extensions:
