@@ -36,7 +36,6 @@ class ResourceLocator {
         dirname(currentDir),
         "..",
         "..",
-        "..",
         "src",
         "core",
       );

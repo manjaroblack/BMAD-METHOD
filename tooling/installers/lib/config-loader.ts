@@ -203,12 +203,12 @@ class ConfigLoader {
 
   getBmadCorePath(): string {
     const currentDir = new URL(".", import.meta.url).pathname;
-    return join(dirname(currentDir), "..", "..", "..", "src", "core");
+    return join(dirname(currentDir), "..", "..", "src", "core");
   }
 
   getDistPath(): string {
     const currentDir = new URL(".", import.meta.url).pathname;
-    return join(dirname(currentDir), "..", "..", "..", "dist");
+    return join(dirname(currentDir), "..", "..", "dist");
   }
 
   getAgentPath(agentId: string): string {

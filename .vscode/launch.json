@@ -4,46 +4,448 @@
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
+    // === CLI COMMANDS ===
     {
-      "name": "🚀 Debug BMAD CLI (Deno)",
-      "type": "node",
+      "name": "🏗️ Debug Build",
       "request": "launch",
-      "program": "deno",
-      "args": [
+      "type": "node",
+      "program": "${workspaceFolder}/tooling/cli/cli.ts",
+      "args": ["build"],
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "deno",
+      "runtimeArgs": [
         "run",
+        "--inspect-brk",
         "--allow-read",
         "--allow-write",
-        "--allow-env",
-        "--inspect-brk",
-        "${workspaceFolder}/tooling/cli/cli.ts",
-        "build"
+        "--allow-env"
       ],
-      "cwd": "${workspaceFolder}",
+      "attachSimplePort": 9229,
       "env": {
         "DENO_ENV": "development"
       },
-      "console": "integratedTerminal",
-      "restart": true
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "👥 Debug Build Agents",
+      "request": "launch",
+      "type": "node",
+      "program": "${workspaceFolder}/tooling/cli/cli.ts",
+      "args": ["build", "--agents-only"],
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "deno",
+      "runtimeArgs": [
+        "run",
+        "--inspect-brk",
+        "--allow-read",
+        "--allow-write",
+        "--allow-env"
+      ],
+      "attachSimplePort": 9229,
+      "env": {
+        "DENO_ENV": "development"
+      },
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "🔗 Debug Build Teams",
+      "request": "launch",
+      "type": "node",
+      "program": "${workspaceFolder}/tooling/cli/cli.ts",
+      "args": ["build", "--teams-only"],
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "deno",
+      "runtimeArgs": [
+        "run",
+        "--inspect-brk",
+        "--allow-read",
+        "--allow-write",
+        "--allow-env"
+      ],
+      "attachSimplePort": 9229,
+      "env": {
+        "DENO_ENV": "development"
+      },
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "🧩 Debug Build Expansions",
+      "request": "launch",
+      "type": "node",
+      "program": "${workspaceFolder}/tooling/cli/cli.ts",
+      "args": ["build:expansions"],
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "deno",
+      "runtimeArgs": [
+        "run",
+        "--inspect-brk",
+        "--allow-read",
+        "--allow-write",
+        "--allow-env"
+      ],
+      "attachSimplePort": 9229,
+      "env": {
+        "DENO_ENV": "development"
+      },
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "📋 Debug List Agents",
+      "request": "launch",
+      "type": "node",
+      "program": "${workspaceFolder}/tooling/cli/cli.ts",
+      "args": ["list:agents"],
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "deno",
+      "runtimeArgs": [
+        "run",
+        "--inspect-brk",
+        "--allow-read"
+      ],
+      "attachSimplePort": 9229,
+      "env": {
+        "DENO_ENV": "development"
+      },
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "📋 Debug List Teams",
+      "request": "launch",
+      "type": "node",
+      "program": "${workspaceFolder}/tooling/cli/cli.ts",
+      "args": ["list:teams"],
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "deno",
+      "runtimeArgs": [
+        "run",
+        "--inspect-brk",
+        "--allow-read"
+      ],
+      "attachSimplePort": 9229,
+      "env": {
+        "DENO_ENV": "development"
+      },
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "📋 Debug List Expansions",
+      "request": "launch",
+      "type": "node",
+      "program": "${workspaceFolder}/tooling/cli/cli.ts",
+      "args": ["list:expansions"],
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "deno",
+      "runtimeArgs": [
+        "run",
+        "--inspect-brk",
+        "--allow-read"
+      ],
+      "attachSimplePort": 9229,
+      "env": {
+        "DENO_ENV": "development"
+      },
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "✅ Debug Validate",
+      "request": "launch",
+      "type": "node",
+      "program": "${workspaceFolder}/tooling/cli/cli.ts",
+      "args": ["validate"],
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "deno",
+      "runtimeArgs": [
+        "run",
+        "--inspect-brk",
+        "--allow-read"
+      ],
+      "attachSimplePort": 9229,
+      "env": {
+        "DENO_ENV": "development"
+      },
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "⬆️ Debug Upgrade",
+      "request": "launch",
+      "type": "node",
+      "program": "${workspaceFolder}/tooling/cli/cli.ts",
+      "args": ["upgrade"],
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "deno",
+      "runtimeArgs": [
+        "run",
+        "--inspect-brk",
+        "--allow-read",
+        "--allow-write",
+        "--allow-env"
+      ],
+      "attachSimplePort": 9229,
+      "env": {
+        "DENO_ENV": "development"
+      },
+      "console": "integratedTerminal"
+    },
+    
+    // === INSTALLER ===
+    {
+      "name": "💾 Debug Install BMAD",
+      "request": "launch",
+      "type": "node",
+      "program": "${workspaceFolder}/tooling/installers/bin/bmad.ts",
+      "args": ["install"],
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "deno",
+      "runtimeArgs": [
+        "run",
+        "--inspect-brk",
+        "--allow-read",
+        "--allow-write",
+        "--allow-env",
+        "--allow-run"
+      ],
+      "attachSimplePort": 9229,
+      "env": {
+        "DENO_ENV": "development"
+      },
+      "console": "integratedTerminal"
+    },
+    
+    // === VERSION MANAGEMENT ===
+    {
+      "name": "🔧 Debug Version Patch",
+      "request": "launch",
+      "type": "node",
+      "program": "${workspaceFolder}/tooling/version-management/version-bump.ts",
+      "args": ["patch"],
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "deno",
+      "runtimeArgs": [
+        "run",
+        "--inspect-brk",
+        "--allow-read",
+        "--allow-write",
+        "--allow-env",
+        "--allow-run"
+      ],
+      "attachSimplePort": 9229,
+      "env": {
+        "DENO_ENV": "development"
+      },
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "🔧 Debug Version Minor",
+      "request": "launch",
+      "type": "node",
+      "program": "${workspaceFolder}/tooling/version-management/version-bump.ts",
+      "args": ["minor"],
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "deno",
+      "runtimeArgs": [
+        "run",
+        "--inspect-brk",
+        "--allow-read",
+        "--allow-write",
+        "--allow-env",
+        "--allow-run"
+      ],
+      "attachSimplePort": 9229,
+      "env": {
+        "DENO_ENV": "development"
+      },
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "🔧 Debug Version Major",
+      "request": "launch",
+      "type": "node",
+      "program": "${workspaceFolder}/tooling/version-management/version-bump.ts",
+      "args": ["major"],
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "deno",
+      "runtimeArgs": [
+        "run",
+        "--inspect-brk",
+        "--allow-read",
+        "--allow-write",
+        "--allow-env",
+        "--allow-run"
+      ],
+      "attachSimplePort": 9229,
+      "env": {
+        "DENO_ENV": "development"
+      },
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "🧩 Debug Version Expansion",
+      "request": "launch",
+      "type": "node",
+      "program": "${workspaceFolder}/tooling/version-management/bump-expansion-version.ts",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "deno",
+      "runtimeArgs": [
+        "run",
+        "--inspect-brk",
+        "--allow-read",
+        "--allow-write",
+        "--allow-env",
+        "--allow-run"
+      ],
+      "attachSimplePort": 9229,
+      "env": {
+        "DENO_ENV": "development"
+      },
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "🧩 Debug Set Expansion Version",
+      "request": "launch",
+      "type": "node",
+      "program": "${workspaceFolder}/tooling/version-management/update-expansion-version.ts",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "deno",
+      "runtimeArgs": [
+        "run",
+        "--inspect-brk",
+        "--allow-read",
+        "--allow-write",
+        "--allow-env",
+        "--allow-run"
+      ],
+      "attachSimplePort": 9229,
+      "env": {
+        "DENO_ENV": "development"
+      },
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "🔧 Debug Version All",
+      "request": "launch",
+      "type": "node",
+      "program": "${workspaceFolder}/tooling/version-management/bump-all-versions.ts",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "deno",
+      "runtimeArgs": [
+        "run",
+        "--inspect-brk",
+        "--allow-read",
+        "--allow-write",
+        "--allow-env",
+        "--allow-run"
+      ],
+      "attachSimplePort": 9229,
+      "env": {
+        "DENO_ENV": "development"
+      },
+      "console": "integratedTerminal"
+    },
+    
+    // === UTILITIES ===
+    {
+      "name": "📄 Debug Flattener",
+      "request": "launch",
+      "type": "node",
+      "program": "${workspaceFolder}/tooling/user-tools/flattener/main.ts",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "deno",
+      "runtimeArgs": [
+        "run",
+        "--inspect-brk",
+        "--allow-read",
+        "--allow-write"
+      ],
+      "attachSimplePort": 9229,
+      "env": {
+        "DENO_ENV": "development"
+      },
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "🧪 Debug Test Migration",
+      "request": "launch",
+      "type": "node",
+      "program": "${workspaceFolder}/tooling/scripts/test-migrated-files.ts",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "deno",
+      "runtimeArgs": [
+        "run",
+        "--inspect-brk",
+        "--allow-read",
+        "--allow-write",
+        "--allow-env",
+        "--allow-run"
+      ],
+      "attachSimplePort": 9229,
+      "env": {
+        "DENO_ENV": "development"
+      },
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "🧪 Debug Tests",
+      "request": "launch",
+      "type": "node",
+      "program": "${workspaceFolder}",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "deno",
+      "runtimeArgs": [
+        "test",
+        "--inspect-brk",
+        "--allow-read",
+        "--allow-write",
+        "--allow-env"
+      ],
+      "attachSimplePort": 9229,
+      "env": {
+        "DENO_ENV": "development"
+      },
+      "console": "integratedTerminal"
+    },
+    
+    // === GENERIC ===
+    {
+      "name": "🚀 Debug BMAD CLI (Deno)",
+      "request": "launch",
+      "type": "node",
+      "program": "${workspaceFolder}/tooling/cli/cli.ts",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "deno",
+      "runtimeArgs": [
+        "run",
+        "--inspect-brk",
+        "--allow-read",
+        "--allow-write",
+        "--allow-env",
+        "--allow-run"
+      ],
+      "attachSimplePort": 9229,
+      "env": {
+        "DENO_ENV": "development"
+      },
+      "console": "integratedTerminal"
     },
     {
       "name": "🔧 Debug Current File (Deno)",
-      "type": "node",
       "request": "launch",
-      "program": "deno",
-      "args": [
+      "type": "node",
+      "program": "${file}",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "deno",
+      "runtimeArgs": [
         "run",
+        "--inspect-brk",
         "--allow-read",
         "--allow-write",
         "--allow-env",
-        "--inspect-brk",
-        "${file}"
+        "--allow-run"
       ],
-      "cwd": "${workspaceFolder}",
+      "attachSimplePort": 9229,
       "env": {
         "DENO_ENV": "development"
       },
-      "console": "integratedTerminal",
-      "restart": true
+      "console": "integratedTerminal"
     },
     {
       "name": "🏗️ Debug Web Builder (Deno)",
@@ -57,50 +459,6 @@
         "--allow-env",
         "--inspect-brk",
         "${workspaceFolder}/tooling/build-tools/web-builder.ts"
-      ],
-      "cwd": "${workspaceFolder}",
-      "env": {
-        "DENO_ENV": "development"
-      },
-      "console": "integratedTerminal",
-      "restart": true
-    },
-    {
-      "name": "📦 Debug Version Management (Deno)",
-      "type": "node",
-      "request": "launch",
-      "program": "deno",
-      "args": [
-        "run",
-        "--allow-read",
-        "--allow-write",
-        "--allow-env",
-        "--inspect-brk",
-        "${workspaceFolder}/tooling/version-management/version-bump.ts",
-        "patch"
-      ],
-      "cwd": "${workspaceFolder}",
-      "env": {
-        "DENO_ENV": "development"
-      },
-      "console": "integratedTerminal",
-      "restart": true
-    },
-
-    {
-      "name": "⚙️ Debug Installer (Deno)",
-      "type": "node",
-      "request": "launch",
-      "program": "deno",
-      "args": [
-        "run",
-        "--allow-read",
-        "--allow-write",
-        "--allow-env",
-        "--allow-run",
-        "--inspect-brk",
-        "${workspaceFolder}/tooling/installers/bin/bmad.ts",
-        "install"
       ],
       "cwd": "${workspaceFolder}",
       "env": {

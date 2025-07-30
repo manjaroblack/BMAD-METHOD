@@ -241,7 +241,6 @@ async function promptInstallation(): Promise<void> {
     dirname(currentDir),
     "..",
     "..",
-    "..",
     "src",
     "core",
     "core-config.yaml",
