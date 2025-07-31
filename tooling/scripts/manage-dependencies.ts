@@ -93,7 +93,7 @@ class DependencyManager {
   // Main dependency management workflow
   async manage(options: ManagementOptions = {}): Promise<ManagementResults> {
     console.log("🔧 Starting Deno dependency management...");
-    this.monitor.startTimer("dependency_management");
+    const operationId = this.monitor.start("dependency_management");
 
     try {
       // Step 1: Discover all deno.json and import_map.json files
@@ -130,7 +130,7 @@ class DependencyManager {
         await this.updateDenoRequirements(options.projectRoot || Deno.cwd());
       }
 
-      this.monitor.endTimer("dependency_management");
+      this.monitor.end(operationId);
       console.log("✅ Dependency management completed successfully!");
 
       if (options.report) {
@@ -602,7 +602,7 @@ class DependencyManager {
         config_files: this.configFiles,
         dependencies: Object.fromEntries(this.dependencies),
         results: this.results,
-        performance: this.monitor.getAllMetrics(),
+        performance: this.monitor.getMetrics(),
       };
 
       await Deno.writeTextFile(reportPath, JSON.stringify(report, null, 2));

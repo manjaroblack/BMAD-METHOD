@@ -67,10 +67,10 @@ export class WebBuilder {
     let content = this.cache.get(cacheKey);
 
     if (content === null) {
-      this.monitor.startTimer(`read_${basename(filePath)}`);
+      const operationId = this.monitor.start(`read_${basename(filePath)}`);
       content = await Deno.readTextFile(filePath);
       this.cache.set(cacheKey, content);
-      this.monitor.endTimer(`read_${basename(filePath)}`);
+      this.monitor.end(operationId);
     }
 
     return content as string;
@@ -87,11 +87,11 @@ export class WebBuilder {
     let parsed = this.cache.get(cacheKey);
 
     if (parsed === null) {
-      this.monitor.startTimer(`parse_yaml_${basename(filePath)}`);
+      const operationId = this.monitor.start(`parse_yaml_${basename(filePath)}`);
       const content = await this.readFileWithCache(filePath);
       parsed = parseYaml(content);
       this.cache.set(cacheKey, parsed);
-      this.monitor.endTimer(`parse_yaml_${basename(filePath)}`);
+      this.monitor.end(operationId);
     }
 
     return parsed;

@@ -92,6 +92,7 @@ class InstallationValidator {
   private monitor: PerformanceMonitor;
   private denoManager: DenoVersionManager;
   private results: ValidationResults;
+  private validationId?: string;
 
   constructor() {
     this.logger = new Logger();
@@ -117,7 +118,7 @@ class InstallationValidator {
   // Main validation workflow
   async validate(options: ValidationOptions = {}): Promise<ValidationResults> {
     console.log("🔍 Starting installation validation...");
-    this.monitor.startTimer("full_validation");
+    this.validationId = this.monitor.start("full_validation");
 
     try {
       const projectRoot = options.projectRoot || Deno.cwd();
@@ -141,7 +142,9 @@ class InstallationValidator {
       // Calculate overall results
       this.calculateOverallResults();
 
-      this.monitor.endTimer("full_validation");
+      if (this.validationId) {
+        this.monitor.end(this.validationId);
+      }
 
       if (this.results.overall === "pass") {
         console.log(colors.green("✅ Installation validation completed successfully"));
@@ -161,7 +164,9 @@ class InstallationValidator {
 
       return this.results;
     } catch (error) {
-      this.monitor.endTimer("full_validation");
+      if (this.validationId) {
+        this.monitor.end(this.validationId);
+      }
       console.log(colors.red(`❌ Validation failed: ${(error as Error).message}`));
       this.logger.error("Validation error:", error as Error);
       throw new BMadError(
@@ -885,7 +890,7 @@ class InstallationValidator {
         projectRoot,
         denoVersion: Deno.version.deno,
         validationResults: this.results,
-        performanceMetrics: this.monitor.getAllMetrics(),
+        performanceMetrics: this.monitor.getMetrics(),
       };
 
       await Deno.writeTextFile(reportPath, JSON.stringify(report, null, 2));

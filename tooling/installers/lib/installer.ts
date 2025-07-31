@@ -30,10 +30,9 @@ function extractYamlFromAgent(content: string): string | null {
   return yamlMatch ? (yamlMatch[1] || null) : null;
 }
 
-// Import actual implementations
-import resourceLocator from "./resource-locator.ts";
+// Import actual implementations from centralized deps
+import { resourceLocator, configLoader } from "deps";
 // import fileManager from "./file-manager.ts"; // Currently unused
-import configLoader from "./config-loader.ts";
 import ideSetup from "./ide-setup.ts";
 import installerValidator from "./installer-validator.ts";
 class Logger {

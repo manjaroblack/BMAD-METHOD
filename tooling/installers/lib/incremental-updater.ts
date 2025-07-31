@@ -43,6 +43,9 @@ class IncrementalUpdater {
   private cache: CacheManager;
   private processor: ParallelProcessor;
   private monitor: PerformanceMonitor;
+  private manifestId?: string;
+  private incrementalUpdateId?: string;
+  private fullCopyId?: string;
 
   constructor() {
     this.logger = new Logger();
@@ -56,7 +59,7 @@ class IncrementalUpdater {
     sourceDir: string,
     _targetDir: string | null = null,
   ): Promise<Manifest> {
-    this.monitor.startTimer("generate_manifest");
+    this.manifestId = this.monitor.start("generate_manifest");
     const manifest: Manifest = {
       version: "1.0.0",
       timestamp: new Date().toISOString(),
@@ -97,14 +100,18 @@ class IncrementalUpdater {
       // Get directories
       manifest.directories = await this.getAllDirectories(sourceDir);
 
-      this.monitor.endTimer("generate_manifest");
+      if (this.manifestId) {
+        this.monitor.end(this.manifestId);
+      }
       this.logger.info(
         `Generated manifest for ${files.length} files (${manifest.totalSize} bytes)`,
       );
 
       return manifest;
     } catch (error) {
-      this.monitor.endTimer("generate_manifest");
+      if (this.manifestId) {
+        this.monitor.end(this.manifestId);
+      }
       this.logger.error(
         "Failed to generate manifest",
         error instanceof Error ? error : new Error(String(error)),
@@ -160,7 +167,7 @@ class IncrementalUpdater {
     targetDir: string,
     oldManifest: Manifest | null = null,
   ): Promise<void> {
-    this.monitor.startTimer("incremental_update");
+    this.incrementalUpdateId = this.monitor.start("incremental_update");
 
     try {
       // Generate new manifest
@@ -180,10 +187,14 @@ class IncrementalUpdater {
       const manifestPath = join(targetDir, ".bmad-manifest.json");
       await this.saveManifest(newManifest, manifestPath);
 
-      this.monitor.endTimer("incremental_update");
+      if (this.incrementalUpdateId) {
+        this.monitor.end(this.incrementalUpdateId);
+      }
       this.logger.info("Incremental update completed successfully");
     } catch (error) {
-      this.monitor.endTimer("incremental_update");
+      if (this.incrementalUpdateId) {
+        this.monitor.end(this.incrementalUpdateId);
+      }
       this.logger.error(
         "Incremental update failed",
         error instanceof Error ? error : new Error(String(error)),
@@ -266,7 +277,7 @@ class IncrementalUpdater {
 
   // Fallback: perform full copy
   async performFullCopy(sourceDir: string, targetDir: string): Promise<void> {
-    this.monitor.startTimer("full_copy");
+    this.fullCopyId = this.monitor.start("full_copy");
 
     try {
       await ensureDir(targetDir);
@@ -277,10 +288,14 @@ class IncrementalUpdater {
       const manifestPath = join(targetDir, ".bmad-manifest.json");
       await this.saveManifest(manifest, manifestPath);
 
-      this.monitor.endTimer("full_copy");
+      if (this.fullCopyId) {
+        this.monitor.end(this.fullCopyId);
+      }
       this.logger.info("Full copy completed");
     } catch (error) {
-      this.monitor.endTimer("full_copy");
+      if (this.fullCopyId) {
+        this.monitor.end(this.fullCopyId);
+      }
       this.logger.error(
         "Full copy failed",
         error instanceof Error ? error : new Error(String(error)),
@@ -411,7 +426,7 @@ class IncrementalUpdater {
 
   // Get performance metrics
   getPerformanceMetrics(): unknown {
-    return this.monitor.getAllMetrics();
+    return this.monitor.getMetrics();
   }
 }
 

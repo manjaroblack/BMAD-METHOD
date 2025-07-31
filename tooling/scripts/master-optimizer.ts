@@ -123,6 +123,7 @@ class MasterOptimizer {
   private denoManager: DenoVersionManager;
   private dependencyManager: DependencyManager;
   private results: OptimizationResults;
+  private optimizationId?: string;
 
   constructor() {
     this.logger = new Logger();
@@ -150,7 +151,7 @@ class MasterOptimizer {
 
     const spinner = new Spinner({ message: "Initializing master optimization..." });
     spinner.start();
-    this.monitor.startTimer("master_optimization");
+    this.optimizationId = this.monitor.start("master_optimization");
 
     try {
       // Phase 1: Pre-optimization validation
@@ -180,7 +181,9 @@ class MasterOptimizer {
       }
 
       this.calculateOverallResults();
-      this.monitor.endTimer("master_optimization");
+      if (this.optimizationId) {
+        this.monitor.end(this.optimizationId);
+      }
 
       spinner.stop();
       this.displayComprehensiveResults(options);
@@ -442,7 +445,7 @@ class MasterOptimizer {
         deno_version: Deno.version.deno,
         project_root: options.projectRoot || Deno.cwd(),
         optimization_results: this.results,
-        performance_metrics: this.monitor.getAllMetrics(),
+        performance_metrics: this.monitor.getMetrics(),
         executive_summary: this.generateExecutiveSummary(),
         recommendations: this.generateRecommendations(),
       };

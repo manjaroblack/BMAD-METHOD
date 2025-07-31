@@ -102,6 +102,8 @@ class BuildOptimizer {
   private logger: Logger;
   private monitor: PerformanceMonitor;
   private denoManager: DenoVersionManager;
+  private fullOptimizationId?: string;
+  private buildOptimizationId?: string;
 
   constructor() {
     this.logger = new Logger();
@@ -112,7 +114,7 @@ class BuildOptimizer {
   // Main optimization workflow
   async optimize(options: OptimizationOptions = {}): Promise<boolean> {
     console.log("🚀 Starting build optimization...");
-    this.monitor.startTimer("full_optimization");
+    this.fullOptimizationId = this.monitor.start("full_optimization");
 
     try {
       const results: OptimizationResults = {
@@ -148,7 +150,9 @@ class BuildOptimizer {
       console.log("📊 Generating performance report...");
       results.performance = await this.generatePerformanceReport(options.projectRoot || Deno.cwd());
 
-      this.monitor.endTimer("full_optimization");
+      if (this.fullOptimizationId) {
+        this.monitor.end(this.fullOptimizationId);
+      }
       console.log(green("Build optimization completed"));
 
       // Display results
@@ -156,7 +160,9 @@ class BuildOptimizer {
 
       return true;
     } catch (error) {
-      this.monitor.endTimer("full_optimization");
+      if (this.fullOptimizationId) {
+        this.monitor.end(this.fullOptimizationId);
+      }
       console.log(red(`Optimization failed: ${(error as Error).message}`));
       this.logger.error("Optimization error:", error as Error);
       return false;
@@ -269,7 +275,7 @@ class BuildOptimizer {
     };
 
     try {
-      this.monitor.startTimer("build_optimization");
+      this.buildOptimizationId = this.monitor.start("build_optimization");
 
       // Enable Deno caching
       results.cacheEnabled = true;
@@ -284,8 +290,11 @@ class BuildOptimizer {
         results.outputSize = buildStats.totalSize;
       }
 
-      this.monitor.endTimer("build_optimization");
-      const buildTime = this.monitor.getTimer("build_optimization");
+      if (this.buildOptimizationId) {
+        this.monitor.end(this.buildOptimizationId);
+      }
+      const buildMetrics = this.monitor.getMetrics().find(m => m.operationName === "build_optimization");
+      const buildTime = buildMetrics?.duration || 0;
       results.buildTime = typeof buildTime === "number" ? buildTime : 0;
     } catch (error) {
       this.logger.error("Build optimization failed:", error as Error);
@@ -430,7 +439,7 @@ class BuildOptimizer {
 
   // Generate comprehensive performance report
   async generatePerformanceReport(projectRoot: string): Promise<PerformanceReport> {
-    const allMetrics = this.monitor.getAllMetrics();
+    const allMetrics = this.monitor.getMetrics();
     const metricsRecord: Record<string, number> = {};
 
     if (Array.isArray(allMetrics)) {
