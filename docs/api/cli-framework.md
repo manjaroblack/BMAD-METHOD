@@ -129,7 +129,7 @@ export class MyPlugin implements CLIPlugin {
 
 ```typescript
 import { CLIFramework } from '@bmad/cli/core';
-import { MyPlugin } from './my-plugin';
+import { MyPlugin } from 'deps';
 
 const cli = new CLIFramework();
 await cli.registerPlugin(new MyPlugin());

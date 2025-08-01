@@ -11,7 +11,7 @@
       {
         "assets": [
           "deno.json",
-          "tooling/installers/deno.json",
+          "src/installers/deno.json",
           "CHANGELOG.md"
         ],
         "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"

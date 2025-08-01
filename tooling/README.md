@@ -10,10 +10,10 @@ Run the complete optimization suite:
 
 ```bash
 # Full optimization with all phases
-deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/master-optimizer.ts
+deno run --allow-read --allow-write --allow-env --allow-run src/scripts/master-optimizer.ts
 
 # With custom options
-deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/master-optimizer.ts \
+deno run --allow-read --allow-write --allow-env --allow-run src/scripts/master-optimizer.ts \
   --project-root /path/to/project \
   --update-dependencies \
   --consolidate-dependencies \
@@ -21,25 +21,25 @@ deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/mast
   --verbose
 
 # Skip specific phases
-deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/master-optimizer.ts \
+deno run --allow-read --allow-write --allow-env --allow-run src/scripts/master-optimizer.ts \
   --skip-dependencies \
   --skip-build
 
 # Force optimization despite critical issues
-deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/master-optimizer.ts --force
+deno run --allow-read --allow-write --allow-env --allow-run src/scripts/master-optimizer.ts --force
 ```
 
 ### Individual Phase Commands
 
 ```bash
 # Run only validation
-deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/master-optimizer.ts validate --verbose
+deno run --allow-read --allow-write --allow-env --allow-run src/scripts/master-optimizer.ts validate --verbose
 
 # Run only dependency management
-deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/master-optimizer.ts dependencies --update --consolidate
+deno run --allow-read --allow-write --allow-env --allow-run src/scripts/master-optimizer.ts dependencies --update --consolidate
 
 # Run only build optimization
-deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/master-optimizer.ts build --source-dir src --output-dir dist
+deno run --allow-read --allow-write --allow-env --allow-run src/scripts/master-optimizer.ts build --source-dir src --output-dir dist
 ```
 
 ## 📁 Directory Structure
@@ -74,7 +74,7 @@ tooling/
 Standardized error handling across all tooling:
 
 ```javascript
-import { BMadError, Logger } from "./lib/error-handler.ts";
+import { BMadError, Logger } from 'deps';
 
 // Create logger with different levels
 const logger = new Logger("debug"); // debug, info, warn, error
@@ -107,7 +107,7 @@ import {
   CacheManager,
   ParallelProcessor,
   PerformanceMonitor,
-} from "./lib/performance-optimizer.ts";
+} from 'deps';
 
 // Caching
 const cache = new CacheManager();
@@ -142,7 +142,7 @@ console.log(monitor.getTimer("operation")); // milliseconds
 Deno version management and validation:
 
 ```javascript
-import { NodeVersionManager } from "./lib/node-version-manager.ts";
+import { NodeVersionManager } from 'deps';
 
 const manager = new NodeVersionManager();
 
@@ -200,10 +200,10 @@ Optimizes build processes:
 
 ```bash
 # Basic optimization
-deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/optimize-build.ts
+deno run --allow-read --allow-write --allow-env --allow-run src/scripts/optimize-build.ts
 
 # With custom directories
-deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/optimize-build.ts \
+deno run --allow-read --allow-write --allow-env --allow-run src/scripts/optimize-build.ts \
   --source-dir src \
   --output-dir dist \
   --dependencies \
@@ -224,13 +224,13 @@ Validates installation integrity:
 
 ```bash
 # Full validation
-deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/validate-installation.ts
+deno run --allow-read --allow-write --allow-env --allow-run src/scripts/validate-installation.ts
 
 # Quick validation
-deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/validate-installation.ts --quick
+deno run --allow-read --allow-write --allow-env --allow-run src/scripts/validate-installation.ts --quick
 
 # Generate report
-deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/validate-installation.ts --report validation-report.json
+deno run --allow-read --allow-write --allow-env --allow-run src/scripts/validate-installation.ts --report validation-report.json
 ```
 
 **Validation Categories:**
@@ -246,16 +246,16 @@ Manages project dependencies:
 
 ```bash
 # Audit dependencies
-deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/manage-dependencies.ts --audit
+deno run --allow-read --allow-write --allow-env --allow-run src/scripts/manage-dependencies.ts --audit
 
 # Update and consolidate
-deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/manage-dependencies.ts \
+deno run --allow-read --allow-write --allow-env --allow-run src/scripts/manage-dependencies.ts \
   --update \
   --consolidate \
   --install
 
 # Clean up
-deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/manage-dependencies.ts --cleanup
+deno run --allow-read --allow-write --allow-env --allow-run src/scripts/manage-dependencies.ts --cleanup
 ```
 
 **Features:**
@@ -283,7 +283,7 @@ Enhanced with performance optimizations:
 **Usage:**
 
 ```javascript
-import { WebBuilder } from "./build-tools/web-builder.ts";
+import { WebBuilder } from 'deps';
 
 const builder = new WebBuilder({
   enableCache: true,
@@ -416,18 +416,21 @@ All scripts include performance monitoring:
 ### Running Optimizations
 
 1. **Start with validation:**
+
    ```bash
-   deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/master-optimizer.ts validate --verbose
+   deno run --allow-read --allow-write --allow-env --allow-run src/scripts/master-optimizer.ts validate --verbose
    ```
 
 2. **Run full optimization:**
+
    ```bash
-   deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/master-optimizer.ts --report optimization-report.json
+   deno run --allow-read --allow-write --allow-env --allow-run src/scripts/master-optimizer.ts --report optimization-report.json
    ```
 
 3. **Address issues and re-run:**
+
    ```bash
-   deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/master-optimizer.ts --force
+   deno run --allow-read --allow-write --allow-env --allow-run src/scripts/master-optimizer.ts --force
    ```
 
 ### Maintenance Schedule
@@ -461,12 +464,12 @@ Add these tasks to your deno.json:
 ```json
 {
   "tasks": {
-    "optimize": "deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/master-optimizer.ts",
-    "optimize:full": "deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/master-optimizer.ts --update-dependencies --consolidate-dependencies --report optimization-report.json",
-    "validate": "deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/master-optimizer.ts validate",
-    "deps:audit": "deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/manage-dependencies.ts --audit",
-    "deps:update": "deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/manage-dependencies.ts --update --install",
-    "build:optimize": "deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/optimize-build.ts"
+    "optimize": "deno run --allow-read --allow-write --allow-env --allow-run src/scripts/master-optimizer.ts",
+    "optimize:full": "deno run --allow-read --allow-write --allow-env --allow-run src/scripts/master-optimizer.ts --update-dependencies --consolidate-dependencies --report optimization-report.json",
+    "validate": "deno run --allow-read --allow-write --allow-env --allow-run src/scripts/master-optimizer.ts validate",
+    "deps:audit": "deno run --allow-read --allow-write --allow-env --allow-run src/scripts/manage-dependencies.ts --audit",
+    "deps:update": "deno run --allow-read --allow-write --allow-env --allow-run src/scripts/manage-dependencies.ts --update --install",
+    "build:optimize": "deno run --allow-read --allow-write --allow-env --allow-run src/scripts/optimize-build.ts"
   }
 }
 ```
@@ -476,25 +479,29 @@ Add these tasks to your deno.json:
 ### Common Issues
 
 1. **Permission Errors:**
+
    ```bash
    # Fix file permissions
-   chmod +x tooling/scripts/*.ts
+   chmod +x src/scripts/*.ts
    ```
 
 2. **Deno Version Issues:**
+
    ```bash
    # Check Deno version
-   deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/master-optimizer.ts validate
+   deno run --allow-read --allow-write --allow-env --allow-run src/scripts/master-optimizer.ts validate
    ```
 
 3. **Dependency Conflicts:**
+
    ```bash
    # Clean and reinstall
-   deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/manage-dependencies.ts --cleanup
+   deno run --allow-read --allow-write --allow-env --allow-run src/scripts/manage-dependencies.ts --cleanup
    deno cache deps.ts
    ```
 
 4. **Cache Issues:**
+
    ```bash
    # Clear cache
    rm -rf .bmad-cache
@@ -509,7 +516,7 @@ Enable verbose logging for troubleshooting:
 export BMAD_LOG_LEVEL=debug
 
 # Or use --verbose flag
-deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/master-optimizer.ts --verbose
+deno run --allow-read --allow-write --allow-env --allow-run src/scripts/master-optimizer.ts --verbose
 ```
 
 ### Getting Help
@@ -542,7 +549,7 @@ Integrate with CI/CD pipelines:
 # GitHub Actions example
 - name: Run BMAD Optimization
   run: |
-    deno run --allow-read --allow-write --allow-env --allow-run tooling/scripts/master-optimizer.ts \
+    deno run --allow-read --allow-write --allow-env --allow-run src/scripts/master-optimizer.ts \
       --report optimization-report.json \
       --json > optimization-results.json
 

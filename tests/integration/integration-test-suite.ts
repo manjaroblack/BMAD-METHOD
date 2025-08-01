@@ -4,14 +4,16 @@
 
 // deno-lint-ignore-file no-explicit-any require-await
 
-import { 
-  AgentManager, 
+import {
+  AgentManager,
   IAgentManager,
-  ExtensionManager, 
+  ExtensionManager,
   IExtensionManager,
   CLIFramework,
   BuildCommandPlugin,
-  VersionManagementCommandPlugin
+  VersionManagementCommandPlugin,
+  join,
+  ProjectPaths
 } from "deps";
 
 export interface IntegrationTestResult {
@@ -124,7 +126,7 @@ export class IntegrationTestSuite {
       await this.extensionManager.initialize();
 
       // Test extension loading
-      const extensionPath = '/Users/ds/dev/BMAD-METHOD/extensions/bmad-2d-phaser-game-dev';
+      const extensionPath = join(ProjectPaths.extensions, 'bmad-2d-phaser-game-dev');
       const loadResult = await this.extensionManager.loadExtension(extensionPath);
       
       if (!loadResult.success) {

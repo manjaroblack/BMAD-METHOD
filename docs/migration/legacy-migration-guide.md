@@ -9,9 +9,10 @@ This guide provides step-by-step instructions for migrating from the legacy BMAD
 ### Pre-Migration Assessment
 
 1. **Backup Current System**
+
    ```bash
    # Create full backup
-   cp -r /Users/ds/dev/BMAD-METHOD /Users/ds/dev/BMAD-METHOD-backup-$(date +%Y%m%d)
+   cp -r . ./BMAD-METHOD-backup-$(date +%Y%m%d)
    
    # Export current configurations
    mkdir -p migration/backup
@@ -32,6 +33,7 @@ This guide provides step-by-step instructions for migrating from the legacy BMAD
 ### Phase 1: Installer System Migration ✅ COMPLETED
 
 #### Before (Legacy)
+
 ```typescript
 // Single monolithic file: tooling/installers/lib/installer.ts (1,057 lines)
 class MonolithicInstaller {
@@ -45,12 +47,13 @@ class MonolithicInstaller {
 ```
 
 #### After (Modular)
+
 ```typescript
 // Distributed across focused modules (20+ files)
-import { InstallerOrchestrator } from './core/installer-orchestrator';
-import { FreshInstallHandler } from './handlers/fresh-install-handler';
-import { UpdateHandler } from './handlers/update-handler';
-import { RepairHandler } from './handlers/repair-handler';
+import { InstallerOrchestrator } from 'deps';
+import { FreshInstallHandler } from 'deps';
+import { UpdateHandler } from 'deps';
+import { RepairHandler } from 'deps';
 
 // Each module handles one specific concern (< 500 lines each)
 ```
@@ -60,6 +63,7 @@ import { RepairHandler } from './handlers/repair-handler';
 #### Migration Steps
 
 1. **Update Agent Imports**
+
    ```typescript
    // OLD: Direct YAML loading
    const agent = loadYAML('agents/developer.yaml');
@@ -71,6 +75,7 @@ import { RepairHandler } from './handlers/repair-handler';
    ```
 
 2. **Convert Agent Configurations**
+
    ```typescript
    // OLD: YAML-only configuration
    name: developer-agent
@@ -90,6 +95,7 @@ import { RepairHandler } from './handlers/repair-handler';
    ```
 
 3. **Update Agent Usage**
+
    ```typescript
    // OLD: Direct agent invocation
    const result = await agent.executeTask(taskData);
@@ -109,6 +115,7 @@ import { RepairHandler } from './handlers/repair-handler';
 #### Migration Steps
 
 1. **Convert Workflow Definitions**
+
    ```yaml
    # OLD: Simple YAML workflow
    name: development-workflow
@@ -142,6 +149,7 @@ import { RepairHandler } from './handlers/repair-handler';
    ```
 
 2. **Update Workflow Execution**
+
    ```typescript
    // OLD: Direct workflow execution
    const result = await runWorkflow(workflowYaml);
@@ -158,6 +166,7 @@ import { RepairHandler } from './handlers/repair-handler';
 #### Migration Steps
 
 1. **Convert Task Definitions**
+
    ```markdown
    <!-- OLD: Markdown task definition -->
    # Setup Development Environment
@@ -190,6 +199,7 @@ import { RepairHandler } from './handlers/repair-handler';
    ```
 
 2. **Update Task Execution**
+
    ```typescript
    // OLD: Manual task handling
    const result = await executeTask(taskData);
@@ -208,6 +218,7 @@ import { RepairHandler } from './handlers/repair-handler';
 #### Migration Steps
 
 1. **Convert Extension Structure**
+
    ```
    # OLD: Flat extension structure
    extensions/
@@ -233,6 +244,7 @@ import { RepairHandler } from './handlers/repair-handler';
    ```
 
 2. **Update Extension Loading**
+
    ```typescript
    // OLD: Manual extension loading
    const extension = loadExtension(path);
@@ -252,6 +264,7 @@ import { RepairHandler } from './handlers/repair-handler';
 #### Migration Steps
 
 1. **Update CLI Usage**
+
    ```bash
    # OLD: Monolithic CLI commands
    node tooling/cli/cli.js build
@@ -267,9 +280,10 @@ import { RepairHandler } from './handlers/repair-handler';
    ```
 
 2. **Update Build Process**
+
    ```typescript
    // OLD: Manual build scripts
-   import { buildAgents, buildTeams } from './build-utils';
+   import { buildAgents, buildTeams } from 'deps';
    
    // NEW: CLI-based builds
    import { CLIFramework } from '@bmad/cli/core';
@@ -336,12 +350,14 @@ export class LegacyAgentLoader {
 ## Migration Checklist
 
 ### Pre-Migration ✅
+
 - [x] Create system backup
 - [x] Document current configurations
 - [x] Identify custom modifications
 - [x] Plan migration timeline
 
 ### Core System Migration ✅
+
 - [x] Migrate installer system to modular architecture
 - [x] Convert agent configurations to new format
 - [x] Update workflow definitions and execution
@@ -350,6 +366,7 @@ export class LegacyAgentLoader {
 - [x] Update CLI system to plugin-based architecture
 
 ### Post-Migration Validation
+
 - [ ] Run integration test suite
 - [ ] Validate all existing workflows
 - [ ] Test extension loading and activation
@@ -358,6 +375,7 @@ export class LegacyAgentLoader {
 - [ ] Documentation review
 
 ### Cleanup
+
 - [ ] Remove legacy code
 - [ ] Update deployment scripts
 - [ ] Archive old documentation
@@ -368,22 +386,25 @@ export class LegacyAgentLoader {
 If migration issues occur, use this rollback procedure:
 
 1. **Stop New System**
+
    ```bash
    # Stop all new services
    pkill -f "bmad"
    ```
 
 2. **Restore Backup**
+
    ```bash
    # Restore from backup
-   rm -rf /Users/ds/dev/BMAD-METHOD
-   mv /Users/ds/dev/BMAD-METHOD-backup-YYYYMMDD /Users/ds/dev/BMAD-METHOD
+   rm -rf ./BMAD-METHOD
+   mv ./BMAD-METHOD-backup-YYYYMMDD ./BMAD-METHOD
    ```
 
 3. **Validate Legacy System**
+
    ```bash
    # Test legacy functionality
-   cd /Users/ds/dev/BMAD-METHOD
+   cd .
    npm test
    ```
 
@@ -392,29 +413,35 @@ If migration issues occur, use this rollback procedure:
 The migration delivers significant performance benefits:
 
 ### Startup Time
+
 - **Before**: 4.2 seconds (monolithic loading)
 - **After**: 2.5 seconds (lazy loading) - **40% improvement**
 
 ### Memory Usage
+
 - **Before**: 185MB average
 - **After**: 139MB average - **25% reduction**
 
 ### Build Speed
+
 - **Before**: 45 seconds full build
 - **After**: 22 seconds full build - **50% improvement**
 
 ### Extension Loading
+
 - **Before**: 2.1 seconds per extension
 - **After**: 0.7 seconds per extension - **67% improvement**
 
 ## Support and Resources
 
 ### Getting Help
+
 - **Documentation**: `/docs/api/README.md`
 - **Integration Tests**: `npm run test:integration`
 - **Migration Tools**: `tooling/migration/`
 
 ### Best Practices
+
 1. **Test Incrementally**: Migrate and test one component at a time
 2. **Use Compatibility Layer**: Leverage shims during transition
 3. **Monitor Performance**: Compare before/after metrics
@@ -423,6 +450,7 @@ The migration delivers significant performance benefits:
 ### Common Issues and Solutions
 
 #### Issue: Agent Loading Errors
+
 ```typescript
 // Problem: Direct YAML loading fails
 const agent = loadYAML('agents/developer.yaml'); // ERROR
@@ -434,6 +462,7 @@ const agent = await manager.createAgent(config);
 ```
 
 #### Issue: Workflow Execution Failures
+
 ```typescript
 // Problem: Legacy workflow execution
 await runWorkflow(workflowYaml); // ERROR
@@ -446,6 +475,7 @@ await engine.execute(instance.id);
 ```
 
 #### Issue: Extension Loading Problems
+
 ```typescript
 // Problem: Direct extension loading
 const ext = loadExtension('./extensions/my-ext'); // ERROR

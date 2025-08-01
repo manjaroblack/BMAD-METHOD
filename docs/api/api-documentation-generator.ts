@@ -2,11 +2,7 @@
  * API Documentation Generator - Automatic documentation generation for BMAD-METHOD APIs
  */
 
-import { 
-  ensureDir,
-  join,
-  dirname
-} from "deps";
+import { dirname, ensureDir, join, ProjectPaths } from "deps";
 
 export interface APIEndpoint {
   name: string;
@@ -83,7 +79,7 @@ export interface MethodDocumentation {
   description: string;
   parameters: ParameterDocumentation[];
   returns: ReturnDocumentation;
-  accessibility: 'public' | 'private' | 'protected';
+  accessibility: "public" | "private" | "protected";
   static?: boolean;
 }
 
@@ -91,7 +87,7 @@ export interface PropertyDocumentation {
   name: string;
   type: string;
   description: string;
-  accessibility: 'public' | 'private' | 'protected';
+  accessibility: "public" | "private" | "protected";
   readonly?: boolean;
   static?: boolean;
 }
@@ -127,50 +123,50 @@ export class APIDocumentationGenerator {
   private outputPath: string;
   private moduleDocuments: Map<string, ModuleDocumentation> = new Map();
 
-  constructor(outputPath: string = '/Users/ds/dev/BMAD-METHOD/docs/api') {
+  constructor(outputPath: string = join(ProjectPaths.docs, "api")) {
     this.outputPath = outputPath;
   }
 
   async generateFullDocumentation(): Promise<void> {
-    console.log('🔍 Generating comprehensive API documentation...\n');
+    console.log("🔍 Generating comprehensive API documentation...\n");
 
     // Generate core module documentation
     await this.generateCoreModulesDocs();
-    
+
     // Generate extension module documentation
     await this.generateExtensionModulesDocs();
-    
+
     // Generate tooling documentation
     await this.generateToolingDocs();
-    
+
     // Generate overview and navigation
     await this.generateNavigationDocs();
-    
-    console.log('📚 API documentation generation completed!\n');
+
+    console.log("📚 API documentation generation completed!\n");
   }
 
   private async generateCoreModulesDocs(): Promise<void> {
     const coreModules = [
       {
-        name: 'Agent System',
-        path: '/Users/ds/dev/BMAD-METHOD/src/core/agents',
-        description: 'Agent management, registry, and execution system'
+        name: "Agent System",
+        path: ProjectPaths.getAgentPath(""), // Placeholder, actual agent ID will be passed later
+        description: "Agent management, registry, and execution system",
       },
       {
-        name: 'Workflow Engine',
-        path: '/Users/ds/dev/BMAD-METHOD/src/core/workflows',
-        description: 'Workflow orchestration and execution engine'
+        name: "Workflow Engine",
+        path: ProjectPaths.getWorkflowPath(""), // Placeholder, actual workflow ID will be passed later
+        description: "Workflow orchestration and execution engine",
       },
       {
-        name: 'Task System',
-        path: '/Users/ds/dev/BMAD-METHOD/src/core/tasks',
-        description: 'Task scheduling, execution, and state management'
+        name: "Task System",
+        path: ProjectPaths.getTaskPath(""), // Placeholder, actual task ID will be passed later
+        description: "Task scheduling, execution, and state management",
       },
       {
-        name: 'Extension Framework',
-        path: '/Users/ds/dev/BMAD-METHOD/src/core/extensions',
-        description: 'Extension loading, management, and lifecycle'
-      }
+        name: "Extension Framework",
+        path: ProjectPaths.core,
+        description: "Extension loading, management, and lifecycle",
+      },
     ];
 
     for (const module of coreModules) {
@@ -181,15 +177,15 @@ export class APIDocumentationGenerator {
   private async generateExtensionModulesDocs(): Promise<void> {
     const extensionModules = [
       {
-        name: 'Game Development Extensions',
-        path: '/Users/ds/dev/BMAD-METHOD/extensions',
-        description: 'Phaser, Unity, and game development tools'
+        name: "Game Development Extensions",
+        path: ProjectPaths.extensions,
+        description: "Phaser, Unity, and game development tools",
       },
       {
-        name: 'Infrastructure Extensions',
-        path: '/Users/ds/dev/BMAD-METHOD/extensions',
-        description: 'DevOps, deployment, and infrastructure automation'
-      }
+        name: "Infrastructure Extensions",
+        path: ProjectPaths.extensions,
+        description: "DevOps, deployment, and infrastructure automation",
+      },
     ];
 
     for (const module of extensionModules) {
@@ -200,15 +196,15 @@ export class APIDocumentationGenerator {
   private async generateToolingDocs(): Promise<void> {
     const toolingModules = [
       {
-        name: 'CLI Framework',
-        path: '/Users/ds/dev/BMAD-METHOD/tooling/cli',
-        description: 'Command-line interface framework and plugins'
+        name: "CLI Framework",
+        path: join(ProjectPaths.src, "cli"),
+        description: "Command-line interface framework and plugins",
       },
       {
-        name: 'Build System',
-        path: '/Users/ds/dev/BMAD-METHOD/tooling',
-        description: 'Build tools and automation'
-      }
+        name: "Build System",
+        path: ProjectPaths.tooling,
+        description: "Build tools and automation",
+      },
     ];
 
     for (const module of toolingModules) {
@@ -216,21 +212,25 @@ export class APIDocumentationGenerator {
     }
   }
 
-  private async generateModuleDocumentation(module: { name: string; path: string; description: string }): Promise<void> {
+  private async generateModuleDocumentation(
+    module: { name: string; path: string; description: string },
+  ): Promise<void> {
     const documentation: ModuleDocumentation = {
       name: module.name,
       description: module.description,
-      version: '1.0.0',
+      version: "1.0.0",
       interfaces: await this.extractInterfaces(module.path),
       classes: await this.extractClasses(module.path),
       functions: await this.extractFunctions(module.path),
-      types: await this.extractTypes(module.path)
+      types: await this.extractTypes(module.path),
     };
 
     await this.writeModuleDocumentation(module.name, documentation);
   }
 
-  private async generateExtensionDocumentation(module: { name: string; path: string; description: string }): Promise<void> {
+  private async generateExtensionDocumentation(
+    module: { name: string; path: string; description: string },
+  ): Promise<void> {
     const extensionDoc = `# ${module.name}
 
 ${module.description}
@@ -322,10 +322,15 @@ await gameDevAgent.executeTask('create-game-project', {
 \`\`\`
 `;
 
-    await this.writeDocumentationFile(`${module.name.toLowerCase().replace(/\s+/g, '-')}.md`, extensionDoc);
+    await this.writeDocumentationFile(
+      `${module.name.toLowerCase().replace(/\s+/g, "-")}.md`,
+      extensionDoc,
+    );
   }
 
-  private async generateToolingModuleDocumentation(module: { name: string; path: string; description: string }): Promise<void> {
+  private async generateToolingModuleDocumentation(
+    module: { name: string; path: string; description: string },
+  ): Promise<void> {
     const toolingDoc = `# ${module.name}
 
 ${module.description}
@@ -451,14 +456,17 @@ export class MyPlugin implements CLIPlugin {
 
 \`\`\`typescript
 import { CLIFramework } from '@bmad/cli/core';
-import { MyPlugin } from './my-plugin';
+import { MyPlugin } from 'deps';
 
 const cli = new CLIFramework();
 await cli.registerPlugin(new MyPlugin());
 \`\`\`
 `;
 
-    await this.writeDocumentationFile(`${module.name.toLowerCase().replace(/\s+/g, '-')}.md`, toolingDoc);
+    await this.writeDocumentationFile(
+      `${module.name.toLowerCase().replace(/\s+/g, "-")}.md`,
+      toolingDoc,
+    );
   }
 
   private async generateNavigationDocs(): Promise<void> {
@@ -585,41 +593,41 @@ Complete API documentation for the BMAD-METHOD modular architecture system.
 **BMAD-METHOD**: Comprehensive Modular Architecture
 `;
 
-    await this.writeDocumentationFile('README.md', navigationDoc);
+    await this.writeDocumentationFile("README.md", navigationDoc);
   }
 
   private async extractInterfaces(_modulePath: string): Promise<InterfaceDocumentation[]> {
     // Mock implementation - in real system would parse TypeScript AST
     await Promise.resolve(); // Ensure method is properly async
-    
+
     return [
       {
-        name: 'IModuleInterface',
-        description: 'Core module interface definition',
+        name: "IModuleInterface",
+        description: "Core module interface definition",
         properties: [],
-        methods: []
-      }
+        methods: [],
+      },
     ];
   }
 
   private async extractClasses(_modulePath: string): Promise<ClassDocumentation[]> {
     // Mock implementation - in real system would parse TypeScript AST
     await Promise.resolve(); // Ensure method is properly async
-    
+
     return [
       {
-        name: 'ModuleClass',
-        description: 'Core module class implementation',
+        name: "ModuleClass",
+        description: "Core module class implementation",
         constructor: {
-          name: 'constructor',
-          description: 'Module constructor',
+          name: "constructor",
+          description: "Module constructor",
           parameters: [],
-          returns: { type: 'void', description: '' },
-          accessibility: 'public'
+          returns: { type: "void", description: "" },
+          accessibility: "public",
         },
         methods: [],
-        properties: []
-      }
+        properties: [],
+      },
     ];
   }
 
@@ -635,8 +643,11 @@ Complete API documentation for the BMAD-METHOD modular architecture system.
     return [];
   }
 
-  private async writeModuleDocumentation(moduleName: string, documentation: ModuleDocumentation): Promise<void> {
-    const filename = `${moduleName.toLowerCase().replace(/\s+/g, '-')}.md`;
+  private async writeModuleDocumentation(
+    moduleName: string,
+    documentation: ModuleDocumentation,
+  ): Promise<void> {
+    const filename = `${moduleName.toLowerCase().replace(/\s+/g, "-")}.md`;
     const content = this.formatModuleDocumentation(documentation);
     await this.writeDocumentationFile(filename, content);
   }
@@ -650,73 +661,147 @@ ${doc.description}
 
 ## Interfaces
 
-${doc.interfaces.map(iface => `### ${iface.name}
+${
+      doc.interfaces.map((iface) =>
+        `### ${iface.name}
 ${iface.description}
 
-${iface.properties.length > 0 ? `**Properties**:
-${iface.properties.map(p => `- \`${p.name}: ${p.type}\` - ${p.description}`).join('\n')}` : ''}
+${
+          iface.properties.length > 0
+            ? `**Properties**:
+${iface.properties.map((p) => `- \`${p.name}: ${p.type}\` - ${p.description}`).join("\n")}`
+            : ""
+        }
 
-${iface.methods.length > 0 ? `**Methods**:
-${iface.methods.map(m => `- \`${m.name}(${m.parameters.map(p => `${p.name}: ${p.type}`).join(', ')}): ${m.returns.type}\` - ${m.description}`).join('\n')}` : ''}
-`).join('\n')}
+${
+          iface.methods.length > 0
+            ? `**Methods**:
+${
+              iface.methods.map((m) =>
+                `- \`${m.name}(${
+                  m.parameters.map((p) => `${p.name}: ${p.type}`).join(", ")
+                }): ${m.returns.type}\` - ${m.description}`
+              ).join("\n")
+            }`
+            : ""
+        }
+`
+      ).join("\n")
+    }
 
 ## Classes
 
-${doc.classes.map(cls => `### ${cls.name}
+${
+      doc.classes.map((cls) =>
+        `### ${cls.name}
 ${cls.description}
 
-**Constructor**: \`${cls.constructor.name}(${cls.constructor.parameters.map(p => `${p.name}: ${p.type}`).join(', ')})\`
+**Constructor**: \`${cls.constructor.name}(${
+          cls.constructor.parameters.map((p) => `${p.name}: ${p.type}`).join(", ")
+        })\`
 
-${cls.methods.length > 0 ? `**Methods**:
-${cls.methods.map(m => `- \`${m.accessibility} ${m.name}(${m.parameters.map(p => `${p.name}: ${p.type}`).join(', ')}): ${m.returns.type}\` - ${m.description}`).join('\n')}` : ''}
+${
+          cls.methods.length > 0
+            ? `**Methods**:
+${
+              cls.methods.map((m) =>
+                `- \`${m.accessibility} ${m.name}(${
+                  m.parameters.map((p) => `${p.name}: ${p.type}`).join(", ")
+                }): ${m.returns.type}\` - ${m.description}`
+              ).join("\n")
+            }`
+            : ""
+        }
 
-${cls.properties.length > 0 ? `**Properties**:
-${cls.properties.map(p => `- \`${p.accessibility} ${p.name}: ${p.type}\` - ${p.description}`).join('\n')}` : ''}
-`).join('\n')}
+${
+          cls.properties.length > 0
+            ? `**Properties**:
+${
+              cls.properties.map((p) =>
+                `- \`${p.accessibility} ${p.name}: ${p.type}\` - ${p.description}`
+              ).join("\n")
+            }`
+            : ""
+        }
+`
+      ).join("\n")
+    }
 
-${doc.functions.length > 0 ? `## Functions
+${
+      doc.functions.length > 0
+        ? `## Functions
 
-${doc.functions.map(fn => `### ${fn.name}
+${
+          doc.functions.map((fn) =>
+            `### ${fn.name}
 ${fn.description}
 
 **Parameters**:
-${fn.parameters.map(p => `- \`${p.name}: ${p.type}\` - ${p.description}`).join('\n')}
+${fn.parameters.map((p) => `- \`${p.name}: ${p.type}\` - ${p.description}`).join("\n")}
 
 **Returns**: \`${fn.returns.type}\` - ${fn.returns.description}
 
-${fn.examples.length > 0 ? `**Examples**:
-${fn.examples.map(ex => `#### ${ex.title}
+${
+              fn.examples.length > 0
+                ? `**Examples**:
+${
+                  fn.examples.map((ex) =>
+                    `#### ${ex.title}
 ${ex.description}
 
 \`\`\`${ex.language}
 ${ex.code}
 \`\`\`
-`).join('\n')}` : ''}
-`).join('\n')}` : ''}
+`
+                  ).join("\n")
+                }`
+                : ""
+            }
+`
+          ).join("\n")
+        }`
+        : ""
+    }
 
-${doc.types.length > 0 ? `## Types
+${
+      doc.types.length > 0
+        ? `## Types
 
-${doc.types.map(type => `### ${type.name}
+${
+          doc.types.map((type) =>
+            `### ${type.name}
 ${type.description}
 
 \`\`\`typescript
 ${type.definition}
 \`\`\`
 
-${type.examples.length > 0 ? `**Examples**:
-${type.examples.map(ex => `\`\`\`typescript
+${
+              type.examples.length > 0
+                ? `**Examples**:
+${
+                  type.examples.map((ex) =>
+                    `\`\`\`typescript
 ${ex}
-\`\`\``).join('\n')}` : ''}
-`).join('\n')}` : ''}
+\`\`\``
+                  ).join("\n")
+                }`
+                : ""
+            }
+`
+          ).join("\n")
+        }`
+        : ""
+    }
 `;
   }
 
   private async writeDocumentationFile(filename: string, content: string): Promise<void> {
     const fullPath = join(this.outputPath, filename);
-    
+
     // Ensure directory exists
     await ensureDir(dirname(fullPath));
-    
+
     // Write file
     await Deno.writeTextFile(fullPath, content);
     console.log(`📝 Generated: ${filename}`);
@@ -731,8 +816,8 @@ export async function generateAPIDocumentation(): Promise<void> {
 
 // CLI execution support
 if (import.meta.main) {
-  generateAPIDocumentation().catch(error => {
-    console.error('API documentation generation failed:', error);
+  generateAPIDocumentation().catch((error) => {
+    console.error("API documentation generation failed:", error);
     Deno.exit(1);
   });
 }

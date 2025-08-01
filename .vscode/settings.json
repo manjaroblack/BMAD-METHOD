@@ -73,5 +73,6 @@
     "Upgrader",
     "upgraders",
     "VNET"
-  ]
+  ],
+  "terminal.integrated.cwd": "${workspaceFolder}"
 }

@@ -33,12 +33,12 @@ function processUser(user) {
 
 ```typescript
 // ✅ Good - Explicit file extensions
-import { helper } from "./utils/helper.ts";
-import { config } from "./config/index.ts";
+import { helper } from 'deps';
+import { config } from 'deps';
 
 // ❌ Bad - Implicit extensions
-import { helper } from "./utils/helper";
-import { config } from "./config";
+import { helper } from 'deps';
+import { config } from 'deps';
 ```
 
 **Rationale**: Deno requires explicit specifiers, improves performance, reduces ambiguity.
@@ -52,7 +52,7 @@ export { serve } from "https://deno.land/std@0.224.0/http/server.ts";
 export { assertEquals } from "https://deno.land/std@0.224.0/testing/asserts.ts";
 
 // main.ts
-import { serve, assertEquals } from "./deps.ts";
+import { serve, assertEquals } from 'deps';
 
 // ❌ Bad - Direct external imports
 import { serve } from "https://deno.land/std@0.224.0/http/server.ts";
@@ -100,11 +100,11 @@ function calculateTotal(items: Item[]) {
 
 ```typescript
 // ✅ Good - Explicit type imports
-import type { User, Config } from "./types.ts";
-import { processUser } from "./processors.ts";
+import type { User, Config } from 'deps';
+import { processUser } from 'deps';
 
 // ❌ Bad - Mixed imports
-import { User, Config, processUser } from "./types.ts";
+import { User, Config, processUser } from 'deps';
 ```
 
 **Rationale**: Better tree-shaking, clearer separation of types vs runtime code.
