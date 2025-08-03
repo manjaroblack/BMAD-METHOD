@@ -3,16 +3,10 @@
  */
 
 import { 
-  type IAgent,
-  type IAgentRegistry,
   AgentRegistry,
-  type AgentConfig,
-  type AgentRole,
-  type AgentTask,
-  type AgentResponse,
-  AgentStatus,
-  type AgentTeam
+  AgentStatus
 } from 'deps';
+import type { IAgent, IAgentRegistry, AgentConfig, AgentRole, AgentTask, AgentResponse, AgentTeam } from 'deps';
 
 export interface IAgentManager {
   initialize(): Promise<void>;

@@ -6,10 +6,10 @@
  * with a clean, maintainable entry point (~100 lines)
  */
 
-import { cyan, red, yellow } from "deps";
-
-// Import our modular services and types from centralized deps
-import {
+import { 
+  cyan, 
+  red, 
+  yellow,
   CorruptedInstallationError,
   createInstallerOrchestrator,
   createSpinner,
@@ -17,21 +17,18 @@ import {
   DirectoryNotFoundError,
   InstallationError,
   InstallationTimeoutError,
-  type InstallConfig,
   InstallerOrchestrator,
   InsufficientPermissionsError,
   IntegrityCheckFailedError,
   logger,
   performanceMonitor,
   UnsupportedVersionError,
-} from "deps";
-
-import {
   ConfigValidationError,
   InvalidValueError,
   RequiredFieldMissingError,
   ValidationError,
 } from "deps";
+import type { InstallConfig } from "deps";
 
 /**
  * Main Installer class - simplified and modular

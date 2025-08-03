@@ -3,13 +3,7 @@
  * Handles file integrity validation, checksum generation, and corruption detection
  */
 import { safeExists } from "deps";
-
-import type {
-  FileIntegrityResult,
-  IFileService,
-  IIntegrityValidator,
-  ILogger,
-} from "deps";
+import type { FileIntegrityResult, IFileService, IIntegrityValidator, ILogger } from "deps";
 
 export interface IntegrityCheckOptions {
   validateChecksums?: boolean;

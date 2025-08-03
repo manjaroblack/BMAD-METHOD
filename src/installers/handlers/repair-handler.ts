@@ -4,13 +4,7 @@
  */
 
 import { red, yellow, green } from "deps";
-import type { 
-  InstallationContext,
-  InstallConfig,
-  FileIntegrityResult,
-  IInstallationHandler,
-  ILogger
-} from 'deps';
+import type { InstallationContext, InstallConfig, FileIntegrityResult, IInstallationHandler, ILogger } from 'deps';
 
 export class RepairHandler implements IInstallationHandler {
   constructor(

@@ -1,28 +1,9 @@
 #!/usr/bin/env -S deno run --allow-read --allow-write --allow-env --allow-run
 
-import { Checkbox, Command, Input, Select } from "deps";
-import {
-  blue,
-  bold,
-  cyan,
-  dirname,
-  green,
-  join,
-  magenta,
-  parseYaml,
-  red,
-  resolve,
-  yellow,
-} from "deps";
+import { Checkbox, Command, Input, Select, blue, bold, cyan, dirname, green, join, magenta, parseYaml, red, resolve, yellow, ExpansionPack, ExpansionPackInfo, InstallationState, InstallConfig, Installer } from "deps";
 
 // Handle both execution contexts (from root via deno or from installer directory)
 let version: string = "1.0.0"; // Default version, will be overridden by deno.json
-import installer, {
-  ExpansionPack,
-  ExpansionPackInfo,
-  InstallationState,
-  InstallConfig,
-} from "../lib/installer.ts";
 
 async function initializeInstaller(): Promise<void> {
   try {
@@ -102,7 +83,7 @@ cli.command("install")
         };
 
         console.log(bold(blue("🚀 Starting BMad Method installation...")));
-        await installer.install(installOptions);
+        await Installer.install(installOptions);
         console.log(bold(green("✅ Installation completed successfully!")));
       }
     } catch (error) {
@@ -121,7 +102,7 @@ cli.command("update")
   .action(async (options) => {
     try {
       console.log(bold(blue("🔄 Updating BMad Method installation...")));
-      await installer.update(options);
+      await Installer.update(options);
       console.log(bold(green("✅ Update completed successfully!")));
     } catch (error) {
       console.error(
@@ -136,7 +117,7 @@ cli.command("list:expansions")
   .description("List available expansion packs")
   .action(async () => {
     try {
-      const expansions = await installer.getAvailableExpansionPacks();
+      const expansions = await Installer.getAvailableExpansionPacks();
       console.log(bold(blue("📦 Available Expansion Packs:")));
       expansions.forEach((pack: ExpansionPack) => {
         console.log(
@@ -156,7 +137,7 @@ cli.command("status")
   .description("Show installation status")
   .action(async () => {
     try {
-      const status = await installer.getInstallationStatus(Deno.cwd());
+      const status = await Installer.getInstallationStatus(Deno.cwd());
       console.log(bold(blue("📊 Installation Status:")));
       console.log(JSON.stringify(status, null, 2));
     } catch (error) {
@@ -226,7 +207,7 @@ async function promptInstallation(): Promise<void> {
 
   // Detect existing installations
   const installDir = resolve(directory);
-  const state: InstallationState = await installer.detectInstallationState(
+  const state: InstallationState = await Installer.detectInstallationState(
     installDir,
   );
 
@@ -234,7 +215,7 @@ async function promptInstallation(): Promise<void> {
   const existingExpansionPacks = state.expansionPacks || {};
 
   // Get available expansion packs
-  const availableExpansionPacks = await installer.getAvailableExpansionPacks();
+  const availableExpansionPacks = await Installer.getAvailableExpansionPacks();
 
   // Build choices list
   const choices: Array<{ name: string; value: string }> = [];
@@ -347,7 +328,7 @@ async function promptInstallation(): Promise<void> {
       ides: answers.ides || [],
     };
 
-    await installer.install(installOptions);
+    await Installer.install(installOptions);
     console.log(bold(green("✅ Installation completed successfully!")));
   } catch (error) {
     console.error(

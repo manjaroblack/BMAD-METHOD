@@ -4,13 +4,7 @@
  */
 
 import { ensureDir } from "deps";
-import type { 
-  InstallationContext,
-  InstallConfig,
-  IInstallationHandler,
-
-  ILogger
-} from 'deps';
+import type { InstallationContext, InstallConfig, IInstallationHandler, ILogger } from 'deps';
 
 export class FreshInstallHandler implements IInstallationHandler {
   constructor(

@@ -7,20 +7,6 @@ import {
   green, 
   red, 
   resolve,
-  type InstallConfig,
-  type InstallationState,
-  type InstallationContext,
-  type InstallationType,
-  type IInstaller,
-  type IInstallationHandler,
-  type ILogger,
-  type ISpinner,
-  type IPerformanceMonitor,
-  type InstallationResult,
-  type IFileService
-} from "deps";
-
-import { 
   InstallationDetector,
   FreshInstallHandler,
   UpdateHandler,
@@ -28,7 +14,8 @@ import {
   ManifestService,
   ExpansionPackService,
   IntegrityChecker
-} from 'deps';
+} from "deps";
+import type { InstallConfig, InstallationState, InstallationContext, InstallationType, IInstaller, IInstallationHandler, ILogger, ISpinner, IPerformanceMonitor, InstallationResult, IFileService } from "deps";
 
 export interface InstallerDependencies {
   logger?: ILogger;

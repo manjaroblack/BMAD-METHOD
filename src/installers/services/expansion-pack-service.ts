@@ -4,17 +4,7 @@
  */
 
 import { expandGlob, join, ProjectPaths, safeExists } from "deps";
-import type {
-  ExpansionPack,
-  ExpansionPackInfo,
-  ExpansionPackInstallResult,
-  ExpansionPackManifest,
-  ExpansionPackStatus,
-  IExpansionPackService,
-  IFileService,
-  ILogger,
-  InstallConfig,
-} from "deps";
+import type { ExpansionPack, ExpansionPackInfo, ExpansionPackInstallResult, ExpansionPackManifest, ExpansionPackStatus, IExpansionPackService, IFileService, ILogger, InstallConfig } from "deps";
 
 export class ExpansionPackService implements IExpansionPackService {
   private readonly expansionPacksDir = "extensions";

@@ -4,12 +4,7 @@
  */
 
 import { expandGlob, join, safeExists } from "deps";
-import type {
-  IFileManager,
-  ILogger,
-  IManifestService,
-  InstallationManifest,
-} from "deps";
+import type { IFileManager, ILogger, IManifestService, InstallationManifest } from "deps";
 
 export class ManifestService implements IManifestService {
   private readonly manifestFileName = ".bmad-manifest.json";

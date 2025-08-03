@@ -3,20 +3,12 @@
  */
 
 import {
-  type ExtensionConfig,
-  type ExtensionManifest,
   ExtensionStatus,
   ExtensionType,
-  type ExtensionLoadResult,
-  type ExtensionSearchCriteria,
-  type ExtensionMetrics,
-  type ExtensionContext,
-  type ExtensionError,
-  type ExtensionRegistry,
-  type ExtensionResources,
   join,
   ProjectPaths
 } from 'deps';
+import type { ExtensionConfig, ExtensionManifest, ExtensionLoadResult, ExtensionSearchCriteria, ExtensionMetrics, ExtensionContext, ExtensionError, ExtensionRegistry, ExtensionResources } from 'deps';
 
 export interface IExtensionManager {
   initialize(): Promise<void>;

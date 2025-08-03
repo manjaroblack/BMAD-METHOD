@@ -6,12 +6,7 @@
 // deno-lint-ignore-file no-explicit-any no-unused-vars require-await
 
 import { yellow, cyan } from "deps";
-import type { 
-  InstallationContext,
-  InstallConfig,
-  IInstallationHandler,
-  ILogger
-} from 'deps';
+import type { InstallationContext, InstallConfig, IInstallationHandler, ILogger } from 'deps';
 
 export class UpdateHandler implements IInstallationHandler {
   constructor(

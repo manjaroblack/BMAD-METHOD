@@ -4,13 +4,7 @@
  */
 
 import { join, safeExists } from "deps";
-import type {
-  FileIntegrityResult,
-  IFileManager,
-  IInstallationDetector,
-  ILogger,
-  InstallationState,
-} from "deps";
+import type { FileIntegrityResult, IFileManager, IInstallationDetector, ILogger, InstallationState } from "deps";
 
 export class InstallationDetector implements IInstallationDetector {
   private readonly manifestFileName = ".bmad-manifest.json";

@@ -3,26 +3,7 @@
  * Tests the complete installation flow with all components integrated
  */
 
-import {
-  assertEquals,
-  assertExists,
-  assertRejects,
-} from "https://deno.land/std@0.208.0/assert/mod.ts";
-import { ensureDir, join } from "deps";
-import { InstallerOrchestrator } from "deps";
-import { InstallationDetector } from "deps";
-// import { FreshInstallHandler } from 'deps';
-// import { UpdateHandler } from 'deps';
-// import { RepairHandler } from 'deps';
-// import { UnknownInstallHandler } from 'deps';
-import { ManifestService } from "deps";
-import { ExpansionPackService } from "deps";
-import { IntegrityChecker } from "deps";
-// import { CoreInstaller } from 'deps';
-import { logger } from "deps";
-import { performanceMonitor } from "deps";
-import { spinner } from "deps";
-import { fileSystemService } from "deps";
+import { assertEquals, assertExists, assertRejects, ensureDir, ExpansionPackService, fileSystemService, InstallationDetector, InstallerOrchestrator, IntegrityChecker, join, logger, ManifestService, performanceMonitor, spinner } from "deps";
 import type { InstallConfig } from "deps";
 
 // Test configuration

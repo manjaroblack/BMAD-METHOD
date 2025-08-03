@@ -8,13 +8,10 @@ import {
   copy,
   ensureDir,
   safeExists,
-  type InstallConfig,
-  type ILogger,
-  type ISpinner,
-  type IFileSystemService,
   InstallationError,
   ProjectPaths
 } from "deps";
+import type { InstallConfig, ILogger, ISpinner, IFileSystemService } from "deps";
 
 export interface CoreInstallationResult {
   success: boolean;

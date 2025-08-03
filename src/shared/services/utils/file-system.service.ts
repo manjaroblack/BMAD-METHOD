@@ -4,17 +4,7 @@
  */
 
 import { copy, dirname, ensureDir, expandGlob, join, resolve, safeExists } from "deps";
-
-import type {
-  FileCopyOperation,
-  FileCopyResult,
-  FileStats,
-  GlobOptions,
-  IFileManager,
-  IFileOperations,
-  IFileSystemService,
-  ILogger,
-} from "deps";
+import type { FileCopyOperation, FileCopyResult, FileStats, GlobOptions, IFileManager, IFileOperations, IFileSystemService, ILogger } from "deps";
 
 export class FileSystemService implements IFileManager, IFileSystemService, IFileOperations {
   private logger?: ILogger;

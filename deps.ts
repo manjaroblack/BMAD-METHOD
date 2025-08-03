@@ -27,7 +27,7 @@ export { format as formatBytes } from "jsr:@std/fmt@1.0.8/bytes";
 export { parse as parseYaml, stringify as stringifyYaml } from "jsr:@std/yaml@1.0.9";
 
 // Additional standard library modules that might be used
-export { assert, assertEquals } from "jsr:@std/assert@1.0.13";
+export { assert, assertEquals, assertExists, assertRejects } from "jsr:@std/assert@1.0.13";
 export { delay } from "jsr:@std/async@1.0.13";
 export { deepMerge } from "jsr:@std/collections@1.1.2";
 
