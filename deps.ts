@@ -376,3 +376,6 @@ export {
 
 // Safe filesystem utilities
 export { safeExists, safeIsDirectory, safeIsFile } from "./src/installers/utils/safe-fs.ts";
+
+// Flattener tool
+export { default as flattener } from "./tooling/user-tools/flattener/main.ts";

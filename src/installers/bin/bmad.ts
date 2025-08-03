@@ -1,44 +1,31 @@
 #!/usr/bin/env -S deno run --allow-read --allow-write --allow-env --allow-run
 
-import { Checkbox, Command, Input, Select, blue, bold, cyan, dirname, green, join, magenta, parseYaml, red, resolve, yellow, ExpansionPack, ExpansionPackInfo, InstallationState, InstallConfig, Installer } from "deps";
+import { Checkbox, Command, Input, Select, blue, bold, cyan, dirname, flattener, green, join, magenta, parseYaml, red, resolve, yellow, ExpansionPack, ExpansionPackInfo, InstallationState, InstallConfig, Installer } from "deps";
 
 // Handle both execution contexts (from root via deno or from installer directory)
 let version: string = "1.0.0"; // Default version, will be overridden by deno.json
 
 async function initializeInstaller(): Promise<void> {
   try {
-    // Try installer context first (when run from src/installers/bin/)
+    // Determine the correct path to deno.json
     const currentDir = new URL(".", import.meta.url).pathname;
     const denoJsonPath = join(currentDir, "..", "..", "..", "deno.json");
+    
+    // Read and parse deno.json to get version
     const denoJsonContent = await Deno.readTextFile(denoJsonPath);
     const denoJson = JSON.parse(denoJsonContent);
     version = denoJson.version || "1.0.0";
+    
     // installer is already an instance from deps.ts
-  } catch (e) {
-    // Fall back to root context (when run via deno from GitHub)
-    console.log(
-      `Installer context not found (${
-        e instanceof Error ? e.message : String(e)
-      }), trying root context...`,
+  } catch (error) {
+    console.error(
+      "Error: Could not load required modules. Please ensure you are running from the correct directory.",
     );
-    try {
-      const currentDir = new URL(".", import.meta.url).pathname;
-      const denoJsonPath = join(currentDir, "..", "..", "..", "deno.json");
-      const denoJsonContent = await Deno.readTextFile(denoJsonPath);
-      const denoJson = JSON.parse(denoJsonContent);
-      version = denoJson.version || "1.0.0";
-
-      // installer is already an instance from deps.ts
-    } catch (e2) {
-      console.error(
-        "Error: Could not load required modules. Please ensure you are running from the correct directory.",
-      );
-      console.error("Debug info:", {
-        cwd: Deno.cwd(),
-        error: e2 instanceof Error ? e2.message : String(e2),
-      });
-      Deno.exit(1);
-    }
+    console.error("Debug info:", {
+      cwd: Deno.cwd(),
+      error: error instanceof Error ? error.message : String(error),
+    });
+    Deno.exit(1);
   }
 }
 
@@ -157,14 +144,17 @@ cli.command("flatten")
   .option("-o, --output <path:string>", "Output file path", {
     default: "flattened-codebase.xml",
   })
-  .action((options) => {
+  .action(async (options) => {
     try {
       console.log(bold(blue("📄 Flattening codebase...")));
-      // Import flattener functionality - using a mock implementation for now
-      console.log(
-        bold(green(`✅ Codebase flattening functionality not yet implemented`)),
-      );
-      console.log(`Would flatten ${options.input} to ${options.output}`);
+      
+      // Execute the flattener with the provided options
+      await flattener.parse([
+        "--input", options.input,
+        "--output", options.output
+      ]);
+      
+      console.log(bold(green("✅ Codebase flattening completed successfully!")));
     } catch (error) {
       console.error(
         bold(red("❌ Flattening failed:")),
