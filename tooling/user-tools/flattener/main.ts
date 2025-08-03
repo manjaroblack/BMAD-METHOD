@@ -1,6 +1,6 @@
 #!/usr/bin/env -S deno run --allow-read --allow-write
 
-import { basename, Command, exists, extname, join, relative, walk } from "deps";
+import { basename, Command, extname, join, relative, safeExists, walk } from "deps";
 
 interface FileInfo {
   path: string;
@@ -159,7 +159,7 @@ async function discoverFiles(rootDir: string): Promise<string[]> {
  */
 async function parseGitignore(gitignorePath: string): Promise<string[]> {
   try {
-    if (!(await exists(gitignorePath))) {
+    if (!(await safeExists(gitignorePath))) {
       return [];
     }
 

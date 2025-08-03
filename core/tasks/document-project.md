@@ -43,7 +43,7 @@ Based on their response:
 Begin by conducting analysis of the existing project. Use available tools to:
 
 1. **Project Structure Discovery**: Examine the root directory structure, identify main folders, and understand the overall organization
-2. **Technology Stack Identification**: Look for package.json, requirements.txt, Cargo.toml, pom.xml, etc. to identify languages, frameworks, and dependencies
+2. **Technology Stack Identification**: Look for deno.json, requirements.txt, Cargo.toml, pom.xml, etc. to identify languages, frameworks, and dependencies
 3. **Build System Analysis**: Find build scripts, CI/CD configurations, and development commands
 4. **Existing Documentation Review**: Check for README files, docs folders, and any existing documentation
 5. **Code Pattern Analysis**: Sample key files to understand coding patterns, naming conventions, and architectural approaches
@@ -134,7 +134,7 @@ This document captures the CURRENT STATE of the [Project Name] codebase, includi
 
 ### Technical Summary
 
-### Actual Tech Stack (from package.json/requirements.txt)
+### Actual Tech Stack (from deno.json/requirements.txt)
 
 | Category  | Technology | Version | Notes                      |
 | --------- | ---------- | ------- | -------------------------- |

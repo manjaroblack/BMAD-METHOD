@@ -3,7 +3,13 @@
  * Reduces duplication and provides shared methods
  */
 
-import { exists, extractYamlFromAgent, join, parseYaml, ProjectPaths } from "deps";
+import {
+  extractYamlFromAgent,
+  join,
+  parseYaml,
+  ProjectPaths,
+  safeExists,
+} from "deps";
 
 interface ExpansionPack {
   id: string;
@@ -67,7 +73,7 @@ class BaseIdeSetup {
     ];
 
     for (const agentsPath of corePaths) {
-      if (await exists(agentsPath)) {
+      if (await safeExists(agentsPath)) {
         try {
           for await (const entry of Deno.readDir(agentsPath)) {
             if (entry.isFile && entry.name.endsWith(".md")) {
@@ -108,7 +114,7 @@ class BaseIdeSetup {
     }
 
     for (const path of searchPaths) {
-      if (await exists(path)) {
+      if (await safeExists(path)) {
         this._pathCache.set(cacheKey, path);
         return path;
       }
@@ -149,7 +155,7 @@ class BaseIdeSetup {
     const expansionPacks: ExpansionPack[] = [];
     const expansionPacksPath = join(installDir, ".bmad-core/expansion-packs");
 
-    if (!(await exists(expansionPacksPath))) {
+    if (!(await safeExists(expansionPacksPath))) {
       return expansionPacks;
     }
 
@@ -158,7 +164,7 @@ class BaseIdeSetup {
         if (entry.isDirectory) {
           const packPath = join(expansionPacksPath, entry.name);
           const configPath = join(packPath, "config.yaml");
-          const packageJsonPath = join(packPath, "package.json");
+          const denoJsonPath = join(packPath, "deno.json");
 
           const packInfo: ExpansionPack = {
             id: entry.name,
@@ -168,28 +174,35 @@ class BaseIdeSetup {
           };
 
           // Try to read config.yaml first
-          if (await exists(configPath)) {
+          if (await safeExists(configPath)) {
             try {
               const configContent = await Deno.readTextFile(configPath);
-              const config = parseYaml(configContent) as Record<string, unknown>;
-              packInfo.name = typeof config.name === "string" ? config.name : entry.name;
-              packInfo.version = typeof config.version === "string" ? config.version : "1.0.0";
+              const config = parseYaml(configContent) as Record<
+                string,
+                unknown
+              >;
+              packInfo.name = typeof config.name === "string"
+                ? config.name
+                : entry.name;
+              packInfo.version = typeof config.version === "string"
+                ? config.version
+                : "1.0.0";
             } catch (error) {
               console.warn(
                 `Failed to read config for pack ${entry.name}:`,
                 error,
               );
             }
-          } // Fallback to package.json
-          else if (await exists(packageJsonPath)) {
+          } // Fallback to deno.json
+          else if (await safeExists(denoJsonPath)) {
             try {
-              const packageContent = await Deno.readTextFile(packageJsonPath);
-              const packageJson = JSON.parse(packageContent);
-              packInfo.name = packageJson.name || entry.name;
-              packInfo.version = packageJson.version || "1.0.0";
+              const denoJsonContent = await Deno.readTextFile(denoJsonPath);
+              const denoJson = JSON.parse(denoJsonContent);
+              packInfo.name = denoJson.name || entry.name;
+              packInfo.version = denoJson.version || "1.0.0";
             } catch (error) {
               console.warn(
-                `Failed to read package.json for pack ${entry.name}:`,
+                `Failed to read deno.json for pack ${entry.name}:`,
                 error,
               );
             }
@@ -215,7 +228,7 @@ class BaseIdeSetup {
     const agents: string[] = [];
     const agentsPath = join(packPath, "agents");
 
-    if (await exists(agentsPath)) {
+    if (await safeExists(agentsPath)) {
       try {
         for await (const entry of Deno.readDir(agentsPath)) {
           if (entry.isFile && entry.name.endsWith(".md")) {

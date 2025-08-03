@@ -3,7 +3,7 @@
  * Reduces duplicate file system operations and memory usage
  */
 
-import { exists, expandGlob, extractYamlFromAgent, join, parseYaml, ProjectPaths } from "deps";
+import { expandGlob, extractYamlFromAgent, join, parseYaml, ProjectPaths, safeExists } from "deps";
 
 interface Agent {
   id: string;
@@ -101,7 +101,7 @@ class ResourceLocator {
     const agentsDir = join(this.getBmadCorePath(), "agents");
     const agentPath = join(agentsDir, `${agentId}.md`);
 
-    if (await exists(agentPath)) {
+    if (await safeExists(agentPath)) {
       this._pathCache.set(cacheKey, agentPath);
       return agentPath;
     }
@@ -167,14 +167,14 @@ class ResourceLocator {
     const packs: ExpansionPack[] = [];
 
     try {
-      if (await exists(expansionPacksDir)) {
+      if (await safeExists(expansionPacksDir)) {
         for await (const entry of Deno.readDir(expansionPacksDir)) {
           if (entry.isDirectory) {
             const packId = entry.name;
             const configPath = join(expansionPacksDir, packId, "config.yaml");
 
             try {
-              if (await exists(configPath)) {
+              if (await safeExists(configPath)) {
                 const configContent = await Deno.readTextFile(configPath);
                 const config = parseYaml(configContent) as Record<string, unknown>;
 
@@ -221,7 +221,7 @@ class ResourceLocator {
     const teamPath = join(teamsDir, `${teamId}.yaml`);
 
     try {
-      if (await exists(teamPath)) {
+      if (await safeExists(teamPath)) {
         const content = await Deno.readTextFile(teamPath);
         return parseYaml(content) as Record<string, unknown>;
       }
@@ -283,7 +283,7 @@ class ResourceLocator {
     const ideConfigPath = join(ideConfigsDir, `${ideId}.yaml`);
 
     try {
-      if (await exists(ideConfigPath)) {
+      if (await safeExists(ideConfigPath)) {
         const content = await Deno.readTextFile(ideConfigPath);
         return parseYaml(content) as Record<string, unknown>;
       }

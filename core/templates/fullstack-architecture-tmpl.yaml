@@ -5,7 +5,7 @@ template:
   output:
     format: markdown
     filename: docs/architecture.md
-    title: "{{project_name}} Fullstack Architecture Document"
+    title: '{{project_name}} Fullstack Architecture Document'
 
 workflow:
   mode: interactive
@@ -126,12 +126,12 @@ sections:
 
           For each pattern, provide recommendation and rationale.
         repeatable: true
-        template: "- **{{pattern_name}}:** {{pattern_description}} - _Rationale:_ {{rationale}}"
+        template: '- **{{pattern_name}}:** {{pattern_description}} - _Rationale:_ {{rationale}}'
         examples:
-          - "**Jamstack Architecture:** Static site generation with serverless APIs - _Rationale:_ Optimal performance and scalability for content-heavy applications"
-          - "**Component-Based UI:** Reusable React components with TypeScript - _Rationale:_ Maintainability and type safety across large codebases"
-          - "**Repository Pattern:** Abstract data access logic - _Rationale:_ Enables testing and future database migration flexibility"
-          - "**API Gateway Pattern:** Single entry point for all API calls - _Rationale:_ Centralized auth, rate limiting, and monitoring"
+          - '**Jamstack Architecture:** Static site generation with serverless APIs - _Rationale:_ Optimal performance and scalability for content-heavy applications'
+          - '**Component-Based UI:** Reusable React components with TypeScript - _Rationale:_ Maintainability and type safety across large codebases'
+          - '**Repository Pattern:** Abstract data access logic - _Rationale:_ Enables testing and future database migration flexibility'
+          - '**API Gateway Pattern:** Single entry point for all API calls - _Rationale:_ Centralized auth, rate limiting, and monitoring'
 
   - id: tech-stack
     title: Tech Stack
@@ -156,151 +156,151 @@ sections:
         columns: [Category, Technology, Version, Purpose, Rationale]
         rows:
           - [
-              "Frontend Language",
-              "{{fe_language}}",
-              "{{version}}",
-              "{{purpose}}",
-              "{{why_chosen}}",
+              'Frontend Language',
+              '{{fe_language}}',
+              '{{version}}',
+              '{{purpose}}',
+              '{{why_chosen}}',
             ]
           - [
-              "Frontend Framework",
-              "{{fe_framework}}",
-              "{{version}}",
-              "{{purpose}}",
-              "{{why_chosen}}",
+              'Frontend Framework',
+              '{{fe_framework}}',
+              '{{version}}',
+              '{{purpose}}',
+              '{{why_chosen}}',
             ]
           - [
-              "UI Component Library",
-              "{{ui_library}}",
-              "{{version}}",
-              "{{purpose}}",
-              "{{why_chosen}}",
+              'UI Component Library',
+              '{{ui_library}}',
+              '{{version}}',
+              '{{purpose}}',
+              '{{why_chosen}}',
             ]
           - [
-              "State Management",
-              "{{state_mgmt}}",
-              "{{version}}",
-              "{{purpose}}",
-              "{{why_chosen}}",
+              'State Management',
+              '{{state_mgmt}}',
+              '{{version}}',
+              '{{purpose}}',
+              '{{why_chosen}}',
             ]
           - [
-              "Backend Language",
-              "{{be_language}}",
-              "{{version}}",
-              "{{purpose}}",
-              "{{why_chosen}}",
+              'Backend Language',
+              '{{be_language}}',
+              '{{version}}',
+              '{{purpose}}',
+              '{{why_chosen}}',
             ]
           - [
-              "Backend Framework",
-              "{{be_framework}}",
-              "{{version}}",
-              "{{purpose}}",
-              "{{why_chosen}}",
+              'Backend Framework',
+              '{{be_framework}}',
+              '{{version}}',
+              '{{purpose}}',
+              '{{why_chosen}}',
             ]
           - [
-              "API Style",
-              "{{api_style}}",
-              "{{version}}",
-              "{{purpose}}",
-              "{{why_chosen}}",
+              'API Style',
+              '{{api_style}}',
+              '{{version}}',
+              '{{purpose}}',
+              '{{why_chosen}}',
             ]
           - [
-              "Database",
-              "{{database}}",
-              "{{version}}",
-              "{{purpose}}",
-              "{{why_chosen}}",
+              'Database',
+              '{{database}}',
+              '{{version}}',
+              '{{purpose}}',
+              '{{why_chosen}}',
             ]
           - [
-              "Cache",
-              "{{cache}}",
-              "{{version}}",
-              "{{purpose}}",
-              "{{why_chosen}}",
+              'Cache',
+              '{{cache}}',
+              '{{version}}',
+              '{{purpose}}',
+              '{{why_chosen}}',
             ]
           - [
-              "File Storage",
-              "{{storage}}",
-              "{{version}}",
-              "{{purpose}}",
-              "{{why_chosen}}",
+              'File Storage',
+              '{{storage}}',
+              '{{version}}',
+              '{{purpose}}',
+              '{{why_chosen}}',
             ]
           - [
-              "Authentication",
-              "{{auth}}",
-              "{{version}}",
-              "{{purpose}}",
-              "{{why_chosen}}",
+              'Authentication',
+              '{{auth}}',
+              '{{version}}',
+              '{{purpose}}',
+              '{{why_chosen}}',
             ]
           - [
-              "Frontend Testing",
-              "{{fe_test}}",
-              "{{version}}",
-              "{{purpose}}",
-              "{{why_chosen}}",
+              'Frontend Testing',
+              '{{fe_test}}',
+              '{{version}}',
+              '{{purpose}}',
+              '{{why_chosen}}',
             ]
           - [
-              "Backend Testing",
-              "{{be_test}}",
-              "{{version}}",
-              "{{purpose}}",
-              "{{why_chosen}}",
+              'Backend Testing',
+              '{{be_test}}',
+              '{{version}}',
+              '{{purpose}}',
+              '{{why_chosen}}',
             ]
           - [
-              "E2E Testing",
-              "{{e2e_test}}",
-              "{{version}}",
-              "{{purpose}}",
-              "{{why_chosen}}",
+              'E2E Testing',
+              '{{e2e_test}}',
+              '{{version}}',
+              '{{purpose}}',
+              '{{why_chosen}}',
             ]
           - [
-              "Build Tool",
-              "{{build_tool}}",
-              "{{version}}",
-              "{{purpose}}",
-              "{{why_chosen}}",
+              'Build Tool',
+              '{{build_tool}}',
+              '{{version}}',
+              '{{purpose}}',
+              '{{why_chosen}}',
             ]
           - [
-              "Bundler",
-              "{{bundler}}",
-              "{{version}}",
-              "{{purpose}}",
-              "{{why_chosen}}",
+              'Bundler',
+              '{{bundler}}',
+              '{{version}}',
+              '{{purpose}}',
+              '{{why_chosen}}',
             ]
           - [
-              "IaC Tool",
-              "{{iac_tool}}",
-              "{{version}}",
-              "{{purpose}}",
-              "{{why_chosen}}",
+              'IaC Tool',
+              '{{iac_tool}}',
+              '{{version}}',
+              '{{purpose}}',
+              '{{why_chosen}}',
             ]
           - [
-              "CI/CD",
-              "{{cicd}}",
-              "{{version}}",
-              "{{purpose}}",
-              "{{why_chosen}}",
+              'CI/CD',
+              '{{cicd}}',
+              '{{version}}',
+              '{{purpose}}',
+              '{{why_chosen}}',
             ]
           - [
-              "Monitoring",
-              "{{monitoring}}",
-              "{{version}}",
-              "{{purpose}}",
-              "{{why_chosen}}",
+              'Monitoring',
+              '{{monitoring}}',
+              '{{version}}',
+              '{{purpose}}',
+              '{{why_chosen}}',
             ]
           - [
-              "Logging",
-              "{{logging}}",
-              "{{version}}",
-              "{{purpose}}",
-              "{{why_chosen}}",
+              'Logging',
+              '{{logging}}',
+              '{{version}}',
+              '{{purpose}}',
+              '{{why_chosen}}',
             ]
           - [
-              "CSS Framework",
-              "{{css_framework}}",
-              "{{version}}",
-              "{{purpose}}",
-              "{{why_chosen}}",
+              'CSS Framework',
+              '{{css_framework}}',
+              '{{version}}',
+              '{{purpose}}',
+              '{{why_chosen}}',
             ]
 
   - id: data-models
@@ -320,7 +320,7 @@ sections:
     repeatable: true
     sections:
       - id: model
-        title: "{{model_name}}"
+        title: '{{model_name}}'
         template: |
           **Purpose:** {{model_purpose}}
 
@@ -332,11 +332,11 @@ sections:
             title: TypeScript Interface
             type: code
             language: typescript
-            template: "{{model_interface}}"
+            template: '{{model_interface}}'
           - id: relationships
             title: Relationships
             type: bullet-list
-            template: "- {{relationship}}"
+            template: '- {{relationship}}'
 
   - id: api-spec
     title: API Specification
@@ -373,13 +373,13 @@ sections:
         condition: API style is GraphQL
         type: code
         language: graphql
-        template: "{{graphql_schema}}"
+        template: '{{graphql_schema}}'
       - id: trpc-api
         title: tRPC Router Definitions
         condition: API style is tRPC
         type: code
         language: typescript
-        template: "{{trpc_routers}}"
+        template: '{{trpc_routers}}'
 
   - id: components
     title: Components
@@ -400,7 +400,7 @@ sections:
     sections:
       - id: component-list
         repeatable: true
-        title: "{{component_name}}"
+        title: '{{component_name}}'
         template: |
           **Responsibility:** {{component_description}}
 
@@ -438,7 +438,7 @@ sections:
     repeatable: true
     sections:
       - id: api
-        title: "{{api_name}} API"
+        title: '{{api_name}} API'
         template: |
           - **Purpose:** {{api_purpose}}
           - **Documentation:** {{api_docs_url}}
@@ -495,12 +495,12 @@ sections:
             title: Component Organization
             type: code
             language: text
-            template: "{{component_structure}}"
+            template: '{{component_structure}}'
           - id: component-template
             title: Component Template
             type: code
             language: typescript
-            template: "{{component_template}}"
+            template: '{{component_template}}'
       - id: state-management
         title: State Management Architecture
         instruction: Detail state management approach based on chosen solution.
@@ -509,11 +509,11 @@ sections:
             title: State Structure
             type: code
             language: typescript
-            template: "{{state_structure}}"
+            template: '{{state_structure}}'
           - id: state-patterns
             title: State Management Patterns
             type: bullet-list
-            template: "- {{pattern}}"
+            template: '- {{pattern}}'
       - id: routing-architecture
         title: Routing Architecture
         instruction: Define routing structure based on framework choice.
@@ -522,12 +522,12 @@ sections:
             title: Route Organization
             type: code
             language: text
-            template: "{{route_structure}}"
+            template: '{{route_structure}}'
           - id: protected-routes
             title: Protected Route Pattern
             type: code
             language: typescript
-            template: "{{protected_route_example}}"
+            template: '{{protected_route_example}}'
       - id: frontend-services
         title: Frontend Services Layer
         instruction: Define how frontend communicates with backend.
@@ -536,12 +536,12 @@ sections:
             title: API Client Setup
             type: code
             language: typescript
-            template: "{{api_client_setup}}"
+            template: '{{api_client_setup}}'
           - id: service-example
             title: Service Example
             type: code
             language: typescript
-            template: "{{service_example}}"
+            template: '{{service_example}}'
 
   - id: backend-architecture
     title: Backend Architecture
@@ -559,12 +559,12 @@ sections:
                 title: Function Organization
                 type: code
                 language: text
-                template: "{{function_structure}}"
+                template: '{{function_structure}}'
               - id: function-template
                 title: Function Template
                 type: code
                 language: typescript
-                template: "{{function_template}}"
+                template: '{{function_template}}'
           - id: traditional-server
             condition: Traditional server architecture chosen
             sections:
@@ -572,12 +572,12 @@ sections:
                 title: Controller/Route Organization
                 type: code
                 language: text
-                template: "{{controller_structure}}"
+                template: '{{controller_structure}}'
               - id: controller-template
                 title: Controller Template
                 type: code
                 language: typescript
-                template: "{{controller_template}}"
+                template: '{{controller_template}}'
       - id: database-architecture
         title: Database Architecture
         instruction: Define database schema and access patterns.
@@ -586,12 +586,12 @@ sections:
             title: Schema Design
             type: code
             language: sql
-            template: "{{database_schema}}"
+            template: '{{database_schema}}'
           - id: data-access-layer
             title: Data Access Layer
             type: code
             language: typescript
-            template: "{{repository_pattern}}"
+            template: '{{repository_pattern}}'
       - id: auth-architecture
         title: Authentication and Authorization
         instruction: Define auth implementation details.
@@ -600,12 +600,12 @@ sections:
             title: Auth Flow
             type: mermaid
             mermaid_type: sequence
-            template: "{{auth_flow_diagram}}"
+            template: '{{auth_flow_diagram}}'
           - id: auth-middleware
             title: Middleware/Guards
             type: code
             language: typescript
-            template: "{{auth_middleware}}"
+            template: '{{auth_middleware}}'
 
   - id: unified-project-structure
     title: Unified Project Structure
@@ -615,59 +615,59 @@ sections:
     language: plaintext
     examples:
       - |
-          {{project-name}}/
-          ├── .github/                    # CI/CD workflows
-          │   └── workflows/
-          │       ├── ci.yaml
-          │       └── deploy.yaml
-          ├── apps/                       # Application packages
-          │   ├── web/                    # Frontend application
-          │   │   ├── src/
-          │   │   │   ├── components/     # UI components
-          │   │   │   ├── pages/          # Page components/routes
-          │   │   │   ├── hooks/          # Custom React hooks
-          │   │   │   ├── services/       # API client services
-          │   │   │   ├── stores/         # State management
-          │   │   │   ├── styles/         # Global styles/themes
-          │   │   │   └── utils/          # Frontend utilities
-          │   │   ├── public/             # Static assets
-          │   │   ├── tests/              # Frontend tests
-          │   │   └── package.json
-          │   └── api/                    # Backend application
-          │       ├── src/
-          │       │   ├── routes/         # API routes/controllers
-          │       │   ├── services/       # Business logic
-          │       │   ├── models/         # Data models
-          │       │   ├── middleware/     # Express/API middleware
-          │       │   ├── utils/          # Backend utilities
-          │       │   └── {{serverless_or_server_entry}}
-          │       ├── tests/              # Backend tests
-          │       └── package.json
-          ├── packages/                   # Shared packages
-          │   ├── shared/                 # Shared types/utilities
-          │   │   ├── src/
-          │   │   │   ├── types/          # TypeScript interfaces
-          │   │   │   ├── constants/      # Shared constants
-          │   │   │   └── utils/          # Shared utilities
-          │   │   └── package.json
-          │   ├── ui/                     # Shared UI components
-          │   │   ├── src/
-          │   │   └── package.json
-          │   └── config/                 # Shared configuration
-          │       ├── eslint/
-          │       ├── typescript/
-          │       └── jest/
-          ├── infrastructure/             # IaC definitions
-          │   └── {{iac_structure}}
-          ├── scripts/                    # Build/deploy scripts
-          ├── docs/                       # Documentation
-          │   ├── prd.md
-          │   ├── front-end-spec.md
-          │   └── fullstack-architecture.md
-          ├── .env.example                # Environment template
-          ├── package.json                # Root package.json
-          ├── {{monorepo_config}}         # Monorepo configuration
-          └── README.md
+        {{project-name}}/
+        ├── .github/                    # CI/CD workflows
+        │   └── workflows/
+        │       ├── ci.yaml
+        │       └── deploy.yaml
+        ├── apps/                       # Application packages
+        │   ├── web/                    # Frontend application
+        │   │   ├── src/
+        │   │   │   ├── components/     # UI components
+        │   │   │   ├── pages/          # Page components/routes
+        │   │   │   ├── hooks/          # Custom React hooks
+        │   │   │   ├── services/       # API client services
+        │   │   │   ├── stores/         # State management
+        │   │   │   ├── styles/         # Global styles/themes
+        │   │   │   └── utils/          # Frontend utilities
+        │   │   ├── public/             # Static assets
+        │   │   ├── tests/              # Frontend tests
+        │   │   └── deno.json
+        │   └── api/                    # Backend application
+        │       ├── src/
+        │       │   ├── routes/         # API routes/controllers
+        │       │   ├── services/       # Business logic
+        │       │   ├── models/         # Data models
+        │       │   ├── middleware/     # Express/API middleware
+        │       │   ├── utils/          # Backend utilities
+        │       │   └── {{serverless_or_server_entry}}
+        │       ├── tests/              # Backend tests
+        │       └── deno.json
+        ├── packages/                   # Shared packages
+        │   ├── shared/                 # Shared types/utilities
+        │   │   ├── src/
+        │   │   │   ├── types/          # TypeScript interfaces
+        │   │   │   ├── constants/      # Shared constants
+        │   │   │   └── utils/          # Shared utilities
+        │   │   └── deno.json
+        │   ├── ui/                     # Shared UI components
+        │   │   ├── src/
+        │   │   └── deno.json
+        │   └── config/                 # Shared configuration
+        │       ├── eslint/
+        │       ├── typescript/
+        │       └── jest/
+        ├── infrastructure/             # IaC definitions
+        │   └── {{iac_structure}}
+        ├── scripts/                    # Build/deploy scripts
+        ├── docs/                       # Documentation
+        │   ├── prd.md
+        │   ├── front-end-spec.md
+        │   └── fullstack-architecture.md
+        ├── .env.example                # Environment template
+        ├── deno.json                # Root deno.json
+        ├── {{monorepo_config}}         # Monorepo configuration
+        └── README.md
 
   - id: development-workflow
     title: Development Workflow
@@ -681,12 +681,12 @@ sections:
             title: Prerequisites
             type: code
             language: bash
-            template: "{{prerequisites_commands}}"
+            template: '{{prerequisites_commands}}'
           - id: initial-setup
             title: Initial Setup
             type: code
             language: bash
-            template: "{{setup_commands}}"
+            template: '{{setup_commands}}'
           - id: dev-commands
             title: Development Commands
             type: code
@@ -742,29 +742,29 @@ sections:
         title: CI/CD Pipeline
         type: code
         language: yaml
-        template: "{{cicd_pipeline_config}}"
+        template: '{{cicd_pipeline_config}}'
       - id: environments
         title: Environments
         type: table
         columns: [Environment, Frontend URL, Backend URL, Purpose]
         rows:
           - [
-              "Development",
-              "{{dev_fe_url}}",
-              "{{dev_be_url}}",
-              "Local development",
+              'Development',
+              '{{dev_fe_url}}',
+              '{{dev_be_url}}',
+              'Local development',
             ]
           - [
-              "Staging",
-              "{{staging_fe_url}}",
-              "{{staging_be_url}}",
-              "Pre-production testing",
+              'Staging',
+              '{{staging_fe_url}}',
+              '{{staging_be_url}}',
+              'Pre-production testing',
             ]
           - [
-              "Production",
-              "{{prod_fe_url}}",
-              "{{prod_be_url}}",
-              "Live environment",
+              'Production',
+              '{{prod_fe_url}}',
+              '{{prod_be_url}}',
+              'Live environment',
             ]
 
   - id: security-performance
@@ -820,17 +820,17 @@ sections:
             title: Frontend Tests
             type: code
             language: text
-            template: "{{frontend_test_structure}}"
+            template: '{{frontend_test_structure}}'
           - id: backend-tests
             title: Backend Tests
             type: code
             language: text
-            template: "{{backend_test_structure}}"
+            template: '{{backend_test_structure}}'
           - id: e2e-tests
             title: E2E Tests
             type: code
             language: text
-            template: "{{e2e_test_structure}}"
+            template: '{{e2e_test_structure}}'
       - id: test-examples
         title: Test Examples
         sections:
@@ -838,17 +838,17 @@ sections:
             title: Frontend Component Test
             type: code
             language: typescript
-            template: "{{frontend_test_example}}"
+            template: '{{frontend_test_example}}'
           - id: backend-test
             title: Backend API Test
             type: code
             language: typescript
-            template: "{{backend_test_example}}"
+            template: '{{backend_test_example}}'
           - id: e2e-test
             title: E2E Test
             type: code
             language: typescript
-            template: "{{e2e_test_example}}"
+            template: '{{e2e_test_example}}'
 
   - id: coding-standards
     title: Coding Standards
@@ -858,22 +858,22 @@ sections:
       - id: critical-rules
         title: Critical Fullstack Rules
         repeatable: true
-        template: "- **{{rule_name}}:** {{rule_description}}"
+        template: '- **{{rule_name}}:** {{rule_description}}'
         examples:
-          - "**Type Sharing:** Always define types in packages/shared and import from there"
-          - "**API Calls:** Never make direct HTTP calls - use the service layer"
-          - "**Environment Variables:** Access only through config objects, never process.env directly"
-          - "**Error Handling:** All API routes must use the standard error handler"
-          - "**State Updates:** Never mutate state directly - use proper state management patterns"
+          - '**Type Sharing:** Always define types in packages/shared and import from there'
+          - '**API Calls:** Never make direct HTTP calls - use the service layer'
+          - '**Environment Variables:** Access only through config objects, never process.env directly'
+          - '**Error Handling:** All API routes must use the standard error handler'
+          - '**State Updates:** Never mutate state directly - use proper state management patterns'
       - id: naming-conventions
         title: Naming Conventions
         type: table
         columns: [Element, Frontend, Backend, Example]
         rows:
-          - ["Components", "PascalCase", "-", "`UserProfile.tsx`"]
-          - ["Hooks", "camelCase with 'use'", "-", "`useAuth.ts`"]
-          - ["API Routes", "-", "kebab-case", "`/api/user-profile`"]
-          - ["Database Tables", "-", "snake_case", "`user_profiles`"]
+          - ['Components', 'PascalCase', '-', '`UserProfile.tsx`']
+          - ['Hooks', "camelCase with 'use'", '-', '`useAuth.ts`']
+          - ['API Routes', '-', 'kebab-case', '`/api/user-profile`']
+          - ['Database Tables', '-', 'snake_case', '`user_profiles`']
 
   - id: error-handling
     title: Error Handling Strategy
@@ -884,7 +884,7 @@ sections:
         title: Error Flow
         type: mermaid
         mermaid_type: sequence
-        template: "{{error_flow_diagram}}"
+        template: '{{error_flow_diagram}}'
       - id: error-format
         title: Error Response Format
         type: code
@@ -903,12 +903,12 @@ sections:
         title: Frontend Error Handling
         type: code
         language: typescript
-        template: "{{frontend_error_handler}}"
+        template: '{{frontend_error_handler}}'
       - id: backend-error-handling
         title: Backend Error Handling
         type: code
         language: typescript
-        template: "{{backend_error_handler}}"
+        template: '{{backend_error_handler}}'
 
   - id: monitoring
     title: Monitoring and Observability

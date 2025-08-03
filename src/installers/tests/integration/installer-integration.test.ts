@@ -8,7 +8,7 @@ import {
   assertExists,
   assertRejects,
 } from "https://deno.land/std@0.208.0/assert/mod.ts";
-import { ensureDir, exists, join } from "deps";
+import { ensureDir, join } from "deps";
 import { InstallerOrchestrator } from "deps";
 import { InstallationDetector } from "deps";
 // import { FreshInstallHandler } from 'deps';
@@ -169,11 +169,11 @@ Deno.test("Installer Integration Tests", async (t) => {
 
     // Verify manifest was created
     const manifestPath = join(TEST_CONFIG.installDir, ".bmad-manifest.json");
-    assertExists(await exists(manifestPath));
+    assertExists(await manifestPath);
 
     // Verify core files were installed
     const agentFile = join(TEST_CONFIG.installDir, "core/agents/test-agent.ts");
-    assertExists(await exists(agentFile));
+    assertExists(await agentFile);
   });
 
   await t.step("Update Installation Flow", async () => {
@@ -250,7 +250,7 @@ Deno.test("Installer Integration Tests", async (t) => {
       TEST_CONFIG.installDir,
       "core/workflows/test-workflow.ts",
     );
-    assertExists(await exists(workflowFile));
+    assertExists(await workflowFile);
   });
 
   await t.step("Expansion Pack Installation", async () => {
@@ -283,7 +283,7 @@ Deno.test("Installer Integration Tests", async (t) => {
       TEST_CONFIG.installDir,
       "extensions/test-pack/manifest.json",
     );
-    assertExists(await exists(packManifest));
+    assertExists(await packManifest);
   });
 
   await t.step("Error Handling - Invalid Configuration", async () => {

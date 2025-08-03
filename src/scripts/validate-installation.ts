@@ -13,17 +13,17 @@ import {
   Command,
   cyan,
   DenoVersionManager,
-  // dirname, // Currently unused
-  exists,
   gray,
   green,
   join,
-  ProjectPaths,
   Logger,
   magenta,
   parseYaml,
   PerformanceMonitor,
+  ProjectPaths,
   red,
+  // dirname, // Currently unused
+  safeExists,
   yellow,
 } from "deps";
 
@@ -235,7 +235,7 @@ class InstallationValidator {
       // Check for orphaned files
       await this.findOrphanedFiles(projectRoot, category);
 
-      // Validate package.json files
+      // Validate deno.json files
       await this.validatePackageJsonFiles(projectRoot, category);
 
       // Check for conflicting installations
@@ -262,7 +262,7 @@ class InstallationValidator {
     try {
       // Validate deno.json
       const denoJsonPath = join(projectRoot, "deno.json");
-      if (await exists(denoJsonPath)) {
+      if (await safeExists(denoJsonPath)) {
         const result = await this.validateJsonFile(denoJsonPath, "deno.json");
         category.issues.push(...result.issues);
       } else {
@@ -282,7 +282,7 @@ class InstallationValidator {
 
       for (const configFile of configFiles) {
         const configPath = join(projectRoot, configFile);
-        if (await exists(configPath)) {
+        if (await safeExists(configPath)) {
           const result = await this.validateYamlFile(configPath, configFile);
           category.issues.push(...result.issues);
         }
@@ -338,7 +338,7 @@ class InstallationValidator {
 
     for (const file of coreFiles) {
       const filePath = join(projectRoot, file);
-      if (await exists(filePath)) {
+      if (await safeExists(filePath)) {
         category.issues.push({
           type: "success",
           severity: "info",
@@ -360,7 +360,7 @@ class InstallationValidator {
   async validateExpansionPacks(_projectRoot: string, category: CategoryResult): Promise<void> {
     const extensionsDir = ProjectPaths.extensions;
 
-    if (!(await exists(extensionsDir))) {
+    if (!(await safeExists(extensionsDir))) {
       category.issues.push({
         type: "warning",
         severity: "warning",
@@ -374,7 +374,7 @@ class InstallationValidator {
       for await (const entry of Deno.readDir(extensionsDir)) {
         if (entry.isDirectory) {
           const configPath = join(extensionsDir, entry.name, "config.yaml");
-          if (await exists(configPath)) {
+          if (await safeExists(configPath)) {
             const result = await this.validateYamlFile(configPath, "expansion-config");
             category.issues.push(...result.issues);
           } else {
@@ -416,7 +416,7 @@ class InstallationValidator {
         // Simplified pattern matching - check specific known locations
         if (pattern.includes("node_modules")) {
           const nodeModulesPath = join(projectRoot, "node_modules");
-          if (await exists(nodeModulesPath)) {
+          if (await safeExists(nodeModulesPath)) {
             tempFiles.push("node_modules");
           }
         }
@@ -508,16 +508,16 @@ class InstallationValidator {
     return result;
   }
 
-  // Validate package.json files
+  // Validate deno.json files
   async validatePackageJsonFiles(projectRoot: string, category: CategoryResult): Promise<void> {
     const packageJsonFiles = [
-      "package.json",
-      "src/installers/package.json",
+      "deno.json",
+      "src/installers/deno.json",
     ];
 
     for (const file of packageJsonFiles) {
       const filePath = join(projectRoot, file);
-      if (await exists(filePath)) {
+      if (await safeExists(filePath)) {
         const result = await this.validateJsonFile(filePath, file);
         category.issues.push(...result.issues);
       }
@@ -538,7 +538,7 @@ class InstallationValidator {
 
     for (const conflictPath of conflictingPaths) {
       const fullPath = join(projectRoot, conflictPath);
-      if (await exists(fullPath)) {
+      if (await safeExists(fullPath)) {
         category.issues.push({
           type: "warning",
           severity: "warning",
@@ -615,7 +615,7 @@ class InstallationValidator {
     try {
       const buildDir = join(projectRoot, ".bmad-cache");
 
-      if (await exists(buildDir)) {
+      if (await safeExists(buildDir)) {
         const stats = await this.getBuildStats(buildDir);
 
         if (stats.totalSize > 100 * 1024 * 1024) { // > 100MB

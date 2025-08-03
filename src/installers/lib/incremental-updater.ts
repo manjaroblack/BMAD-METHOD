@@ -7,12 +7,12 @@ import {
   CacheManager,
   copy,
   ensureDir,
-  exists,
   join,
   Logger,
   ParallelProcessor,
   PerformanceMonitor,
   relative,
+  safeExists,
   walk,
 } from "deps";
 
@@ -391,7 +391,7 @@ class IncrementalUpdater {
   // Load manifest from file
   async loadManifest(manifestPath: string): Promise<Manifest | null> {
     try {
-      if (await exists(manifestPath)) {
+      if (await safeExists(manifestPath)) {
         const content = await Deno.readTextFile(manifestPath);
         return JSON.parse(content) as Manifest;
       }

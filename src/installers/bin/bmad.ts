@@ -16,18 +16,22 @@ import {
 } from "deps";
 
 // Handle both execution contexts (from root via deno or from installer directory)
-let version: string = "1.0.0"; // Default version, will be overridden by package.json
-import installer, { InstallConfig, InstallationState, ExpansionPack, ExpansionPackInfo } from "../lib/installer.ts";
+let version: string = "1.0.0"; // Default version, will be overridden by deno.json
+import installer, {
+  ExpansionPack,
+  ExpansionPackInfo,
+  InstallationState,
+  InstallConfig,
+} from "../lib/installer.ts";
 
 async function initializeInstaller(): Promise<void> {
   try {
-    // Try installer context first (when run from tools/installer/)
+    // Try installer context first (when run from src/installers/bin/)
     const currentDir = new URL(".", import.meta.url).pathname;
-    const denoJsonPath = join(dirname(currentDir), "..", "deno.json");
+    const denoJsonPath = join(currentDir, "..", "..", "..", "deno.json");
     const denoJsonContent = await Deno.readTextFile(denoJsonPath);
     const denoJson = JSON.parse(denoJsonContent);
     version = denoJson.version || "1.0.0";
-
     // installer is already an instance from deps.ts
   } catch (e) {
     // Fall back to root context (when run via deno from GitHub)
@@ -38,7 +42,7 @@ async function initializeInstaller(): Promise<void> {
     );
     try {
       const currentDir = new URL(".", import.meta.url).pathname;
-      const denoJsonPath = join(dirname(currentDir), "..", "..", "deno.json");
+      const denoJsonPath = join(currentDir, "..", "..", "..", "deno.json");
       const denoJsonContent = await Deno.readTextFile(denoJsonPath);
       const denoJson = JSON.parse(denoJsonContent);
       version = denoJson.version || "1.0.0";
@@ -209,7 +213,8 @@ async function promptInstallation(): Promise<void> {
 
   // Ask for installation directory first
   const directory = await Input.prompt({
-    message: "Enter the full path to your project directory where BMad should be installed:",
+    message:
+      "Enter the full path to your project directory where BMad should be installed:",
     validate: (input: string) => {
       if (!input.trim()) {
         return "Please enter a valid project path";
@@ -221,7 +226,9 @@ async function promptInstallation(): Promise<void> {
 
   // Detect existing installations
   const installDir = resolve(directory);
-  const state: InstallationState = await installer.detectInstallationState(installDir);
+  const state: InstallationState = await installer.detectInstallationState(
+    installDir,
+  );
 
   // Check for existing expansion packs
   const existingExpansionPacks = state.expansionPacks || {};
@@ -238,7 +245,6 @@ async function promptInstallation(): Promise<void> {
     dirname(currentDir),
     "..",
     "..",
-    "..",
     "core",
     "core-config.yaml",
   );
@@ -250,7 +256,7 @@ async function promptInstallation(): Promise<void> {
   let bmadOptionText: string;
   if (state.type === "v5_existing") {
     const currentVersion = state.manifest?.version || "unknown";
-    const newVersion = version; // Always use package.json version
+    const newVersion = version; // Always use deno.json version
     const versionInfo = currentVersion === newVersion
       ? `(v${currentVersion} - reinstall)`
       : `(v${currentVersion} → v${newVersion})`;

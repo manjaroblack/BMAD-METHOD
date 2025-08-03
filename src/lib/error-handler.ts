@@ -3,7 +3,7 @@
  * Provides consistent error patterns, logging, and exit codes
  */
 
-import { blue, dirname, ensureDir, exists, gray, red, yellow } from "deps";
+import { blue, dirname, ensureDir, gray, red, yellow, safeExists } from "deps";
 
 // Standard exit codes
 export const EXIT_CODES = {
@@ -186,7 +186,7 @@ export function validateRequired(
 }
 
 export async function validateFileExists(filePath: string, errorMessage?: string): Promise<void> {
-  const fileExists = await exists(filePath, { isFile: true });
+  const fileExists = await safeExists(filePath);
   if (!fileExists) {
     throw new ValidationError(
       errorMessage || `File not found: ${filePath}`,
@@ -195,7 +195,7 @@ export async function validateFileExists(filePath: string, errorMessage?: string
 }
 
 export async function validateDirectory(dirPath: string, errorMessage?: string): Promise<void> {
-  const dirExists = await exists(dirPath, { isDirectory: true });
+  const dirExists = await safeExists(dirPath);
   if (!dirExists) {
     throw new ValidationError(
       errorMessage || `Directory not found: ${dirPath}`,

@@ -1,21 +1,21 @@
 import {
   blue,
+  configLoader,
   copy,
   cyan,
   dirname,
   ensureDir,
-  exists,
   expandGlob,
   green,
   join,
   parseYaml,
+  ProjectPaths,
   red,
   resolve,
+  resourceLocator,
+  safeExists,
   stringifyYaml,
   yellow,
-  ProjectPaths,
-  resourceLocator,
-  configLoader,
 } from "deps";
 
 // Spinner interface for consistent typing
@@ -33,8 +33,7 @@ function extractYamlFromAgent(content: string): string | null {
   return yamlMatch ? (yamlMatch[1] || null) : null;
 }
 // import fileManager from 'deps'; // Currently unused
-import BaseIdeSetup from './ide-base-setup.ts';
-import { IntegrityChecker } from 'deps';
+import BaseIdeSetup from "./ide-base-setup.ts";
 class Logger {
   log(message: string): void {
     console.log(message);
@@ -80,13 +79,11 @@ export interface ExpansionPackInfo {
 }
 
 class Installer {
-  private validator: typeof IntegrityChecker;
   private logger: Logger;
   private monitor: PerformanceMonitor;
   private _ideSetup: BaseIdeSetup;
 
   constructor() {
-    this.validator = IntegrityChecker;
     this.logger = new Logger();
     this.monitor = new PerformanceMonitor();
     this._ideSetup = new BaseIdeSetup();
@@ -94,13 +91,13 @@ class Installer {
 
   getCoreVersion(): string {
     try {
-      // Always use package.json version
-      const packagePath = join(ProjectPaths.root, "package.json");
-      const packageContent = Deno.readTextFileSync(packagePath);
-      const packageJson = JSON.parse(packageContent);
-      return packageJson.version;
+      // Always use deno.json version
+      const denoJsonPath = join(ProjectPaths.root, "deno.json");
+      const denoJsonContent = Deno.readTextFileSync(denoJsonPath);
+      const denoJson = JSON.parse(denoJsonContent);
+      return denoJson.version;
     } catch (_error) {
-      console.warn("Could not read version from package.json, using 'unknown'");
+      console.warn("Could not read version from deno.json, using 'unknown'");
       return "unknown";
     }
   }
@@ -115,17 +112,22 @@ class Installer {
         "agent-configs",
       );
       const agentsDir = join(bmadCoreDestDir, "agents");
-      const templatesDir = join(
-        resourceLocator.getBmadCorePath(),
-        "templates",
-      );
 
       // Ensure agents directory exists
       await ensureDir(agentsDir);
 
-      // Load base template
-      const baseTemplatePath = join(templatesDir, "agent-base-tmpl.yaml");
-      const baseTemplateContent = await Deno.readTextFile(baseTemplatePath);
+      // Load base template from source directory
+      const baseTemplatePath = join(agentConfigsDir, "agent-base-tmpl.yaml");
+      let baseTemplateContent: string;
+      try {
+        baseTemplateContent = await Deno.readTextFile(baseTemplatePath);
+      } catch (error) {
+        throw new Error(
+          `Failed to read base template file at ${baseTemplatePath}: ${
+            (error as Error).message
+          }`,
+        );
+      }
       const baseTemplate = parseYaml(baseTemplateContent) as Record<
         string,
         unknown
@@ -139,7 +141,7 @@ class Installer {
         }
       }
 
-      // Load all agent configurations for bmad-master aggregation
+      // Load all agent configurations
       const allAgentConfigs: Record<string, unknown> = {};
       for (const configFile of configFiles) {
         const agentName = configFile.replace("-config.yaml", "");
@@ -158,15 +160,10 @@ class Installer {
           spinner.text = `Generating ${agentName} agent...`;
         }
 
-        let agentConfig = allAgentConfigs[agentName] as Record<string, unknown>;
-
-        // Special handling for bmad-master: aggregate dependencies from other agents
-        if (agentName === "bmad-master") {
-          agentConfig = this.buildBmadMasterConfig(
-            agentConfig,
-            allAgentConfigs,
-          );
-        }
+        const agentConfig = allAgentConfigs[agentName] as Record<
+          string,
+          unknown
+        >;
 
         // Generate agent file content
         const content = this.generateAgentFileContent(
@@ -181,7 +178,9 @@ class Installer {
 
       return generatedFiles;
     } catch (error: unknown) {
-      const errorMessage = error instanceof Error ? error.message : String(error);
+      const errorMessage = error instanceof Error
+        ? error.message
+        : String(error);
       console.error(
         red("Failed to generate agents from configs:"),
         errorMessage,
@@ -189,80 +188,215 @@ class Installer {
       throw error;
     }
   }
-
-  buildBmadMasterConfig(
-    bmadMasterConfig: Record<string, unknown>,
-    allAgentConfigs: Record<string, unknown>,
-  ): Record<string, unknown> {
-    // Aggregate dependencies from all other agents
-    const aggregatedDependencies: Record<string, unknown[]> = {};
-
-    for (const [agentName, config] of Object.entries(allAgentConfigs)) {
-      if (
-        agentName !== "bmad-master" &&
-        config &&
-        typeof config === "object" &&
-        "dependencies" in config &&
-        config.dependencies &&
-        typeof config.dependencies === "object"
-      ) {
-        for (
-          const [depType, deps] of Object.entries(config.dependencies as Record<string, unknown>)
-        ) {
-          if (!aggregatedDependencies[depType]) {
-            aggregatedDependencies[depType] = [];
-          }
-          if (Array.isArray(deps)) {
-            aggregatedDependencies[depType].push(...deps);
-          }
-        }
-      }
-    }
-
-    // Remove duplicates and merge with existing bmad-master dependencies
-    for (const [depType, deps] of Object.entries(aggregatedDependencies)) {
-      if (Array.isArray(deps)) {
-        const uniqueDeps = [...new Set(deps)];
-
-        // Ensure bmadMasterConfig.dependencies exists and is an object
-        if (!bmadMasterConfig.dependencies || typeof bmadMasterConfig.dependencies !== "object") {
-          bmadMasterConfig.dependencies = {};
-        }
-
-        const dependencies = bmadMasterConfig.dependencies as Record<string, unknown>;
-
-        if (dependencies[depType] && Array.isArray(dependencies[depType])) {
-          dependencies[depType] = [
-            ...new Set([
-              ...(dependencies[depType] as unknown[]),
-              ...uniqueDeps,
-            ]),
-          ];
-        } else {
-          dependencies[depType] = uniqueDeps;
-        }
-      }
-    }
-
-    return bmadMasterConfig;
-  }
-
   generateAgentFileContent(
     baseTemplate: Record<string, unknown>,
     agentConfig: Record<string, unknown>,
   ): string {
-    // Create a deep copy of the base template
-    const template = JSON.parse(JSON.stringify(baseTemplate));
+    // Build the markdown content
+    let content = `# ${
+      agentConfig.id
+        ? String(agentConfig.id).toUpperCase()
+        : (agentConfig.name || "Agent")
+    }\n\n`;
 
-    // Merge agent config into template
-    Object.assign(template, agentConfig);
+    // Add activation notice
+    if (baseTemplate.activation_notice) {
+      content += `${baseTemplate.activation_notice}\n---\n\n`;
+    }
 
-    // Convert to YAML and wrap in markdown
-    const yamlContent = stringifyYaml(template);
+    // Add config section
+    content += "## Config\n\n";
 
-    return `---\n${yamlContent}---\n\n# ${template.title || template.id}\n\n${
-      template.description || ""
-    }`;
+    const configSection = baseTemplate.config as
+      | { requests?: string[]; files?: string[]; activation?: string[] }
+      | undefined;
+
+    // Files section
+
+    if (configSection?.files && Array.isArray(configSection.files)) {
+      content += "**Files:**\n\n";
+      for (const file of configSection.files) {
+        content += `* ${file}\n`;
+      }
+      content += "\n";
+    }
+
+    // Requests section
+
+    if (configSection?.requests && Array.isArray(configSection.requests)) {
+      content += "**Requests:**\n\n";
+      for (const request of configSection.requests) {
+        content += `* ${request}\n`;
+      }
+      content += "\n";
+    }
+
+    // Activation section
+    if (configSection?.activation && Array.isArray(configSection.activation)) {
+      content += "**Activation:**\n\n";
+      for (let i = 0; i < configSection.activation.length; i++) {
+        content += `${i + 1}. ${configSection.activation[i]}\n`;
+      }
+      content += "\n";
+    }
+
+    // Additional Activation section
+    const additionalActivationSection = agentConfig
+      .additional_activation_instructions as string[] | undefined;
+    if (
+      additionalActivationSection && Array.isArray(additionalActivationSection)
+    ) {
+      content += "**Additional Activation:**\n\n";
+      for (const line of additionalActivationSection) {
+        content += `* ${line}\n`;
+      }
+      content += "\n";
+    }
+
+    // Add persona section
+    content += "## Persona\n\n";
+
+    const agent = agentConfig.agent as {
+      name: string;
+      title: string;
+      icon: string;
+      whenToUse: string;
+    };
+
+    // Agent subsection
+    content += "**Agent:**\n\n";
+    if (agent.name) {
+      content += `* **Name:** ${agent.name}\n`;
+    }
+    if (agent.title) {
+      const titleWithIcon = agent.icon
+        ? `${agent.title} ${agent.icon}`
+        : agent.title;
+      content += `* **Title:** ${titleWithIcon}\n`;
+    }
+    if (agent.whenToUse) {
+      content += `* **Use:** ${agent.whenToUse}\n`;
+    }
+    content += "\n";
+
+    // Persona subsection
+    const persona = agentConfig.persona as {
+      role: string;
+      style: string;
+      identity: string;
+      focus: string;
+      core_principles: string[];
+    };
+    content += "**Persona:**\n\n";
+    if (persona.role) {
+      content += `* **Role:** ${persona.role}\n`;
+    }
+    if (persona.style) {
+      content += `* **Style:** ${persona.style}\n`;
+    }
+    if (persona.identity) {
+      content += `* **Identity:** ${persona.identity}\n`;
+    }
+    if (persona.focus) {
+      content += `* **Focus:** ${persona.focus}\n`;
+    }
+
+    // Core principles
+    if (persona.core_principles && Array.isArray(persona.core_principles)) {
+      content += "* **Principles:**";
+      for (let i = 0; i < persona.core_principles.length; i++) {
+        const principle = persona.core_principles[i];
+        if (i === 0) {
+          content += ` ${principle}`;
+        } else {
+          content += `, ${principle}`;
+        }
+      }
+      content += "\n\n";
+    }
+
+    // Additional permissions
+    const additionalPermissions = agentConfig.additional_permissions as
+      | string[]
+      | undefined;
+    if (
+      additionalPermissions &&
+      Array.isArray(additionalPermissions)
+    ) {
+      for (const permission of additionalPermissions) {
+        content += `* **Permissions:** ${permission}\n`;
+      }
+      content += "\n";
+    }
+
+    // Add commands & dependencies section header
+    content += "## Commands & Dependencies\n\n";
+    const defaultPrefixNotice = "*`*` prefix on all commands*";
+    content += `${defaultPrefixNotice}\n\n`;
+
+    const standardCommands =
+      baseTemplate.standard_commands as Record<string, unknown> || {};
+    const includeStandardCommands =
+      agentConfig.include_standard_commands as string[] || [];
+    const commands = agentConfig.commands as Record<string, unknown> || {};
+
+    // Build combined commands object
+    const allCommands: Record<string, unknown> = { ...commands };
+
+    // Add included standard commands
+    for (const cmd of includeStandardCommands) {
+      if (standardCommands[cmd]) {
+        allCommands[cmd] = standardCommands[cmd];
+      }
+    }
+
+    // Add all commands
+    if (Object.keys(allCommands).length > 0) {
+      content += "**Commands:**\n\n";
+      for (const [command, description] of Object.entries(allCommands)) {
+        // Handle multi-line descriptions with special formatting
+        if (
+          typeof description === "string" &&
+          (description.includes("\n") || description.includes(":"))
+        ) {
+          content += `* **${command}:**\n`;
+          const lines = description.split("\n");
+          for (const line of lines) {
+            const parts = line.trim().split(":");
+            if (parts.length >= 2 && parts[0]) {
+              content += `  * **${parts[0].trim()}:** ${
+                parts.slice(1).join(":").trim()
+              }\n`;
+            }
+          }
+        } else {
+          content += `* **${command}:** ${description}\n`;
+        }
+      }
+      content += "\n";
+    }
+
+    const dependencies = agentConfig.dependencies as Record<string, unknown>;
+
+    // Add dependencies section if present
+    if (Object.keys(dependencies).length > 0) {
+      content += "**Dependencies:**\n\n";
+      for (
+        const [depType, depList] of Object.entries(dependencies)
+      ) {
+        if (Array.isArray(depList) && depList.length > 0) {
+          content += `* **${
+            depType.charAt(0).toUpperCase() + depType.slice(1)
+          }:** ${depList.map((dep: string) => `\`${dep}\``).join(", ")}\n`;
+        }
+      }
+      content += "\n";
+    }
+
+    // Ensure single trailing newline
+    content = content.trimEnd() + "\n";
+
+    return content;
   }
 
   async install(config: InstallConfig): Promise<void> {
@@ -308,7 +442,9 @@ class Installer {
 
       spinner.succeed("Installation completed successfully!");
     } catch (error: unknown) {
-      const errorMessage = error instanceof Error ? error.message : String(error);
+      const errorMessage = error instanceof Error
+        ? error.message
+        : String(error);
       spinner.fail(
         `Installation failed: ${errorMessage}`,
       );
@@ -326,7 +462,10 @@ class Installer {
     );
 
     try {
-      if (await exists(manifestPath)) {
+      // Check if the manifest file exists
+      const manifestExists = await safeExists(manifestPath);
+
+      if (manifestExists) {
         const manifestContent = await Deno.readTextFile(manifestPath);
         const manifest = parseYaml(manifestContent) as Record<string, unknown>;
 
@@ -342,7 +481,9 @@ class Installer {
 
     // Check for other installation types
     const bmadCoreDir = join(installDir, ".bmad-core");
-    if (await exists(bmadCoreDir)) {
+    const coreDirExists = await safeExists(bmadCoreDir);
+
+    if (coreDirExists) {
       return {
         type: "unknown_existing",
         expansionPacks: await this.detectExpansionPacks(installDir),
@@ -368,7 +509,8 @@ class Installer {
     }
 
     // Install expansion packs if selected
-    const expansionPacks = config.selectedPacks?.filter((pack) => pack !== ".bmad-core") || [];
+    const expansionPacks =
+      config.selectedPacks?.filter((pack) => pack !== ".bmad-core") || [];
     if (expansionPacks.length > 0) {
       await this.installExpansionPacks(
         installDir,
@@ -408,7 +550,8 @@ class Installer {
           (typeof state.manifest.installedAt === "string" ||
             typeof state.manifest.installedAt === "number" ||
             state.manifest.installedAt instanceof Date)
-          ? new Date(state.manifest.installedAt as string | number | Date).toLocaleDateString()
+          ? new Date(state.manifest.installedAt as string | number | Date)
+            .toLocaleDateString()
           : "unknown"
       }`,
     );
@@ -428,7 +571,9 @@ class Installer {
       if (hasMissingFiles) {
         console.log(`   Missing files: ${integrity.missing.length}`);
         if (integrity.missing.length <= 5) {
-          integrity.missing.forEach((file: string) => console.log(`     - ${file}`));
+          integrity.missing.forEach((file: string) =>
+            console.log(`     - ${file}`)
+          );
         }
       }
       if (hasModifiedFiles) {
@@ -436,7 +581,9 @@ class Installer {
           yellow(`   Modified files: ${integrity.modified.length}`),
         );
         if (integrity.modified.length <= 5) {
-          integrity.modified.forEach((file: string) => console.log(`     - ${file}`));
+          integrity.modified.forEach((file: string) =>
+            console.log(`     - ${file}`)
+          );
         }
       }
     }
@@ -479,7 +626,8 @@ class Installer {
     }
 
     // Update/install expansion packs
-    const expansionPacks = config.selectedPacks?.filter((pack) => pack !== ".bmad-core") || [];
+    const expansionPacks =
+      config.selectedPacks?.filter((pack) => pack !== ".bmad-core") || [];
     if (expansionPacks.length > 0) {
       await this.installExpansionPacks(
         installDir,
@@ -511,10 +659,17 @@ class Installer {
     return 0;
   }
 
-  async detectExpansionPacks(installDir: string): Promise<Record<string, unknown>> {
+  async detectExpansionPacks(
+    installDir: string,
+  ): Promise<Record<string, unknown>> {
     const expansionPacks: Record<string, unknown> = {};
 
     try {
+      // Check if install directory exists before trying to read it
+      if (!(await safeExists(installDir))) {
+        return expansionPacks;
+      }
+
       for await (const entry of Deno.readDir(installDir)) {
         if (
           entry.isDirectory && entry.name.startsWith(".") &&
@@ -523,10 +678,13 @@ class Installer {
           const packId = entry.name.substring(1); // Remove leading dot
           const configPath = join(installDir, entry.name, "config.yaml");
 
-          if (await exists(configPath)) {
+          if (await safeExists(configPath)) {
             try {
               const configContent = await Deno.readTextFile(configPath);
-              const config = parseYaml(configContent) as Record<string, unknown>;
+              const config = parseYaml(configContent) as Record<
+                string,
+                unknown
+              >;
               expansionPacks[packId] = {
                 manifest: config,
                 path: join(installDir, entry.name),
@@ -557,7 +715,7 @@ class Installer {
 
     for (const dir of expectedDirs) {
       const dirPath = join(coreDir, dir);
-      if (!(await exists(dirPath))) {
+      if (!(await safeExists(dirPath))) {
         missing.push(dir);
       }
     }
@@ -578,7 +736,7 @@ class Installer {
     const backupDir = join(installDir, ".bmad-core.backup");
     const coreDir = join(installDir, ".bmad-core");
 
-    if (await exists(coreDir)) {
+    if (await safeExists(coreDir)) {
       await copy(coreDir, backupDir, { overwrite: true });
     }
 
@@ -587,15 +745,15 @@ class Installer {
       await this.installCore(installDir, spinner);
 
       // Remove backup on success
-      if (await exists(backupDir)) {
+      if (await safeExists(backupDir)) {
         await Deno.remove(backupDir, { recursive: true });
       }
 
       console.log(green("✅ Core updated successfully"));
     } catch (error: unknown) {
       // Restore backup on failure
-      if (await exists(backupDir)) {
-        if (await exists(coreDir)) {
+      if (await safeExists(backupDir)) {
+        if (await safeExists(coreDir)) {
           await Deno.remove(coreDir, { recursive: true });
         }
         await copy(backupDir, coreDir, { overwrite: true });
@@ -640,9 +798,9 @@ class Installer {
     const coreDestDir = join(installDir, ".bmad-core");
     await ensureDir(coreDestDir);
 
-    // Copy core files
+    // Copy only configuration files from core, not TypeScript implementation files
     const corePath = resourceLocator.getBmadCorePath();
-    await copy(corePath, coreDestDir, { overwrite: true });
+    await this.copyConfigurationFiles(corePath, coreDestDir);
 
     // Generate agents from configs
     await this.generateAgentsFromConfigs(coreDestDir, spinner);
@@ -674,7 +832,7 @@ class Installer {
 
       // Get expansion pack source
       const packPath = resourceLocator.getExpansionPackPath(packId);
-      if (await exists(packPath)) {
+      if (await safeExists(packPath)) {
         await copy(packPath, packDestDir, { overwrite: true });
 
         // Copy common items to expansion pack
@@ -721,7 +879,11 @@ class Installer {
           const agentId = agentIds[i] as string;
           const agentPath = agentPaths[i] as string | null;
           if (agentPath !== null) {
-            await this._ideSetup.createAgentRuleContent(agentId, agentPath, installDir);
+            await this._ideSetup.createAgentRuleContent(
+              agentId,
+              agentPath,
+              installDir,
+            );
           } else {
             console.warn(`Skipping agent ${agentId}: agentPath not found.`);
           }
@@ -729,7 +891,9 @@ class Installer {
         console.log(green(`✓ ${ide} configuration set up.`));
       }
     } catch (error: unknown) {
-      const errorMessage = error instanceof Error ? error.message : String(error);
+      const errorMessage = error instanceof Error
+        ? error.message
+        : String(error);
       console.error(
         red(`Failed to set up IDE configurations: ${errorMessage}`),
       );
@@ -763,9 +927,9 @@ class Installer {
     await Deno.writeTextFile(manifestPath, manifestContent);
   }
 
-
-
-  async getInstallationStatus(directory: string): Promise<Record<string, unknown>> {
+  async getInstallationStatus(
+    directory: string,
+  ): Promise<Record<string, unknown>> {
     const state = await this.detectInstallationState(directory);
 
     return {
@@ -890,7 +1054,9 @@ class Installer {
 
       console.log(green(`✅ Codebase flattened successfully to ${outputFile}`));
     } catch (error: unknown) {
-      const errorMessage = error instanceof Error ? error.message : String(error);
+      const errorMessage = error instanceof Error
+        ? error.message
+        : String(error);
       console.error(
         red(
           `❌ Failed to flatten codebase: ${errorMessage}`,
@@ -910,7 +1076,7 @@ class Installer {
     const copiedFiles: string[] = [];
 
     // Check if common/ exists
-    if (!(await exists(commonPath))) {
+    if (!(await safeExists(commonPath))) {
       console.warn("Warning: common/ folder not found");
       return copiedFiles;
     }
@@ -963,7 +1129,8 @@ class Installer {
       if (yamlContent) {
         try {
           const agentConfig = parseYaml(yamlContent) as Record<string, unknown>;
-          const dependencies = (agentConfig.dependencies as Record<string, unknown>) || {};
+          const dependencies =
+            (agentConfig.dependencies as Record<string, unknown>) || {};
 
           // Check for core dependencies (those that don't exist in the expansion pack)
           for (
@@ -991,11 +1158,11 @@ class Installer {
               );
 
               // Check if dependency exists in expansion pack dot folder
-              if (!(await exists(expansionDepPath))) {
+              if (!(await safeExists(expansionDepPath))) {
                 // Try to find it in expansion pack source
                 const sourceDepPath = join(pack.path, depType, depFileName);
 
-                if (await exists(sourceDepPath)) {
+                if (await safeExists(sourceDepPath)) {
                   // Copy from expansion pack source
                   spinner.text = `Copying ${packId} dependency ${dep}...`;
                   const destPath = join(
@@ -1021,8 +1188,9 @@ class Installer {
                     depFileName,
                   );
 
-                  if (await exists(coreDepPath)) {
-                    spinner.text = `Copying core dependency ${dep} for ${packId}...`;
+                  if (await safeExists(coreDepPath)) {
+                    spinner.text =
+                      `Copying core dependency ${dep} for ${packId}...`;
                     const destPath = join(
                       expansionDotFolder,
                       depType,
@@ -1050,7 +1218,9 @@ class Installer {
             }
           }
         } catch (error: unknown) {
-          const errorMessage = error instanceof Error ? error.message : String(error);
+          const errorMessage = error instanceof Error
+            ? error.message
+            : String(error);
           console.warn(
             yellow(
               `Warning: Could not parse YAML in ${entry.path}: ${errorMessage}`,
@@ -1058,6 +1228,94 @@ class Installer {
           );
         }
       }
+    }
+  }
+
+  /**
+   * Copy only configuration files (YAML, MD, etc.) from core directory
+   * Excludes TypeScript implementation files which should be in src/shared/
+   */
+  async copyConfigurationFiles(
+    sourcePath: string,
+    destPath: string,
+  ): Promise<void> {
+    const allowedExtensions = new Set([
+      ".yaml",
+      ".yml",
+      ".md",
+      ".json",
+      ".txt",
+    ]);
+    const excludedDirs = new Set(["agent-configs"]); // TypeScript-only directories
+
+    // Ensure destination directory exists
+    await ensureDir(destPath);
+
+    // Copy core-config.yaml file if it exists
+    const coreConfigPath = join(sourcePath, "core-config.yaml");
+    if (await safeExists(coreConfigPath)) {
+      await copy(coreConfigPath, join(destPath, "core-config.yaml"), {
+        overwrite: true,
+      });
+    }
+
+    // Copy directories containing only configuration files
+    for await (const entry of Deno.readDir(sourcePath)) {
+      if (entry.isDirectory && !excludedDirs.has(entry.name)) {
+        const sourceDir = join(sourcePath, entry.name);
+        const destDir = join(destPath, entry.name);
+
+        await this.copyConfigFilesRecursively(
+          sourceDir,
+          destDir,
+          allowedExtensions,
+        );
+      } else if (entry.isFile) {
+        const ext = entry.name.substring(entry.name.lastIndexOf("."));
+        if (allowedExtensions.has(ext)) {
+          await copy(
+            join(sourcePath, entry.name),
+            join(destPath, entry.name),
+            { overwrite: true },
+          );
+        }
+      }
+    }
+  }
+
+  /**
+   * Recursively copy only configuration files from a directory
+   */
+  private async copyConfigFilesRecursively(
+    sourceDir: string,
+    destDir: string,
+    allowedExtensions: Set<string>,
+  ): Promise<void> {
+    try {
+      await ensureDir(destDir);
+
+      for await (const entry of Deno.readDir(sourceDir)) {
+        const sourcePath = join(sourceDir, entry.name);
+        const destPath = join(destDir, entry.name);
+
+        if (entry.isDirectory) {
+          await this.copyConfigFilesRecursively(
+            sourcePath,
+            destPath,
+            allowedExtensions,
+          );
+        } else if (entry.isFile) {
+          const ext = entry.name.substring(entry.name.lastIndexOf("."));
+          if (allowedExtensions.has(ext)) {
+            await copy(sourcePath, destPath, { overwrite: true });
+          }
+        }
+      }
+    } catch (error) {
+      // Skip directories that don't exist or can't be read
+      console.warn(
+        `Warning: Could not copy config files from ${sourceDir}: ${error}`,
+      );
     }
   }
 

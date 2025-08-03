@@ -17,7 +17,7 @@ export interface IFileManager {
   /**
    * Check if file or directory exists
    */
-  exists(path: string): Promise<boolean>;
+  fileExists(path: string): Promise<boolean>;
 
   /**
    * Ensure directory exists (create if necessary)

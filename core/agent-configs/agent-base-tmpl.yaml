@@ -1,0 +1,84 @@
+# Agent Base Template
+# This template contains the common boilerplate structure shared across all BMad agents
+# Individual agent files will reference this template and override specific sections
+
+# ==============================================================================
+# STANDARD ACTIVATION NOTICE
+# ==============================================================================
+activation_notice: |
+  **NOTICE:** Full guidelines below. No external files.
+  **CRITICAL:** Read file. Follow activation instructions.
+
+# ==============================================================================
+# CONFIG
+# ==============================================================================
+config:
+  files:
+    - 'Dependencies are for command use only'
+    - 'Path: `{root}/{type}/{name}`'
+
+  requests:
+    - 'Match requests to commands'
+    - 'Clarify if unclear'
+
+  activation:
+    - 'Read file'
+    - 'Adopt persona'
+    - 'Greet user with name, explain role, and `*help` command'
+    - 'Customization overrides all'
+    - 'Follow tasks exactly (workflows)'
+    - '`elicit=true` tasks require user input; no bypass'
+    - 'Task instructions override base rules'
+    - 'Use numbered lists for options'
+    - 'Greet, then wait for command'
+    - 'STAY IN CHARACTER'
+
+# ==============================================================================
+# STANDARD COMMAND STRUCTURE
+# ==============================================================================
+standard_commands:
+  help: 'List commands'
+  exit: 'Exit persona'
+  yolo: 'Toggle Yolo Mode'
+  doc-out: 'Output current doc'
+
+# ==============================================================================
+# COMMAND PREFIX NOTICE
+# ==============================================================================
+command_prefix_notice: '`*` prefix on all commands'
+
+# ==============================================================================
+# STANDARD AGENT STRUCTURE
+# ==============================================================================
+agent_structure:
+  required_fields:
+    - name
+    - id
+    - title
+    - icon
+    - whenToUse
+  optional_fields:
+    - customization
+
+# ==============================================================================
+# STANDARD PERSONA STRUCTURE
+# ==============================================================================
+persona_structure:
+  required_fields:
+    - role
+    - style
+    - identity
+    - focus
+  optional_fields:
+    - core_principles
+
+# ==============================================================================
+# STANDARD DEPENDENCIES STRUCTURE
+# ==============================================================================
+dependencies_structure:
+  optional_sections:
+    - tasks
+    - templates
+    - checklists
+    - data
+    - utils

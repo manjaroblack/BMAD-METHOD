@@ -2,13 +2,13 @@ import {
   basename,
   CacheManager,
   DependencyResolver,
-  exists,
   join,
   ParallelProcessor,
   parseYaml,
   PerformanceMonitor,
   relative,
   SEPARATOR as sep,
+  safeExists,
 } from "deps";
 
 interface WebBuilderOptions {
@@ -146,7 +146,7 @@ export class WebBuilder {
   async cleanOutputDirs(): Promise<void> {
     for (const outputDir of this.outputDirs) {
       try {
-        if (await exists(outputDir)) {
+        if (await safeExists(outputDir)) {
           await Deno.remove(outputDir, { recursive: true });
         }
       } catch (error) {

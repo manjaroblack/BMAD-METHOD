@@ -1,11 +1,11 @@
 #!/usr/bin/env -S deno run --allow-read --allow-write --allow-env
 
 /**
- * Semantic-release plugin to sync installer package.json version
+ * Semantic-release plugin to sync installer deno.json version
  * Migrated from Node.js to Deno
  */
 
-import { exists, join } from "deps";
+import { join, safeExists } from "deps";
 
 // Interface for semantic-release context
 interface SemanticReleaseContext {
@@ -25,7 +25,7 @@ interface SemanticReleaseContext {
   };
 }
 
-// Interface for package.json structure
+// Interface for deno.json structure
 interface PackageJson {
   name?: string;
   version: string;
@@ -44,13 +44,13 @@ interface PluginConfig {
 }
 
 /**
- * Semantic Release Plugin for syncing installer package.json version
+ * Semantic Release Plugin for syncing installer deno.json version
  */
 class SemanticReleaseSyncInstaller {
-  private defaultInstallerPath = "tools/installer/package.json";
+  private defaultInstallerPath = "tools/installer/deno.json";
 
   /**
-   * Prepare step - syncs the installer package.json version
+   * Prepare step - syncs the installer deno.json version
    */
   async prepare(
     pluginConfig: PluginConfig,
@@ -64,12 +64,12 @@ class SemanticReleaseSyncInstaller {
 
     try {
       // Check if the file exists
-      if (!(await exists(filePath))) {
-        logger.log(`Installer package.json not found at ${filePath}, skipping`);
+      if (!(await safeExists(filePath))) {
+        logger.log(`Installer deno.json not found at ${filePath}, skipping`);
         return;
       }
 
-      // Read and parse the package.json file
+      // Read and parse the deno.json file
       const fileContent = await Deno.readTextFile(filePath);
       const pkg: PackageJson = JSON.parse(fileContent);
 
@@ -81,9 +81,9 @@ class SemanticReleaseSyncInstaller {
       await Deno.writeTextFile(filePath, updatedContent);
 
       // Log success message
-      logger.log(`Synced installer package.json to version ${nextRelease.version}`);
+      logger.log(`Synced installer deno.json to version ${nextRelease.version}`);
     } catch (error) {
-      const errorMessage = `Failed to sync installer package.json: ${(error as Error).message}`;
+      const errorMessage = `Failed to sync installer deno.json: ${(error as Error).message}`;
       logger.error(errorMessage);
       throw new Error(errorMessage);
     }
@@ -141,7 +141,7 @@ if (import.meta.main) {
     Deno.exit(1);
   }
 
-  const installerPath = args[1] || "tools/installer/package.json";
+  const installerPath = args[1] || "tools/installer/deno.json";
 
   // Create mock context for CLI usage
   const mockContext: SemanticReleaseContext = {
@@ -159,9 +159,9 @@ if (import.meta.main) {
 
   try {
     await plugin.prepare({ installerPath }, mockContext);
-    console.log("✅ Successfully synced installer package.json version");
+    console.log("✅ Successfully synced installer deno.json version");
   } catch (error) {
-    console.error("❌ Failed to sync installer package.json version:", error);
+    console.error("❌ Failed to sync installer deno.json version:", error);
     Deno.exit(1);
   }
 }

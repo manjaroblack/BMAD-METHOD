@@ -2,7 +2,6 @@ import {
   copy,
   dirname,
   ensureDir,
-  exists,
   expandGlob,
   join,
   parseYaml,
@@ -61,7 +60,17 @@ class FileManager {
   }
 
   async fileExists(filePath: string): Promise<boolean> {
-    return await exists(filePath);
+    try {
+      await Deno.stat(filePath);
+      return true;
+    } catch (error) {
+      // Path doesn't exist or permission denied
+      if (error instanceof Deno.errors.NotFound || error instanceof Deno.errors.PermissionDenied) {
+        return false;
+      }
+      // Re-throw unexpected errors
+      throw error;
+    }
   }
 
   async deleteFile(filePath: string): Promise<boolean> {

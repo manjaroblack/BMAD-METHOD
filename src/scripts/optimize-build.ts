@@ -9,7 +9,7 @@ import {
   Command,
   cyan,
   DenoVersionManager,
-  exists,
+  safeExists,
   green,
   join,
   Logger,
@@ -197,7 +197,7 @@ class BuildOptimizer {
       const projectRoot = Deno.cwd();
       const denoJsonPath = join(projectRoot, "deno.json");
 
-      if (await exists(denoJsonPath)) {
+      if (await safeExists(denoJsonPath)) {
         issues.info.push({
           type: "info",
           message: "deno.json configuration found",
@@ -211,7 +211,7 @@ class BuildOptimizer {
 
       // Check for TypeScript configuration
       const tsconfigPath = join(projectRoot, "tsconfig.json");
-      if (await exists(tsconfigPath)) {
+      if (await safeExists(tsconfigPath)) {
         issues.info.push({
           type: "info",
           message: "TypeScript configuration found",
@@ -343,7 +343,7 @@ class BuildOptimizer {
       // For Deno, we check import map and deno.json dependencies
       const denoJsonPath = join(projectRoot, "deno.json");
 
-      if (await exists(denoJsonPath)) {
+      if (await safeExists(denoJsonPath)) {
         const denoConfig = JSON.parse(await Deno.readTextFile(denoJsonPath));
 
         // Check if imports are using specific versions
@@ -383,7 +383,7 @@ class BuildOptimizer {
 
       // Check for --allow-all usage in scripts
       const denoJsonPath = join(projectRoot, "deno.json");
-      if (await exists(denoJsonPath)) {
+      if (await safeExists(denoJsonPath)) {
         const denoConfig = JSON.parse(await Deno.readTextFile(denoJsonPath));
         const tasks = denoConfig.tasks || {};
 
@@ -428,7 +428,7 @@ class BuildOptimizer {
         }
       };
 
-      if (await exists(outputDir)) {
+      if (await safeExists(outputDir)) {
         await walk(outputDir);
       }
     } catch (error) {
@@ -509,7 +509,7 @@ class BuildOptimizer {
       // Get Deno cache information
       const cacheDir = await this.getDenoCacheDir();
 
-      if (cacheDir && await exists(cacheDir)) {
+      if (cacheDir && await safeExists(cacheDir)) {
         const stats = await this.getBuildStats(cacheDir);
         return {
           hitRate: 0.85, // Estimated

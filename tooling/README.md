@@ -62,9 +62,9 @@ tooling/
 │   │   ├── installer.ts          # Enhanced installer with validation
 │   │   ├── installer-validator.ts # Installation validation utilities
 │   │   └── incremental-updater.ts # Incremental update utilities
-│   └── package.json             # Installer dependencies
+│   └── deno.json             # Installer dependencies
 ├── development-tools/            # Development and maintenance utilities
-└── package.json                 # Main tooling dependencies
+└── deno.json                 # Main tooling dependencies
 ```
 
 ## 🛠️ Core Libraries
@@ -150,8 +150,8 @@ const manager = new NodeVersionManager();
 const versionInfo = manager.getVersionInfo();
 console.log(versionInfo.compatible); // true/false
 
-// Update package.json engines
-await manager.updatePackageEngines("/path/to/package.json");
+// Update deno.json engines
+await manager.updatePackageEngines("/path/to/deno.json");
 
 // Generate .nvmrc file
 await manager.generateNvmrc("/path/to/project");
@@ -163,7 +163,7 @@ await manager.generateDockerfile("/path/to/project", "18.17.0");
 **Features:**
 
 - Version compatibility checking
-- Package.json engine field updates
+- deno.json engine field updates
 - .nvmrc file generation
 - Dockerfile generation
 - GitHub Actions workflow generation

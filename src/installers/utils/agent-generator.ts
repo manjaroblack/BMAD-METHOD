@@ -3,8 +3,8 @@
  * Generates agent configurations and scripts during installation
  */
 
-import { join, ensureDir, exists } from "deps";
-import type { ILogger, IFileSystemService } from 'deps';
+import { ensureDir, join, safeExists } from "deps";
+import type { IFileSystemService, ILogger } from "deps";
 
 // Manifest data interfaces
 export interface ManifestData {
@@ -49,7 +49,7 @@ export interface TemplateData {
 
 export interface AgentConfig {
   name: string;
-  type: 'workflow' | 'checklist' | 'task' | 'template';
+  type: "workflow" | "checklist" | "task" | "template";
   description: string;
   category?: string;
   tags?: string[];
@@ -69,7 +69,7 @@ export interface AgentGenerationOptions {
 export interface AgentTemplate {
   id: string;
   name: string;
-  type: AgentConfig['type'];
+  type: AgentConfig["type"];
   template: string;
   placeholders: string[];
   requiredFields: string[];
@@ -81,7 +81,7 @@ export class AgentGenerator {
 
   constructor(
     private fileSystem: IFileSystemService,
-    private logger?: ILogger
+    private logger?: ILogger,
   ) {
     this.initializePredefinedTemplates();
   }
@@ -91,12 +91,12 @@ export class AgentGenerator {
    */
   async generateAgent(
     config: AgentConfig,
-    options: AgentGenerationOptions
+    options: AgentGenerationOptions,
   ): Promise<string> {
-    this.logger?.info('Generating agent', {
+    this.logger?.info("Generating agent", {
       agent: config.name,
       type: config.type,
-      outputDir: options.outputDir
+      outputDir: options.outputDir,
     });
 
     try {
@@ -107,16 +107,16 @@ export class AgentGenerator {
 
       // Get template
       const template = this.getTemplate(config.type);
-      
+
       // Generate agent content
       const agentContent = this.renderTemplate(template, config);
-      
+
       // Determine output path
       const fileName = this.generateFileName(config);
       const outputPath = join(options.outputDir, fileName);
 
       // Check if file exists and handle overwrite
-      if (!options.overwrite && await exists(outputPath)) {
+      if (!options.overwrite && await safeExists(outputPath)) {
         throw new Error(`Agent file already exists: ${outputPath}`);
       }
 
@@ -131,18 +131,17 @@ export class AgentGenerator {
         await this.generateAgentDocumentation(config, options.outputDir);
       }
 
-      this.logger?.info('Agent generated successfully', {
+      this.logger?.info("Agent generated successfully", {
         agent: config.name,
         type: config.type,
-        outputPath
+        outputPath,
       });
 
       return outputPath;
-
     } catch (error) {
-      this.logger?.error('Failed to generate agent', error as Error, {
+      this.logger?.error("Failed to generate agent", error as Error, {
         agent: config.name,
-        type: config.type
+        type: config.type,
       });
       throw error;
     }
@@ -153,11 +152,11 @@ export class AgentGenerator {
    */
   async generateAgents(
     configs: AgentConfig[],
-    options: AgentGenerationOptions
+    options: AgentGenerationOptions,
   ): Promise<string[]> {
-    this.logger?.info('Generating multiple agents', {
+    this.logger?.info("Generating multiple agents", {
       agentCount: configs.length,
-      outputDir: options.outputDir
+      outputDir: options.outputDir,
     });
 
     const generatedPaths: string[] = [];
@@ -168,11 +167,11 @@ export class AgentGenerator {
           const path = await this.generateAgent(config, options);
           generatedPaths.push(path);
         } catch (error) {
-          this.logger?.warn('Failed to generate individual agent', {
+          this.logger?.warn("Failed to generate individual agent", {
             agent: config.name,
-            error: (error as Error).message
+            error: (error as Error).message,
           });
-          
+
           // Continue with other agents unless configured to fail fast
           if (options.validate) {
             throw error;
@@ -180,18 +179,17 @@ export class AgentGenerator {
         }
       }
 
-      this.logger?.info('Multiple agents generation completed', {
+      this.logger?.info("Multiple agents generation completed", {
         requestedCount: configs.length,
         generatedCount: generatedPaths.length,
-        outputDir: options.outputDir
+        outputDir: options.outputDir,
       });
 
       return generatedPaths;
-
     } catch (error) {
-      this.logger?.error('Failed to generate agents', error as Error, {
+      this.logger?.error("Failed to generate agents", error as Error, {
         requestedCount: configs.length,
-        generatedCount: generatedPaths.length
+        generatedCount: generatedPaths.length,
       });
       throw error;
     }
@@ -202,11 +200,11 @@ export class AgentGenerator {
    */
   async generateFromManifest(
     manifestPath: string,
-    options: AgentGenerationOptions
+    options: AgentGenerationOptions,
   ): Promise<string[]> {
-    this.logger?.info('Generating agents from manifest', {
+    this.logger?.info("Generating agents from manifest", {
       manifestPath,
-      outputDir: options.outputDir
+      outputDir: options.outputDir,
     });
 
     try {
@@ -222,12 +220,12 @@ export class AgentGenerator {
         manifest.workflows.forEach((workflow: WorkflowData) => {
           agentConfigs.push({
             name: workflow.name,
-            type: 'workflow',
-            description: workflow.description || '',
+            type: "workflow",
+            description: workflow.description || "",
             category: workflow.category,
             tags: workflow.tags,
             version: manifest.version,
-            metadata: workflow
+            metadata: workflow,
           });
         });
       }
@@ -236,12 +234,12 @@ export class AgentGenerator {
         manifest.checklists.forEach((checklist: ChecklistData) => {
           agentConfigs.push({
             name: checklist.name,
-            type: 'checklist',
-            description: checklist.description || '',
+            type: "checklist",
+            description: checklist.description || "",
             category: checklist.category,
             tags: checklist.tags,
             version: manifest.version,
-            metadata: checklist
+            metadata: checklist,
           });
         });
       }
@@ -250,12 +248,12 @@ export class AgentGenerator {
         manifest.tasks.forEach((task: TaskData) => {
           agentConfigs.push({
             name: task.name,
-            type: 'task',
-            description: task.description || '',
+            type: "task",
+            description: task.description || "",
             category: task.category,
             tags: task.tags,
             version: manifest.version,
-            metadata: task
+            metadata: task,
           });
         });
       }
@@ -264,12 +262,12 @@ export class AgentGenerator {
         manifest.templates.forEach((template: TemplateData) => {
           agentConfigs.push({
             name: template.name,
-            type: 'template',
-            description: template.description || '',
+            type: "template",
+            description: template.description || "",
             category: template.category,
             tags: template.tags,
             version: manifest.version,
-            metadata: template
+            metadata: template,
           });
         });
       }
@@ -277,18 +275,21 @@ export class AgentGenerator {
       // Generate agents
       const generatedPaths = await this.generateAgents(agentConfigs, options);
 
-      this.logger?.info('Agents generated from manifest', {
+      this.logger?.info("Agents generated from manifest", {
         manifestPath,
         agentCount: agentConfigs.length,
-        generatedCount: generatedPaths.length
+        generatedCount: generatedPaths.length,
       });
 
       return generatedPaths;
-
     } catch (error) {
-      this.logger?.error('Failed to generate agents from manifest', error as Error, {
-        manifestPath
-      });
+      this.logger?.error(
+        "Failed to generate agents from manifest",
+        error as Error,
+        {
+          manifestPath,
+        },
+      );
       throw error;
     }
   }
@@ -299,36 +300,40 @@ export class AgentGenerator {
   private validateAgentConfig(config: AgentConfig): void {
     const errors: string[] = [];
 
-    if (!config.name || config.name.trim() === '') {
-      errors.push('Agent name is required');
+    if (!config.name || config.name.trim() === "") {
+      errors.push("Agent name is required");
     }
 
     if (!config.type) {
-      errors.push('Agent type is required');
+      errors.push("Agent type is required");
     }
 
-    if (!['workflow', 'checklist', 'task', 'template'].includes(config.type)) {
+    if (!["workflow", "checklist", "task", "template"].includes(config.type)) {
       errors.push(`Invalid agent type: ${config.type}`);
     }
 
-    if (!config.description || config.description.trim() === '') {
-      errors.push('Agent description is required');
+    if (!config.description || config.description.trim() === "") {
+      errors.push("Agent description is required");
     }
 
     // Validate name format (alphanumeric, hyphens, underscores)
     if (!/^[a-zA-Z0-9_-]+$/.test(config.name)) {
-      errors.push('Agent name must contain only alphanumeric characters, hyphens, and underscores');
+      errors.push(
+        "Agent name must contain only alphanumeric characters, hyphens, and underscores",
+      );
     }
 
     if (errors.length > 0) {
-      throw new Error(`Agent configuration validation failed:\n${errors.join('\n')}`);
+      throw new Error(
+        `Agent configuration validation failed:\n${errors.join("\n")}`,
+      );
     }
   }
 
   /**
    * Get template for agent type
    */
-  private getTemplate(type: AgentConfig['type']): AgentTemplate {
+  private getTemplate(type: AgentConfig["type"]): AgentTemplate {
     const template = this.predefinedTemplates.get(type);
     if (!template) {
       throw new Error(`No template found for agent type: ${type}`);
@@ -346,19 +351,26 @@ export class AgentGenerator {
     content = content.replace(/\{\{name\}\}/g, config.name);
     content = content.replace(/\{\{type\}\}/g, config.type);
     content = content.replace(/\{\{description\}\}/g, config.description);
-    content = content.replace(/\{\{version\}\}/g, config.version || '1.0.0');
-    content = content.replace(/\{\{category\}\}/g, config.category || 'general');
+    content = content.replace(/\{\{version\}\}/g, config.version || "1.0.0");
+    content = content.replace(
+      /\{\{category\}\}/g,
+      config.category || "general",
+    );
 
     // Replace tags
-    const tagsJson = config.tags ? JSON.stringify(config.tags, null, 2) : '[]';
+    const tagsJson = config.tags ? JSON.stringify(config.tags, null, 2) : "[]";
     content = content.replace(/\{\{tags\}\}/g, tagsJson);
 
     // Replace dependencies
-    const depsJson = config.dependencies ? JSON.stringify(config.dependencies, null, 2) : '[]';
+    const depsJson = config.dependencies
+      ? JSON.stringify(config.dependencies, null, 2)
+      : "[]";
     content = content.replace(/\{\{dependencies\}\}/g, depsJson);
 
     // Replace metadata
-    const metadataJson = config.metadata ? JSON.stringify(config.metadata, null, 2) : '{}';
+    const metadataJson = config.metadata
+      ? JSON.stringify(config.metadata, null, 2)
+      : "{}";
     content = content.replace(/\{\{metadata\}\}/g, metadataJson);
 
     // Replace timestamp
@@ -371,7 +383,10 @@ export class AgentGenerator {
    * Generate appropriate filename for agent
    */
   private generateFileName(config: AgentConfig): string {
-    const sanitizedName = config.name.toLowerCase().replace(/[^a-z0-9_-]/g, '-');
+    const sanitizedName = config.name.toLowerCase().replace(
+      /[^a-z0-9_-]/g,
+      "-",
+    );
     const extension = this.getFileExtension(config.type);
     return `${sanitizedName}${extension}`;
   }
@@ -379,18 +394,18 @@ export class AgentGenerator {
   /**
    * Get file extension for agent type
    */
-  private getFileExtension(type: AgentConfig['type']): string {
+  private getFileExtension(type: AgentConfig["type"]): string {
     switch (type) {
-      case 'workflow':
-        return '.workflow.ts';
-      case 'checklist':
-        return '.checklist.ts';
-      case 'task':
-        return '.task.ts';
-      case 'template':
-        return '.template.ts';
+      case "workflow":
+        return ".workflow.ts";
+      case "checklist":
+        return ".checklist.ts";
+      case "task":
+        return ".task.ts";
+      case "template":
+        return ".template.ts";
       default:
-        return '.ts';
+        return ".ts";
     }
   }
 
@@ -399,7 +414,7 @@ export class AgentGenerator {
    */
   private async generateAgentDocumentation(
     config: AgentConfig,
-    outputDir: string
+    outputDir: string,
   ): Promise<void> {
     const docContent = `# ${config.name}
 
@@ -410,16 +425,16 @@ ${config.description}
 ${config.type}
 
 ## Category
-${config.category || 'general'}
+${config.category || "general"}
 
 ## Version
-${config.version || '1.0.0'}
+${config.version || "1.0.0"}
 
 ## Tags
-${config.tags ? config.tags.join(', ') : 'None'}
+${config.tags ? config.tags.join(", ") : "None"}
 
 ## Dependencies
-${config.dependencies ? config.dependencies.join(', ') : 'None'}
+${config.dependencies ? config.dependencies.join(", ") : "None"}
 
 ## Generated
 ${new Date().toISOString()}
@@ -439,12 +454,19 @@ ${JSON.stringify(config.metadata || {}, null, 2)}
    */
   private initializePredefinedTemplates(): void {
     // Workflow template
-    this.predefinedTemplates.set('workflow', {
-      id: 'workflow',
-      name: 'Workflow Template',
-      type: 'workflow',
-      placeholders: ['name', 'description', 'version', 'category', 'tags', 'metadata'],
-      requiredFields: ['name', 'description'],
+    this.predefinedTemplates.set("workflow", {
+      id: "workflow",
+      name: "Workflow Template",
+      type: "workflow",
+      placeholders: [
+        "name",
+        "description",
+        "version",
+        "category",
+        "tags",
+        "metadata",
+      ],
+      requiredFields: ["name", "description"],
       template: `/**
  * {{name}} Workflow
  * {{description}}
@@ -487,16 +509,23 @@ export const default{{name}}Config: {{name}}WorkflowConfig = {
 
 // Export workflow instance
 export const {{name}}WorkflowInstance = new {{name}}Workflow(default{{name}}Config);
-`
+`,
     });
 
     // Checklist template
-    this.predefinedTemplates.set('checklist', {
-      id: 'checklist',
-      name: 'Checklist Template',
-      type: 'checklist',
-      placeholders: ['name', 'description', 'version', 'category', 'tags', 'metadata'],
-      requiredFields: ['name', 'description'],
+    this.predefinedTemplates.set("checklist", {
+      id: "checklist",
+      name: "Checklist Template",
+      type: "checklist",
+      placeholders: [
+        "name",
+        "description",
+        "version",
+        "category",
+        "tags",
+        "metadata",
+      ],
+      requiredFields: ["name", "description"],
       template: `/**
  * {{name}} Checklist
  * {{description}}
@@ -567,16 +596,23 @@ export const default{{name}}Config: {{name}}ChecklistConfig = {
 
 // Export checklist instance
 export const {{name}}ChecklistInstance = new {{name}}Checklist(default{{name}}Config);
-`
+`,
     });
 
     // Task template
-    this.predefinedTemplates.set('task', {
-      id: 'task',
-      name: 'Task Template',
-      type: 'task',
-      placeholders: ['name', 'description', 'version', 'category', 'tags', 'metadata'],
-      requiredFields: ['name', 'description'],
+    this.predefinedTemplates.set("task", {
+      id: "task",
+      name: "Task Template",
+      type: "task",
+      placeholders: [
+        "name",
+        "description",
+        "version",
+        "category",
+        "tags",
+        "metadata",
+      ],
+      requiredFields: ["name", "description"],
       template: `/**
  * {{name}} Task
  * {{description}}
@@ -639,16 +675,23 @@ export const default{{name}}Config: {{name}}TaskConfig = {
 
 // Export task instance
 export const {{name}}TaskInstance = new {{name}}Task(default{{name}}Config);
-`
+`,
     });
 
     // Template template (meta!)
-    this.predefinedTemplates.set('template', {
-      id: 'template',
-      name: 'Template Template',
-      type: 'template',
-      placeholders: ['name', 'description', 'version', 'category', 'tags', 'metadata'],
-      requiredFields: ['name', 'description'],
+    this.predefinedTemplates.set("template", {
+      id: "template",
+      name: "Template Template",
+      type: "template",
+      placeholders: [
+        "name",
+        "description",
+        "version",
+        "category",
+        "tags",
+        "metadata",
+      ],
+      requiredFields: ["name", "description"],
       template: `/**
  * {{name}} Template
  * {{description}}
@@ -712,7 +755,7 @@ export const default{{name}}Config: {{name}}TemplateConfig = {
 
 // Export template instance
 export const {{name}}TemplateInstance = new {{name}}Template(default{{name}}Config);
-`
+`,
     });
   }
 }
@@ -720,7 +763,7 @@ export const {{name}}TemplateInstance = new {{name}}Template(default{{name}}Conf
 // Export factory function
 export function createAgentGenerator(
   fileSystem: IFileSystemService,
-  logger?: ILogger
+  logger?: ILogger,
 ): AgentGenerator {
   return new AgentGenerator(fileSystem, logger);
 }

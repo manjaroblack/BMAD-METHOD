@@ -2,11 +2,11 @@
 
 import {
   dirname,
-  exists as existsSync,
   join,
   parseYaml as parse,
-  stringifyYaml as stringify,
   ProjectPaths,
+  safeExists as existsSync,
+  stringifyYaml as stringify,
 } from "deps";
 
 const args = Deno.args;
@@ -48,8 +48,8 @@ async function bumpAllVersions(): Promise<void> {
   const currentDir = new URL(".", import.meta.url).pathname;
   const rootDir = join(dirname(currentDir), "..", "..");
 
-  // First, bump the core version (package.json)
-  const packagePath = join(rootDir, "package.json");
+  // First, bump the core version (deno.json)
+  const packagePath = join(rootDir, "deno.json");
   try {
     const packageContent = await Deno.readTextFile(packagePath);
     const packageJson = JSON.parse(packageContent);
@@ -67,7 +67,7 @@ async function bumpAllVersions(): Promise<void> {
       newVersion: newCoreVersion,
     });
     console.log(
-      `✓ BMad Core (package.json): ${oldCoreVersion} → ${newCoreVersion}`,
+      `✓ BMad Core (deno.json): ${oldCoreVersion} → ${newCoreVersion}`,
     );
   } catch (error) {
     console.error(

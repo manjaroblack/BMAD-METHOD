@@ -3,11 +3,11 @@
 // Load required modules
 import {
   dirname,
-  exists as existsSync,
   join,
   parseYaml as parse,
-  stringifyYaml as stringify,
   ProjectPaths,
+  safeExists as existsSync,
+  stringifyYaml as stringify,
 } from "deps";
 
 // Parse CLI arguments

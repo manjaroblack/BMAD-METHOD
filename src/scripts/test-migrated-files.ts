@@ -5,7 +5,7 @@
  * Tests compilation, imports, and basic functionality of each migrated file
  */
 
-import { blue, bold, exists, green, join, red, yellow } from "deps";
+import { blue, bold, green, join, red, safeExists, yellow } from "deps";
 
 interface TestResult {
   file: string;
@@ -111,7 +111,7 @@ class MigratedFilesTester {
       const fullPath = join(this.rootDir, filePath);
 
       // Check if file exists
-      if (!(await exists(fullPath))) {
+      if (!(await safeExists(fullPath))) {
         result.errors.push("File does not exist");
         result.duration = performance.now() - startTime;
         return result;

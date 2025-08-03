@@ -3,7 +3,7 @@
  * Handles migration from v3 to v5 project structure
  */
 
-import { ensureDir, exists, join, Logger, ProjectPaths } from "deps";
+import { ensureDir, join, Logger, ProjectPaths, safeExists } from "deps";
 
 interface UpgradeOptions {
   dryRun?: boolean;
@@ -81,7 +81,7 @@ export class V3ToV5Upgrader {
     ];
 
     for (const indicator of v3Indicators) {
-      if (await exists(join(this.rootDir, indicator))) {
+      if (await join(this.rootDir, indicator)) {
         return true;
       }
     }
@@ -96,7 +96,7 @@ export class V3ToV5Upgrader {
     // Copy important files to backup
     const filesToBackup = [
       "bmad-method.json",
-      "package.json",
+      "deno.json",
       "src",
       "common",
       "tooling",
@@ -104,7 +104,7 @@ export class V3ToV5Upgrader {
 
     for (const file of filesToBackup) {
       const sourcePath = join(this.rootDir, file);
-      if (await exists(sourcePath)) {
+      if (await safeExists(sourcePath)) {
         const targetPath = join(backupDir, file);
         try {
           await Deno.copyFile(sourcePath, targetPath);
@@ -173,7 +173,7 @@ export class V3ToV5Upgrader {
       ];
 
       for (const file of v5Files) {
-        if (!await exists(join(this.rootDir, file))) {
+        if (!await join(this.rootDir, file)) {
           this.logger.warn(`Missing v5 file: ${file}`);
           return false;
         }

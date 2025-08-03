@@ -1,4 +1,4 @@
-import { exists, green, join, parseYaml, red, yellow } from "deps";
+import { green, join, parseYaml, red, safeExists, yellow } from "deps";
 
 interface ValidationResult {
   isValid: boolean;
@@ -16,7 +16,7 @@ interface InstallationStructure {
 class InstallerValidator {
   private readonly expectedStructure: InstallationStructure = {
     requiredFiles: [
-      "package.json",
+      "deno.json",
       ".bmad-core/config/install.config.yaml",
       ".bmad-core/agents/bmad-master.md",
     ],
@@ -47,7 +47,7 @@ class InstallerValidator {
     console.log(`Validating BMad installation at: ${installDir}`);
 
     // Check if installation directory exists
-    if (!(await exists(installDir))) {
+    if (!(await safeExists(installDir))) {
       result.errors.push(
         `Installation directory does not exist: ${installDir}`,
       );
@@ -79,7 +79,7 @@ class InstallerValidator {
   ): Promise<void> {
     for (const dir of this.expectedStructure.requiredDirectories) {
       const fullPath = join(installDir, dir);
-      if (!(await exists(fullPath))) {
+      if (!(await safeExists(fullPath))) {
         result.errors.push(`Required directory missing: ${dir}`);
         result.isValid = false;
       }
@@ -92,7 +92,7 @@ class InstallerValidator {
   ): Promise<void> {
     for (const file of this.expectedStructure.requiredFiles) {
       const fullPath = join(installDir, file);
-      if (!(await exists(fullPath))) {
+      if (!(await safeExists(fullPath))) {
         result.errors.push(`Required file missing: ${file}`);
         result.isValid = false;
       }
@@ -106,7 +106,7 @@ class InstallerValidator {
     for (const configFile of this.expectedStructure.configFiles) {
       const fullPath = join(installDir, configFile);
 
-      if (!(await exists(fullPath))) {
+      if (!(await safeExists(fullPath))) {
         result.errors.push(`Configuration file missing: ${configFile}`);
         result.isValid = false;
         continue;
@@ -152,7 +152,10 @@ class InstallerValidator {
       const requiredInstallFields = ["directory", "timestamp"];
 
       for (const field of requiredInstallFields) {
-        if (typeof installation !== "object" || installation === null || !(field in installation)) {
+        if (
+          typeof installation !== "object" || installation === null ||
+          !(field in installation)
+        ) {
           result.warnings.push(
             `Missing recommended field in installation config: ${field}`,
           );
@@ -167,7 +170,7 @@ class InstallerValidator {
   ): Promise<void> {
     const agentsDir = join(installDir, ".bmad-core/agents");
 
-    if (!(await exists(agentsDir))) {
+    if (!(await safeExists(agentsDir))) {
       result.errors.push("Agents directory missing");
       result.isValid = false;
       return;
@@ -256,7 +259,7 @@ class InstallerValidator {
   ): Promise<void> {
     for (const file of this.expectedStructure.optionalFiles) {
       const fullPath = join(installDir, file);
-      if (!(await exists(fullPath))) {
+      if (!(await safeExists(fullPath))) {
         result.warnings.push(`Optional file missing: ${file}`);
       }
     }
@@ -272,7 +275,7 @@ class InstallerValidator {
     console.log(`Validating expansion pack at: ${packPath}`);
 
     // Check if pack directory exists
-    if (!(await exists(packPath))) {
+    if (!(await safeExists(packPath))) {
       result.errors.push(
         `Expansion pack directory does not exist: ${packPath}`,
       );
@@ -281,17 +284,17 @@ class InstallerValidator {
     }
 
     // Check for required expansion pack files
-    const requiredFiles = ["package.json", "config.yaml"];
+    const requiredFiles = ["deno.json", "config.yaml"];
     for (const file of requiredFiles) {
       const fullPath = join(packPath, file);
-      if (!(await exists(fullPath))) {
+      if (!(await safeExists(fullPath))) {
         result.errors.push(`Required expansion pack file missing: ${file}`);
         result.isValid = false;
       }
     }
 
-    // Validate package.json
-    await this.validatePackageJson(packPath, result);
+    // Validate deno.json
+    await this.validateDenoJson(packPath, result);
 
     // Validate config.yaml
     await this.validateExpansionConfig(packPath, result);
@@ -299,32 +302,34 @@ class InstallerValidator {
     return result;
   }
 
-  private async validatePackageJson(
+  private async validateDenoJson(
     packPath: string,
     result: ValidationResult,
   ): Promise<void> {
-    const packageJsonPath = join(packPath, "package.json");
+    const denoJsonPath = join(packPath, "deno.json");
 
-    if (!(await exists(packageJsonPath))) {
+    if (!(await safeExists(denoJsonPath))) {
       return; // Already handled in validateExpansionPack
     }
 
     try {
-      const content = await Deno.readTextFile(packageJsonPath);
-      const packageJson = JSON.parse(content);
+      const content = await Deno.readTextFile(denoJsonPath);
+      const denoJson = JSON.parse(content);
 
       const requiredFields = ["name", "version", "description"];
       for (const field of requiredFields) {
-        if (!(field in packageJson)) {
+        if (!(field in denoJson)) {
           result.errors.push(
-            `Missing required field in package.json: ${field}`,
+            `Missing required field in deno.json: ${field}`,
           );
           result.isValid = false;
         }
       }
     } catch (error) {
       result.errors.push(
-        `Invalid JSON in package.json: ${error instanceof Error ? error.message : String(error)}`,
+        `Invalid JSON in deno.json: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
       );
       result.isValid = false;
     }
@@ -336,7 +341,7 @@ class InstallerValidator {
   ): Promise<void> {
     const configPath = join(packPath, "config.yaml");
 
-    if (!(await exists(configPath))) {
+    if (!(await safeExists(configPath))) {
       return; // Already handled in validateExpansionPack
     }
 
@@ -353,7 +358,9 @@ class InstallerValidator {
       }
     } catch (error) {
       result.errors.push(
-        `Invalid YAML in config.yaml: ${error instanceof Error ? error.message : String(error)}`,
+        `Invalid YAML in config.yaml: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
       );
       result.isValid = false;
     }
@@ -373,7 +380,9 @@ class InstallerValidator {
 
     if (result.warnings.length > 0) {
       console.log(yellow("\nWarnings:"));
-      result.warnings.forEach((warning) => console.log(yellow(`  • ${warning}`)));
+      result.warnings.forEach((warning) =>
+        console.log(yellow(`  • ${warning}`))
+      );
     }
   }
 
@@ -385,7 +394,7 @@ class InstallerValidator {
 
     for (const file of coreFiles) {
       const fullPath = join(installDir, file);
-      if (!(await exists(fullPath))) {
+      if (!(await safeExists(fullPath))) {
         return false;
       }
     }

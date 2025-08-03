@@ -12,7 +12,6 @@ import {
   bold,
   Command,
   cyan,
-  exists,
   expandGlob,
   extname,
   gray,
@@ -20,6 +19,7 @@ import {
   magenta,
   parseYaml,
   red,
+  safeExists,
   stringifyYaml,
   yellow,
 } from "deps";
@@ -247,7 +247,7 @@ class YamlFormatter {
    * Process a single file based on its type
    */
   async processFile(filePath: string): Promise<ProcessingResult> {
-    if (!(await exists(filePath))) {
+    if (!(await safeExists(filePath))) {
       return { changed: false, hasErrors: false };
     }
 

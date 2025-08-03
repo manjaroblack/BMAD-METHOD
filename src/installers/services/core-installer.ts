@@ -7,7 +7,7 @@ import {
   join,
   copy,
   ensureDir,
-  exists,
+  safeExists,
   type InstallConfig,
   type ILogger,
   type ISpinner,
@@ -361,7 +361,7 @@ export class CoreInstaller {
 
     try {
       // Check if source exists
-      if (!await exists(sourcePath)) {
+      if (!await safeExists(sourcePath)) {
         if (component.required) {
           throw new Error(`Required source path not found: ${sourcePath}`);
         } else {
@@ -493,7 +493,7 @@ export class CoreInstaller {
       } else {
         // Check that the component directory exists
         const componentPath = join(targetDir, component.path);
-        if (!await exists(componentPath)) {
+        if (!(await safeExists(componentPath))) {
           errors.push(`Component directory missing: ${componentPath}`);
         }
       }
@@ -530,7 +530,7 @@ export class CoreInstaller {
     
     for (const component of this.coreComponents) {
       const componentPath = join(targetDir, component.path);
-      if (await exists(componentPath)) {
+      if (await safeExists(componentPath)) {
         installed.push(component.name);
       }
     }

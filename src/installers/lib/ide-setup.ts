@@ -1,4 +1,4 @@
-import { ensureDir, exists, green, join, red, stringifyYaml, yellow } from "deps";
+import { ensureDir, green, join, red, stringifyYaml, yellow, safeExists } from "deps";
 
 interface IdeConfig {
   name: string;
@@ -219,7 +219,7 @@ class IdeSetup {
     for (const indicator of ideIndicators) {
       for (const path of indicator.paths) {
         const fullPath = join(installDir, path);
-        if (await exists(fullPath)) {
+        if (await safeExists(fullPath)) {
           detectedIdes.push(indicator.ide);
           break;
         }
@@ -240,7 +240,7 @@ class IdeSetup {
     // Check if all required config files exist
     for (const configFile of config.configFiles) {
       const fullPath = join(installDir, configFile.path);
-      if (!(await exists(fullPath))) {
+      if (!(await safeExists(fullPath))) {
         return false;
       }
     }

@@ -3,7 +3,7 @@
  * Ensures consistent Deno version requirements across the project
  */
 
-import { dirname, ensureDir, exists, join, Logger, ValidationError } from "deps";
+import { dirname, ensureDir, join, Logger, ValidationError, safeExists } from "deps";
 
 // Simple semver comparison utilities for Deno
 class SemVer {
@@ -141,7 +141,7 @@ class DenoVersionManager {
     try {
       let config: Record<string, unknown> = {};
 
-      if (await exists(denoJsonPath)) {
+      if (await safeExists(denoJsonPath)) {
         const content = await Deno.readTextFile(denoJsonPath);
         config = JSON.parse(content);
       }

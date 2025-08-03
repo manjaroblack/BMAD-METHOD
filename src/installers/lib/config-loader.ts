@@ -1,4 +1,4 @@
-import { exists, extractYamlFromAgent, join, parseYaml, ProjectPaths } from "deps";
+import { extractYamlFromAgent, join, parseYaml, ProjectPaths, safeExists } from "deps";
 
 interface ExpansionPack {
   id: string;
@@ -59,7 +59,7 @@ class ConfigLoader {
     const agents: Agent[] = [];
 
     try {
-      if (await exists(agentsDir)) {
+      if (await safeExists(agentsDir)) {
         for await (const entry of Deno.readDir(agentsDir)) {
           if (entry.isFile && entry.name.endsWith(".md")) {
             const agentPath = join(agentsDir, entry.name);
@@ -112,14 +112,14 @@ class ConfigLoader {
     const packs: ExpansionPack[] = [];
 
     try {
-      if (await exists(expansionPacksDir)) {
+      if (await safeExists(expansionPacksDir)) {
         for await (const entry of Deno.readDir(expansionPacksDir)) {
           if (entry.isDirectory) {
             const packId = entry.name;
             const configPath = join(expansionPacksDir, packId, "config.yaml");
 
             try {
-              if (await exists(configPath)) {
+              if (await safeExists(configPath)) {
                 const configContent = await Deno.readTextFile(configPath);
                 const config = parseYaml(configContent) as Record<string, unknown>;
 
@@ -164,7 +164,7 @@ class ConfigLoader {
     const agentPath = this.getAgentPath(agentId);
 
     try {
-      if (await exists(agentPath)) {
+      if (await safeExists(agentPath)) {
         const agentContent = await Deno.readTextFile(agentPath);
         const yamlString = extractYamlFromAgent(agentContent);
 
@@ -214,7 +214,7 @@ class ConfigLoader {
     > = [];
 
     try {
-      if (await exists(teamsDir)) {
+      if (await safeExists(teamsDir)) {
         for await (const entry of Deno.readDir(teamsDir)) {
           if (entry.isFile && entry.name.endsWith(".yaml")) {
             const teamId = entry.name.replace(".yaml", "");
@@ -259,7 +259,7 @@ class ConfigLoader {
     const teamPath = this.getTeamPath(teamId);
 
     try {
-      if (await exists(teamPath)) {
+      if (await safeExists(teamPath)) {
         const teamContent = await Deno.readTextFile(teamPath);
         const teamConfig = parseYaml(teamContent) as TeamConfig;
 

@@ -19,7 +19,7 @@ export interface IExtensionRegistry {
   getByType(type: ExtensionType): ExtensionManifest[];
   getByStatus(status: ExtensionStatus): ExtensionManifest[];
   getByCategory(category: string): ExtensionManifest[];
-  exists(extensionId: string): boolean;
+  has(extensionId: string): boolean;
   updateStatus(extensionId: string, status: ExtensionStatus): void;
   getMetrics(): ExtensionMetrics;
   getDependencyGraph(): ExtensionDependencyGraph;
@@ -34,16 +34,17 @@ export interface ExtensionDependencyGraph {
 
 export interface ExtensionGraphNode {
   id: string;
-  name: string;
-  version: string;
+  label: string;
   status: ExtensionStatus;
+  type: ExtensionType;
 }
 
 export interface ExtensionGraphEdge {
   from: string;
   to: string;
   type: "required" | "optional";
-  version: string;
+  version?: string;
+
 }
 
 export interface ExtensionDependencyValidation {
@@ -68,6 +69,57 @@ export class ExtensionRegistry implements IExtensionRegistry {
   constructor() {
     this.initializeIndexes();
   }
+
+  private initializeIndexes() {
+    this.extensions.forEach((manifest) => {
+      this.updateIndexes(manifest, "add");
+    });
+  }
+
+  private updateIndexes(manifest: ExtensionManifest, operation: "add" | "remove") {
+    const { id, type, category } = manifest.config;
+
+    // Update type index
+    let typeSet = this.typeIndex.get(type);
+    if (!typeSet) {
+      typeSet = new Set();
+      this.typeIndex.set(type, typeSet);
+    }
+    if (operation === "add") {
+      typeSet.add(id);
+    } else {
+      typeSet.delete(id);
+    }
+
+    // Update category index
+    let categorySet = this.categoryIndex.get(category);
+    if (!categorySet) {
+      categorySet = new Set();
+      this.categoryIndex.set(category, categorySet);
+    }
+    if (operation === "add") {
+      categorySet.add(id);
+    } else {
+      categorySet.delete(id);
+    }
+
+    // Update status index
+    let statusSet = this.statusIndex.get(manifest.status);
+    if (!statusSet) {
+      statusSet = new Set();
+      this.statusIndex.set(manifest.status, statusSet);
+    }
+    if (operation === "add") {
+      statusSet.add(id);
+    } else {
+      statusSet.delete(id);
+    }
+  }
+
+  has(extensionId: string): boolean {
+    return this.extensions.has(extensionId);
+  }
+
 
   register(manifest: ExtensionManifest): void {
     const extensionId = manifest.config.id;
@@ -103,6 +155,7 @@ export class ExtensionRegistry implements IExtensionRegistry {
   getAll(): ExtensionManifest[] {
     return Array.from(this.extensions.values());
   }
+
 
   search(criteria: ExtensionSearchCriteria): ExtensionManifest[] {
     let candidates = this.getAll();
@@ -168,10 +221,6 @@ export class ExtensionRegistry implements IExtensionRegistry {
     return this.search({ category });
   }
 
-  exists(extensionId: string): boolean {
-    return this.extensions.has(extensionId);
-  }
-
   updateStatus(extensionId: string, status: ExtensionStatus): void {
     const manifest = this.extensions.get(extensionId);
     if (!manifest) {
@@ -230,9 +279,9 @@ export class ExtensionRegistry implements IExtensionRegistry {
     extensions.forEach((ext) => {
       nodes.push({
         id: ext.config.id,
-        name: ext.config.name,
-        version: ext.config.version,
+        label: ext.config.name,
         status: ext.status,
+        type: ext.config.type,
       });
     });
 
@@ -242,8 +291,7 @@ export class ExtensionRegistry implements IExtensionRegistry {
         edges.push({
           from: ext.config.id,
           to: dep.id,
-          type: dep.optional ? "optional" : "required",
-          version: dep.version,
+          type: dep.optional ? "optional" : "required"
         });
       });
     });
@@ -254,85 +302,7 @@ export class ExtensionRegistry implements IExtensionRegistry {
     return { nodes, edges, cycles };
   }
 
-  validateDependencies(extensionId: string): ExtensionDependencyValidation {
-    const manifest = this.extensions.get(extensionId);
-    if (!manifest) {
-      throw new Error(`Extension ${extensionId} is not registered`);
-    }
 
-    const validation: ExtensionDependencyValidation = {
-      valid: true,
-      missingDependencies: [],
-      versionConflicts: [],
-      circularDependencies: [],
-    };
-
-    // Check for missing dependencies
-    manifest.config.dependencies.forEach((dep) => {
-      if (!dep.optional && !this.exists(dep.id)) {
-        validation.missingDependencies.push(dep.id);
-        validation.valid = false;
-      }
-    });
-
-    // Check for version conflicts
-    manifest.config.dependencies.forEach((dep) => {
-      const depManifest = this.get(dep.id);
-      if (depManifest && !this.isVersionCompatible(dep.version, depManifest.config.version)) {
-        validation.versionConflicts.push({
-          dependencyId: dep.id,
-          requiredVersion: dep.version,
-          availableVersion: depManifest.config.version,
-        });
-        validation.valid = false;
-      }
-    });
-
-    // Check for circular dependencies
-    const graph = this.getDependencyGraph();
-    const circularDeps = graph.cycles.find((cycle) => cycle.includes(extensionId));
-    if (circularDeps) {
-      validation.circularDependencies = circularDeps;
-      validation.valid = false;
-    }
-
-    return validation;
-  }
-
-  private initializeIndexes(): void {
-    // Initialize type index
-    Object.values(ExtensionType).forEach((type) => {
-      this.typeIndex.set(type, new Set());
-    });
-
-    // Initialize status index
-    Object.values(ExtensionStatus).forEach((status) => {
-      this.statusIndex.set(status, new Set());
-    });
-  }
-
-  private updateIndexes(manifest: ExtensionManifest, operation: "add" | "remove"): void {
-    const extensionId = manifest.config.id;
-
-    if (operation === "add") {
-      // Add to type index
-      this.typeIndex.get(manifest.config.type)?.add(extensionId);
-
-      // Add to category index
-      if (!this.categoryIndex.has(manifest.config.category)) {
-        this.categoryIndex.set(manifest.config.category, new Set());
-      }
-      this.categoryIndex.get(manifest.config.category)?.add(extensionId);
-
-      // Add to status index
-      this.statusIndex.get(manifest.status)?.add(extensionId);
-    } else {
-      // Remove from all indexes
-      this.typeIndex.get(manifest.config.type)?.delete(extensionId);
-      this.categoryIndex.get(manifest.config.category)?.delete(extensionId);
-      this.statusIndex.get(manifest.status)?.delete(extensionId);
-    }
-  }
 
   private detectCircularDependencies(edges: ExtensionGraphEdge[]): string[][] {
     const cycles: string[][] = [];
@@ -380,11 +350,58 @@ export class ExtensionRegistry implements IExtensionRegistry {
     return cycles;
   }
 
-  private isVersionCompatible(required: string, available: string): boolean {
-    // Simple version compatibility check
-    // In a real implementation, this would use semver
-    return required === available || required === "*";
+  validateDependencies(extensionId: string): ExtensionDependencyValidation {
+    const manifest = this.extensions.get(extensionId);
+    if (!manifest) {
+      throw new Error(`Extension ${extensionId} is not registered`);
+    }
+
+    const validation: ExtensionDependencyValidation = {
+      valid: true,
+      missingDependencies: [],
+      versionConflicts: [],
+      circularDependencies: [],
+    };
+
+    // Check for missing dependencies
+    manifest.config.dependencies.forEach((dep) => {
+      if (!dep.optional && !this.has(dep.id)) {
+        validation.missingDependencies.push(dep.id);
+        validation.valid = false;
+      }
+    });
+
+    // Check for version conflicts
+    manifest.config.dependencies.forEach((dep) => {
+      const depManifest = this.get(dep.id);
+      if (depManifest && !this.isVersionCompatible(dep.version, depManifest.config.version)) {
+        validation.versionConflicts.push({
+          dependencyId: dep.id,
+          requiredVersion: dep.version,
+          availableVersion: depManifest.config.version,
+        });
+        validation.valid = false;
+      }
+    });
+
+    // Check for circular dependencies
+    const graph = this.getDependencyGraph();
+    const circularDeps = graph.cycles.find((cycle) => cycle.includes(extensionId));
+    if (circularDeps) {
+      validation.circularDependencies = circularDeps;
+      validation.valid = false;
+    }
+
+    return validation;
   }
+
+  private isVersionCompatible(requiredVersion: string, availableVersion: string): boolean {
+    // Simple placeholder: assume compatible if versions match
+    // In a real scenario, this would involve semantic versioning comparison
+    return requiredVersion === availableVersion;
+  }
+
+
 
   /**
    * Get extensions that depend on a specific extension
