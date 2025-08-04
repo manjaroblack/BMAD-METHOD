@@ -379,3 +379,8 @@ export { safeExists, safeIsDirectory, safeIsFile } from "./src/installers/utils/
 
 // Flattener tool
 export { default as flattener } from "./tooling/user-tools/flattener/main.ts";
+
+// Installer modules
+export { promptInstallation } from "./src/installers/lib/prompt-handler.ts";
+export { setupCommands } from "./src/installers/lib/cli-commands.ts";
+export { initializeInstaller, getVersion, displayLogo } from "./src/installers/lib/cli-utils.ts";
