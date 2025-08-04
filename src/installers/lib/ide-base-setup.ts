@@ -3,13 +3,7 @@
  * Reduces duplication and provides shared methods
  */
 
-import {
-  extractYamlFromAgent,
-  join,
-  parseYaml,
-  ProjectPaths,
-  safeExists,
-} from "deps";
+import { extractYamlFromAgent, join, parseYaml, ProjectPaths } from "deps";
 
 interface ExpansionPack {
   id: string;
@@ -73,7 +67,7 @@ class BaseIdeSetup {
     ];
 
     for (const agentsPath of corePaths) {
-      if (await safeExists(agentsPath)) {
+      if (await Deno.stat(agentsPath)) {
         try {
           for await (const entry of Deno.readDir(agentsPath)) {
             if (entry.isFile && entry.name.endsWith(".md")) {
@@ -114,7 +108,7 @@ class BaseIdeSetup {
     }
 
     for (const path of searchPaths) {
-      if (await safeExists(path)) {
+      if (await Deno.stat(path)) {
         this._pathCache.set(cacheKey, path);
         return path;
       }
@@ -155,7 +149,7 @@ class BaseIdeSetup {
     const expansionPacks: ExpansionPack[] = [];
     const expansionPacksPath = join(installDir, ".bmad-core/expansion-packs");
 
-    if (!(await safeExists(expansionPacksPath))) {
+    if (!(await Deno.stat(expansionPacksPath))) {
       return expansionPacks;
     }
 
@@ -174,7 +168,7 @@ class BaseIdeSetup {
           };
 
           // Try to read config.yaml first
-          if (await safeExists(configPath)) {
+          if (await Deno.stat(configPath)) {
             try {
               const configContent = await Deno.readTextFile(configPath);
               const config = parseYaml(configContent) as Record<
@@ -194,7 +188,7 @@ class BaseIdeSetup {
               );
             }
           } // Fallback to deno.json
-          else if (await safeExists(denoJsonPath)) {
+          else if (await Deno.stat(denoJsonPath)) {
             try {
               const denoJsonContent = await Deno.readTextFile(denoJsonPath);
               const denoJson = JSON.parse(denoJsonContent);
@@ -228,7 +222,7 @@ class BaseIdeSetup {
     const agents: string[] = [];
     const agentsPath = join(packPath, "agents");
 
-    if (await safeExists(agentsPath)) {
+    if (await Deno.stat(agentsPath)) {
       try {
         for await (const entry of Deno.readDir(agentsPath)) {
           if (entry.isFile && entry.name.endsWith(".md")) {

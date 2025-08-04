@@ -13,7 +13,6 @@ import {
   red,
   resolve,
   resourceLocator,
-  safeExists,
   stringifyYaml,
   yellow,
 } from "deps";
@@ -463,7 +462,7 @@ class Installer {
 
     try {
       // Check if the manifest file exists
-      const manifestExists = await safeExists(manifestPath);
+      const manifestExists = await Deno.stat(manifestPath);
 
       if (manifestExists) {
         const manifestContent = await Deno.readTextFile(manifestPath);
@@ -481,7 +480,7 @@ class Installer {
 
     // Check for other installation types
     const bmadCoreDir = join(installDir, ".bmad-core");
-    const coreDirExists = await safeExists(bmadCoreDir);
+    const coreDirExists = await Deno.stat(bmadCoreDir);
 
     if (coreDirExists) {
       return {
@@ -666,7 +665,7 @@ class Installer {
 
     try {
       // Check if install directory exists before trying to read it
-      if (!(await safeExists(installDir))) {
+      if (!(await Deno.stat(installDir))) {
         return expansionPacks;
       }
 
@@ -678,7 +677,7 @@ class Installer {
           const packId = entry.name.substring(1); // Remove leading dot
           const configPath = join(installDir, entry.name, "config.yaml");
 
-          if (await safeExists(configPath)) {
+          if (await Deno.stat(configPath)) {
             try {
               const configContent = await Deno.readTextFile(configPath);
               const config = parseYaml(configContent) as Record<
@@ -715,7 +714,7 @@ class Installer {
 
     for (const dir of expectedDirs) {
       const dirPath = join(coreDir, dir);
-      if (!(await safeExists(dirPath))) {
+      if (!(await Deno.stat(dirPath))) {
         missing.push(dir);
       }
     }
@@ -736,7 +735,7 @@ class Installer {
     const backupDir = join(installDir, ".bmad-core.backup");
     const coreDir = join(installDir, ".bmad-core");
 
-    if (await safeExists(coreDir)) {
+    if (await Deno.stat(coreDir)) {
       await copy(coreDir, backupDir, { overwrite: true });
     }
 
@@ -745,15 +744,15 @@ class Installer {
       await this.installCore(installDir, spinner);
 
       // Remove backup on success
-      if (await safeExists(backupDir)) {
+      if (await Deno.stat(backupDir)) {
         await Deno.remove(backupDir, { recursive: true });
       }
 
       console.log(green("✅ Core updated successfully"));
     } catch (error: unknown) {
       // Restore backup on failure
-      if (await safeExists(backupDir)) {
-        if (await safeExists(coreDir)) {
+      if (await Deno.stat(backupDir)) {
+        if (await Deno.stat(coreDir)) {
           await Deno.remove(coreDir, { recursive: true });
         }
         await copy(backupDir, coreDir, { overwrite: true });
@@ -832,7 +831,7 @@ class Installer {
 
       // Get expansion pack source
       const packPath = resourceLocator.getExpansionPackPath(packId);
-      if (await safeExists(packPath)) {
+      if (await Deno.stat(packPath)) {
         await copy(packPath, packDestDir, { overwrite: true });
 
         // Copy common items to expansion pack
@@ -1076,7 +1075,7 @@ class Installer {
     const copiedFiles: string[] = [];
 
     // Check if common/ exists
-    if (!(await safeExists(commonPath))) {
+    if (!(await Deno.stat(commonPath))) {
       console.warn("Warning: common/ folder not found");
       return copiedFiles;
     }
@@ -1158,11 +1157,11 @@ class Installer {
               );
 
               // Check if dependency exists in expansion pack dot folder
-              if (!(await safeExists(expansionDepPath))) {
+              if (!(await Deno.stat(expansionDepPath))) {
                 // Try to find it in expansion pack source
                 const sourceDepPath = join(pack.path, depType, depFileName);
 
-                if (await safeExists(sourceDepPath)) {
+                if (await Deno.stat(sourceDepPath)) {
                   // Copy from expansion pack source
                   spinner.text = `Copying ${packId} dependency ${dep}...`;
                   const destPath = join(
@@ -1188,7 +1187,7 @@ class Installer {
                     depFileName,
                   );
 
-                  if (await safeExists(coreDepPath)) {
+                  if (await Deno.stat(coreDepPath)) {
                     spinner.text =
                       `Copying core dependency ${dep} for ${packId}...`;
                     const destPath = join(
@@ -1253,7 +1252,7 @@ class Installer {
 
     // Copy core-config.yaml file if it exists
     const coreConfigPath = join(sourcePath, "core-config.yaml");
-    if (await safeExists(coreConfigPath)) {
+    if (await Deno.stat(coreConfigPath)) {
       await copy(coreConfigPath, join(destPath, "core-config.yaml"), {
         overwrite: true,
       });

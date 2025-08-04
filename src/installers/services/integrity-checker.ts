@@ -2,7 +2,7 @@
  * Integrity Checker Service for BMAD-METHOD
  * Handles file integrity validation, checksum generation, and corruption detection
  */
-import { safeExists } from "deps";
+import { Deno.stat } from "deps";
 import type { FileIntegrityResult, IFileService, IIntegrityValidator, ILogger } from "deps";
 
 export interface IntegrityCheckOptions {
@@ -113,7 +113,7 @@ export class IntegrityChecker implements IIntegrityValidator {
     try {
       for (const filePath of filePaths) {
         try {
-          if (await safeExists(filePath)) {
+          if (await Deno.stat(filePath)) {
             checksums[filePath] = await this.calculateFileChecksum(filePath);
             processedFiles++;
           } else {
@@ -205,7 +205,7 @@ export class IntegrityChecker implements IIntegrityValidator {
           );
           const targetPath = this.fileSystem.join(installDir, missingFile);
 
-          if (await safeExists(sourcePath)) {
+          if (await Deno.stat(sourcePath)) {
             await this.fileSystem.copyFile(sourcePath, targetPath);
             repairedFiles.push(missingFile);
 
@@ -360,7 +360,7 @@ export class IntegrityChecker implements IIntegrityValidator {
     manifestPath: string,
   ): Promise<Record<string, string> | null> {
     try {
-      if (!await safeExists(manifestPath)) {
+      if (!await Deno.stat(manifestPath)) {
         return null;
       }
 

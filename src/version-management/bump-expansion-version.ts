@@ -6,7 +6,7 @@ import {
   join,
   parseYaml as parse,
   ProjectPaths,
-  safeExists as existsSync,
+  Deno.stat as existsSync,
   stringifyYaml as stringify,
 } from "deps";
 

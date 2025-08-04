@@ -3,7 +3,13 @@
  * Reduces duplicate file system operations and memory usage
  */
 
-import { expandGlob, extractYamlFromAgent, join, parseYaml, ProjectPaths, safeExists } from "deps";
+import {
+  expandGlob,
+  extractYamlFromAgent,
+  join,
+  parseYaml,
+  ProjectPaths,
+} from "deps";
 
 interface Agent {
   id: string;
@@ -101,7 +107,7 @@ class ResourceLocator {
     const agentsDir = join(this.getBmadCorePath(), "agents");
     const agentPath = join(agentsDir, `${agentId}.md`);
 
-    if (await safeExists(agentPath)) {
+    if (await Deno.stat(agentPath)) {
       this._pathCache.set(cacheKey, agentPath);
       return agentPath;
     }
@@ -131,13 +137,17 @@ class ResourceLocator {
               if (yamlData && typeof yamlData === "object") {
                 agents.push({
                   id: agentId,
-                  title: typeof yamlData.title === "string" ? yamlData.title : agentId,
+                  title: typeof yamlData.title === "string"
+                    ? yamlData.title
+                    : agentId,
                   description: typeof yamlData.description === "string"
                     ? yamlData.description
                     : undefined,
-                  dependencies: yamlData.dependencies && typeof yamlData.dependencies === "object"
-                    ? yamlData.dependencies as Record<string, unknown>
-                    : undefined,
+                  dependencies:
+                    yamlData.dependencies &&
+                      typeof yamlData.dependencies === "object"
+                      ? yamlData.dependencies as Record<string, unknown>
+                      : undefined,
                 });
               }
             }
@@ -167,16 +177,19 @@ class ResourceLocator {
     const packs: ExpansionPack[] = [];
 
     try {
-      if (await safeExists(expansionPacksDir)) {
+      if (await Deno.stat(expansionPacksDir)) {
         for await (const entry of Deno.readDir(expansionPacksDir)) {
           if (entry.isDirectory) {
             const packId = entry.name;
             const configPath = join(expansionPacksDir, packId, "config.yaml");
 
             try {
-              if (await safeExists(configPath)) {
+              if (await Deno.stat(configPath)) {
                 const configContent = await Deno.readTextFile(configPath);
-                const config = parseYaml(configContent) as Record<string, unknown>;
+                const config = parseYaml(configContent) as Record<
+                  string,
+                  unknown
+                >;
 
                 if (config && typeof config === "object") {
                   packs.push({
@@ -184,7 +197,9 @@ class ResourceLocator {
                     shortTitle: typeof config["short-title"] === "string"
                       ? config["short-title"]
                       : packId,
-                    version: typeof config.version === "string" ? config.version : "1.0.0",
+                    version: typeof config.version === "string"
+                      ? config.version
+                      : "1.0.0",
                     description: typeof config.description === "string"
                       ? config.description
                       : undefined,
@@ -221,7 +236,7 @@ class ResourceLocator {
     const teamPath = join(teamsDir, `${teamId}.yaml`);
 
     try {
-      if (await safeExists(teamPath)) {
+      if (await Deno.stat(teamPath)) {
         const content = await Deno.readTextFile(teamPath);
         return parseYaml(content) as Record<string, unknown>;
       }
@@ -283,7 +298,7 @@ class ResourceLocator {
     const ideConfigPath = join(ideConfigsDir, `${ideId}.yaml`);
 
     try {
-      if (await safeExists(ideConfigPath)) {
+      if (await Deno.stat(ideConfigPath)) {
         const content = await Deno.readTextFile(ideConfigPath);
         return parseYaml(content) as Record<string, unknown>;
       }

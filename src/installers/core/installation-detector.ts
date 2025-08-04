@@ -3,8 +3,14 @@
  * Detects and analyzes existing installation states
  */
 
-import { join, safeExists } from "deps";
-import type { FileIntegrityResult, IFileManager, IInstallationDetector, ILogger, InstallationState } from "deps";
+import { join } from "deps";
+import type {
+  FileIntegrityResult,
+  IFileManager,
+  IInstallationDetector,
+  ILogger,
+  InstallationState,
+} from "deps";
 
 export class InstallationDetector implements IInstallationDetector {
   private readonly manifestFileName = ".bmad-manifest.json";
@@ -346,17 +352,21 @@ export class InstallationDetector implements IInstallationDetector {
 
   // File system abstraction methods
   private async directoryExists(path: string): Promise<boolean> {
-    if (this.fileSystem) {
-      return await safeExists(path);
+    try {
+      const stat = await Deno.stat(path);
+      return stat.isDirectory;
+    } catch {
+      return false;
     }
-    return await safeExists(path);
   }
 
   private async fileExists(path: string): Promise<boolean> {
-    if (this.fileSystem) {
-      return await safeExists(path);
+    try {
+      const stat = await Deno.stat(path);
+      return stat.isFile;
+    } catch {
+      return false;
     }
-    return await safeExists(path);
   }
 
   private async readFile(path: string): Promise<string> {

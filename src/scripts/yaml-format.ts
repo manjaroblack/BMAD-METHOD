@@ -19,7 +19,7 @@ import {
   magenta,
   parseYaml,
   red,
-  safeExists,
+  Deno.stat,
   stringifyYaml,
   yellow,
 } from "deps";
@@ -247,7 +247,7 @@ class YamlFormatter {
    * Process a single file based on its type
    */
   async processFile(filePath: string): Promise<ProcessingResult> {
-    if (!(await safeExists(filePath))) {
+    if (!(await Deno.stat(filePath))) {
       return { changed: false, hasErrors: false };
     }
 

@@ -358,24 +358,12 @@ export {
 } from "./src/shared/tasks/task.types.ts";
 
 // Task Services
-export {
-  TaskExecutor,
-  type ITaskExecutor,
-} from "./src/shared/tasks/task-executor.ts";
+export { type ITaskExecutor, TaskExecutor } from "./src/shared/tasks/task-executor.ts";
 
-export {
-  TaskScheduler,
-  type ITaskScheduler,
-} from "./src/shared/tasks/task-scheduler.ts";
+export { type ITaskScheduler, TaskScheduler } from "./src/shared/tasks/task-scheduler.ts";
 
 // Workflow Services
-export {
-  WorkflowEngine,
-  type IWorkflowEngine,
-} from "./src/shared/workflows/workflow-engine.ts";
-
-// Safe filesystem utilities
-export { safeExists, safeIsDirectory, safeIsFile } from "./src/installers/utils/safe-fs.ts";
+export { type IWorkflowEngine, WorkflowEngine } from "./src/shared/workflows/workflow-engine.ts";
 
 // Flattener tool
 export { default as flattener } from "./tooling/user-tools/flattener/main.ts";
@@ -383,4 +371,4 @@ export { default as flattener } from "./tooling/user-tools/flattener/main.ts";
 // Installer modules
 export { promptInstallation } from "./src/installers/lib/prompt-handler.ts";
 export { setupCommands } from "./src/installers/lib/cli-commands.ts";
-export { initializeInstaller, getVersion, displayLogo } from "./src/installers/lib/cli-utils.ts";
+export { displayLogo, getVersion, initializeInstaller } from "./src/installers/lib/cli-utils.ts";

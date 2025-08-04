@@ -5,7 +5,7 @@
  * This file ensures proper execution when run via Deno from GitHub or local installation
  */
 
-import { dirname, join, safeExists } from "deps";
+import { dirname, join } from "deps";
 
 // Get command line arguments (excluding the script path)
 const args = Deno.args;
@@ -15,7 +15,7 @@ const currentDir = new URL(".", import.meta.url).pathname;
 const bmadScriptPath = join(dirname(currentDir), "..", "installers", "bin", "bmad.ts");
 
 // Check if the installer exists
-if (!(await safeExists(bmadScriptPath))) {
+if (!(await Deno.stat(bmadScriptPath))) {
   console.error("Error: Could not find bmad.ts at", bmadScriptPath);
   console.error("Current directory:", currentDir);
   Deno.exit(1);

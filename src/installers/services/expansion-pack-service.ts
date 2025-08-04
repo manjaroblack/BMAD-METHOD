@@ -3,7 +3,7 @@
  * Handles detection, installation, and management of expansion packs
  */
 
-import { expandGlob, join, ProjectPaths, safeExists } from "deps";
+import { expandGlob, join, ProjectPaths, Deno.stat } from "deps";
 import type { ExpansionPack, ExpansionPackInfo, ExpansionPackInstallResult, ExpansionPackManifest, ExpansionPackStatus, IExpansionPackService, IFileService, ILogger, InstallConfig } from "deps";
 
 export class ExpansionPackService implements IExpansionPackService {
@@ -120,7 +120,7 @@ export class ExpansionPackService implements IExpansionPackService {
     try {
       const packsDir = join(installDir, this.expansionPacksDir);
 
-      if (!await safeExists(packsDir)) {
+      if (!await Deno.stat(packsDir)) {
         this.logger?.debug("Expansion packs directory does not exist", {
           packsDir,
         });
@@ -305,7 +305,7 @@ export class ExpansionPackService implements IExpansionPackService {
 
       // Copy expansion pack files (placeholder logic)
       const sourceDir = this.getExpansionPackSourceDir(pack.id);
-      if (await safeExists(sourceDir)) {
+      if (await Deno.stat(sourceDir)) {
         await this.fileSystem.copyDirectory(sourceDir, targetDir);
       }
 
@@ -360,7 +360,7 @@ export class ExpansionPackService implements IExpansionPackService {
       this.expansionPacksDir,
       pack.id,
     );
-    if (await safeExists(targetDir)) {
+    if (await Deno.stat(targetDir)) {
       await this.fileSystem.remove(targetDir);
     }
 
@@ -373,7 +373,7 @@ export class ExpansionPackService implements IExpansionPackService {
   ): Promise<ExpansionPackInfo | null> {
     const manifestPath = this.fileSystem.join(packDir, this.packManifestFile);
 
-    if (!await safeExists(manifestPath)) {
+    if (!await Deno.stat(manifestPath)) {
       return null;
     }
 

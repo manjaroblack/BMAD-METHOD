@@ -3,7 +3,7 @@
  * Generates agent configurations and scripts during installation
  */
 
-import { ensureDir, join, safeExists } from "deps";
+import { ensureDir, join } from "deps";
 import type { IFileSystemService, ILogger } from "deps";
 
 // Manifest data interfaces
@@ -116,7 +116,7 @@ export class AgentGenerator {
       const outputPath = join(options.outputDir, fileName);
 
       // Check if file exists and handle overwrite
-      if (!options.overwrite && await safeExists(outputPath)) {
+      if (!options.overwrite && await Deno.stat(outputPath)) {
         throw new Error(`Agent file already exists: ${outputPath}`);
       }
 

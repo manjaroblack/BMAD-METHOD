@@ -3,7 +3,7 @@
  * Handles creation, reading, and updating of installation manifests
  */
 
-import { expandGlob, join, safeExists } from "deps";
+import { expandGlob, join, Deno.stat } from "deps";
 import type { IFileManager, ILogger, IManifestService, InstallationManifest } from "deps";
 
 export class ManifestService implements IManifestService {
@@ -66,7 +66,7 @@ export class ManifestService implements IManifestService {
     });
 
     try {
-      if (!await safeExists(manifestPath)) {
+      if (!await Deno.stat(manifestPath)) {
         this.logger?.debug("Manifest file does not exist", { manifestPath });
         return null;
       }

@@ -12,7 +12,7 @@ import {
   join,
   Logger,
   PerformanceMonitor,
-  safeExists,
+  Deno.stat,
   walk,
 } from "deps";
 
@@ -282,7 +282,7 @@ class DependencyManager {
       // For Deno, we can check if there are newer versions available
       // This is a simplified check - in practice, you'd want to query registries
       const configPath = join(directory, "deno.json");
-      if (await safeExists(configPath)) {
+      if (await Deno.stat(configPath)) {
         const content = await Deno.readTextFile(configPath);
         const config = JSON.parse(content);
 

@@ -3,8 +3,17 @@
  * Provides enhanced file system operations with error handling and utilities
  */
 
-import { copy, dirname, ensureDir, expandGlob, join, resolve, safeExists } from "deps";
-import type { FileCopyOperation, FileCopyResult, FileStats, GlobOptions, IFileManager, IFileOperations, IFileSystemService, ILogger } from "deps";
+import { copy, dirname, ensureDir, expandGlob, join, resolve } from "deps";
+import type {
+  FileCopyOperation,
+  FileCopyResult,
+  FileStats,
+  GlobOptions,
+  IFileManager,
+  IFileOperations,
+  IFileSystemService,
+  ILogger,
+} from "deps";
 
 export class FileSystemService implements IFileManager, IFileSystemService, IFileOperations {
   private logger?: ILogger;
@@ -52,7 +61,8 @@ export class FileSystemService implements IFileManager, IFileSystemService, IFil
 
   async fileExists(path: string): Promise<boolean> {
     try {
-      return await safeExists(path);
+      const stat = await Deno.stat(path);
+      return stat.isFile;
     } catch (error) {
       this.logger?.error(`Failed to check if path exists`, error as Error, { path });
       return false;
@@ -197,7 +207,7 @@ export class FileSystemService implements IFileManager, IFileSystemService, IFil
 
     for (const operation of operations) {
       try {
-        if (!operation.overwrite && await safeExists(operation.destination)) {
+        if (!operation.overwrite && await Deno.stat(operation.destination)) {
           results.push({
             operation,
             success: false,
@@ -244,7 +254,7 @@ export class FileSystemService implements IFileManager, IFileSystemService, IFil
       await this.ensureDirectory(backupDir);
 
       for (const filePath of filePaths) {
-        if (await safeExists(filePath)) {
+        if (await Deno.stat(filePath)) {
           const fileName = filePath.split("/").pop() || "unknown";
           const backupPath = this.join(backupDir, `${timestamp}_${fileName}`);
 

@@ -3,7 +3,7 @@
  * Handles migration from v3 to v5 project structure
  */
 
-import { ensureDir, join, Logger, ProjectPaths, safeExists } from "deps";
+import { ensureDir, join, Logger, ProjectPaths } from "deps";
 
 interface UpgradeOptions {
   dryRun?: boolean;
@@ -104,7 +104,7 @@ export class V3ToV5Upgrader {
 
     for (const file of filesToBackup) {
       const sourcePath = join(this.rootDir, file);
-      if (await safeExists(sourcePath)) {
+      if (await Deno.stat(sourcePath)) {
         const targetPath = join(backupDir, file);
         try {
           await Deno.copyFile(sourcePath, targetPath);

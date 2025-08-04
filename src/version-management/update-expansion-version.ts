@@ -4,7 +4,7 @@
  * Updates version in expansion pack config.yaml files
  */
 
-import { dirname, join, parseYaml as parse, safeExists, stringifyYaml as stringify } from "deps";
+import { dirname, join, parseYaml as parse, Deno.stat, stringifyYaml as stringify } from "deps";
 
 interface ExpansionConfig {
   version?: string;
@@ -45,7 +45,7 @@ class ExpansionVersionUpdater {
       const configPath = this.getConfigPath();
 
       // Check if expansion pack exists
-      if (!(await safeExists(configPath))) {
+      if (!(await Deno.stat(configPath))) {
         console.error(`Error: Expansion pack '${this.packId}' not found`);
         console.error(`Expected path: ${configPath}`);
         Deno.exit(1);

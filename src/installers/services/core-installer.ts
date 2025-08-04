@@ -3,15 +3,13 @@
  * Handles installation of core BMAD framework components
  */
 
-import {
-  join,
-  copy,
-  ensureDir,
-  safeExists,
-  InstallationError,
-  ProjectPaths
+import { copy, ensureDir, InstallationError, join, ProjectPaths } from "deps";
+import type {
+  IFileSystemService,
+  ILogger,
+  InstallConfig,
+  ISpinner,
 } from "deps";
-import type { InstallConfig, ILogger, ISpinner, IFileSystemService } from "deps";
 
 export interface CoreInstallationResult {
   success: boolean;
@@ -38,67 +36,67 @@ export class CoreInstaller {
   // Core components that make up the BMAD framework
   private readonly coreComponents: CoreComponent[] = [
     {
-      name: 'agents',
-      path: join(ProjectPaths.core, 'agents'),
+      name: "agents",
+      path: join(ProjectPaths.core, "agents"),
       required: true,
       dependencies: [],
-      postInstallActions: ['validate-agents']
+      postInstallActions: ["validate-agents"],
     },
     {
-      name: 'workflows',
-      path: join(ProjectPaths.core, 'workflows'),
+      name: "workflows",
+      path: join(ProjectPaths.core, "workflows"),
       required: true,
-      dependencies: ['agents'],
-      postInstallActions: ['register-workflows']
+      dependencies: ["agents"],
+      postInstallActions: ["register-workflows"],
     },
     {
-      name: 'checklists',
-      path: join(ProjectPaths.core, 'checklists'),
+      name: "checklists",
+      path: join(ProjectPaths.core, "checklists"),
       required: true,
-      dependencies: ['agents'],
-      postInstallActions: ['register-checklists']
+      dependencies: ["agents"],
+      postInstallActions: ["register-checklists"],
     },
     {
-      name: 'tasks',
-      path: join(ProjectPaths.core, 'tasks'),
+      name: "tasks",
+      path: join(ProjectPaths.core, "tasks"),
       required: true,
-      dependencies: ['agents'],
-      postInstallActions: ['register-tasks']
+      dependencies: ["agents"],
+      postInstallActions: ["register-tasks"],
     },
     {
-      name: 'templates',
-      path: 'core/templates',
+      name: "templates",
+      path: "core/templates",
       required: true,
       dependencies: [],
-      postInstallActions: ['compile-templates']
+      postInstallActions: ["compile-templates"],
     },
     {
-      name: 'data',
-      path: 'core/data',
+      name: "data",
+      path: "core/data",
       required: false,
       dependencies: [],
-      postInstallActions: ['setup-data-directories']
+      postInstallActions: ["setup-data-directories"],
     },
     {
-      name: 'tooling',
-      path: 'tooling',
+      name: "tooling",
+      path: "tooling",
       required: true,
       dependencies: [],
-      postInstallActions: ['setup-cli-tools']
+      postInstallActions: ["setup-cli-tools"],
     },
     {
-      name: 'configurations',
-      path: 'config',
+      name: "configurations",
+      path: "config",
       required: false,
       dependencies: [],
-      postInstallActions: ['validate-configurations']
-    }
+      postInstallActions: ["validate-configurations"],
+    },
   ];
 
   constructor(
     logger: ILogger,
     spinner: ISpinner,
-    fileSystem: IFileSystemService
+    fileSystem: IFileSystemService,
   ) {
     this.logger = logger;
     this.spinner = spinner;
@@ -111,12 +109,12 @@ export class CoreInstaller {
   async installCore(
     sourceDir: string,
     targetDir: string,
-    config: InstallConfig
+    config: InstallConfig,
   ): Promise<CoreInstallationResult> {
-    this.logger.info('Starting core installation', {
+    this.logger.info("Starting core installation", {
       sourceDir,
       targetDir,
-      selectedComponents: config.selectedPacks
+      selectedComponents: config.selectedPacks,
     });
 
     const result: CoreInstallationResult = {
@@ -125,11 +123,11 @@ export class CoreInstaller {
       skippedComponents: [],
       errors: [],
       installPath: targetDir,
-      version: 'unknown'
+      version: "unknown",
     };
 
     try {
-      this.spinner.text = 'Installing BMAD core components...';
+      this.spinner.text = "Installing BMAD core components...";
       this.spinner.start();
 
       // Ensure target directory exists
@@ -137,86 +135,97 @@ export class CoreInstaller {
 
       // Filter components based on configuration
       const componentsToInstall = this.filterComponents(config);
-      
-      this.logger.info('Components selected for installation', {
+
+      this.logger.info("Components selected for installation", {
         total: componentsToInstall.length,
-        required: componentsToInstall.filter(c => c.required).length,
-        optional: componentsToInstall.filter(c => !c.required).length
+        required: componentsToInstall.filter((c) => c.required).length,
+        optional: componentsToInstall.filter((c) => !c.required).length,
       });
 
       // Install components in dependency order
-      const sortedComponents = this.sortComponentsByDependencies(componentsToInstall);
-      
+      const sortedComponents = this.sortComponentsByDependencies(
+        componentsToInstall,
+      );
+
       for (const component of sortedComponents) {
         try {
           await this.installComponent(component, sourceDir, targetDir);
           result.installedComponents.push(component.name);
-          
+
           this.spinner.text = `Installed ${component.name}...`;
-          
         } catch (error) {
-          const errorMessage = `Failed to install component ${component.name}: ${(error as Error).message}`;
+          const errorMessage =
+            `Failed to install component ${component.name}: ${
+              (error as Error).message
+            }`;
           result.errors.push(errorMessage);
-          
-          this.logger.error('Component installation failed', error as Error, {
+
+          this.logger.error("Component installation failed", error as Error, {
             component: component.name,
             sourceDir,
-            targetDir
+            targetDir,
           });
 
           // If it's a required component, fail the entire installation
           if (component.required) {
             throw new InstallationError(
               `Required component installation failed: ${component.name}`,
-              'CORE_COMPONENT_FAILED',
-              { component: component.name, error: error as Error }
+              "CORE_COMPONENT_FAILED",
+              { component: component.name, error: error as Error },
             );
           } else {
             // For optional components, log and continue
             result.skippedComponents.push(component.name);
-            this.logger.warn('Optional component skipped due to error', {
+            this.logger.warn("Optional component skipped due to error", {
               component: component.name,
-              error: errorMessage
+              error: errorMessage,
             });
           }
         }
       }
 
       // Execute post-installation actions
-      await this.executePostInstallActions(result.installedComponents, targetDir);
+      await this.executePostInstallActions(
+        result.installedComponents,
+        targetDir,
+      );
 
       // Validate installation
-      const validationResult = await this.validateInstallation(targetDir, result.installedComponents);
-      
+      const validationResult = await this.validateInstallation(
+        targetDir,
+        result.installedComponents,
+      );
+
       if (!validationResult.isValid) {
         result.errors.push(...validationResult.errors);
         throw new InstallationError(
-          'Core installation validation failed',
-          'CORE_VALIDATION_FAILED',
-          { validationErrors: validationResult.errors }
+          "Core installation validation failed",
+          "CORE_VALIDATION_FAILED",
+          { validationErrors: validationResult.errors },
         );
       }
 
       result.success = true;
-      this.spinner.succeed(`Core installation completed (${result.installedComponents.length} components)`);
+      this.spinner.succeed(
+        `Core installation completed (${result.installedComponents.length} components)`,
+      );
 
-      this.logger.info('Core installation completed successfully', {
+      this.logger.info("Core installation completed successfully", {
         targetDir,
         installedComponents: result.installedComponents,
         skippedComponents: result.skippedComponents,
-        totalErrors: result.errors.length
+        totalErrors: result.errors.length,
       });
 
       return result;
-
     } catch (error) {
       result.success = false;
-      this.spinner.fail('Core installation failed');
-      
-      this.logger.error('Core installation failed', error as Error, {
+      this.spinner.fail("Core installation failed");
+
+      this.logger.error("Core installation failed", error as Error, {
         sourceDir,
         targetDir,
-        partialResults: result
+        partialResults: result,
       });
 
       throw error;
@@ -229,15 +238,15 @@ export class CoreInstaller {
   async updateCore(
     sourceDir: string,
     targetDir: string,
-    config: InstallConfig
+    config: InstallConfig,
   ): Promise<CoreInstallationResult> {
-    this.logger.info('Starting core update', {
+    this.logger.info("Starting core update", {
       sourceDir,
-      targetDir
+      targetDir,
     });
 
     try {
-      this.spinner.text = 'Updating BMAD core components...';
+      this.spinner.text = "Updating BMAD core components...";
       this.spinner.start();
 
       // Create backup before update
@@ -245,34 +254,33 @@ export class CoreInstaller {
 
       // Get currently installed components
       const currentComponents = await this.getInstalledComponents(targetDir);
-      
+
       // Determine which components need updating
       const componentsToUpdate = await this.getComponentsToUpdate(
         currentComponents,
         sourceDir,
-        config
+        config,
       );
 
-      this.logger.info('Components identified for update', {
+      this.logger.info("Components identified for update", {
         current: currentComponents.length,
-        toUpdate: componentsToUpdate.length
+        toUpdate: componentsToUpdate.length,
       });
 
       // Update components
       const result = await this.installCore(sourceDir, targetDir, config);
-      
-      this.spinner.succeed('Core update completed successfully');
-      return result;
 
+      this.spinner.succeed("Core update completed successfully");
+      return result;
     } catch (error) {
-      this.spinner.fail('Core update failed');
-      
+      this.spinner.fail("Core update failed");
+
       // Attempt to restore from backup
       await this.restoreFromBackup(targetDir);
-      
-      this.logger.error('Core update failed', error as Error, {
+
+      this.logger.error("Core update failed", error as Error, {
         sourceDir,
-        targetDir
+        targetDir,
       });
 
       throw error;
@@ -287,14 +295,14 @@ export class CoreInstaller {
 
     // If specific components are selected, filter to those
     if (config.selectedPacks && config.selectedPacks.length > 0) {
-      components = components.filter(component => 
+      components = components.filter((component) =>
         config.selectedPacks!.includes(component.name) || component.required
       );
     }
 
     // Apply additional filters based on installation type
     if (config.expansionOnly) {
-      components = components.filter(component => component.required);
+      components = components.filter((component) => component.required);
     }
 
     return components;
@@ -303,16 +311,20 @@ export class CoreInstaller {
   /**
    * Sort components by their dependencies
    */
-  private sortComponentsByDependencies(components: CoreComponent[]): CoreComponent[] {
+  private sortComponentsByDependencies(
+    components: CoreComponent[],
+  ): CoreComponent[] {
     const sorted: CoreComponent[] = [];
     const visited = new Set<string>();
     const visiting = new Set<string>();
 
     const visit = (component: CoreComponent) => {
       if (visiting.has(component.name)) {
-        throw new Error(`Circular dependency detected for component: ${component.name}`);
+        throw new Error(
+          `Circular dependency detected for component: ${component.name}`,
+        );
       }
-      
+
       if (visited.has(component.name)) {
         return;
       }
@@ -321,7 +333,7 @@ export class CoreInstaller {
 
       // Visit dependencies first
       for (const depName of component.dependencies) {
-        const dependency = components.find(c => c.name === depName);
+        const dependency = components.find((c) => c.name === depName);
         if (dependency) {
           visit(dependency);
         }
@@ -345,26 +357,26 @@ export class CoreInstaller {
   private async installComponent(
     component: CoreComponent,
     sourceDir: string,
-    targetDir: string
+    targetDir: string,
   ): Promise<void> {
     const sourcePath = join(sourceDir, component.path);
     const targetPath = join(targetDir, component.path);
 
-    this.logger.debug('Installing component', {
+    this.logger.debug("Installing component", {
       name: component.name,
       sourcePath,
-      targetPath
+      targetPath,
     });
 
     try {
       // Check if source exists
-      if (!await safeExists(sourcePath)) {
+      if (!await Deno.stat(sourcePath)) {
         if (component.required) {
           throw new Error(`Required source path not found: ${sourcePath}`);
         } else {
-          this.logger.warn('Optional component source not found, skipping', {
+          this.logger.warn("Optional component source not found, skipping", {
             component: component.name,
-            sourcePath
+            sourcePath,
           });
           return;
         }
@@ -376,16 +388,15 @@ export class CoreInstaller {
       // Copy component files
       await copy(sourcePath, targetPath, { overwrite: true });
 
-      this.logger.debug('Component installed successfully', {
+      this.logger.debug("Component installed successfully", {
         name: component.name,
-        targetPath
+        targetPath,
       });
-
     } catch (error) {
-      this.logger.error('Component installation failed', error as Error, {
+      this.logger.error("Component installation failed", error as Error, {
         component: component.name,
         sourcePath,
-        targetPath
+        targetPath,
       });
       throw error;
     }
@@ -396,12 +407,14 @@ export class CoreInstaller {
    */
   private async executePostInstallActions(
     installedComponents: string[],
-    targetDir: string
+    targetDir: string,
   ): Promise<void> {
-    this.spinner.text = 'Executing post-installation actions...';
+    this.spinner.text = "Executing post-installation actions...";
 
     for (const componentName of installedComponents) {
-      const component = this.coreComponents.find(c => c.name === componentName);
+      const component = this.coreComponents.find((c) =>
+        c.name === componentName
+      );
       if (!component || !component.postInstallActions) {
         continue;
       }
@@ -410,10 +423,10 @@ export class CoreInstaller {
         try {
           await this.executePostInstallAction(action, component, targetDir);
         } catch (error) {
-          this.logger.warn('Post-install action failed', {
+          this.logger.warn("Post-install action failed", {
             component: componentName,
             action,
-            error: (error as Error).message
+            error: (error as Error).message,
           });
           // Don't fail installation for post-install action failures
         }
@@ -427,49 +440,49 @@ export class CoreInstaller {
   private async executePostInstallAction(
     action: string,
     component: CoreComponent,
-    targetDir: string
+    targetDir: string,
   ): Promise<void> {
-    this.logger.debug('Executing post-install action', {
+    this.logger.debug("Executing post-install action", {
       action,
       component: component.name,
-      targetDir
+      targetDir,
     });
 
     switch (action) {
-      case 'validate-agents':
+      case "validate-agents":
         await this.validateAgents(targetDir);
         break;
-      
-      case 'register-workflows':
+
+      case "register-workflows":
         await this.registerWorkflows(targetDir);
         break;
-      
-      case 'register-checklists':
+
+      case "register-checklists":
         await this.registerChecklists(targetDir);
         break;
-      
-      case 'register-tasks':
+
+      case "register-tasks":
         await this.registerTasks(targetDir);
         break;
-      
-      case 'compile-templates':
+
+      case "compile-templates":
         await this.compileTemplates(targetDir);
         break;
-      
-      case 'setup-data-directories':
+
+      case "setup-data-directories":
         await this.setupDataDirectories(targetDir);
         break;
-      
-      case 'setup-cli-tools':
+
+      case "setup-cli-tools":
         await this.setupCliTools(targetDir);
         break;
-      
-      case 'validate-configurations':
+
+      case "validate-configurations":
         await this.validateConfigurations(targetDir);
         break;
-      
+
       default:
-        this.logger.warn('Unknown post-install action', { action });
+        this.logger.warn("Unknown post-install action", { action });
     }
   }
 
@@ -478,19 +491,19 @@ export class CoreInstaller {
    */
   private async validateInstallation(
     targetDir: string,
-    installedComponents: string[]
+    installedComponents: string[],
   ): Promise<{ isValid: boolean; errors: string[] }> {
     const errors: string[] = [];
 
     // Check that all required components are present
-    const requiredComponents = this.coreComponents.filter(c => c.required);
+    const requiredComponents = this.coreComponents.filter((c) => c.required);
     for (const component of requiredComponents) {
       if (!installedComponents.includes(component.name)) {
         errors.push(`Required component missing: ${component.name}`);
       } else {
         // Check that the component directory exists
         const componentPath = join(targetDir, component.path);
-        if (!(await safeExists(componentPath))) {
+        if (!(await Deno.stat(componentPath))) {
           errors.push(`Component directory missing: ${componentPath}`);
         }
       }
@@ -498,7 +511,7 @@ export class CoreInstaller {
 
     return {
       isValid: errors.length === 0,
-      errors
+      errors,
     };
   }
 
@@ -506,15 +519,15 @@ export class CoreInstaller {
    * Create backup before update
    */
   private async createUpdateBackup(targetDir: string): Promise<void> {
-    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+    const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
     const backupDir = `${targetDir}.backup-${timestamp}`;
-    
+
     try {
       await copy(targetDir, backupDir);
-      this.logger.info('Update backup created', { backupDir });
+      this.logger.info("Update backup created", { backupDir });
     } catch (error) {
-      this.logger.warn('Failed to create update backup', {
-        error: (error as Error).message
+      this.logger.warn("Failed to create update backup", {
+        error: (error as Error).message,
       });
     }
   }
@@ -524,14 +537,14 @@ export class CoreInstaller {
    */
   private async getInstalledComponents(targetDir: string): Promise<string[]> {
     const installed: string[] = [];
-    
+
     for (const component of this.coreComponents) {
       const componentPath = join(targetDir, component.path);
-      if (await safeExists(componentPath)) {
+      if (await Deno.stat(componentPath)) {
         installed.push(component.name);
       }
     }
-    
+
     return installed;
   }
 
@@ -541,7 +554,7 @@ export class CoreInstaller {
   private getComponentsToUpdate(
     _currentComponents: string[],
     _sourceDir: string,
-    config: InstallConfig
+    config: InstallConfig,
   ): CoreComponent[] {
     // For now, return all components (could be enhanced with version checking)
     return this.filterComponents(config);
@@ -552,40 +565,42 @@ export class CoreInstaller {
    */
   private restoreFromBackup(targetDir: string): void {
     // Implementation would restore from the most recent backup
-    this.logger.info('Restore from backup would be implemented here', { targetDir });
+    this.logger.info("Restore from backup would be implemented here", {
+      targetDir,
+    });
   }
 
   // Post-install action implementations (stubs for now)
   private validateAgents(targetDir: string): void {
-    this.logger.debug('Validating agents', { targetDir });
+    this.logger.debug("Validating agents", { targetDir });
   }
 
   private registerWorkflows(targetDir: string): void {
-    this.logger.debug('Registering workflows', { targetDir });
+    this.logger.debug("Registering workflows", { targetDir });
   }
 
   private registerChecklists(targetDir: string): void {
-    this.logger.debug('Registering checklists', { targetDir });
+    this.logger.debug("Registering checklists", { targetDir });
   }
 
   private registerTasks(targetDir: string): void {
-    this.logger.debug('Registering tasks', { targetDir });
+    this.logger.debug("Registering tasks", { targetDir });
   }
 
   private compileTemplates(targetDir: string): void {
-    this.logger.debug('Compiling templates', { targetDir });
+    this.logger.debug("Compiling templates", { targetDir });
   }
 
   private setupDataDirectories(targetDir: string): void {
-    this.logger.debug('Setting up data directories', { targetDir });
+    this.logger.debug("Setting up data directories", { targetDir });
   }
 
   private setupCliTools(targetDir: string): void {
-    this.logger.debug('Setting up CLI tools', { targetDir });
+    this.logger.debug("Setting up CLI tools", { targetDir });
   }
 
   private validateConfigurations(targetDir: string): void {
-    this.logger.debug('Validating configurations', { targetDir });
+    this.logger.debug("Validating configurations", { targetDir });
   }
 }
 
@@ -593,7 +608,7 @@ export class CoreInstaller {
 export function createCoreInstaller(
   logger: ILogger,
   spinner: ISpinner,
-  fileSystem: IFileSystemService
+  fileSystem: IFileSystemService,
 ): CoreInstaller {
   return new CoreInstaller(logger, spinner, fileSystem);
 }

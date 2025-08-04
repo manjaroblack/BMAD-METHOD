@@ -5,7 +5,7 @@
  * Migrated from Node.js to Deno
  */
 
-import { join, safeExists } from "deps";
+import { join, Deno.stat } from "deps";
 
 // Interface for semantic-release context
 interface SemanticReleaseContext {
@@ -64,7 +64,7 @@ class SemanticReleaseSyncInstaller {
 
     try {
       // Check if the file exists
-      if (!(await safeExists(filePath))) {
+      if (!(await Deno.stat(filePath))) {
         logger.log(`Installer deno.json not found at ${filePath}, skipping`);
         return;
       }

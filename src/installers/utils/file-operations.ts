@@ -3,7 +3,7 @@
  * Provides specialized file operations for installation processes
  */
 
-import { copy, dirname, ensureDir, join, safeExists } from "deps";
+import { copy, dirname, ensureDir, join } from "deps";
 import type { IFileSystemService, ILogger } from "deps";
 
 export interface CopyOperation {
@@ -185,7 +185,7 @@ export class FileOperations {
         const sourcePath = join(sourceDir, commonPath);
         const targetPath = join(targetDir, commonPath);
 
-        if (await safeExists(sourcePath)) {
+        if (await Deno.stat(sourcePath)) {
           try {
             // Ensure target directory exists
             await ensureDir(dirname(targetPath));
@@ -249,7 +249,7 @@ export class FileOperations {
       await ensureDir(backupDir);
 
       for (const filePath of filePaths) {
-        if (await safeExists(filePath)) {
+        if (await Deno.stat(filePath)) {
           const fileName = filePath.split("/").pop() || "unknown";
           const backupPath = join(backupDir, `${timestamp}_${fileName}`);
 
@@ -284,7 +284,7 @@ export class FileOperations {
    */
   async validateCopy(sourcePath: string, destPath: string): Promise<boolean> {
     try {
-      if (!await safeExists(destPath)) {
+      if (!await Deno.stat(destPath)) {
         return false;
       }
 
@@ -312,7 +312,7 @@ export class FileOperations {
         operation;
 
       // Check if destination exists and handle overwrite
-      if (!overwrite && await safeExists(destination)) {
+      if (!overwrite && await Deno.stat(destination)) {
         return {
           success: false,
           source,
@@ -322,7 +322,7 @@ export class FileOperations {
       }
 
       // Create backup if requested
-      if (createBackup && await safeExists(destination)) {
+      if (createBackup && await Deno.stat(destination)) {
         const backupDir = join(dirname(destination), ".backup");
         await this.createBackup([destination], backupDir);
       }

@@ -1,4 +1,4 @@
-import { green, join, parseYaml, red, safeExists, yellow } from "deps";
+import { green, join, parseYaml, red, yellow } from "deps";
 
 interface ValidationResult {
   isValid: boolean;
@@ -47,7 +47,7 @@ class InstallerValidator {
     console.log(`Validating BMad installation at: ${installDir}`);
 
     // Check if installation directory exists
-    if (!(await safeExists(installDir))) {
+    if (!(await Deno.stat(installDir))) {
       result.errors.push(
         `Installation directory does not exist: ${installDir}`,
       );
@@ -79,7 +79,7 @@ class InstallerValidator {
   ): Promise<void> {
     for (const dir of this.expectedStructure.requiredDirectories) {
       const fullPath = join(installDir, dir);
-      if (!(await safeExists(fullPath))) {
+      if (!(await Deno.stat(fullPath))) {
         result.errors.push(`Required directory missing: ${dir}`);
         result.isValid = false;
       }
@@ -92,7 +92,7 @@ class InstallerValidator {
   ): Promise<void> {
     for (const file of this.expectedStructure.requiredFiles) {
       const fullPath = join(installDir, file);
-      if (!(await safeExists(fullPath))) {
+      if (!(await Deno.stat(fullPath))) {
         result.errors.push(`Required file missing: ${file}`);
         result.isValid = false;
       }
@@ -106,7 +106,7 @@ class InstallerValidator {
     for (const configFile of this.expectedStructure.configFiles) {
       const fullPath = join(installDir, configFile);
 
-      if (!(await safeExists(fullPath))) {
+      if (!(await Deno.stat(fullPath))) {
         result.errors.push(`Configuration file missing: ${configFile}`);
         result.isValid = false;
         continue;
@@ -170,7 +170,7 @@ class InstallerValidator {
   ): Promise<void> {
     const agentsDir = join(installDir, ".bmad-core/agents");
 
-    if (!(await safeExists(agentsDir))) {
+    if (!(await Deno.stat(agentsDir))) {
       result.errors.push("Agents directory missing");
       result.isValid = false;
       return;
@@ -259,7 +259,7 @@ class InstallerValidator {
   ): Promise<void> {
     for (const file of this.expectedStructure.optionalFiles) {
       const fullPath = join(installDir, file);
-      if (!(await safeExists(fullPath))) {
+      if (!(await Deno.stat(fullPath))) {
         result.warnings.push(`Optional file missing: ${file}`);
       }
     }
@@ -275,7 +275,7 @@ class InstallerValidator {
     console.log(`Validating expansion pack at: ${packPath}`);
 
     // Check if pack directory exists
-    if (!(await safeExists(packPath))) {
+    if (!(await Deno.stat(packPath))) {
       result.errors.push(
         `Expansion pack directory does not exist: ${packPath}`,
       );
@@ -287,7 +287,7 @@ class InstallerValidator {
     const requiredFiles = ["deno.json", "config.yaml"];
     for (const file of requiredFiles) {
       const fullPath = join(packPath, file);
-      if (!(await safeExists(fullPath))) {
+      if (!(await Deno.stat(fullPath))) {
         result.errors.push(`Required expansion pack file missing: ${file}`);
         result.isValid = false;
       }
@@ -308,7 +308,7 @@ class InstallerValidator {
   ): Promise<void> {
     const denoJsonPath = join(packPath, "deno.json");
 
-    if (!(await safeExists(denoJsonPath))) {
+    if (!(await Deno.stat(denoJsonPath))) {
       return; // Already handled in validateExpansionPack
     }
 
@@ -341,7 +341,7 @@ class InstallerValidator {
   ): Promise<void> {
     const configPath = join(packPath, "config.yaml");
 
-    if (!(await safeExists(configPath))) {
+    if (!(await Deno.stat(configPath))) {
       return; // Already handled in validateExpansionPack
     }
 
@@ -394,7 +394,7 @@ class InstallerValidator {
 
     for (const file of coreFiles) {
       const fullPath = join(installDir, file);
-      if (!(await safeExists(fullPath))) {
+      if (!(await Deno.stat(fullPath))) {
         return false;
       }
     }

@@ -7,7 +7,7 @@
  * Safely check if a path exists without throwing errors
  * Uses Deno.stat directly to avoid import issues with std/fs exists
  */
-export async function safeExists(path: string): Promise<boolean> {
+export async function Deno.stat(path: string): Promise<boolean> {
   try {
     await Deno.stat(path);
     return true;

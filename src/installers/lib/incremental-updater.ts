@@ -12,7 +12,6 @@ import {
   ParallelProcessor,
   PerformanceMonitor,
   relative,
-  safeExists,
   walk,
 } from "deps";
 
@@ -391,7 +390,7 @@ class IncrementalUpdater {
   // Load manifest from file
   async loadManifest(manifestPath: string): Promise<Manifest | null> {
     try {
-      if (await safeExists(manifestPath)) {
+      if (await Deno.stat(manifestPath)) {
         const content = await Deno.readTextFile(manifestPath);
         return JSON.parse(content) as Manifest;
       }

@@ -23,7 +23,7 @@ import {
   ProjectPaths,
   red,
   // dirname, // Currently unused
-  safeExists,
+  Deno.stat,
   yellow,
 } from "deps";
 
@@ -262,7 +262,7 @@ class InstallationValidator {
     try {
       // Validate deno.json
       const denoJsonPath = join(projectRoot, "deno.json");
-      if (await safeExists(denoJsonPath)) {
+      if (await Deno.stat(denoJsonPath)) {
         const result = await this.validateJsonFile(denoJsonPath, "deno.json");
         category.issues.push(...result.issues);
       } else {
@@ -282,7 +282,7 @@ class InstallationValidator {
 
       for (const configFile of configFiles) {
         const configPath = join(projectRoot, configFile);
-        if (await safeExists(configPath)) {
+        if (await Deno.stat(configPath)) {
           const result = await this.validateYamlFile(configPath, configFile);
           category.issues.push(...result.issues);
         }
@@ -338,7 +338,7 @@ class InstallationValidator {
 
     for (const file of coreFiles) {
       const filePath = join(projectRoot, file);
-      if (await safeExists(filePath)) {
+      if (await Deno.stat(filePath)) {
         category.issues.push({
           type: "success",
           severity: "info",
@@ -360,7 +360,7 @@ class InstallationValidator {
   async validateExpansionPacks(_projectRoot: string, category: CategoryResult): Promise<void> {
     const extensionsDir = ProjectPaths.extensions;
 
-    if (!(await safeExists(extensionsDir))) {
+    if (!(await Deno.stat(extensionsDir))) {
       category.issues.push({
         type: "warning",
         severity: "warning",
@@ -374,7 +374,7 @@ class InstallationValidator {
       for await (const entry of Deno.readDir(extensionsDir)) {
         if (entry.isDirectory) {
           const configPath = join(extensionsDir, entry.name, "config.yaml");
-          if (await safeExists(configPath)) {
+          if (await Deno.stat(configPath)) {
             const result = await this.validateYamlFile(configPath, "expansion-config");
             category.issues.push(...result.issues);
           } else {
@@ -416,7 +416,7 @@ class InstallationValidator {
         // Simplified pattern matching - check specific known locations
         if (pattern.includes("node_modules")) {
           const nodeModulesPath = join(projectRoot, "node_modules");
-          if (await safeExists(nodeModulesPath)) {
+          if (await Deno.stat(nodeModulesPath)) {
             tempFiles.push("node_modules");
           }
         }
@@ -517,7 +517,7 @@ class InstallationValidator {
 
     for (const file of packageJsonFiles) {
       const filePath = join(projectRoot, file);
-      if (await safeExists(filePath)) {
+      if (await Deno.stat(filePath)) {
         const result = await this.validateJsonFile(filePath, file);
         category.issues.push(...result.issues);
       }
@@ -538,7 +538,7 @@ class InstallationValidator {
 
     for (const conflictPath of conflictingPaths) {
       const fullPath = join(projectRoot, conflictPath);
-      if (await safeExists(fullPath)) {
+      if (await Deno.stat(fullPath)) {
         category.issues.push({
           type: "warning",
           severity: "warning",
@@ -615,7 +615,7 @@ class InstallationValidator {
     try {
       const buildDir = join(projectRoot, ".bmad-cache");
 
-      if (await safeExists(buildDir)) {
+      if (await Deno.stat(buildDir)) {
         const stats = await this.getBuildStats(buildDir);
 
         if (stats.totalSize > 100 * 1024 * 1024) { // > 100MB
