@@ -1,13 +1,6 @@
 #!/usr/bin/env -S deno run --allow-read --allow-write --allow-env
 
-import {
-  dirname,
-  join,
-  parseYaml as parse,
-  ProjectPaths,
-  Deno.stat as existsSync,
-  stringifyYaml as stringify,
-} from "deps";
+import { dirname, join, parseYaml as parse, ProjectPaths, stringifyYaml as stringify } from "deps";
 
 const args = Deno.args;
 const bumpType = args[0] || "minor"; // default to minor
@@ -92,7 +85,7 @@ async function bumpAllVersions(): Promise<void> {
         const packId = entry.name;
         const configPath = join(expansionPacksDir, packId, "config.yaml");
 
-        if (await existsSync(configPath)) {
+        if (await Deno.stat(configPath)) {
           try {
             const configContent = await Deno.readTextFile(configPath);
             const config = parse(configContent) as Record<string, unknown>;

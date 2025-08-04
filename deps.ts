@@ -55,9 +55,6 @@ export {
   ParallelProcessor,
 } from "./src/lib/performance-optimizer.ts";
 
-// Deno version management
-export { default as DenoVersionManager } from "./src/lib/node-version-manager.ts";
-
 // YAML utilities
 export { extractYamlFromAgent } from "./src/lib/yaml-utils.ts";
 
@@ -67,115 +64,8 @@ export { DependencyResolver } from "./src/lib/dependency-resolver.ts";
 // Build tools
 export { WebBuilder } from "./src/build-tools/web-builder.ts";
 
-// Dependency management
-export { default as DependencyManager } from "./src/scripts/manage-dependencies.ts";
-
 // Installer module
 export { default as Installer } from "./src/installers/lib/installer.ts";
-
-// Core Services - Agent Management
-export {
-  AgentManager,
-  type AgentSystemStatus,
-  type IAgentManager,
-  type TeamWorkflowResult,
-} from "./src/shared/services/agent-manager.service.ts";
-
-// Core Services - Extension Management
-export {
-  ExtensionManager,
-  type IExtensionManager,
-} from "./src/shared/extensions/extension-manager.service.ts";
-
-export {
-  ExtensionLoader,
-  type IExtensionLoader,
-} from "./src/shared/extensions/extension-loader.ts";
-
-export {
-  ExtensionRegistry as ExtensionRegistryService,
-  type IExtensionRegistry,
-} from "./src/shared/extensions/extension-registry.service.ts";
-
-// Extension Types
-export {
-  type ChecklistItem,
-  type ExtensionActivationContext,
-  type ExtensionAgentResource,
-  type ExtensionChecklistResource,
-  type ExtensionCommand,
-  type ExtensionConfig,
-  type ExtensionConfigurationSchema,
-  type ExtensionContext,
-  type ExtensionContributions,
-  type ExtensionDataResource,
-  type ExtensionDependency,
-  type ExtensionError,
-  type ExtensionLoadResult,
-  type ExtensionLogger,
-  type ExtensionManifest,
-  type ExtensionMetrics,
-  type ExtensionRegistry,
-  type ExtensionResources,
-  type ExtensionSearchCriteria,
-  ExtensionStatus,
-  type ExtensionSubscription,
-  type ExtensionTaskResource,
-  type ExtensionTemplateResource,
-  ExtensionType,
-  type ExtensionWorkflowResource,
-} from "./src/shared/extensions/extension.types.ts";
-
-// Core Agents
-export { type IAgent } from "./src/shared/agents/base-agent.ts";
-
-export { AgentRegistry, type IAgentRegistry } from "./src/shared/agents/agent-registry.ts";
-
-// Agent Types
-export {
-  type AgentConfig,
-  type AgentResponse,
-  AgentRole,
-  type AgentState,
-  AgentStatus,
-  type AgentTask,
-  type AgentTeam,
-} from "./src/shared/agents/agent.types.ts";
-
-// CLI Framework
-export { CLIFramework } from "./src/cli/core/cli-framework.ts";
-
-// CLI Types
-export {
-  type BuildOptions,
-  type CLIConfig,
-  type CLIEvent,
-  type CLIEventListener,
-  CLIEventType,
-  type CLIHelp,
-  type CLILogger,
-  type CLIMetrics,
-  type CLIMiddleware,
-  type CLIPlugin,
-  type CLIValidation,
-  type CommandContext,
-  type CommandDefinition,
-  type CommandExample,
-  type CommandHandler,
-  type CommandOption,
-  type CommandResult,
-  type ICLI,
-  type ValidationError as CLIValidationError,
-  type ValidationOptions,
-  type ValidationResult,
-  type ValidationWarning,
-  type VersionBumpOptions,
-} from "./src/cli/types/cli.types.ts";
-
-// CLI Commands
-export { BuildCommandPlugin } from "./src/cli/commands/build.command.ts";
-
-export { VersionManagementCommandPlugin } from "./src/cli/commands/version-management.command.ts";
 
 // Shared Types
 export {
@@ -186,8 +76,6 @@ export {
   type InstallationType,
   type InstallConfig,
 } from "./src/shared/types/installation.types.ts";
-
-export { type InstallationResult } from "./src/shared/types/installation-result.types.ts";
 
 // Centralized Path Management
 export {
@@ -221,35 +109,6 @@ export {
   type ExpansionPackStatus,
 } from "./src/shared/types/expansion-pack.types.ts";
 
-// Shared Interfaces
-export {
-  type ICoreInstaller,
-  type IExpansionPackService,
-  type IInstallationDetector,
-  type IInstallationHandler,
-  type IInstaller,
-  type IManifestService,
-} from "./src/shared/interfaces/installer.interface.ts";
-
-export {
-  type IConfigValidator,
-  type IIntegrityValidator,
-  type IValidationResult,
-  type IValidationRule,
-  type IValidator,
-} from "./src/shared/interfaces/validator.interface.ts";
-
-export {
-  type FileCopyOperation,
-  type FileCopyResult,
-  type FileStats,
-  type GlobOptions,
-  type IFileManager,
-  type IFileOperations,
-  type IFileService,
-  type IFileSystemService,
-} from "./src/shared/interfaces/file-manager.interface.ts";
-
 // Shared Services
 export { type ILogger, logger } from "./src/shared/services/core/logger.service.ts";
 
@@ -268,102 +127,9 @@ export {
   performanceMonitor,
 } from "./src/shared/services/core/performance.service.ts";
 
-export { fileSystemService } from "./src/shared/services/utils/file-system.service.ts";
-
-// Shared Errors
-export {
-  CorruptedInstallationError,
-  DependencyResolutionError,
-  DirectoryNotFoundError,
-  InstallationError,
-  InstallationTimeoutError,
-  InsufficientPermissionsError,
-  IntegrityCheckFailedError,
-  UnsupportedVersionError,
-} from "./src/shared/errors/installation.errors.ts";
-
-// Installer Services
-export {
-  createInstallerOrchestrator,
-  InstallerOrchestrator,
-} from "./src/installers/core/installer-orchestrator.ts";
-
-export { InstallationDetector } from "./src/installers/core/installation-detector.ts";
-
-export { FreshInstallHandler } from "./src/installers/handlers/fresh-install-handler.ts";
-
-export { UpdateHandler } from "./src/installers/handlers/update-handler.ts";
-
-export { RepairHandler } from "./src/installers/handlers/repair-handler.ts";
-
-export { ManifestService } from "./src/installers/services/manifest-service.ts";
-
-export { ExpansionPackService } from "./src/installers/services/expansion-pack-service.ts";
-
 // Resource Locator and Config Loader
 export { default as resourceLocator } from "./src/installers/lib/resource-locator.ts";
 export { default as configLoader } from "./src/installers/lib/config-loader.ts";
-
-export { IntegrityChecker } from "./src/installers/services/integrity-checker.ts";
-
-// Workflow Types
-export {
-  type StepExecution,
-  StepStatus,
-  type WorkflowAction,
-  type WorkflowCondition,
-  type WorkflowContext,
-  type WorkflowDefinition,
-  type WorkflowEvent,
-  type WorkflowExecution,
-  type WorkflowMetrics,
-  WorkflowStatus,
-  type WorkflowStep,
-  type WorkflowTemplate,
-  WorkflowType,
-} from "./src/shared/workflows/workflow.types.ts";
-
-// Validation Errors
-export {
-  ConfigValidationError,
-  InvalidValueError,
-  RequiredFieldMissingError,
-  SchemaValidationError,
-  ValidationCollectionError,
-  ValidationError,
-} from "./src/shared/errors/validation.errors.ts";
-
-// Task Types
-export {
-  type Task,
-  type TaskArtifact,
-  type TaskCheckpoint,
-  type TaskDefinition,
-  type TaskDependency,
-  type TaskError,
-  type TaskExecution,
-  type TaskFilter,
-  type TaskLog,
-  type TaskMetrics,
-  type TaskOutputDefinition,
-  type TaskParameterDefinition,
-  TaskPriority,
-  type TaskQueue,
-  type TaskResult,
-  type TaskSchedule,
-  TaskStatus,
-  type TaskTemplate,
-  TaskType,
-  type ValidationRule,
-} from "./src/shared/tasks/task.types.ts";
-
-// Task Services
-export { type ITaskExecutor, TaskExecutor } from "./src/shared/tasks/task-executor.ts";
-
-export { type ITaskScheduler, TaskScheduler } from "./src/shared/tasks/task-scheduler.ts";
-
-// Workflow Services
-export { type IWorkflowEngine, WorkflowEngine } from "./src/shared/workflows/workflow-engine.ts";
 
 // Flattener tool
 export { default as flattener } from "./tooling/user-tools/flattener/main.ts";

@@ -1,14 +1,7 @@
 #!/usr/bin/env -S deno run --allow-read --allow-write --allow-env
 
 // Load required modules
-import {
-  dirname,
-  join,
-  parseYaml as parse,
-  ProjectPaths,
-  Deno.stat as existsSync,
-  stringifyYaml as stringify,
-} from "deps";
+import { dirname, join, parseYaml as parse, ProjectPaths, stringifyYaml as stringify } from "deps";
 
 // Parse CLI arguments
 const args = Deno.args;
@@ -61,7 +54,7 @@ async function updateVersion(): Promise<void> {
   );
 
   // Check if config exists
-  if (!(await existsSync(configPath))) {
+  if (!(await Deno.stat(configPath))) {
     console.error(`Error: Expansion pack '${packId}' not found`);
     console.log("\nAvailable expansion packs:");
 
