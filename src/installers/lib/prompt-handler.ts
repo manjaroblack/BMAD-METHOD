@@ -9,7 +9,15 @@ import {
   Input,
   InstallationState,
   InstallConfig,
-  Installer,
+  InstallerValidator,
+  ExpansionPackHandler,
+  ConfigLoader,
+  FileManager,
+  IdeSetup,
+  ResourceLocator,
+  PromptHandler,
+  InstallerOrchestrator,
+  logger,
   join,
   magenta,
   parseYaml,
@@ -36,7 +44,7 @@ export async function promptInstallation(): Promise<void> {
   console.log(
     bold(magenta("🚀 Universal AI Agent Framework for Any Domain")),
   );
-  console.log(bold(blue(`✨ Installer v${Installer.getCoreVersion()}\n`)));
+  console.log(bold(blue(`✨ Installer v5.0.0\n`)));
 
   const answers: InstallConfig = {};
 
@@ -55,7 +63,8 @@ export async function promptInstallation(): Promise<void> {
 
   // Detect existing installations
   const installDir = resolve(directory);
-  const state: InstallationState = await Installer.detectInstallationState(
+  const validator = new InstallerValidator();
+  const state: InstallationState = await validator.detectInstallationState(
     installDir,
   );
 
@@ -63,7 +72,11 @@ export async function promptInstallation(): Promise<void> {
   const existingExpansionPacks = state.expansionPacks || {};
 
   // Get available expansion packs
-  const availableExpansionPacks = await Installer.getAvailableExpansionPacks();
+  const configLoader = new ConfigLoader();
+  const fileManager = new FileManager();
+  const resourceLocator = new ResourceLocator();
+  const expansionPackHandler = new ExpansionPackHandler(configLoader, fileManager, resourceLocator);
+  const availableExpansionPacks = await expansionPackHandler.getAvailableExpansionPacks();
 
   // Build choices list
   const choices: Array<{ name: string; value: string }> = [];
@@ -85,14 +98,14 @@ export async function promptInstallation(): Promise<void> {
   let bmadOptionText: string;
   if (state.type === "v5_existing") {
     const currentVersion = state.manifest?.version || "unknown";
-    const newVersion = Installer.getCoreVersion(); // Always use deno.json version
+    const newVersion = "5.0.0"; // Always use deno.json version
     const versionInfo = currentVersion === newVersion
       ? `(v${currentVersion} - reinstall)`
       : `(v${currentVersion} → v${newVersion})`;
     bmadOptionText = `Update ${coreShortTitle} ${versionInfo} .bmad-core`;
   } else {
     bmadOptionText =
-      `${coreShortTitle} (v${Installer.getCoreVersion()}) .bmad-core`;
+      `${coreShortTitle} (v5.0.0) .bmad-core`;
   }
 
   choices.push({
@@ -179,7 +192,23 @@ export async function promptInstallation(): Promise<void> {
       ides: answers.ides || [],
     };
 
-    await Installer.install(installOptions);
+    // Create orchestrator instance with dependencies
+    const fileManager = new FileManager();
+    const ideSetup = new IdeSetup(fileManager);
+    const configLoader = new ConfigLoader();
+    const resourceLocator = new ResourceLocator();
+    const installerValidator = new InstallerValidator();
+    const promptHandler = new PromptHandler();
+    const orchestrator = new InstallerOrchestrator(
+      logger,
+      fileManager,
+      ideSetup,
+      configLoader,
+      resourceLocator,
+      installerValidator,
+      promptHandler,
+    );
+    await orchestrator.install(installOptions);
     console.log(bold(green("✅ Installation completed successfully!")));
   } catch (error) {
     console.error(

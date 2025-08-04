@@ -65,7 +65,11 @@ export { DependencyResolver } from "./src/lib/dependency-resolver.ts";
 export { WebBuilder } from "./src/build-tools/web-builder.ts";
 
 // Installer module
-export { default as Installer } from "./src/installers/lib/installer.ts";
+// export { default as Installer } from "./src/installers/lib/installer.ts"; // Legacy installer - removed in favor of modular orchestrator
+
+// --- Internal Installer Modules ---
+// Interfaces
+export type { IConfigLoader, IFileManager, IIdeSetup, IInstallerValidator, IPromptHandler, IResourceLocator } from "./src/installers/lib/installer.interfaces.ts";
 
 // Shared Types
 export {
@@ -110,7 +114,10 @@ export {
 } from "./src/shared/types/expansion-pack.types.ts";
 
 // Shared Services
-export { type ILogger, logger } from "./src/shared/services/core/logger.service.ts";
+export {
+  type ILogger,
+  logger,
+} from "./src/shared/services/core/logger.service.ts";
 
 export {
   createSpinner,
@@ -128,13 +135,60 @@ export {
 } from "./src/shared/services/core/performance.service.ts";
 
 // Resource Locator and Config Loader
-export { default as resourceLocator } from "./src/installers/lib/resource-locator.ts";
-export { default as configLoader } from "./src/installers/lib/config-loader.ts";
+// export { default as resourceLocator } from "./src/installers/lib/resource-locator.ts";
+export { ResourceLocator } from "./src/installers/lib/resource-locator-refactored.ts";
+// export { default as configLoader } from "./src/installers/lib/config-loader.ts";
+export { ConfigLoader } from "./src/installers/lib/config-loader-refactored.ts";
+export { InstallerValidator } from "./src/installers/lib/installer-validator.ts";
+
+export {
+  InstallerOrchestrator,
+  type IInstallConfig,
+  type IInstallationState,
+} from "./src/installers/lib/installer-orchestrator.ts";
+
+export {
+  FileIntegrityChecker,
+  type IFileIntegrityChecker,
+} from "./src/installers/lib/file-integrity-checker.ts";
+
+export {
+  VersionComparator,
+  type IVersionComparator,
+} from "./src/installers/lib/version-comparator.ts";
+
+export {
+  ExpansionPackHandler,
+  type IExpansionPackHandler,
+} from "./src/installers/lib/expansion-pack-handler.ts";
+
+export {
+  IdeSetupHandler,
+  type IIdeSetupHandler,
+} from "./src/installers/lib/ide-setup-handler.ts";
+
+export {
+  CoreInstaller,
+  type ICoreInstaller,
+} from "./src/installers/lib/core-installer.ts";
+
+export {
+  FileCopyUtilities,
+  type IFileCopyUtilities,
+} from "./src/installers/lib/file-copy-utilities.ts";
+
+export {
+  AgentManifestUtilities,
+  type IAgentManifestUtilities,
+} from "./src/installers/lib/agent-manifest-utilities.ts";
 
 // Flattener tool
 export { default as flattener } from "./tooling/user-tools/flattener/main.ts";
 
 // Installer modules
 export { promptInstallation } from "./src/installers/lib/prompt-handler.ts";
+export { PromptHandler } from "./src/installers/lib/prompt-handler-refactored.ts";
+export { FileManager } from "./src/installers/lib/file-manager.ts";
+export { IdeSetup } from "./src/installers/lib/ide-setup.ts";
 export { setupCommands } from "./src/installers/lib/cli-commands.ts";
 export { displayLogo, getVersion, initializeInstaller } from "./src/installers/lib/cli-utils.ts";

@@ -4,6 +4,7 @@
  */
 
 import { extractYamlFromAgent, join, parseYaml, ProjectPaths } from "deps";
+import type { IFileManager } from "./installer.interfaces.ts";
 
 interface ExpansionPack {
   id: string;
@@ -23,10 +24,12 @@ interface AgentMetadata {
 class BaseIdeSetup {
   private _agentCache: Map<string, unknown>;
   private _pathCache: Map<string, string>;
+  private _fileManager: IFileManager;
 
-  constructor() {
+  constructor(fileManager: IFileManager) {
     this._agentCache = new Map();
     this._pathCache = new Map();
+    this._fileManager = fileManager;
   }
 
   /**
@@ -67,16 +70,16 @@ class BaseIdeSetup {
     ];
 
     for (const agentsPath of corePaths) {
-      if (await Deno.stat(agentsPath)) {
+      if (await this._fileManager.exists(agentsPath)) {
         try {
-          for await (const entry of Deno.readDir(agentsPath)) {
+          for await (const entry of this._fileManager.readDir(agentsPath)) {
             if (entry.isFile && entry.name.endsWith(".md")) {
               const agentId = entry.name.replace(".md", "");
               coreAgents.push(agentId);
             }
           }
-        } catch (error) {
-          console.warn(`Failed to read agents from ${agentsPath}:`, error);
+        } catch (_e) {
+          // Directory doesn't exist or can't be read, skip
         }
       }
     }
@@ -98,17 +101,12 @@ class BaseIdeSetup {
 
     const searchPaths = [
       join(installDir, ".bmad-core/agents", `${agentId}.md`),
-      join(installDir, "core/agents", `${agentId}.md`),
+      join(installDir, ProjectPaths.core, "agents", `${agentId}.md`),
+      join(installDir, "agents", `${agentId}.md`),
     ];
 
-    // Also check expansion packs
-    const expansionPacks = await this.getInstalledExpansionPacks(installDir);
-    for (const pack of expansionPacks) {
-      searchPaths.push(join(pack.path, "agents", `${agentId}.md`));
-    }
-
     for (const path of searchPaths) {
-      if (await Deno.stat(path)) {
+      if (await this._fileManager.exists(path)) {
         this._pathCache.set(cacheKey, path);
         return path;
       }
@@ -127,14 +125,15 @@ class BaseIdeSetup {
     }
 
     try {
-      const content = await Deno.readTextFile(agentPath);
+      const content = await this._fileManager.readTextFile(agentPath);
       const yamlContent = extractYamlFromAgent(content);
       if (yamlContent) {
         const metadata = parseYaml(yamlContent) as AgentMetadata;
         return metadata.title || agentId;
       }
-    } catch (error) {
-      console.warn(`Failed to extract title from ${agentPath}:`, error);
+    } catch (_e) {
+      // File doesn't exist or can't be read, return ID
+      return agentId;
     }
 
     return agentId;
@@ -143,73 +142,45 @@ class BaseIdeSetup {
   /**
    * Get installed expansion packs
    */
-  async getInstalledExpansionPacks(
-    installDir: string,
-  ): Promise<ExpansionPack[]> {
+  async getInstalledExpansionPacks(installDir: string): Promise<ExpansionPack[]> {
     const expansionPacks: ExpansionPack[] = [];
     const expansionPacksPath = join(installDir, ".bmad-core/expansion-packs");
 
-    if (!(await Deno.stat(expansionPacksPath))) {
+    if (!(await this._fileManager.exists(expansionPacksPath))) {
       return expansionPacks;
     }
 
     try {
-      for await (const entry of Deno.readDir(expansionPacksPath)) {
+      for await (const entry of this._fileManager.readDir(expansionPacksPath)) {
         if (entry.isDirectory) {
           const packPath = join(expansionPacksPath, entry.name);
-          const configPath = join(packPath, "config.yaml");
-          const denoJsonPath = join(packPath, "deno.json");
-
-          const packInfo: ExpansionPack = {
-            id: entry.name,
-            name: entry.name,
-            version: "1.0.0",
-            path: packPath,
-          };
-
-          // Try to read config.yaml first
-          if (await Deno.stat(configPath)) {
-            try {
-              const configContent = await Deno.readTextFile(configPath);
-              const config = parseYaml(configContent) as Record<
-                string,
-                unknown
-              >;
-              packInfo.name = typeof config.name === "string"
-                ? config.name
-                : entry.name;
-              packInfo.version = typeof config.version === "string"
-                ? config.version
-                : "1.0.0";
-            } catch (error) {
-              console.warn(
-                `Failed to read config for pack ${entry.name}:`,
-                error,
-              );
-            }
-          } // Fallback to deno.json
-          else if (await Deno.stat(denoJsonPath)) {
-            try {
-              const denoJsonContent = await Deno.readTextFile(denoJsonPath);
-              const denoJson = JSON.parse(denoJsonContent);
-              packInfo.name = denoJson.name || entry.name;
-              packInfo.version = denoJson.version || "1.0.0";
-            } catch (error) {
-              console.warn(
-                `Failed to read deno.json for pack ${entry.name}:`,
-                error,
-              );
-            }
+          const packManifestPath = join(packPath, "pack.yaml");
+          
+          try {
+            const manifestContent = await this._fileManager.readTextFile(packManifestPath);
+            const manifest = parseYaml(manifestContent) as Record<string, unknown>;
+            
+            expansionPacks.push({
+              id: manifest.id as string || entry.name,
+              name: manifest.name as string || entry.name,
+              version: manifest.version as string || "1.0.0",
+              path: packPath,
+              agents: Array.isArray(manifest.agents) ? manifest.agents as string[] : [],
+            });
+          } catch (_e) {
+            // Pack manifest doesn't exist or is invalid, create a minimal entry
+            expansionPacks.push({
+              id: entry.name,
+              name: entry.name,
+              version: "1.0.0",
+              path: packPath,
+              agents: [],
+            });
           }
-
-          expansionPacks.push(packInfo);
         }
       }
-    } catch (error) {
-      console.warn(
-        `Failed to read expansion packs from ${expansionPacksPath}:`,
-        error,
-      );
+    } catch (_e) {
+      // Directory doesn't exist or can't be read
     }
 
     return expansionPacks;
@@ -222,16 +193,16 @@ class BaseIdeSetup {
     const agents: string[] = [];
     const agentsPath = join(packPath, "agents");
 
-    if (await Deno.stat(agentsPath)) {
+    if (await this._fileManager.exists(agentsPath)) {
       try {
-        for await (const entry of Deno.readDir(agentsPath)) {
+        for await (const entry of this._fileManager.readDir(agentsPath)) {
           if (entry.isFile && entry.name.endsWith(".md")) {
             const agentId = entry.name.replace(".md", "");
             agents.push(agentId);
           }
         }
-      } catch (error) {
-        console.warn(`Failed to read agents from ${agentsPath}:`, error);
+      } catch (_e) {
+        // Directory doesn't exist or can't be read, skip
       }
     }
 
@@ -248,7 +219,7 @@ class BaseIdeSetup {
     format = "mdc",
   ): Promise<string> {
     try {
-      const content = await Deno.readTextFile(agentPath);
+      const content = await this._fileManager.readTextFile(agentPath);
       const yamlContent = extractYamlFromAgent(content);
       let metadata: AgentMetadata = {};
 

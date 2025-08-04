@@ -138,6 +138,10 @@ export class Logger {
   async debug(message: string, data: unknown = null): Promise<void> {
     await this._log(LOG_LEVELS.DEBUG, message, data);
   }
+
+  setLevel(level: LogLevel): void {
+    this.level = level;
+  }
 }
 
 // Global error handler
