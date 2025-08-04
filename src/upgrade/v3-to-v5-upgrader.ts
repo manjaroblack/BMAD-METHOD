@@ -3,7 +3,12 @@
  * Handles migration from v3 to v5 project structure
  */
 
-import { ensureDir, join, Logger, ProjectPaths } from "deps";
+import {
+  ensureDir,
+  join,
+  Logger,
+  ProjectPaths,
+} from "deps";
 
 interface UpgradeOptions {
   dryRun?: boolean;

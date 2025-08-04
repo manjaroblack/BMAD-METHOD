@@ -19,20 +19,20 @@ import {
   resolve,
   Select,
   yellow,
+  ConfigLoader,
+  ExpansionPackHandler,
+  FileManager,
+  IdeSetup,
+  InstallerOrchestrator,
+  InstallerValidator,
+  logger,
+  ResourceLocator,
+  getVersion,
 } from "deps";
 
-// Import modular services
-import { ConfigLoader } from "deps";
-import { ExpansionPackHandler } from "deps";
-import { FileManager } from "deps";
-import { IdeSetup } from "deps";
-import { InstallerOrchestrator } from "deps";
-import { InstallerValidator } from "deps";
-import { logger } from "deps";
-import { ResourceLocator } from "deps";
-import { getVersion } from "deps";
-
-import type { IPromptHandler } from "./installer.interfaces.ts";
+import type {
+  IPromptHandler,
+} from "deps";
 
 export class PromptHandler implements IPromptHandler {
   /**

@@ -1,14 +1,21 @@
-import { describe, it, beforeEach } from "jsr:@std/testing@1.0.13/bdd";
-import { assertEquals } from "jsr:@std/assert@1.0.13";
-import { stub } from "jsr:@std/testing@1.0.13/mock";
-import { InstallerOrchestrator } from "./installer-orchestrator.ts";
-import type { ILogger } from "../../shared/services/core/logger.service.ts";
-import type { IFileManager } from "./installer.interfaces.ts";
-import type { IIdeSetup } from "./installer.interfaces.ts";
-import type { IConfigLoader } from "./installer.interfaces.ts";
-import type { IResourceLocator } from "./installer.interfaces.ts";
-import type { IInstallerValidator } from "./installer.interfaces.ts";
-import type { IPromptHandler } from "./installer.interfaces.ts";
+import {
+  beforeEach,
+  describe,
+  it,
+  assertEquals,
+  stub,
+  InstallerOrchestrator,
+} from "deps";
+
+import type {
+  IConfigLoader,
+  IFileManager,
+  IIdeSetup,
+  IInstallerValidator,
+  ILogger,
+  IPromptHandler,
+  IResourceLocator,
+} from "deps";
 
 describe("InstallerOrchestrator", () => {
   let installerOrchestrator: InstallerOrchestrator;
@@ -36,8 +43,13 @@ describe("InstallerOrchestrator", () => {
       copy: () => Promise.resolve(),
       readTextFile: () => Promise.resolve(""),
       writeTextFile: () => Promise.resolve(),
-      readDir: () => ({ [Symbol.asyncIterator]: () => ({ next: () => Promise.resolve({ done: true, value: undefined }) }) } as AsyncIterable<Deno.DirEntry>),
-      exists: () => Promise.resolve(true),
+      readDir: () => ({
+        [Symbol.asyncIterator]: () => ({
+          next: () => Promise.resolve({ done: true, value: undefined }),
+        }),
+      } as AsyncIterable<Deno.DirEntry>),
+      exists: () =>
+        Promise.resolve(true),
     };
 
     // Create mock IDE setup
@@ -91,16 +103,20 @@ describe("InstallerOrchestrator", () => {
 
   it("should handle installation process", async () => {
     // Mock the install method to avoid complex setup
-    const installStub = stub(installerOrchestrator, "install", () => Promise.resolve());
-    
+    const installStub = stub(
+      installerOrchestrator,
+      "install",
+      () => Promise.resolve(),
+    );
+
     await installerOrchestrator.install({
       directory: "/test/path",
       ides: ["vscode"],
       expansionPacks: [],
     });
-    
+
     assertEquals(installStub.calls.length, 1);
-    
+
     installStub.restore();
   });
 });

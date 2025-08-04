@@ -1,5 +1,10 @@
-import { dirname, join } from "deps";
-import type { IFileManager } from "deps";
+import {
+  dirname,
+  join,
+} from "deps";
+import type {
+  IFileManager,
+} from "deps";
 
 /**
  * Interface for file copying utilities

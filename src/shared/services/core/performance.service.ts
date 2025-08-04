@@ -3,7 +3,10 @@
  * Provides timing, metrics, and performance monitoring capabilities
  */
 
-import type { PerformanceConfig, ILogger } from 'deps';
+import type {
+  PerformanceConfig,
+  ILogger,
+} from 'deps';
 
 export interface IPerformanceMonitor {
   start(operationName: string): string;

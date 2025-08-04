@@ -1,6 +1,10 @@
-import { describe, it, beforeEach } from "jsr:@std/testing/bdd";
-import { assertEquals } from "jsr:@std/assert";
-import { PromptHandler } from "./prompt-handler-refactored.ts";
+import {
+  beforeEach,
+  describe,
+  it,
+  assertEquals,
+  PromptHandler,
+} from "deps";
 
 describe("PromptHandler", () => {
   let promptHandler: PromptHandler;

@@ -7,7 +7,9 @@ import {
   join,
 } from "deps";
 
-import type { IFileManager } from "./installer.interfaces.ts";
+import type {
+  IFileManager,
+} from "deps";
 
 export class FileManager implements IFileManager {
   /**

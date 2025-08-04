@@ -1,12 +1,16 @@
 // IDE setup service for BMad Method installer
 // Implements IIdeSetup interface
 
-import { green, red } from "deps";
-import BaseIdeSetup from "./ide-base-setup.ts";
-import { FileManager as _FileManager } from "./file-manager.ts";
+import {
+  BaseIdeSetup,
+  green,
+  red,
+} from "deps";
 
-import type { IIdeSetup } from "./installer.interfaces.ts";
-import type { IFileManager } from "./installer.interfaces.ts";
+import type {
+  IFileManager,
+  IIdeSetup,
+} from "deps";
 
 export class IdeSetup implements IIdeSetup {
   private _ideSetup: BaseIdeSetup;
@@ -26,26 +30,27 @@ export class IdeSetup implements IIdeSetup {
     ides: string[],
     spinner?: unknown,
   ): Promise<void> {
-    if (spinner && typeof spinner === 'object' && spinner !== null) {
+    if (spinner && typeof spinner === "object" && spinner !== null) {
       (spinner as { text: string }).text = "Setting up IDE configurations...";
     }
-    
+
     try {
       for (const ide of ides) {
-        if (spinner && typeof spinner === 'object' && spinner !== null) {
-          (spinner as { text: string }).text = `Setting up ${ide} configuration...`;
+        if (spinner && typeof spinner === "object" && spinner !== null) {
+          (spinner as { text: string }).text =
+            `Setting up ${ide} configuration...`;
         }
-        
+
         const agentIds = await this._ideSetup.getAllAgentIds(installDir);
         const agentPathPromises = agentIds.map((id) =>
           this._ideSetup.findAgentPath(installDir, id)
         );
         const agentPaths = await Promise.all(agentPathPromises);
-        
+
         for (let i = 0; i < agentIds.length; i++) {
           const agentId = agentIds[i] as string;
           const agentPath = agentPaths[i] as string | null;
-          
+
           if (agentPath !== null) {
             await this._ideSetup.createAgentRuleContent(
               agentId,
@@ -56,7 +61,7 @@ export class IdeSetup implements IIdeSetup {
             console.warn(`Skipping agent ${agentId}: agentPath not found.`);
           }
         }
-        
+
         console.log(green(`✓ ${ide} configuration set up.`));
       }
     } catch (error: unknown) {

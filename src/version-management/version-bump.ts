@@ -1,6 +1,14 @@
 #!/usr/bin/env -S deno run --allow-read --allow-run
 
-import { blue, bold, cyan, gray, green, red, yellow } from "deps";
+import {
+  blue,
+  bold,
+  cyan,
+  gray,
+  green,
+  red,
+  yellow,
+} from "deps";
 
 // Note: dim is not available in deps.ts, using gray as alternative
 const dim = gray;

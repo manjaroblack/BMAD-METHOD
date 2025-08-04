@@ -1,6 +1,16 @@
-import { green, join, ProjectPaths, red, stringifyYaml, yellow } from "deps";
-import type { IFileManager } from "deps";
-import type { ISpinner } from "deps";
+import {
+  green,
+  join,
+  ProjectPaths,
+  red,
+  stringifyYaml,
+  yellow,
+} from "deps";
+
+import type {
+  IFileManager,
+  ISpinner,
+} from "deps";
 
 /**
  * Interface for agent/manifest utilities
@@ -79,7 +89,7 @@ export class AgentManifestUtilities implements IAgentManifestUtilities {
    * @param directory - Directory to check
    * @returns Installation status
    */
-  async getInstallationStatus(directory: string): Promise<Record<string, unknown>> {
+  getInstallationStatus(directory: string): Promise<Record<string, unknown>> {
     // Note: This would check the actual installation state
     console.log(`Getting installation status for ${directory}`);
     return Promise.resolve({

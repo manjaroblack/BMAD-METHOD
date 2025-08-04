@@ -1,7 +1,11 @@
 // Interfaces for the BMad Method installer refactoring
 // These interfaces define the contracts for all services
 
-import type { ILogger } from "../../shared/services/core/logger.service.ts";
+import type {
+  ILogger,
+  InstallationState,
+  InstallConfig,
+} from "deps";
 
 export interface IPromptHandler {
   promptInstallation(): Promise<void>;
@@ -62,6 +66,3 @@ export interface IInstallerValidator {
   ): Promise<{ missing: string[]; modified: string[] }>;
   // Add other validation methods as needed
 }
-
-// Import types that are used in interfaces
-import type { InstallConfig, InstallationState } from "../../shared/types/installation.types.ts";

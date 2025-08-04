@@ -3,8 +3,16 @@
  * Reduces duplication and provides shared methods
  */
 
-import { extractYamlFromAgent, join, parseYaml, ProjectPaths } from "deps";
-import type { IFileManager } from "./installer.interfaces.ts";
+import {
+  extractYamlFromAgent,
+  join,
+  parseYaml,
+  ProjectPaths,
+} from "deps";
+
+import type {
+  IFileManager,
+} from "deps";
 
 interface ExpansionPack {
   id: string;

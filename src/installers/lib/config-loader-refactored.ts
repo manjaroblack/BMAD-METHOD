@@ -3,8 +3,10 @@
 
 import { join, parseYaml, ProjectPaths } from "deps";
 
-import type { IConfigLoader } from "./installer.interfaces.ts";
-import type { ExpansionPack } from "./installer.interfaces.ts";
+import type {
+  IConfigLoader,
+  ExpansionPack,
+} from "deps";
 
 export class ConfigLoader implements IConfigLoader {
   private configPath: string;

@@ -1,7 +1,13 @@
-import { green, join } from "deps";
-import { ResourceLocator } from "deps";
-import type { IFileManager } from "deps";
-import type { ISpinner } from "deps";
+import {
+  green,
+  join,
+  ResourceLocator,
+} from "deps";
+
+import type {
+  IFileManager,
+  ISpinner,
+} from "deps";
 
 /**
  * Interface for core installation handling

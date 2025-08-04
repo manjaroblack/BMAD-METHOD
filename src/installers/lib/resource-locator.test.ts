@@ -1,6 +1,10 @@
-import { describe, it, beforeEach } from "jsr:@std/testing@1.0.13/bdd";
-import { assertEquals } from "jsr:@std/assert@1.0.13";
-import { ResourceLocator } from "./resource-locator-refactored.ts";
+import {
+  beforeEach,
+  describe,
+  it,
+  assertEquals,
+  ResourceLocator,
+} from "deps";
 
 describe("ResourceLocator", () => {
   let resourceLocator: ResourceLocator;

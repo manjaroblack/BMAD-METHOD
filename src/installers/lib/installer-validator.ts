@@ -3,8 +3,11 @@
 
 import { join, parseYaml } from "deps";
 
-import type { IInstallerValidator } from "./installer.interfaces.ts";
-import type { InstallationState, FileIntegrityResult } from "../../shared/types/installation.types.ts";
+import type {
+  IInstallerValidator,
+  InstallationState,
+  FileIntegrityResult,
+} from "deps";
 
 export class InstallerValidator implements IInstallerValidator {
   /**

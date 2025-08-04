@@ -4,7 +4,12 @@
  * Updates version in expansion pack config.yaml files
  */
 
-import { dirname, join, parseYaml as parse, stringifyYaml as stringify } from "deps";
+import {
+  dirname,
+  join,
+  parseYaml as parse,
+  stringifyYaml as stringify,
+} from "deps";
 
 interface ExpansionConfig {
   version?: string;

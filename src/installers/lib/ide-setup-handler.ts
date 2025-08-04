@@ -1,5 +1,9 @@
-import { green } from "deps";
-import type { IIdeSetup } from "deps";
+import {
+  green,
+} from "deps";
+import type {
+  IIdeSetup,
+} from "deps";
 
 /**
  * Interface for IDE setup handling

@@ -1,12 +1,19 @@
-import { cyan, yellow, createSpinner } from "deps";
-import type { ISpinner } from "deps";
-import type { ILogger } from "deps";
-import type { IFileManager } from "deps";
-import type { IIdeSetup } from "deps";
-import type { IConfigLoader } from "deps";
-import type { IResourceLocator } from "deps";
-import type { IInstallerValidator } from "deps";
-import type { IPromptHandler } from "deps";
+import {
+  cyan,
+  yellow,
+  createSpinner,
+} from "deps";
+
+import type {
+  ISpinner,
+  ILogger,
+  IFileManager,
+  IIdeSetup,
+  IConfigLoader,
+  IResourceLocator,
+  IInstallerValidator,
+  IPromptHandler,
+} from "deps";
 
 /**
  * Interface for installation configuration

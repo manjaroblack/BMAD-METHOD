@@ -3,7 +3,9 @@
  * Provides consistent UI feedback for long-running operations
  */
 
-import type { SpinnerConfig } from 'deps';
+import type {
+  SpinnerConfig,
+} from 'deps';
 
 export interface ISpinner {
   text: string;

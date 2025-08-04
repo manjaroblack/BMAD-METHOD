@@ -1,8 +1,11 @@
 #!/usr/bin/env -S deno run --allow-read --allow-write --allow-env --allow-run
 
-import { Command } from "deps";
-import { initializeInstaller, getVersion } from "../lib/cli-utils.ts";
-import { setupCommands } from "../lib/cli-commands.ts";
+import {
+  Command,
+  getVersion,
+  initializeInstaller,
+  setupCommands,
+} from "deps";
 
 // Initialize the installer
 await initializeInstaller();

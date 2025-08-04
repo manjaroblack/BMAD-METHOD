@@ -1,4 +1,23 @@
-import { blue, bold, Command, ExpansionPack as _ExpansionPack, flattener as _flattener, green, InstallConfig, InstallerOrchestrator, logger, FileManager, IdeSetup, ConfigLoader, ResourceLocator, InstallerValidator, PromptHandler, promptInstallation, red, yellow } from "deps";
+import {
+  blue,
+  bold,
+  Command,
+  ExpansionPack as _ExpansionPack,
+  flattener as _flattener,
+  green,
+  InstallConfig,
+  InstallerOrchestrator,
+  logger,
+  FileManager,
+  IdeSetup,
+  ConfigLoader,
+  ResourceLocator,
+  InstallerValidator,
+  PromptHandler,
+  promptInstallation,
+  red,
+  yellow,
+} from "deps";
 
 /**
  * Setup all CLI commands

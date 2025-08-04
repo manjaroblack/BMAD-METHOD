@@ -1,9 +1,16 @@
-import { cyan, join, yellow } from "deps";
-import type { IConfigLoader } from "deps";
-import type { IFileManager } from "deps";
-import type { IResourceLocator } from "deps";
-import type { ISpinner } from "deps";
-import type { ExpansionPack } from "./installer.interfaces.ts";
+import {
+  cyan,
+  join,
+  yellow,
+} from "deps";
+
+import type {
+  IConfigLoader,
+  IFileManager,
+  IResourceLocator,
+  ISpinner,
+  ExpansionPack,
+} from "deps";
 
 /**
  * Interface for expansion pack handling

@@ -12,6 +12,10 @@ export * as ansi from "jsr:@cliffy/ansi@1.0.0-rc.8";
 export { parseArgs } from "jsr:@std/cli@1.0.21";
 export { Spinner } from "jsr:@std/cli@1.0.21/unstable-spinner";
 
+// Testing utilities
+export { describe, it, beforeEach, afterEach } from "jsr:@std/testing@1.0.13/bdd";
+export { stub, type Stub } from "jsr:@std/testing@1.0.13/mock";
+
 // File system utilities
 export { copy, ensureDir, expandGlob, walk } from "jsr:@std/fs@1.0.19";
 
@@ -190,5 +194,6 @@ export { promptInstallation } from "./src/installers/lib/prompt-handler.ts";
 export { PromptHandler } from "./src/installers/lib/prompt-handler-refactored.ts";
 export { FileManager } from "./src/installers/lib/file-manager.ts";
 export { IdeSetup } from "./src/installers/lib/ide-setup.ts";
+export { default as BaseIdeSetup } from "./src/installers/lib/ide-base-setup.ts";
 export { setupCommands } from "./src/installers/lib/cli-commands.ts";
 export { displayLogo, getVersion, initializeInstaller } from "./src/installers/lib/cli-utils.ts";
