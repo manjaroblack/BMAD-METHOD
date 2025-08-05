@@ -140,9 +140,9 @@ export {
 
 // Resource Locator and Config Loader
 // export { default as resourceLocator } from "./src/installers/lib/resource-locator.ts";
-export { ResourceLocator } from "./src/installers/lib/resource-locator-refactored.ts";
+export { ResourceLocator } from "./src/installers/lib/resource-locator.ts";
 // export { default as configLoader } from "./src/installers/lib/config-loader.ts";
-export { ConfigLoader } from "./src/installers/lib/config-loader-refactored.ts";
+export { ConfigLoader } from "./src/installers/lib/config-loader.ts";
 export { InstallerValidator } from "./src/installers/lib/installer-validator.ts";
 
 export {
@@ -191,7 +191,7 @@ export { default as flattener } from "./tooling/user-tools/flattener/main.ts";
 
 // Installer modules
 export { promptInstallation } from "./src/installers/lib/prompt-handler.ts";
-export { PromptHandler } from "./src/installers/lib/prompt-handler-refactored.ts";
+export { PromptHandler } from "./src/installers/lib/prompt-handler.ts";
 export { FileManager } from "./src/installers/lib/file-manager.ts";
 export { IdeSetup } from "./src/installers/lib/ide-setup.ts";
 export { default as BaseIdeSetup } from "./src/installers/lib/ide-base-setup.ts";
