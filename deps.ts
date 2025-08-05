@@ -7,6 +7,25 @@ export { Command } from "jsr:@cliffy/command@1.0.0-rc.8";
 export { Checkbox, Input, Select } from "jsr:@cliffy/prompt@1.0.0-rc.8";
 export * as ansi from "jsr:@cliffy/ansi@1.0.0-rc.8";
 
+// InversifyJS - Dependency Injection Framework
+export { Container, inject, injectable, multiInject, type interfaces } from "npm:inversify@6.0.1";
+// Required for InversifyJS decorators
+import "npm:reflect-metadata@0.2.2";
+
+// Core Services
+export type { ICliService } from "./src/core/services/cli/ICliService.ts";
+export { CliService } from "./src/core/services/cli/CliService.ts";
+export type { IConfigService } from "./src/core/services/config/IConfigService.ts";
+export { ConfigService } from "./src/core/services/config/ConfigService.ts";
+export { ServiceError } from "./src/core/errors/ServiceError.ts";
+export { TYPES } from "./src/core/types.ts";
+export type { ICommand } from "./src/core/commands/ICommand.ts";
+
+// Flattener Component
+export type { IFileDiscoverer } from "./src/components/flattener/interfaces/IFileDiscoverer.ts";
+export { FileDiscoverer } from "./src/components/flattener/services/FileDiscoverer.ts";
+export { FlattenerCommand } from "./src/components/flattener/flattener.command.ts";
+
 // Deno Standard Library - Latest versions from JSR
 // CLI utilities
 export { parseArgs } from "jsr:@std/cli@1.0.21";
