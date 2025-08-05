@@ -1,11 +1,7 @@
 // Interfaces for the BMad Method installer refactoring
 // These interfaces define the contracts for all services
 
-import type {
-  ILogger,
-  InstallationState,
-  InstallConfig,
-} from "deps";
+import type { ILogger, InstallationState, InstallConfig } from "deps";
 
 export interface IPromptHandler {
   promptInstallation(): Promise<void>;

@@ -5,34 +5,32 @@ import {
   blue,
   bold,
   Checkbox,
+  ConfigLoader,
   cyan,
   dirname,
+  ExpansionPackHandler,
   ExpansionPackInfo,
+  FileManager,
+  getVersion,
   green,
+  IdeSetup,
   Input,
   InstallationState,
   InstallConfig,
+  InstallerOrchestrator,
+  InstallerValidator,
   join,
   logger,
   magenta,
   parseYaml,
   red,
   resolve,
+  ResourceLocator,
   Select,
   yellow,
-  ConfigLoader,
-  ExpansionPackHandler,
-  FileManager,
-  IdeSetup,
-  InstallerOrchestrator,
-  InstallerValidator,
-  ResourceLocator,
-  getVersion,
 } from "deps";
 
-import type {
-  IPromptHandler,
-} from "deps";
+import type { IPromptHandler } from "deps";
 
 export class PromptHandler implements IPromptHandler {
   /**
@@ -58,8 +56,7 @@ export class PromptHandler implements IPromptHandler {
 
     // Ask for installation directory first
     const directory = await Input.prompt({
-      message:
-        "Enter the full path to your project directory where BMad should be installed:",
+      message: "Enter the full path to your project directory where BMad should be installed:",
       validate: (input: string) => {
         if (!input.trim()) {
           return "Please enter a valid project path";
@@ -83,7 +80,11 @@ export class PromptHandler implements IPromptHandler {
     const configLoader = new ConfigLoader();
     const fileManager = new FileManager();
     const resourceLocator = new ResourceLocator();
-    const expansionPackHandler = new ExpansionPackHandler(configLoader, fileManager, resourceLocator);
+    const expansionPackHandler = new ExpansionPackHandler(
+      configLoader,
+      fileManager,
+      resourceLocator,
+    );
     const availableExpansionPacks = await expansionPackHandler.getAvailableExpansionPacks();
 
     // Build choices list
@@ -112,8 +113,7 @@ export class PromptHandler implements IPromptHandler {
         : `(v${currentVersion} → v${newVersion})`;
       bmadOptionText = `Update ${coreShortTitle} ${versionInfo} .bmad-core`;
     } else {
-      bmadOptionText =
-        `${coreShortTitle} (v${getVersion()}) .bmad-core`;
+      bmadOptionText = `${coreShortTitle} (v${getVersion()}) .bmad-core`;
     }
 
     choices.push({
@@ -207,7 +207,7 @@ export class PromptHandler implements IPromptHandler {
       const resourceLocator = new ResourceLocator();
       const installerValidator = new InstallerValidator();
       const promptHandler = new PromptHandler();
-      
+
       // Create and use the orchestrator
       const orchestrator = new InstallerOrchestrator(
         logger,

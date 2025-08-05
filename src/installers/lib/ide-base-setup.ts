@@ -3,16 +3,9 @@
  * Reduces duplication and provides shared methods
  */
 
-import {
-  extractYamlFromAgent,
-  join,
-  parseYaml,
-  ProjectPaths,
-} from "deps";
+import { extractYamlFromAgent, join, parseYaml, ProjectPaths } from "deps";
 
-import type {
-  IFileManager,
-} from "deps";
+import type { IFileManager } from "deps";
 
 interface ExpansionPack {
   id: string;
@@ -163,11 +156,11 @@ class BaseIdeSetup {
         if (entry.isDirectory) {
           const packPath = join(expansionPacksPath, entry.name);
           const packManifestPath = join(packPath, "pack.yaml");
-          
+
           try {
             const manifestContent = await this._fileManager.readTextFile(packManifestPath);
             const manifest = parseYaml(manifestContent) as Record<string, unknown>;
-            
+
             expansionPacks.push({
               id: manifest.id as string || entry.name,
               name: manifest.name as string || entry.name,

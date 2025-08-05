@@ -1,13 +1,6 @@
-import {
-  green,
-  join,
-  ResourceLocator,
-} from "deps";
+import { green, join, ResourceLocator } from "deps";
 
-import type {
-  IFileManager,
-  ISpinner,
-} from "deps";
+import type { IFileManager, ISpinner } from "deps";
 
 /**
  * Interface for core installation handling
@@ -58,7 +51,7 @@ export class CoreInstaller implements ICoreInstaller {
 
     // Create install manifest
     // await this.createInstallManifest(installDir);
-    
+
     // Placeholder await to satisfy lint rule
     await Promise.resolve();
   }

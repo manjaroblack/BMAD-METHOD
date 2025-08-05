@@ -123,7 +123,7 @@ graph TD
     E --> F[Workflow Engine]
 ```
 
-### Extension System Flow  
+### Extension System Flow
 
 ```mermaid
 graph TD

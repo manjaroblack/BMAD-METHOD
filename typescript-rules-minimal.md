@@ -50,15 +50,15 @@
 export class ServiceError extends Error {
   constructor(message: string, public readonly code: string, public readonly cause?: Error) {
     super(message);
-    this.name = 'ServiceError';
+    this.name = "ServiceError";
   }
 }
 
 // Specific errors
 export class ConfigError extends ServiceError {
   constructor(message: string, cause?: Error) {
-    super(message, 'CONFIG_ERROR', cause);
-    this.name = 'ConfigError';
+    super(message, "CONFIG_ERROR", cause);
+    this.name = "ConfigError";
   }
 }
 ```
@@ -92,17 +92,11 @@ const createUser = (name: string, email: string): User => ({
   id: crypto.randomUUID(),
   name,
   email,
-  createdAt: new Date()
+  createdAt: new Date(),
 });
 
 // ✅ Good - Vertical imports
-import {
-  parse,
-  walk,
-} from 'deps';
+import { parse, walk } from "deps";
 
-import type {
-  Config,
-  User,
-} from 'deps';
+import type { Config, User } from "deps";
 ```

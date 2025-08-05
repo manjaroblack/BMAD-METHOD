@@ -3,9 +3,7 @@
  * Provides structured logging with configurable levels and outputs
  */
 
-import type {
-  LoggerConfig,
-} from "deps";
+import type { LoggerConfig } from "deps";
 
 export interface ILogger {
   debug(message: string, context?: Record<string, unknown>): void;

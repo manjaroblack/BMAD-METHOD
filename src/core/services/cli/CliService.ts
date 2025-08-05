@@ -1,18 +1,18 @@
-import { Command } from '../../../../deps.ts';
-import { ICliService } from './ICliService.ts';
-import { ICommand } from '../../commands/ICommand.ts';
+import { Command } from "../../../../deps.ts";
+import { ICliService } from "./ICliService.ts";
+import { ICommand } from "../../commands/ICommand.ts";
 
 export class CliService implements ICliService {
   private program: Command;
-  
+
   constructor(
     private readonly commands: ICommand[],
   ) {
     this.program = new Command()
-      .name('bmad')
-      .version('1.0.0')
-      .description('BMad Framework CLI');
-      
+      .name("bmad")
+      .version("1.0.0")
+      .description("BMad Framework CLI");
+
     // Register all commands
     for (const command of this.commands) {
       this.registerCommand(command);
@@ -31,7 +31,7 @@ export class CliService implements ICliService {
           Deno.exit(1);
         }
       });
-      
+
     this.program.command(command.name, cmd);
   }
 

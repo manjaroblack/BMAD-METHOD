@@ -186,7 +186,7 @@
       },
       "console": "integratedTerminal"
     },
-    
+
     // === INSTALLER ===
     {
       "name": "💾 Debug Install BMAD",
@@ -210,7 +210,7 @@
       },
       "console": "integratedTerminal"
     },
-    
+
     // === VERSION MANAGEMENT ===
     {
       "name": "🔧 Debug Version Patch",
@@ -341,7 +341,7 @@
       },
       "console": "integratedTerminal"
     },
-    
+
     // === UTILITIES ===
     {
       "name": "📄 Debug Flattener",
@@ -403,7 +403,7 @@
       },
       "console": "integratedTerminal"
     },
-    
+
     // === GENERIC ===
     {
       "name": "🚀 Debug BMAD CLI (Deno)",

@@ -35,9 +35,9 @@ additional_activation_instructions:
 # AGENT-SPECIFIC COMMANDS
 # ==============================================================================
 commands:
-  draft: 'Task `create-next-story.md`'
-  correct-course: 'Task `correct-course.md`'
-  story-checklist: 'Task `execute-checklist.md` w/ `story-draft-checklist.md`'
+  draft: "Task `create-next-story.md`"
+  correct-course: "Task `correct-course.md`"
+  story-checklist: "Task `execute-checklist.md` w/ `story-draft-checklist.md`"
 
 # ==============================================================================
 # STANDARD COMMANDS TO INCLUDE

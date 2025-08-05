@@ -1,11 +1,4 @@
-import {
-  beforeEach,
-  describe,
-  it,
-  assertEquals,
-  stub,
-  InstallerOrchestrator,
-} from "deps";
+import { assertEquals, beforeEach, describe, InstallerOrchestrator, it, stub } from "deps";
 
 import type {
   IConfigLoader,
@@ -48,8 +41,7 @@ describe("InstallerOrchestrator", () => {
           next: () => Promise.resolve({ done: true, value: undefined }),
         }),
       } as AsyncIterable<Deno.DirEntry>),
-      exists: () =>
-        Promise.resolve(true),
+      exists: () => Promise.resolve(true),
     };
 
     // Create mock IDE setup

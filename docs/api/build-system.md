@@ -28,7 +28,7 @@ interface CLIPlugin {
   name: string;
   version: string;
   commands: CLICommand[];
-  
+
   initialize(context: CLIContext): Promise<void>;
   cleanup(): Promise<void>;
 }
@@ -88,26 +88,26 @@ bmad check --format json
 ### Creating a CLI Plugin
 
 ```typescript
-import { CLIPlugin, CLICommand } from '@bmad/cli/types';
+import { CLICommand, CLIPlugin } from "@bmad/cli/types";
 
 export class MyPlugin implements CLIPlugin {
-  name = 'my-plugin';
-  version = '1.0.0';
-  
+  name = "my-plugin";
+  version = "1.0.0";
+
   commands: CLICommand[] = [
     {
-      name: 'my-command',
-      description: 'My custom command',
+      name: "my-command",
+      description: "My custom command",
       options: [
         {
-          name: 'option',
-          description: 'Command option',
-          type: 'string',
-          required: false
-        }
+          name: "option",
+          description: "Command option",
+          type: "string",
+          required: false,
+        },
       ],
-      handler: this.handleCommand.bind(this)
-    }
+      handler: this.handleCommand.bind(this),
+    },
   ];
 
   async initialize(context: CLIContext): Promise<void> {
@@ -116,7 +116,7 @@ export class MyPlugin implements CLIPlugin {
 
   async handleCommand(args: string[], options: any): Promise<CLIResult> {
     // Command implementation
-    return { success: true, message: 'Command executed' };
+    return { success: true, message: "Command executed" };
   }
 
   async cleanup(): Promise<void> {
@@ -128,8 +128,8 @@ export class MyPlugin implements CLIPlugin {
 ### Registering a Plugin
 
 ```typescript
-import { CLIFramework } from '@bmad/cli/core';
-import { MyPlugin } from 'deps';
+import { CLIFramework } from "@bmad/cli/core";
+import { MyPlugin } from "deps";
 
 const cli = new CLIFramework();
 await cli.registerPlugin(new MyPlugin());

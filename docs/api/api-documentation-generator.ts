@@ -2,12 +2,7 @@
  * API Documentation Generator - Automatic documentation generation for BMAD-METHOD APIs
  */
 
-import {
-  dirname,
-  ensureDir,
-  join,
-  ProjectPaths,
-} from "deps";
+import { dirname, ensureDir, join, ProjectPaths } from "deps";
 
 export interface APIEndpoint {
   name: string;

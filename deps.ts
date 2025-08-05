@@ -7,11 +7,6 @@ export { Command } from "jsr:@cliffy/command@1.0.0-rc.8";
 export { Checkbox, Input, Select } from "jsr:@cliffy/prompt@1.0.0-rc.8";
 export * as ansi from "jsr:@cliffy/ansi@1.0.0-rc.8";
 
-// InversifyJS - Dependency Injection Framework
-export { Container, inject, injectable, multiInject, type interfaces } from "npm:inversify@6.0.1";
-// Required for InversifyJS decorators
-import "npm:reflect-metadata@0.2.2";
-
 // Core Services
 export type { ICliService } from "./src/core/services/cli/ICliService.ts";
 export { CliService } from "./src/core/services/cli/CliService.ts";
@@ -32,8 +27,8 @@ export { parseArgs } from "jsr:@std/cli@1.0.21";
 export { Spinner } from "jsr:@std/cli@1.0.21/unstable-spinner";
 
 // Testing utilities
-export { describe, it, beforeEach, afterEach } from "jsr:@std/testing@1.0.13/bdd";
-export { stub, type Stub } from "jsr:@std/testing@1.0.13/mock";
+export { afterEach, beforeEach, describe, it } from "jsr:@std/testing@1.0.13/bdd";
+export { type Stub, stub } from "jsr:@std/testing@1.0.13/mock";
 
 // File system utilities
 export { copy, ensureDir, expandGlob, walk } from "jsr:@std/fs@1.0.19";
@@ -92,7 +87,14 @@ export { WebBuilder } from "./src/build-tools/web-builder.ts";
 
 // --- Internal Installer Modules ---
 // Interfaces
-export type { IConfigLoader, IFileManager, IIdeSetup, IInstallerValidator, IPromptHandler, IResourceLocator } from "./src/installers/lib/installer.interfaces.ts";
+export type {
+  IConfigLoader,
+  IFileManager,
+  IIdeSetup,
+  IInstallerValidator,
+  IPromptHandler,
+  IResourceLocator,
+} from "./src/installers/lib/installer.interfaces.ts";
 
 // Shared Types
 export {
@@ -137,10 +139,7 @@ export {
 } from "./src/shared/types/expansion-pack.types.ts";
 
 // Shared Services
-export {
-  type ILogger,
-  logger,
-} from "./src/shared/services/core/logger.service.ts";
+export { type ILogger, logger } from "./src/shared/services/core/logger.service.ts";
 
 export {
   createSpinner,
@@ -165,9 +164,9 @@ export { ConfigLoader } from "./src/installers/lib/config-loader.ts";
 export { InstallerValidator } from "./src/installers/lib/installer-validator.ts";
 
 export {
-  InstallerOrchestrator,
-  type IInstallConfig,
   type IInstallationState,
+  type IInstallConfig,
+  InstallerOrchestrator,
 } from "./src/installers/lib/installer-orchestrator.ts";
 
 export {
@@ -176,8 +175,8 @@ export {
 } from "./src/installers/lib/file-integrity-checker.ts";
 
 export {
-  VersionComparator,
   type IVersionComparator,
+  VersionComparator,
 } from "./src/installers/lib/version-comparator.ts";
 
 export {
@@ -185,15 +184,9 @@ export {
   type IExpansionPackHandler,
 } from "./src/installers/lib/expansion-pack-handler.ts";
 
-export {
-  IdeSetupHandler,
-  type IIdeSetupHandler,
-} from "./src/installers/lib/ide-setup-handler.ts";
+export { IdeSetupHandler, type IIdeSetupHandler } from "./src/installers/lib/ide-setup-handler.ts";
 
-export {
-  CoreInstaller,
-  type ICoreInstaller,
-} from "./src/installers/lib/core-installer.ts";
+export { CoreInstaller, type ICoreInstaller } from "./src/installers/lib/core-installer.ts";
 
 export {
   FileCopyUtilities,

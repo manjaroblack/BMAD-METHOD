@@ -1,10 +1,4 @@
-import {
-  beforeEach,
-  describe,
-  it,
-  assertEquals,
-  ResourceLocator,
-} from "deps";
+import { assertEquals, beforeEach, describe, it, ResourceLocator } from "deps";
 
 describe("ResourceLocator", () => {
   let resourceLocator: ResourceLocator;

@@ -1,15 +1,9 @@
 // File manager service for BMad Method installer
 // Implements IFileManager interface
 
-import {
-  copy,
-  ensureDir,
-  join,
-} from "deps";
+import { copy, ensureDir, join } from "deps";
 
-import type {
-  IFileManager,
-} from "deps";
+import type { IFileManager } from "deps";
 
 export class FileManager implements IFileManager {
   /**
@@ -77,7 +71,7 @@ export class FileManager implements IFileManager {
    */
   dirname(path: string): string {
     // Simple implementation - in a real scenario, we'd use a proper path library
-    return path.substring(0, path.lastIndexOf('/'));
+    return path.substring(0, path.lastIndexOf("/"));
   }
 
   /**

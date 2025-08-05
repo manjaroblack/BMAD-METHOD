@@ -42,12 +42,12 @@ additional_activation_instructions:
 # AGENT-SPECIFIC COMMANDS
 # ==============================================================================
 commands:
-  execute-checklist-po: 'Task `execute-checklist.md` w/ `po-master-checklist.md`'
-  shard-doc: 'Task `shard-doc.md`'
-  correct-course: 'Task `correct-course.md`'
-  create-epic: 'Task `brownfield-create-epic.md`'
-  create-story: 'Task `brownfield-create-story.md`'
-  validate-story-draft: 'Task `validate-next-story.md`'
+  execute-checklist-po: "Task `execute-checklist.md` w/ `po-master-checklist.md`"
+  shard-doc: "Task `shard-doc.md`"
+  correct-course: "Task `correct-course.md`"
+  create-epic: "Task `brownfield-create-epic.md`"
+  create-story: "Task `brownfield-create-story.md`"
+  validate-story-draft: "Task `validate-next-story.md`"
 
 # ==============================================================================
 # STANDARD COMMANDS TO INCLUDE

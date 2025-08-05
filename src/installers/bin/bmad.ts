@@ -1,11 +1,6 @@
 #!/usr/bin/env -S deno run --allow-read --allow-write --allow-env --allow-run
 
-import {
-  Command,
-  getVersion,
-  initializeInstaller,
-  setupCommands,
-} from "deps";
+import { Command, getVersion, initializeInstaller, setupCommands } from "deps";
 
 // Initialize the installer
 await initializeInstaller();

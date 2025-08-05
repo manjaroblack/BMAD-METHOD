@@ -9,9 +9,7 @@ import {
   ProjectPaths,
 } from "deps";
 
-import type {
-  IResourceLocator,
-} from "deps";
+import type { IResourceLocator } from "deps";
 
 export class ResourceLocator implements IResourceLocator {
   private _pathCache = new Map<string, string>();
@@ -47,4 +45,3 @@ export class ResourceLocator implements IResourceLocator {
 }
 
 // Export singleton instance
-

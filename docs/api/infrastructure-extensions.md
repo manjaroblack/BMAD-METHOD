@@ -68,10 +68,10 @@ dependencies: []
 ### Loading an Extension
 
 ```typescript
-import { ExtensionManager } from '@bmad/core/extensions';
+import { ExtensionManager } from "@bmad/core/extensions";
 
 const manager = new ExtensionManager();
-const result = await manager.loadExtension('/path/to/extension');
+const result = await manager.loadExtension("/path/to/extension");
 
 if (result.success) {
   await manager.activateExtension(result.extension.config.id);
@@ -81,12 +81,12 @@ if (result.success) {
 ### Using Extension Agents
 
 ```typescript
-import { AgentManager } from '@bmad/core/services';
+import { AgentManager } from "@bmad/core/services";
 
 const agentManager = new AgentManager();
-const gameDevAgent = await agentManager.getAgent('phaser-game-dev');
-await gameDevAgent.executeTask('create-game-project', { 
-  projectName: 'my-game',
-  template: 'platformer'
+const gameDevAgent = await agentManager.getAgent("phaser-game-dev");
+await gameDevAgent.executeTask("create-game-project", {
+  projectName: "my-game",
+  template: "platformer",
 });
 ```

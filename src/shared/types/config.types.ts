@@ -38,20 +38,20 @@ export interface ValidationConfig {
 
 export interface PerformanceConfig {
   enableMonitoring?: boolean;
-  logLevel?: 'debug' | 'info' | 'warn' | 'error';
+  logLevel?: "debug" | "info" | "warn" | "error";
   maxConcurrentOperations?: number;
   timeoutMs?: number;
 }
 
 export interface SpinnerConfig {
   enabled?: boolean;
-  style?: 'dots' | 'line' | 'arrow' | 'bouncingBar';
+  style?: "dots" | "line" | "arrow" | "bouncingBar";
   color?: string;
   text?: string;
 }
 
 export interface LoggerConfig {
-  level: 'debug' | 'info' | 'warn' | 'error';
+  level: "debug" | "info" | "warn" | "error";
   enableConsole?: boolean;
   enableFile?: boolean;
   filePath?: string;

@@ -1,9 +1,5 @@
-import {
-  green,
-} from "deps";
-import type {
-  IIdeSetup,
-} from "deps";
+import { green } from "deps";
+import type { IIdeSetup } from "deps";
 
 /**
  * Interface for IDE setup handling
@@ -47,9 +43,7 @@ export class IdeSetupHandler implements IIdeSetupHandler {
         console.log(green(`✓ ${ide} configuration set up.`));
       }
     } catch (error: unknown) {
-      const errorMessage = error instanceof Error
-        ? error.message
-        : String(error);
+      const errorMessage = error instanceof Error ? error.message : String(error);
       console.error(
         `Failed to set up IDE configurations: ${errorMessage}`,
       );

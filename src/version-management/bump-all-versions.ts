@@ -1,12 +1,6 @@
 #!/usr/bin/env -S deno run --allow-read --allow-write --allow-env
 
-import {
-  dirname,
-  join,
-  parseYaml as parse,
-  ProjectPaths,
-  stringifyYaml as stringify,
-} from "deps";
+import { dirname, join, parseYaml as parse, ProjectPaths, stringifyYaml as stringify } from "deps";
 
 const args = Deno.args;
 const bumpType = args[0] || "minor"; // default to minor

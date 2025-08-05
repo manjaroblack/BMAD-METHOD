@@ -48,7 +48,7 @@ additional_permissions:
 # AGENT-SPECIFIC COMMANDS
 # ==============================================================================
 commands:
-  review {story}: 'Task `review-story.md`'
+  review {story}: "Task `review-story.md`"
 
 # ==============================================================================
 # STANDARD COMMANDS TO INCLUDE

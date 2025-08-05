@@ -1,16 +1,9 @@
 // IDE setup service for BMad Method installer
 // Implements IIdeSetup interface
 
-import {
-  BaseIdeSetup,
-  green,
-  red,
-} from "deps";
+import { BaseIdeSetup, green, red } from "deps";
 
-import type {
-  IFileManager,
-  IIdeSetup,
-} from "deps";
+import type { IFileManager, IIdeSetup } from "deps";
 
 export class IdeSetup implements IIdeSetup {
   private _ideSetup: BaseIdeSetup;
@@ -37,8 +30,7 @@ export class IdeSetup implements IIdeSetup {
     try {
       for (const ide of ides) {
         if (spinner && typeof spinner === "object" && spinner !== null) {
-          (spinner as { text: string }).text =
-            `Setting up ${ide} configuration...`;
+          (spinner as { text: string }).text = `Setting up ${ide} configuration...`;
         }
 
         const agentIds = await this._ideSetup.getAllAgentIds(installDir);
@@ -65,9 +57,7 @@ export class IdeSetup implements IIdeSetup {
         console.log(green(`✓ ${ide} configuration set up.`));
       }
     } catch (error: unknown) {
-      const errorMessage = error instanceof Error
-        ? error.message
-        : String(error);
+      const errorMessage = error instanceof Error ? error.message : String(error);
       console.error(
         red(`Failed to set up IDE configurations: ${errorMessage}`),
       );

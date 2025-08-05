@@ -88,8 +88,8 @@ All modules import dependencies through the 'deps' alias:
 
 ```typescript
 // ✅ Good
-import { walk, Command } from 'deps';
-import type { IFileDiscoverer } from 'deps';
+import { Command, walk } from "deps";
+import type { IFileDiscoverer } from "deps";
 
 // ❌ Bad
 import { walk } from "jsr:@std/fs@0.224.0";
@@ -104,21 +104,13 @@ Group imports by type with proper formatting:
 
 ```typescript
 // ✅ Good - Grouped imports by type
-import {
-  Command,
-  parse,
-  walk,
-} from 'deps';
+import { Command, parse, walk } from "deps";
 
-import type {
-  Config,
-  IFileDiscoverer,
-  User,
-} from 'deps';
+import type { Config, IFileDiscoverer, User } from "deps";
 
 // ❌ Bad - Horizontal imports
-import { walk, parse, Command } from 'deps';
-import type { User, Config, IFileDiscoverer } from 'deps';
+import { Command, parse, walk } from "deps";
+import type { Config, IFileDiscoverer, User } from "deps";
 ```
 
 **Rationale**: Improves readability, easier to scan, avoids horizontal scrolling, and groups related imports together.
@@ -153,11 +145,11 @@ Separate type-only imports from runtime imports:
 
 ```typescript
 // ✅ Good - Explicit type imports
-import type { User, Config } from 'deps';
-import { processUser } from 'deps';
+import type { Config, User } from "deps";
+import { processUser } from "deps";
 
 // ❌ Bad - Mixed imports
-import { User, Config, processUser } from 'deps';
+import { Config, processUser, User } from "deps";
 ```
 
 **Rationale**: Better tree-shaking, clearer separation of types vs runtime code.
@@ -177,22 +169,22 @@ export class ServiceError extends Error {
     public readonly cause?: Error,
   ) {
     super(message);
-    this.name = 'ServiceError';
+    this.name = "ServiceError";
   }
 }
 
 // Specific error types
 export class ConfigError extends ServiceError {
   constructor(message: string, cause?: Error) {
-    super(message, 'CONFIG_ERROR', cause);
-    this.name = 'ConfigError';
+    super(message, "CONFIG_ERROR", cause);
+    this.name = "ConfigError";
   }
 }
 
 export class FileNotFoundError extends ServiceError {
   constructor(message: string, cause?: Error) {
-    super(message, 'FILE_NOT_FOUND', cause);
-    this.name = 'FileNotFoundError';
+    super(message, "FILE_NOT_FOUND", cause);
+    this.name = "FileNotFoundError";
   }
 }
 ```
@@ -214,7 +206,7 @@ try {
     throw error;
   } else {
     // Handle unexpected errors
-    throw new ServiceError(`Unexpected error loading config`, 'UNEXPECTED_ERROR', error);
+    throw new ServiceError(`Unexpected error loading config`, "UNEXPECTED_ERROR", error);
   }
 }
 ```
@@ -236,7 +228,7 @@ export class FileDiscoverer implements IFileDiscoverer {
 
 export class FlattenerService {
   constructor(private readonly fileDiscoverer: IFileDiscoverer) {}
-  
+
   async flatten(directory: string): Promise<void> {
     // Only responsible for flattening logic
     const files = await this.fileDiscoverer.discoverFiles(directory);
@@ -263,9 +255,9 @@ export class FileDiscoverer implements IFileDiscoverer {
 
 export class FlattenerCommand {
   constructor(
-    private readonly fileDiscoverer: IFileDiscoverer,  // Depend on interface
+    private readonly fileDiscoverer: IFileDiscoverer, // Depend on interface
   ) {}
-  
+
   async execute(options: { directory: string }): Promise<void> {
     const files = await this.fileDiscoverer.discoverFiles(options.directory);
     // Process files
@@ -281,14 +273,14 @@ Use a DI container for managing service lifecycles:
 
 ```typescript
 // container.ts
-import { FileDiscoverer } from 'deps';
-import type { IFileDiscoverer } from 'deps';
+import { FileDiscoverer } from "deps";
+import type { IFileDiscoverer } from "deps";
 
 const container = new Container();
-container.register<IFileDiscoverer>('IFileDiscoverer', () => new FileDiscoverer());
+container.register<IFileDiscoverer>("IFileDiscoverer", () => new FileDiscoverer());
 
 // main.ts
-const fileDiscoverer = container.get<IFileDiscoverer>('IFileDiscoverer');
+const fileDiscoverer = container.get<IFileDiscoverer>("IFileDiscoverer");
 const flattenerCommand = new FlattenerCommand(fileDiscoverer);
 ```
 
@@ -300,10 +292,10 @@ Decouple services completely using Dependency Injection:
 // ✅ Good - Loose coupling through DI
 export class FlattenerCommand {
   constructor(
-    private readonly fileDiscoverer: IFileDiscoverer,  // Depend on interface
-    private readonly logger: ILogger,                  // Not concrete class
+    private readonly fileDiscoverer: IFileDiscoverer, // Depend on interface
+    private readonly logger: ILogger, // Not concrete class
   ) {}
-  
+
   async execute(options: { directory: string }): Promise<void> {
     const files = await this.fileDiscoverer.discoverFiles(options.directory);
     // Process files
@@ -312,9 +304,9 @@ export class FlattenerCommand {
 
 // ❌ Bad - Tight coupling
 export class FlattenerCommand {
-  private readonly fileDiscoverer = new FileDiscoverer();  // Direct instantiation
-  private readonly logger = new ConsoleLogger();            // Hard to change
-  
+  private readonly fileDiscoverer = new FileDiscoverer(); // Direct instantiation
+  private readonly logger = new ConsoleLogger(); // Hard to change
+
   async execute(options: { directory: string }): Promise<void> {
     // Cannot easily swap implementations
   }
@@ -329,13 +321,13 @@ Write isolated unit tests with mocks for dependencies:
 
 ```typescript
 // ✅ Good - Easy to test with mocks
-import { assertEquals } from 'deps';
-import { stub } from 'deps';
+import { assertEquals } from "deps";
+import { stub } from "deps";
 
 Deno.test("FlattenerCommand should log and discover files", () => {
   const mockDiscoverer = { discoverFiles: stub() };
   const mockLogger = { info: stub(), error: stub(), debug: stub() };
-  
+
   const command = new FlattenerCommand(mockDiscoverer, mockLogger);
   // Test execution
 });
@@ -349,14 +341,14 @@ Write high-level integration tests for commands:
 Deno.test("FlattenerCommand integration test", async () => {
   // Set up test environment
   const testDir = await Deno.makeTempDir();
-  
+
   // Execute command
   const command = new FlattenerCommand(fileDiscoverer, logger);
   await command.execute({ directory: testDir });
-  
+
   // Verify results
   // ...
-  
+
   // Clean up
   await Deno.remove(testDir, { recursive: true });
 });
@@ -457,7 +449,7 @@ const buffer = new ArrayBuffer(1024); // Create a new buffer
 
 ```typescript
 // ✅ Good - Using Cliffy with Deno patterns
-import { Command } from 'deps';
+import { Command } from "deps";
 
 await new Command()
   .name("my-cli")
@@ -473,7 +465,7 @@ await new Command()
 
 ```typescript
 // ✅ Good - Using JSR JSONC support
-import { parse } from 'deps';
+import { parse } from "deps";
 
 const configText = await Deno.readTextFile("./config.jsonc");
 const config = parse(configText) as ConfigSchema;
@@ -483,7 +475,7 @@ const config = parse(configText) as ConfigSchema;
 
 ```typescript
 // ✅ Good - Using JSR fs utilities
-import { walk } from 'deps';
+import { walk } from "deps";
 
 for await (const entry of walk("./src", { exts: [".ts"] })) {
   console.log(entry.path);

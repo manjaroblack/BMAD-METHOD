@@ -1,16 +1,6 @@
-import {
-  afterEach,
-  beforeEach,
-  describe,
-  it,
-  assertEquals,
-  stub,
-  ConfigLoader,
-} from "deps";
+import { afterEach, assertEquals, beforeEach, ConfigLoader, describe, it, stub } from "deps";
 
-import type {
-  Stub,
-} from "deps";
+import type { Stub } from "deps";
 
 describe("ConfigLoader", () => {
   let configLoader: ConfigLoader;
@@ -121,8 +111,7 @@ describe("ConfigLoader", () => {
   });
 
   it("should parse YAML configuration correctly", async () => {
-    const yamlContent =
-      `name: Test Pack\ndescription: A test expansion pack\nversion: 1.0.0`;
+    const yamlContent = `name: Test Pack\ndescription: A test expansion pack\nversion: 1.0.0`;
     const readTextFileStub = stub(
       Deno,
       "readTextFile",

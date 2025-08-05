@@ -1,18 +1,14 @@
-import {
-  cyan,
-  yellow,
-  createSpinner,
-} from "deps";
+import { createSpinner, cyan, yellow } from "deps";
 
 import type {
-  ISpinner,
-  ILogger,
+  IConfigLoader,
   IFileManager,
   IIdeSetup,
-  IConfigLoader,
-  IResourceLocator,
   IInstallerValidator,
+  ILogger,
   IPromptHandler,
+  IResourceLocator,
+  ISpinner,
 } from "deps";
 
 /**
@@ -90,9 +86,7 @@ export class InstallerOrchestrator {
 
       spinner.succeed("Installation completed successfully!");
     } catch (error: unknown) {
-      const errorMessage = error instanceof Error
-        ? error.message
-        : String(error);
+      const errorMessage = error instanceof Error ? error.message : String(error);
       spinner.fail(
         `Installation failed: ${errorMessage}`,
       );
@@ -129,8 +123,7 @@ export class InstallerOrchestrator {
     }
 
     // Install expansion packs if selected
-    const expansionPacks =
-      config.selectedPacks?.filter((pack) => pack !== ".bmad-core") || [];
+    const expansionPacks = config.selectedPacks?.filter((pack) => pack !== ".bmad-core") || [];
     if (expansionPacks.length > 0) {
       await this.installExpansionPacks(
         installDir,

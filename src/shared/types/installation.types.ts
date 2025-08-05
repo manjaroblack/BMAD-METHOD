@@ -33,12 +33,12 @@ export interface InstallationManifest {
   integrity?: Record<string, unknown>;
 }
 
-export type InstallationType = 
-  | 'fresh'
-  | 'update' 
-  | 'repair'
-  | 'unknown'
-  | 'existing-v5';
+export type InstallationType =
+  | "fresh"
+  | "update"
+  | "repair"
+  | "unknown"
+  | "existing-v5";
 
 export interface InstallationContext {
   config: InstallConfig;

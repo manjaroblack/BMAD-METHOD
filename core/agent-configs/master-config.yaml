@@ -37,15 +37,15 @@ additional_activation_instructions:
 # AGENT-SPECIFIC COMMANDS
 # ==============================================================================
 commands:
-  agent: 'Transform into agent (or list)'
-  task: 'Run a task (or list)'
-  workflow: 'Start a workflow (or list)'
-  workflow-guidance: 'Help selecting a workflow'
-  checklist: 'Run a checklist (or list)'
-  create-doc: 'Task `create-doc.md` or list templates'
-  kb: 'Toggle KB mode (loads `bmad-kb.md`)'
-  status: 'Show current context'
-  plan: 'Create a workflow plan'
+  agent: "Transform into agent (or list)"
+  task: "Run a task (or list)"
+  workflow: "Start a workflow (or list)"
+  workflow-guidance: "Help selecting a workflow"
+  checklist: "Run a checklist (or list)"
+  create-doc: "Task `create-doc.md` or list templates"
+  kb: "Toggle KB mode (loads `bmad-kb.md`)"
+  status: "Show current context"
+  plan: "Create a workflow plan"
 
 # ==============================================================================
 # STANDARD COMMANDS TO INCLUDE

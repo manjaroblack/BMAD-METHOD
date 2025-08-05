@@ -1,10 +1,4 @@
-import {
-  beforeEach,
-  describe,
-  it,
-  assertEquals,
-  PromptHandler,
-} from "deps";
+import { assertEquals, beforeEach, describe, it, PromptHandler } from "deps";
 
 describe("PromptHandler", () => {
   let promptHandler: PromptHandler;

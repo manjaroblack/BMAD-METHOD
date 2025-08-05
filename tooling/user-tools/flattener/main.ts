@@ -1,13 +1,6 @@
 #!/usr/bin/env -S deno run --allow-read --allow-write
 
-import {
-  basename,
-  Command,
-  extname,
-  join,
-  relative,
-  walk,
-} from "deps";
+import { basename, Command, extname, join, relative, walk } from "deps";
 
 interface FileInfo {
   path: string;

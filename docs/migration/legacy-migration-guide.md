@@ -13,7 +13,7 @@ This guide provides step-by-step instructions for migrating from the legacy BMAD
    ```bash
    # Create full backup
    cp -r . ./BMAD-METHOD-backup-$(date +%Y%m%d)
-   
+
    # Export current configurations
    mkdir -p migration/backup
    cp -r src/core/agents/*.yaml migration/backup/agents/
@@ -38,10 +38,10 @@ This guide provides step-by-step instructions for migrating from the legacy BMAD
 // Single monolithic file: tooling/installers/lib/installer.ts (1,057 lines)
 class MonolithicInstaller {
   // All functionality in one massive class
-  freshInstall() { /* 200+ lines */ }
-  updateInstall() { /* 150+ lines */ }
-  repairInstall() { /* 100+ lines */ }
-  detectInstallation() { /* 100+ lines */ }
+  freshInstall() {/* 200+ lines */}
+  updateInstall() {/* 150+ lines */}
+  repairInstall() {/* 100+ lines */}
+  detectInstallation() {/* 100+ lines */}
   // ... many more methods
 }
 ```
@@ -50,10 +50,10 @@ class MonolithicInstaller {
 
 ```typescript
 // Distributed across focused modules (20+ files)
-import { InstallerOrchestrator } from 'deps';
-import { FreshInstallHandler } from 'deps';
-import { UpdateHandler } from 'deps';
-import { RepairHandler } from 'deps';
+import { InstallerOrchestrator } from "deps";
+import { FreshInstallHandler } from "deps";
+import { UpdateHandler } from "deps";
+import { RepairHandler } from "deps";
 
 // Each module handles one specific concern (< 500 lines each)
 ```
@@ -66,10 +66,10 @@ import { RepairHandler } from 'deps';
 
    ```typescript
    // OLD: Direct YAML loading
-   const agent = loadYAML('agents/developer.yaml');
-   
+   const agent = loadYAML("agents/developer.yaml");
+
    // NEW: Use Agent Manager
-   import { AgentManager } from '@bmad/core/services';
+   import { AgentManager } from "@bmad/core/services";
    const manager = new AgentManager();
    const agent = await manager.createAgent(agentConfig);
    ```
@@ -78,19 +78,19 @@ import { RepairHandler } from 'deps';
 
    ```typescript
    // OLD: YAML-only configuration
-   name: developer-agent
-   role: developer
-   
+   name: developer - agent;
+   role: developer;
+
    // NEW: TypeScript interface with validation
    const agentConfig: IAgentConfig = {
      role: AgentRole.DEVELOPER,
-     name: 'developer-agent',
-     description: 'Software development specialist',
-     capabilities: ['coding', 'testing', 'debugging'],
+     name: "developer-agent",
+     description: "Software development specialist",
+     capabilities: ["coding", "testing", "debugging"],
      dependencies: [],
      maxConcurrentTasks: 5,
      timeoutMs: 30000,
-     retryAttempts: 3
+     retryAttempts: 3,
    };
    ```
 
@@ -99,14 +99,14 @@ import { RepairHandler } from 'deps';
    ```typescript
    // OLD: Direct agent invocation
    const result = await agent.executeTask(taskData);
-   
+
    // NEW: Through Agent Manager with proper lifecycle
-   const agent = await agentManager.getAgent('developer-agent');
+   const agent = await agentManager.getAgent("developer-agent");
    const result = await agent.executeTask({
-     id: 'task-123',
-     type: 'coding',
+     id: "task-123",
+     type: "coding",
      priority: TaskPriority.HIGH,
-     data: taskData
+     data: taskData,
    });
    ```
 
@@ -127,24 +127,24 @@ import { RepairHandler } from 'deps';
    ```typescript
    // NEW: Typed workflow with validation
    const workflow: IWorkflowDefinition = {
-     id: 'development-workflow',
-     name: 'Development Workflow',
-     description: 'Complete development lifecycle',
+     id: "development-workflow",
+     name: "Development Workflow",
+     description: "Complete development lifecycle",
      type: WorkflowType.GREENFIELD_FULLSTACK,
-     version: '1.0.0',
+     version: "1.0.0",
      steps: [
        {
-         id: 'setup-step',
-         name: 'Project Setup',
-         description: 'Initialize project structure',
-         type: 'agent-task',
-         agent: 'developer',
+         id: "setup-step",
+         name: "Project Setup",
+         description: "Initialize project structure",
+         type: "agent-task",
+         agent: "developer",
          dependencies: [],
-         parameters: { projectType: 'fullstack' }
-       }
+         parameters: { projectType: "fullstack" },
+       },
      ],
      variables: {},
-     metadata: {}
+     metadata: {},
    };
    ```
 
@@ -153,9 +153,9 @@ import { RepairHandler } from 'deps';
    ```typescript
    // OLD: Direct workflow execution
    const result = await runWorkflow(workflowYaml);
-   
+
    // NEW: Through Workflow Engine
-   import { WorkflowEngine } from '@bmad/core/workflows';
+   import { WorkflowEngine } from "@bmad/core/workflows";
    const engine = new WorkflowEngine();
    const instance = await engine.createInstance(workflow);
    const result = await engine.execute(instance.id);
@@ -169,9 +169,11 @@ import { RepairHandler } from 'deps';
 
    ```markdown
    <!-- OLD: Markdown task definition -->
+
    # Setup Development Environment
-   
+
    Steps:
+
    1. Install dependencies
    2. Configure environment
    ```
@@ -179,22 +181,22 @@ import { RepairHandler } from 'deps';
    ```typescript
    // NEW: Typed task with validation
    const taskDefinition: ITaskDefinition = {
-     id: 'setup-dev-env',
-     name: 'Setup Development Environment',
-     description: 'Initialize development environment',
+     id: "setup-dev-env",
+     name: "Setup Development Environment",
+     description: "Initialize development environment",
      type: TaskType.SETUP,
      priority: TaskPriority.HIGH,
      estimatedDuration: 300000, // 5 minutes
      dependencies: [],
      parameters: {
-       nodeVersion: '18.x',
-       installDeps: true
+       nodeVersion: "18.x",
+       installDeps: true,
      },
      validation: {
-       required: ['nodeVersion'],
-       schema: taskValidationSchema
+       required: ["nodeVersion"],
+       schema: taskValidationSchema,
      },
-     metadata: {}
+     metadata: {},
    };
    ```
 
@@ -203,12 +205,12 @@ import { RepairHandler } from 'deps';
    ```typescript
    // OLD: Manual task handling
    const result = await executeTask(taskData);
-   
+
    // NEW: Through Task Scheduler and Executor
-   import { TaskScheduler, TaskExecutor } from '@bmad/core/tasks';
+   import { TaskExecutor, TaskScheduler } from "@bmad/core/tasks";
    const scheduler = new TaskScheduler();
    const executor = new TaskExecutor();
-   
+
    const taskId = await scheduler.scheduleTask(taskDefinition);
    const result = await executor.executeTask(taskId);
    ```
@@ -248,12 +250,12 @@ import { RepairHandler } from 'deps';
    ```typescript
    // OLD: Manual extension loading
    const extension = loadExtension(path);
-   
+
    // NEW: Through Extension Manager
-   import { ExtensionManager } from '@bmad/core/extensions';
+   import { ExtensionManager } from "@bmad/core/extensions";
    const manager = new ExtensionManager();
    const result = await manager.loadExtension(extensionPath);
-   
+
    if (result.success) {
      await manager.activateExtension(result.extension.config.id);
    }
@@ -283,12 +285,12 @@ import { RepairHandler } from 'deps';
 
    ```typescript
    // OLD: Manual build scripts
-   import { buildAgents, buildTeams } from 'deps';
-   
+   import { buildAgents, buildTeams } from "deps";
+
    // NEW: CLI-based builds
-   import { CLIFramework } from '@bmad/cli/core';
+   import { CLIFramework } from "@bmad/cli/core";
    const cli = new CLIFramework();
-   await cli.executeCommand('build', ['--agents', '--optimize']);
+   await cli.executeCommand("build", ["--agents", "--optimize"]);
    ```
 
 ## Breaking Changes and Compatibility
@@ -323,25 +325,25 @@ To ease migration, temporary compatibility shims are available:
 // Compatibility shim for legacy agent loading
 export class LegacyAgentLoader {
   static async loadAgent(yamlPath: string): Promise<IAgent> {
-    console.warn('Legacy agent loading is deprecated. Use AgentManager instead.');
-    
-    const yamlContent = await fs.readFile(yamlPath, 'utf-8');
+    console.warn("Legacy agent loading is deprecated. Use AgentManager instead.");
+
+    const yamlContent = await fs.readFile(yamlPath, "utf-8");
     const config = yaml.parse(yamlContent);
-    
+
     const agentManager = new AgentManager();
     return await agentManager.createAgent(this.convertLegacyConfig(config));
   }
-  
+
   private static convertLegacyConfig(legacyConfig: any): IAgentConfig {
     return {
       role: this.mapRole(legacyConfig.role),
       name: legacyConfig.name,
-      description: legacyConfig.description || '',
+      description: legacyConfig.description || "",
       capabilities: legacyConfig.capabilities || [],
       dependencies: legacyConfig.dependencies || [],
       maxConcurrentTasks: legacyConfig.maxConcurrentTasks || 3,
       timeoutMs: legacyConfig.timeoutMs || 30000,
-      retryAttempts: legacyConfig.retryAttempts || 2
+      retryAttempts: legacyConfig.retryAttempts || 2,
     };
   }
 }
@@ -453,7 +455,7 @@ The migration delivers significant performance benefits:
 
 ```typescript
 // Problem: Direct YAML loading fails
-const agent = loadYAML('agents/developer.yaml'); // ERROR
+const agent = loadYAML("agents/developer.yaml"); // ERROR
 
 // Solution: Use AgentManager
 const manager = new AgentManager();
@@ -478,11 +480,11 @@ await engine.execute(instance.id);
 
 ```typescript
 // Problem: Direct extension loading
-const ext = loadExtension('./extensions/my-ext'); // ERROR
+const ext = loadExtension("./extensions/my-ext"); // ERROR
 
 // Solution: Use ExtensionManager
 const manager = new ExtensionManager();
-const result = await manager.loadExtension('./extensions/my-ext');
+const result = await manager.loadExtension("./extensions/my-ext");
 if (result.success) {
   await manager.activateExtension(result.extension.config.id);
 }
@@ -502,6 +504,6 @@ The migration is now **COMPLETED** across all core systems. The new modular arch
 
 ---
 
-**Migration Status**: ✅ **COMPLETED**  
-**Generated**: ${new Date().toISOString()}  
+**Migration Status**: ✅ **COMPLETED**\
+**Generated**: ${new Date().toISOString()}\
 **Version**: 1.0.0

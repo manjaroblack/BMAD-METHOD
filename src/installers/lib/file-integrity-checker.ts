@@ -1,9 +1,5 @@
-import {
-  join,
-} from "deps";
-import type {
-  IFileManager,
-} from "deps";
+import { join } from "deps";
+import type { IFileManager } from "deps";
 
 /**
  * Interface for file integrity checking

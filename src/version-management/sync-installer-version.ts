@@ -5,11 +5,7 @@
  * Used by semantic-release to keep versions in sync
  */
 
-import {
-  dirname,
-  join,
-  ProjectPaths,
-} from "deps";
+import { dirname, join, ProjectPaths } from "deps";
 
 export async function syncInstallerVersion(): Promise<void> {
   const currentDir = new URL(".", import.meta.url).pathname;

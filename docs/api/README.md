@@ -59,7 +59,7 @@ Complete API documentation for the BMAD-METHOD modular architecture system.
 - Game project templates
 - Development workflows
 
-### 🏗️ [Infrastructure Extensions](./infrastructure-extensions.md)  
+### 🏗️ [Infrastructure Extensions](./infrastructure-extensions.md)
 
 - DevOps automation
 - Infrastructure as Code
@@ -132,6 +132,6 @@ Complete API documentation for the BMAD-METHOD modular architecture system.
 
 ---
 
-**Generated**: 2025-07-31T00:44:31.687Z  
-**Version**: 1.0.0  
+**Generated**: 2025-07-31T00:44:31.687Z\
+**Version**: 1.0.0\
 **BMAD-METHOD**: Comprehensive Modular Architecture

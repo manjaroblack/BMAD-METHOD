@@ -45,12 +45,12 @@ export interface ExpansionPackInstallResult {
   errors?: string[];
 }
 
-export type ExpansionPackStatus = 
-  | 'available'
-  | 'installed'
-  | 'outdated'
-  | 'missing-dependencies'
-  | 'corrupted';
+export type ExpansionPackStatus =
+  | "available"
+  | "installed"
+  | "outdated"
+  | "missing-dependencies"
+  | "corrupted";
 
 export interface ExpansionPackContext {
   pack: ExpansionPack;

@@ -42,12 +42,12 @@ additional_activation_instructions:
 # AGENT-SPECIFIC COMMANDS
 # ==============================================================================
 commands:
-  create-project-brief: 'Task `create-doc.md` w/ `project-brief-tmpl.yaml`'
-  perform-market-research: 'Task `create-doc.md` w/ `market-research-tmpl.yaml`'
-  create-competitor-analysis: 'Task `create-doc.md` w/ `competitor-analysis-tmpl.yaml`'
-  research-prompt: 'Task `create-deep-research-prompt.md`'
-  brainstorm: 'Task `facilitate-brainstorming-session.md`'
-  elicit: 'Task `advanced-elicitation.md`'
+  create-project-brief: "Task `create-doc.md` w/ `project-brief-tmpl.yaml`"
+  perform-market-research: "Task `create-doc.md` w/ `market-research-tmpl.yaml`"
+  create-competitor-analysis: "Task `create-doc.md` w/ `competitor-analysis-tmpl.yaml`"
+  research-prompt: "Task `create-deep-research-prompt.md`"
+  brainstorm: "Task `facilitate-brainstorming-session.md`"
+  elicit: "Task `advanced-elicitation.md`"
 
 # ==============================================================================
 # STANDARD COMMANDS TO INCLUDE

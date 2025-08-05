@@ -3,9 +3,7 @@
  * Provides consistent UI feedback for long-running operations
  */
 
-import type {
-  SpinnerConfig,
-} from 'deps';
+import type { SpinnerConfig } from "deps";
 
 export interface ISpinner {
   text: string;
@@ -28,40 +26,53 @@ export class SpinnerService implements ISpinner {
   private isSpinning: boolean = false;
   private intervalId?: number;
   private currentFrameIndex: number = 0;
-  private _text: string = '';
-  
+  private _text: string = "";
+
   private readonly spinnerStyles: Record<string, SpinnerFrame> = {
     dots: {
-      frames: ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'],
-      interval: 80
+      frames: ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"],
+      interval: 80,
     },
     line: {
-      frames: ['⎺', '⎻', '⎼', '⎽', '⎼', '⎻'],
-      interval: 130
+      frames: ["⎺", "⎻", "⎼", "⎽", "⎼", "⎻"],
+      interval: 130,
     },
     arrow: {
-      frames: ['←', '↖', '↑', '↗', '→', '↘', '↓', '↙'],
-      interval: 120
+      frames: ["←", "↖", "↑", "↗", "→", "↘", "↓", "↙"],
+      interval: 120,
     },
     bouncingBar: {
       frames: [
-        '[    ]', '[=   ]', '[==  ]', '[=== ]', '[====]',
-        '[ ===]', '[  ==]', '[   =]', '[    ]', '[   =]',
-        '[  ==]', '[ ===]', '[====]', '[=== ]', '[==  ]', '[=   ]'
+        "[    ]",
+        "[=   ]",
+        "[==  ]",
+        "[=== ]",
+        "[====]",
+        "[ ===]",
+        "[  ==]",
+        "[   =]",
+        "[    ]",
+        "[   =]",
+        "[  ==]",
+        "[ ===]",
+        "[====]",
+        "[=== ]",
+        "[==  ]",
+        "[=   ]",
       ],
-      interval: 80
-    }
+      interval: 80,
+    },
   };
 
   constructor(config: SpinnerConfig = {}) {
     this.config = {
       enabled: true,
-      style: 'dots',
-      color: 'cyan',
-      text: '',
-      ...config
+      style: "dots",
+      color: "cyan",
+      text: "",
+      ...config,
     };
-    this._text = this.config.text || '';
+    this._text = this.config.text || "";
   }
 
   get text(): string {
@@ -83,9 +94,9 @@ export class SpinnerService implements ISpinner {
     this.isSpinning = true;
     this.currentFrameIndex = 0;
 
-    const style = this.spinnerStyles[this.config.style || 'dots'];
+    const style = this.spinnerStyles[this.config.style || "dots"];
     if (!style) return;
-    
+
     this.intervalId = setInterval(() => {
       this.currentFrameIndex = (this.currentFrameIndex + 1) % style.frames.length;
       this.render();
@@ -111,25 +122,25 @@ export class SpinnerService implements ISpinner {
   succeed(text?: string): void {
     this.stop();
     const message = text || this._text;
-    this.printLine('✅', message, 'green');
+    this.printLine("✅", message, "green");
   }
 
   fail(text?: string): void {
     this.stop();
     const message = text || this._text;
-    this.printLine('❌', message, 'red');
+    this.printLine("❌", message, "red");
   }
 
   info(text?: string): void {
     this.stop();
     const message = text || this._text;
-    this.printLine('ℹ️', message, 'blue');
+    this.printLine("ℹ️", message, "blue");
   }
 
   warn(text?: string): void {
     this.stop();
     const message = text || this._text;
-    this.printLine('⚠️', message, 'yellow');
+    this.printLine("⚠️", message, "yellow");
   }
 
   update(text: string): void {
@@ -141,21 +152,21 @@ export class SpinnerService implements ISpinner {
       return;
     }
 
-    const style = this.spinnerStyles[this.config.style || 'dots'];
+    const style = this.spinnerStyles[this.config.style || "dots"];
     if (!style) return;
-    
+
     const frame = style.frames[this.currentFrameIndex];
     if (!frame) return;
-    
-    const coloredFrame = this.colorize(frame, (this.config.color || 'cyan') as string);
-    
+
+    const coloredFrame = this.colorize(frame, (this.config.color || "cyan") as string);
+
     this.clearLine();
     Deno.stdout.writeSync(new TextEncoder().encode(`${coloredFrame} ${this._text}`));
   }
 
   private clearLine(): void {
     // Move cursor to beginning of line and clear it
-    Deno.stdout.writeSync(new TextEncoder().encode('\r\x1b[K'));
+    Deno.stdout.writeSync(new TextEncoder().encode("\r\x1b[K"));
   }
 
   private printLine(symbol: string, text: string, color: string): void {
@@ -166,20 +177,20 @@ export class SpinnerService implements ISpinner {
 
   private colorize(text: string, color: string): string {
     const colors: Record<string, string> = {
-      black: '\x1b[30m',
-      red: '\x1b[31m',
-      green: '\x1b[32m',
-      yellow: '\x1b[33m',
-      blue: '\x1b[34m',
-      magenta: '\x1b[35m',
-      cyan: '\x1b[36m',
-      white: '\x1b[37m',
-      gray: '\x1b[90m'
+      black: "\x1b[30m",
+      red: "\x1b[31m",
+      green: "\x1b[32m",
+      yellow: "\x1b[33m",
+      blue: "\x1b[34m",
+      magenta: "\x1b[35m",
+      cyan: "\x1b[36m",
+      white: "\x1b[37m",
+      gray: "\x1b[90m",
     };
 
-    const reset = '\x1b[0m';
+    const reset = "\x1b[0m";
     const colorCode = colors[color] || colors.cyan;
-    
+
     return `${colorCode}${text}${reset}`;
   }
 }

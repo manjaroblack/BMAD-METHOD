@@ -1,10 +1,4 @@
-import {
-  blue,
-  bold,
-  cyan,
-  join,
-  magenta,
-} from "deps";
+import { blue, bold, cyan, join, magenta } from "deps";
 
 // Default version, will be overridden by deno.json
 let version: string = "1.0.0";

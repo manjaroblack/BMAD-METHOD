@@ -5,7 +5,7 @@ template:
   output:
     format: markdown
     filename: docs/architecture.md
-    title: '{{project_name}} Architecture Document'
+    title: "{{project_name}} Architecture Document"
 
 workflow:
   mode: interactive
@@ -116,11 +116,11 @@ sections:
           - Code organization patterns (Dependency Injection, Repository, Module, Factory)
           - Data patterns (Event Sourcing, Saga, Database per Service)
           - Communication patterns (REST, GraphQL, Message Queue, Pub/Sub)
-        template: '- **{{pattern_name}}:** {{pattern_description}} - _Rationale:_ {{rationale}}'
+        template: "- **{{pattern_name}}:** {{pattern_description}} - _Rationale:_ {{rationale}}"
         examples:
-          - '**Serverless Architecture:** Using AWS Lambda for compute - _Rationale:_ Aligns with PRD requirement for cost optimization and automatic scaling'
-          - '**Repository Pattern:** Abstract data access logic - _Rationale:_ Enables testing and future database migration flexibility'
-          - '**Event-Driven Communication:** Using SNS/SQS for service decoupling - _Rationale:_ Supports async processing and system resilience'
+          - "**Serverless Architecture:** Using AWS Lambda for compute - _Rationale:_ Aligns with PRD requirement for cost optimization and automatic scaling"
+          - "**Repository Pattern:** Abstract data access logic - _Rationale:_ Enables testing and future database migration flexibility"
+          - "**Event-Driven Communication:** Using SNS/SQS for service decoupling - _Rationale:_ Supports async processing and system resilience"
 
   - id: tech-stack
     title: Tech Stack
@@ -158,9 +158,9 @@ sections:
         columns: [Category, Technology, Version, Purpose, Rationale]
         instruction: Populate the technology stack table with all relevant technologies
         examples:
-          - '| **Language** | TypeScript | 5.3.3 | Primary development language | Strong typing, excellent tooling, team expertise |'
-          - '| **Runtime** | Node.js | 20.11.0 | JavaScript runtime | LTS version, stable performance, wide ecosystem |'
-          - '| **Framework** | NestJS | 10.3.2 | Backend framework | Enterprise-ready, good DI, matches team patterns |'
+          - "| **Language** | TypeScript | 5.3.3 | Primary development language | Strong typing, excellent tooling, team expertise |"
+          - "| **Runtime** | Node.js | 20.11.0 | JavaScript runtime | LTS version, stable performance, wide ecosystem |"
+          - "| **Framework** | NestJS | 10.3.2 | Backend framework | Enterprise-ready, good DI, matches team patterns |"
 
   - id: data-models
     title: Data Models
@@ -178,7 +178,7 @@ sections:
     repeatable: true
     sections:
       - id: model
-        title: '{{model_name}}'
+        title: "{{model_name}}"
         template: |
           **Purpose:** {{model_purpose}}
 
@@ -209,7 +209,7 @@ sections:
     sections:
       - id: component-list
         repeatable: true
-        title: '{{component_name}}'
+        title: "{{component_name}}"
         template: |
           **Responsibility:** {{component_description}}
 
@@ -247,7 +247,7 @@ sections:
     repeatable: true
     sections:
       - id: api
-        title: '{{api_name}} API'
+        title: "{{api_name}} API"
         template: |
           - **Purpose:** {{api_purpose}}
           - **Documentation:** {{api_docs_url}}
@@ -334,14 +334,14 @@ sections:
     elicit: true
     examples:
       - |
-        project-root/
-        ├── packages/
-        │   ├── api/                    # Backend API service
-        │   ├── web/                    # Frontend application
-        │   ├── shared/                 # Shared utilities/types
-        │   └── infrastructure/         # IaC definitions
-        ├── scripts/                    # Monorepo management scripts
-        └── deno.json                # Root deno.json with workspaces
+          project-root/
+          ├── packages/
+          │   ├── api/                    # Backend API service
+          │   ├── web/                    # Frontend application
+          │   ├── shared/                 # Shared utilities/types
+          │   └── infrastructure/         # IaC definitions
+          ├── scripts/                    # Monorepo management scripts
+          └── deno.json                # Root deno.json with workspaces
 
   - id: infrastructure-deployment
     title: Infrastructure and Deployment
@@ -372,12 +372,12 @@ sections:
       - id: environments
         title: Environments
         repeatable: true
-        template: '- **{{env_name}}:** {{env_purpose}} - {{env_details}}'
+        template: "- **{{env_name}}:** {{env_purpose}} - {{env_details}}"
       - id: promotion-flow
         title: Environment Promotion Flow
         type: code
         language: text
-        template: '{{promotion_flow_diagram}}'
+        template: "{{promotion_flow_diagram}}"
       - id: rollback-strategy
         title: Rollback Strategy
         template: |
@@ -473,16 +473,16 @@ sections:
 
           Avoid obvious rules like "use SOLID principles" or "write clean code"
         repeatable: true
-        template: '- **{{rule_name}}:** {{rule_description}}'
+        template: "- **{{rule_name}}:** {{rule_description}}"
       - id: language-specifics
         title: Language-Specific Guidelines
         condition: Critical language-specific rules needed
         instruction: Add ONLY if critical for preventing AI mistakes. Most teams don't need this section.
         sections:
           - id: language-rules
-            title: '{{language_name}} Specifics'
+            title: "{{language_name}} Specifics"
             repeatable: true
-            template: '- **{{rule_topic}}:** {{rule_detail}}'
+            template: "- **{{rule_topic}}:** {{rule_detail}}"
 
   - id: test-strategy
     title: Test Strategy and Standards
@@ -530,9 +530,9 @@ sections:
               - **Test Infrastructure:**
                 - **{{dependency_name}}:** {{test_approach}} ({{test_tool}})
             examples:
-              - '**Database:** In-memory H2 for unit tests, Testcontainers PostgreSQL for integration'
-              - '**Message Queue:** Embedded Kafka for tests'
-              - '**External APIs:** WireMock for stubbing'
+              - "**Database:** In-memory H2 for unit tests, Testcontainers PostgreSQL for integration"
+              - "**Message Queue:** Embedded Kafka for tests"
+              - "**External APIs:** WireMock for stubbing"
           - id: e2e-tests
             title: End-to-End Tests
             template: |

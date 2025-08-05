@@ -1,18 +1,6 @@
-import {
-  afterEach,
-  beforeEach,
-  describe,
-  it,
-  assertEquals,
-  stub,
-  IdeSetup,
-} from "deps";
+import { afterEach, assertEquals, beforeEach, describe, IdeSetup, it, stub } from "deps";
 
-import type {
-  Stub,
-  IFileManager,
-  ISpinner,
-} from "deps";
+import type { IFileManager, ISpinner, Stub } from "deps";
 
 describe("IdeSetup", () => {
   let ideSetup: IdeSetup;

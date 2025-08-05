@@ -1,8 +1,4 @@
-import {
-  join,
-  parseYaml,
-  ProjectPaths,
-} from "deps";
+import { join, parseYaml, ProjectPaths } from "deps";
 
 interface AgentConfig {
   dependencies?: {

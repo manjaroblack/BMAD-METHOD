@@ -3,10 +3,7 @@
 
 import { join, parseYaml, ProjectPaths } from "deps";
 
-import type {
-  IConfigLoader,
-  ExpansionPack,
-} from "deps";
+import type { ExpansionPack, IConfigLoader } from "deps";
 
 export class ConfigLoader implements IConfigLoader {
   private configPath: string;
@@ -103,4 +100,3 @@ export class ConfigLoader implements IConfigLoader {
 }
 
 // Export singleton instance
-

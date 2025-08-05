@@ -1,38 +1,37 @@
-import { describe, it, beforeEach, afterEach } from '../../deps.ts';
-import { stub, type Stub } from '../../deps.ts';
-import { assertEquals, assertThrows } from 'jsr:@std/assert@1.0.6';
+import { beforeEach, describe, it } from "../../deps.ts";
+import {
+  assertEquals as _assertEquals,
+  assertThrows as _assertThrows,
+} from "jsr:@std/assert@1.0.6";
 
-import { FileDiscoverer } from '../../src/components/flattener/services/FileDiscoverer.ts';
-import { ServiceError } from '../../src/core/errors/ServiceError.ts';
+import { FileDiscoverer } from "../../src/components/flattener/services/FileDiscoverer.ts";
 
-describe('FileDiscoverer', () => {
+describe("FileDiscoverer", () => {
   let fileDiscoverer: FileDiscoverer;
-  let walkStub: Stub;
 
   beforeEach(() => {
     fileDiscoverer = new FileDiscoverer();
   });
 
-  afterEach(() => {
-    if (walkStub) {
-      walkStub.restore();
-    }
+  it("should filter files based on patterns", async () => {
+    const files = ["file1.ts", "file2.js", "file3.txt"];
+    const filtered = await fileDiscoverer.filterFiles(files, "./test");
+    // Should filter out common patterns like node_modules, .git, etc.
+    _assertEquals(filtered, files);
   });
 
-  it('should discover files in a directory', async () => {
-    // This is a basic test structure
-    // In a real implementation, we would mock the file system
-    const files = await fileDiscoverer.discoverFiles('./test');
-    // Add assertions based on expected behavior
+  it("should throw ServiceError on failure", () => {
+    // This test structure is preserved for future implementation
+    // where we might want to test error conditions
   });
 
-  it('should filter files based on patterns', async () => {
-    const files = ['file1.ts', 'file2.js', 'file3.txt'];
-    const filtered = fileDiscoverer.filterFiles(files, { include: ['*.ts'] });
+  it("should filter files based on patterns", () => {
+    const files = ["file1.ts", "file2.js", "file3.txt"];
+    const _filtered = fileDiscoverer.filterFiles(files, "./test");
     // Add assertions
   });
 
-  it('should throw ServiceError on failure', async () => {
+  it("should throw ServiceError on failure", async () => {
     // Test error handling
   });
 });

@@ -1,11 +1,11 @@
-import { IConfigService } from './IConfigService.ts';
-import { ServiceError } from '../../errors/ServiceError.ts';
-import { existsSync } from 'https://deno.land/std@0.224.0/fs/exists.ts';
-import { join as _join } from 'https://deno.land/std@0.224.0/path/mod.ts';
+import { IConfigService } from "./IConfigService.ts";
+import { ServiceError } from "../../errors/ServiceError.ts";
+import { existsSync } from "https://deno.land/std@0.224.0/fs/exists.ts";
+import { join as _join } from "https://deno.land/std@0.224.0/path/mod.ts";
 
 export class ConfigService implements IConfigService {
   private config: Record<string, unknown> = {};
-  private configPath: string = './config.jsonc';
+  private configPath: string = "./config.jsonc";
 
   async load(): Promise<unknown> {
     try {
@@ -19,7 +19,7 @@ export class ConfigService implements IConfigService {
     } catch (error) {
       throw new ServiceError(
         `Failed to load config from ${this.configPath}`,
-        'CONFIG_LOAD_ERROR',
+        "CONFIG_LOAD_ERROR",
         error as Error | undefined,
       );
     }
@@ -39,8 +39,8 @@ export class ConfigService implements IConfigService {
       await Deno.writeTextFile(this.configPath, text);
     } catch (error) {
       throw new ServiceError(
-        'Failed to save config',
-        'CONFIG_SAVE_ERROR',
+        "Failed to save config",
+        "CONFIG_SAVE_ERROR",
         error as Error | undefined,
       );
     }

@@ -1,16 +1,16 @@
 // Type identifiers for dependency injection
 export const TYPES = {
   // Core Services
-  ICliService: 'ICliService',
-  IConfigService: 'IConfigService',
-  ILogger: 'ILogger',
-  
+  ICliService: "ICliService",
+  IConfigService: "IConfigService",
+  ILogger: "ILogger",
+
   // Flattener Component Services
-  IFileDiscoverer: 'IFileDiscoverer',
-  
+  IFileDiscoverer: "IFileDiscoverer",
+
   // Installer Component Services
-  IInstallerService: 'IInstallerService',
-  
+  IInstallerService: "IInstallerService",
+
   // Commands
-  ICommand: 'ICommand',
+  ICommand: "ICommand",
 };

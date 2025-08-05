@@ -3,11 +3,7 @@
 
 import { join, parseYaml } from "deps";
 
-import type {
-  IInstallerValidator,
-  InstallationState,
-  FileIntegrityResult,
-} from "deps";
+import type { FileIntegrityResult, IInstallerValidator, InstallationState } from "deps";
 
 export class InstallerValidator implements IInstallerValidator {
   /**
@@ -19,12 +15,12 @@ export class InstallerValidator implements IInstallerValidator {
       // Check for .bmad-core directory
       const coreDir = join(installDir, ".bmad-core");
       const coreManifestPath = join(coreDir, "install-manifest.yaml");
-      
+
       // Try to read the manifest file
       try {
         const manifestContent = await Deno.readTextFile(coreManifestPath);
         const manifest = parseYaml(manifestContent) as Record<string, unknown>;
-        
+
         // Check if it's a v5 installation
         if (manifest.type === "v5" || manifest.version) {
           return {
@@ -33,7 +29,7 @@ export class InstallerValidator implements IInstallerValidator {
             expansionPacks: await this.detectExpansionPacks(installDir),
           };
         }
-        
+
         return {
           type: "unknown",
           manifest,
@@ -51,7 +47,7 @@ export class InstallerValidator implements IInstallerValidator {
         } catch (_e2) {
           // .bmad-core directory doesn't exist
         }
-        
+
         return {
           type: "fresh",
         };
@@ -61,7 +57,7 @@ export class InstallerValidator implements IInstallerValidator {
         "Error detecting installation state:",
         error instanceof Error ? error.message : String(error),
       );
-      
+
       return {
         type: "unknown",
       };
@@ -81,15 +77,15 @@ export class InstallerValidator implements IInstallerValidator {
       missing: [],
       modified: [],
     };
-    
+
     if (!manifest || !manifest.files || !Array.isArray(manifest.files)) {
       return result;
     }
-    
+
     // Check each file in the manifest
     for (const filePath of manifest.files) {
       const fullPath = join(installDir, filePath);
-      
+
       try {
         // Check if file exists
         const fileInfo = await Deno.stat(fullPath);
@@ -97,16 +93,15 @@ export class InstallerValidator implements IInstallerValidator {
           result.missing.push(filePath);
           continue;
         }
-        
+
         // TODO: Check file integrity (hash comparison)
         // For now, we'll just check existence
-        
       } catch (_e) {
         // File doesn't exist
         result.missing.push(filePath);
       }
     }
-    
+
     return result;
   }
 
@@ -118,17 +113,17 @@ export class InstallerValidator implements IInstallerValidator {
     installDir: string,
   ): Promise<Record<string, unknown>> {
     const expansionPacks: Record<string, unknown> = {};
-    
+
     try {
       const expansionDir = join(installDir, ".bmad-expansions");
       const expansionDirInfo = await Deno.stat(expansionDir);
-      
+
       if (expansionDirInfo.isDirectory) {
         for await (const entry of Deno.readDir(expansionDir)) {
           if (entry.isDirectory) {
             const packId = entry.name;
             const manifestPath = join(expansionDir, packId, "install-manifest.yaml");
-            
+
             try {
               const manifestContent = await Deno.readTextFile(manifestPath);
               const manifest = parseYaml(manifestContent) as Record<string, unknown>;
@@ -145,7 +140,7 @@ export class InstallerValidator implements IInstallerValidator {
     } catch (_e) {
       // Expansion directory doesn't exist
     }
-    
+
     return expansionPacks;
   }
 }

@@ -1,12 +1,4 @@
-import {
-  afterEach,
-  assertEquals,
-  beforeEach,
-  describe,
-  InstallerValidator,
-  it,
-  stub,
-} from "deps";
+import { afterEach, assertEquals, beforeEach, describe, InstallerValidator, it, stub } from "deps";
 
 describe("InstallerValidator", () => {
   let installerValidator: InstallerValidator;

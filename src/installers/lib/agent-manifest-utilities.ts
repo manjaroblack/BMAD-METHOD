@@ -1,16 +1,6 @@
-import {
-  green,
-  join,
-  ProjectPaths,
-  red,
-  stringifyYaml,
-  yellow,
-} from "deps";
+import { green, join, ProjectPaths, red, stringifyYaml, yellow } from "deps";
 
-import type {
-  IFileManager,
-  ISpinner,
-} from "deps";
+import type { IFileManager, ISpinner } from "deps";
 
 /**
  * Interface for agent/manifest utilities
@@ -55,7 +45,7 @@ export class AgentManifestUtilities implements IAgentManifestUtilities {
    */
   generateAgentFileContent(agentConfig: Record<string, unknown>): string {
     // Note: This would generate markdown content from agent config
-    console.log(`Generating agent content for ${agentConfig.name || 'unnamed agent'}`);
+    console.log(`Generating agent content for ${agentConfig.name || "unnamed agent"}`);
     return "# Generated Agent\n\nThis is a generated agent file.";
   }
 
@@ -129,9 +119,7 @@ export class AgentManifestUtilities implements IAgentManifestUtilities {
       // This would call flattenerModule.default.parse(["--input", inputDir, "--output", outputFile]);
       console.log(`Executing flattener with input: ${inputDir}, output: ${outputFile}`);
     } catch (error: unknown) {
-      const errorMessage = error instanceof Error
-        ? error.message
-        : String(error);
+      const errorMessage = error instanceof Error ? error.message : String(error);
       console.error(
         red(
           `❌ Failed to flatten codebase: ${errorMessage}`,

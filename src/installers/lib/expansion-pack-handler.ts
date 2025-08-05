@@ -1,16 +1,6 @@
-import {
-  cyan,
-  join,
-  yellow,
-} from "deps";
+import { cyan, join, yellow } from "deps";
 
-import type {
-  IConfigLoader,
-  IFileManager,
-  IResourceLocator,
-  ISpinner,
-  ExpansionPack,
-} from "deps";
+import type { ExpansionPack, IConfigLoader, IFileManager, IResourceLocator, ISpinner } from "deps";
 
 /**
  * Interface for expansion pack handling

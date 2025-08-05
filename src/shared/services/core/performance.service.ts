@@ -3,10 +3,7 @@
  * Provides timing, metrics, and performance monitoring capabilities
  */
 
-import type {
-  PerformanceConfig,
-  ILogger,
-} from 'deps';
+import type { ILogger, PerformanceConfig } from "deps";
 
 export interface IPerformanceMonitor {
   start(operationName: string): string;
@@ -43,10 +40,10 @@ export class PerformanceMonitor implements IPerformanceMonitor {
   constructor(config: PerformanceConfig = {}, logger?: ILogger) {
     this.config = {
       enableMonitoring: true,
-      logLevel: 'info',
+      logLevel: "info",
       maxConcurrentOperations: 100,
       timeoutMs: 30000,
-      ...config
+      ...config,
     };
     this.logger = logger;
   }
@@ -60,21 +57,21 @@ export class PerformanceMonitor implements IPerformanceMonitor {
 
   start(operationName: string): string {
     if (!this.config.enableMonitoring) {
-      return '';
+      return "";
     }
 
     const id = this.generateId();
     const metric: PerformanceMetric = {
       id,
       operationName,
-      startTime: performance.now()
+      startTime: performance.now(),
     };
 
     this.metrics.set(id, metric);
 
     if (this.logger) {
-      this.logger.debug(`Performance monitoring started for: ${operationName}`, { 
-        operationId: id 
+      this.logger.debug(`Performance monitoring started for: ${operationName}`, {
+        operationId: id,
       });
     }
 
@@ -99,10 +96,10 @@ export class PerformanceMonitor implements IPerformanceMonitor {
     metric.duration = duration;
 
     if (this.logger) {
-      const level = duration > 5000 ? 'warn' : 'debug';
+      const level = duration > 5000 ? "warn" : "debug";
       this.logger[level](`Performance monitoring completed for: ${metric.operationName}`, {
         operationId,
-        duration: `${duration.toFixed(2)}ms`
+        duration: `${duration.toFixed(2)}ms`,
       });
     }
 
@@ -139,7 +136,7 @@ export class PerformanceMonitor implements IPerformanceMonitor {
       name,
       duration,
       startTime: startTime || 0,
-      endTime: endTime || 0
+      endTime: endTime || 0,
     };
   }
 

@@ -1,17 +1,15 @@
 import {
   afterEach,
-  beforeEach,
-  describe,
-  it,
   assertEquals,
   assertRejects as _assertRejects,
-  stub,
+  beforeEach,
+  describe,
   FileManager,
+  it,
+  stub,
 } from "deps";
 
-import type {
-  Stub,
-} from "deps";
+import type { Stub } from "deps";
 
 describe("FileManager", () => {
   let fileManager: FileManager;

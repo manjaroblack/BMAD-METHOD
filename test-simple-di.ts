@@ -9,11 +9,11 @@ class TestService {
 
 class MainApp {
   private testService: TestService;
-  
+
   constructor() {
     this.testService = new TestService();
   }
-  
+
   run(): void {
     console.log(this.testService.getMessage());
   }

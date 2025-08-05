@@ -2,20 +2,20 @@ import {
   blue,
   bold,
   Command,
+  ConfigLoader,
   ExpansionPack as _ExpansionPack,
+  FileManager,
   flattener as _flattener,
   green,
+  IdeSetup,
   InstallConfig,
   InstallerOrchestrator,
-  logger,
-  FileManager,
-  IdeSetup,
-  ConfigLoader,
-  ResourceLocator,
   InstallerValidator,
+  logger,
   PromptHandler,
   promptInstallation,
   red,
+  ResourceLocator,
   yellow,
 } from "deps";
 
@@ -94,7 +94,9 @@ export function setupCommands(cli: Command): void {
       try {
         console.log(bold(blue("🔄 Updating BMad Method installation...")));
         // TODO: Implement update functionality in orchestrator
-        console.log(bold(yellow("⚠️ Update functionality not yet implemented in modular orchestrator")));
+        console.log(
+          bold(yellow("⚠️ Update functionality not yet implemented in modular orchestrator")),
+        );
         console.log(bold(green("✅ Update completed successfully!")));
       } catch (error) {
         console.error(
@@ -114,7 +116,9 @@ export function setupCommands(cli: Command): void {
         const _fileManager = new FileManager();
         const _resourceLocator = new ResourceLocator();
         // TODO: Implement expansion pack listing functionality
-        console.log(bold(yellow("⚠️ Expansion pack listing not yet implemented in modular approach")));
+        console.log(
+          bold(yellow("⚠️ Expansion pack listing not yet implemented in modular approach")),
+        );
         console.log(bold(blue("📦 Available Expansion Packs:")));
         // Placeholder data
         console.log(`  ${green("example-pack")} - Example Pack (v1.0.0)`);

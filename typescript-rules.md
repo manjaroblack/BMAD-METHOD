@@ -36,12 +36,12 @@ function processUser(user) {
 
 ```typescript
 // ✅ Good - Explicit file extensions
-import { helper } from 'deps';
-import { config } from 'deps';
+import { helper } from "deps";
+import { config } from "deps";
 
 // ❌ Bad - Implicit extensions
-import { helper } from 'deps';
-import { config } from 'deps';
+import { helper } from "deps";
+import { config } from "deps";
 ```
 
 **Rationale**: Deno requires explicit specifiers, improves performance, reduces ambiguity.
@@ -61,14 +61,8 @@ export type { IFileDiscoverer } from "./src/components/flattener/interfaces/IFil
 export { FlattenerCommand } from "./src/components/flattener/flattener.command.ts";
 
 // main.ts
-import {
-  walk,
-  parse,
-  Command,
-  FileDiscoverer,
-  FlattenerCommand
-} from 'deps';
-import type { IFileDiscoverer } from 'deps';
+import { Command, FileDiscoverer, FlattenerCommand, parse, walk } from "deps";
+import type { IFileDiscoverer } from "deps";
 
 // ❌ Bad - Direct external imports
 import { walk } from "jsr:@std/fs@0.224.0";
@@ -119,14 +113,11 @@ function calculateTotal(items: Item[]) {
 
 ```typescript
 // ✅ Good - Explicit type imports
-import type { 
-  User, 
-  Config 
-} from 'deps';
-import { processUser } from 'deps';
+import type { Config, User } from "deps";
+import { processUser } from "deps";
 
 // ❌ Bad - Mixed imports
-import { User, Config, processUser } from 'deps';
+import { Config, processUser, User } from "deps";
 ```
 
 **Rationale**: Better tree-shaking, clearer separation of types vs runtime code.
@@ -135,20 +126,13 @@ import { User, Config, processUser } from 'deps';
 
 ```typescript
 // ✅ Good - Grouped imports by type
-import {
-  Command,
-  parse,
-  walk,
-} from 'deps';
+import { Command, parse, walk } from "deps";
 
-import type {
-  Config,
-  User,
-} from 'deps';
+import type { Config, User } from "deps";
 
 // ❌ Bad - Horizontal imports (hard to read)
-import { walk, parse, Command } from 'deps';
-import type { User, Config } from 'deps';
+import { Command, parse, walk } from "deps";
+import type { Config, User } from "deps";
 ```
 
 **Rationale**: Improves readability, easier to scan, avoids horizontal scrolling, and groups related imports together.
@@ -233,7 +217,7 @@ export class FileDiscoverer implements IFileDiscoverer {
 
 export class FlattenerService {
   constructor(private readonly fileDiscoverer: IFileDiscoverer) {}
-  
+
   async flatten(directory: string): Promise<void> {
     // Only responsible for flattening logic
     const files = await this.fileDiscoverer.discoverFiles(directory);
@@ -270,7 +254,7 @@ export interface ILogger {
 // Can be used by any service that needs logging
 export class FileService {
   constructor(private readonly logger: ILogger) {}
-  
+
   async processFile(path: string): Promise<void> {
     this.logger.info(`Processing file: ${path}`);
     // Process file
@@ -280,7 +264,7 @@ export class FileService {
 // ❌ Bad - Hard-coded dependency
 export class FileService {
   private readonly logger = new ConsoleLogger(); // Not reusable
-  
+
   async processFile(path: string): Promise<void> {
     this.logger.info(`Processing file: ${path}`);
     // Process file
@@ -301,7 +285,7 @@ export class FlattenerCommand {
     private readonly fileDiscoverer: IFileDiscoverer,
     private readonly logger: ILogger,
   ) {}
-  
+
   async execute(options: { directory: string }): Promise<void> {
     this.logger.info(`Flattening directory: ${options.directory}`);
     const files = await this.fileDiscoverer.discoverFiles(options.directory);
@@ -313,7 +297,7 @@ export class FlattenerCommand {
 Deno.test("FlattenerCommand should log and discover files", () => {
   const mockDiscoverer = { discoverFiles: stub() };
   const mockLogger = { info: stub(), error: stub(), debug: stub() };
-  
+
   const command = new FlattenerCommand(mockDiscoverer, mockLogger);
   // Test execution
 });
@@ -322,7 +306,7 @@ Deno.test("FlattenerCommand should log and discover files", () => {
 export class FlattenerCommand {
   private readonly fileDiscoverer = new FileDiscoverer();
   private readonly logger = new ConsoleLogger();
-  
+
   async execute(options: { directory: string }): Promise<void> {
     // Cannot easily mock dependencies for testing
   }
@@ -352,10 +336,10 @@ export class FileDiscoverer implements IFileDiscoverer {
 // commands/FlattenerCommand.ts
 export class FlattenerCommand {
   constructor(
-    private readonly fileDiscoverer: IFileDiscoverer,  // Depend on interface
-    private readonly logger: ILogger,                  // Not concrete class
+    private readonly fileDiscoverer: IFileDiscoverer, // Depend on interface
+    private readonly logger: ILogger, // Not concrete class
   ) {}
-  
+
   async execute(options: { directory: string }): Promise<void> {
     const files = await this.fileDiscoverer.discoverFiles(options.directory);
     // Process files
@@ -363,21 +347,21 @@ export class FlattenerCommand {
 }
 
 // container.ts - External entity creates and injects services
-import { FileDiscoverer } from 'deps';
-import type { IFileDiscoverer } from 'deps';
+import { FileDiscoverer } from "deps";
+import type { IFileDiscoverer } from "deps";
 
 const container = new Container();
-container.register<IFileDiscoverer>('IFileDiscoverer', () => new FileDiscoverer());
+container.register<IFileDiscoverer>("IFileDiscoverer", () => new FileDiscoverer());
 
-const fileDiscoverer = container.get<IFileDiscoverer>('IFileDiscoverer');
-const logger = container.get<ILogger>('ILogger');
+const fileDiscoverer = container.get<IFileDiscoverer>("IFileDiscoverer");
+const logger = container.get<ILogger>("ILogger");
 const flattenerCommand = new FlattenerCommand(fileDiscoverer, logger);
 
 // ❌ Bad - Tight coupling
 export class FlattenerCommand {
-  private readonly fileDiscoverer = new FileDiscoverer();  // Direct instantiation
-  private readonly logger = new ConsoleLogger();            // Hard to change
-  
+  private readonly fileDiscoverer = new FileDiscoverer(); // Direct instantiation
+  private readonly logger = new ConsoleLogger(); // Hard to change
+
   async execute(options: { directory: string }): Promise<void> {
     // Cannot easily swap implementations
   }
@@ -437,7 +421,7 @@ export interface IFileDiscoverer {
 }
 
 // services/FileDiscoverer.ts
-import type { IFileDiscoverer } from 'deps';
+import type { IFileDiscoverer } from "deps";
 
 export class FileDiscoverer implements IFileDiscoverer {
   async discoverFiles(directory: string): Promise<string[]> {
@@ -446,7 +430,7 @@ export class FileDiscoverer implements IFileDiscoverer {
 }
 
 // commands/FlattenerCommand.ts
-import type { IFileDiscoverer } from 'deps';
+import type { IFileDiscoverer } from "deps";
 
 export class FlattenerCommand {
   constructor(
@@ -460,18 +444,18 @@ export class FlattenerCommand {
 }
 
 // container.ts
-import { FileDiscoverer } from 'deps';
-import type { IFileDiscoverer } from 'deps';
+import { FileDiscoverer } from "deps";
+import type { IFileDiscoverer } from "deps";
 
 const container = new Container();
-container.register<IFileDiscoverer>('IFileDiscoverer', () => new FileDiscoverer());
+container.register<IFileDiscoverer>("IFileDiscoverer", () => new FileDiscoverer());
 
 // main.ts
-const fileDiscoverer = container.get<IFileDiscoverer>('IFileDiscoverer');
+const fileDiscoverer = container.get<IFileDiscoverer>("IFileDiscoverer");
 const flattenerCommand = new FlattenerCommand(fileDiscoverer);
 
 // ❌ Bad - Direct implementation imports
-import { FileDiscoverer } from 'deps';
+import { FileDiscoverer } from "deps";
 
 export class FlattenerCommand {
   private readonly fileDiscoverer = new FileDiscoverer();
@@ -498,7 +482,7 @@ export class ServiceError extends Error {
     public readonly cause?: Error,
   ) {
     super(message);
-    this.name = 'ServiceError';
+    this.name = "ServiceError";
   }
 }
 
@@ -528,8 +512,7 @@ const createUser = (name: string, email: string): User => ({
   createdAt: new Date(),
 });
 
-const processUsers = (users: User[]): ProcessedUser[] =>
-  users.map((user) => processUser(user));
+const processUsers = (users: User[]): ProcessedUser[] => users.map((user) => processUser(user));
 
 // ❌ Bad - Impure functions
 let globalState = {};
@@ -544,7 +527,7 @@ function createUser(name: string, email: string) {
 
 ```typescript
 // ✅ Good - Using Deno's built-in testing
-import { assertEquals } from 'deps';
+import { assertEquals } from "deps";
 
 Deno.test("should create user with correct properties", () => {
   const user = createUser("John", "john@example.com");
@@ -562,7 +545,7 @@ Deno.test("should create user with correct properties", () => {
 
 ```typescript
 // ✅ Good - Using Cliffy with Deno patterns
-import { Command } from 'deps';
+import { Command } from "deps";
 
 await new Command()
   .name("my-cli")
@@ -578,7 +561,7 @@ await new Command()
 
 ```typescript
 // ✅ Good - Using Deno's built-in JSONC support
-import { parse } from 'deps';
+import { parse } from "deps";
 
 const configText = await Deno.readTextFile("./config.jsonc");
 const config = parse(configText) as ConfigSchema;
@@ -588,7 +571,7 @@ const config = parse(configText) as ConfigSchema;
 
 ```typescript
 // ✅ Good - Using Deno's built-in fs utilities
-import { walk } from 'deps';
+import { walk } from "deps";
 
 for await (const entry of walk("./src", { exts: [".ts"] })) {
   console.log(entry.path);

@@ -43,14 +43,14 @@ additional_activation_instructions:
 # AGENT-SPECIFIC COMMANDS
 # ==============================================================================
 commands:
-  create-full-stack-architecture: 'Task `create-doc.md` w/ `fullstack-architecture-tmpl.yaml`'
-  create-backend-architecture: 'Task `create-doc.md` w/ `architecture-tmpl.yaml`'
-  create-front-end-architecture: 'Task `create-doc.md` w/ `front-end-architecture-tmpl.yaml`'
-  create-brownfield-architecture: 'Task `create-doc.md` w/ `brownfield-architecture-tmpl.yaml`'
-  document-project: 'Task `document-project.md`'
-  execute-checklist {checklist}: 'Task `execute-checklist.md` (default is `architect-checklist.md`)'
-  research {topic}: 'Task `create-deep-research-prompt.md`'
-  shard-prd: 'Task `shard-doc.md` for `architecture.md`'
+  create-full-stack-architecture: "Task `create-doc.md` w/ `fullstack-architecture-tmpl.yaml`"
+  create-backend-architecture: "Task `create-doc.md` w/ `architecture-tmpl.yaml`"
+  create-front-end-architecture: "Task `create-doc.md` w/ `front-end-architecture-tmpl.yaml`"
+  create-brownfield-architecture: "Task `create-doc.md` w/ `brownfield-architecture-tmpl.yaml`"
+  document-project: "Task `document-project.md`"
+  execute-checklist {checklist}: "Task `execute-checklist.md` (default is `architect-checklist.md`)"
+  research {topic}: "Task `create-deep-research-prompt.md`"
+  shard-prd: "Task `shard-doc.md` for `architecture.md`"
 
 # ==============================================================================
 # STANDARD COMMANDS TO INCLUDE
