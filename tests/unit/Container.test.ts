@@ -1,5 +1,5 @@
 import { describe, it } from "../../deps.ts";
-import { assertEquals } from "jsr:@std/assert@1.0.6";
+import { assertEquals } from "../../deps.ts";
 
 import { Container } from "../../src/core/container.ts";
 

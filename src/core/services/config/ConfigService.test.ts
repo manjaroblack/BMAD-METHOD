@@ -1,4 +1,4 @@
-import { assertEquals } from "https://deno.land/std@0.224.0/testing/asserts.ts";
+import { assertEquals } from "deps";
 import { ConfigService } from "./ConfigService.ts";
 
 Deno.test("ConfigService - get and set values", () => {

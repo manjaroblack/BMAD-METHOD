@@ -9,14 +9,14 @@ import {
   cyan,
   dirname,
   ExpansionPackHandler,
-  ExpansionPackInfo,
+  type ExpansionPackInfo,
   FileManager,
   getVersion,
   green,
   IdeSetup,
   Input,
-  InstallationState,
-  InstallConfig,
+  type InstallationState,
+  type InstallConfig,
   InstallerOrchestrator,
   InstallerValidator,
   join,
@@ -64,10 +64,12 @@ export class PromptHandler implements IPromptHandler {
         return true;
       },
     });
-    answers.directory = directory;
-
     // Resolve to absolute path
-    const _installDir = resolve(directory);
+    const resolvedDir = resolve(directory);
+    answers.directory = resolvedDir;
+
+    // Use the resolved directory for installation
+    const _installDir = resolvedDir;
     const installerValidator = new InstallerValidator();
     const state: InstallationState = await installerValidator.detectInstallationState(
       answers.directory,

@@ -1,6 +1,10 @@
-import { ICommand } from "../../core/commands/ICommand.ts";
-import { IFileDiscoverer } from "./interfaces/IFileDiscoverer.ts";
+import type { ICommand } from "../../core/commands/ICommand.ts";
+import type { IFileDiscoverer } from "./interfaces/IFileDiscoverer.ts";
+import type { IContentAggregator } from "./interfaces/IContentAggregator.ts";
+import type { IXmlGenerator } from "./interfaces/IXmlGenerator.ts";
 import { ServiceError } from "../../core/errors/ServiceError.ts";
+import { FileDiscoveryError } from "../../core/errors/FileDiscoveryError.ts";
+import { XmlGenerationError } from "../../core/errors/XmlGenerationError.ts";
 
 /**
  * Command implementation for flattening a codebase into a single XML file.
@@ -16,9 +20,13 @@ export class FlattenerCommand implements ICommand {
   /**
    * Creates an instance of FlattenerCommand.
    * @param fileDiscoverer - The file discovery service used to find files in the codebase.
+   * @param contentAggregator - The content aggregation service used to read and process files.
+   * @param xmlGenerator - The XML generation service used to create the output file.
    */
   constructor(
     private readonly fileDiscoverer: IFileDiscoverer,
+    private readonly contentAggregator: IContentAggregator,
+    private readonly xmlGenerator: IXmlGenerator,
   ) {}
 
   /**
@@ -43,14 +51,21 @@ export class FlattenerCommand implements ICommand {
       const filteredFiles = await this.fileDiscoverer.filterFiles(files, options.input);
       console.log(`Filtered to ${filteredFiles.length} files`);
 
-      // In a real implementation, we would:
-      // 1. Read file contents
-      // 2. Aggregate them
-      // 3. Generate XML output
-      // 4. Write to output file
+      // Aggregate file contents
+      const aggregatedContent = await this.contentAggregator.aggregate(filteredFiles, options.input);
+      console.log(`Aggregated content from ${aggregatedContent.length} files`);
+
+      // Generate XML output
+      await this.xmlGenerator.generate(aggregatedContent, options.output);
 
       console.log(`Flattening complete. Output written to ${options.output}`);
     } catch (error) {
+      // Re-throw specific errors directly
+      if (error instanceof FileDiscoveryError || error instanceof XmlGenerationError) {
+        throw error;
+      }
+      
+      // Wrap other errors in a ServiceError
       throw new ServiceError(
         `Failed to flatten codebase: ${(error as Error).message || "Unknown error"}`,
         "FLATTEN_ERROR",

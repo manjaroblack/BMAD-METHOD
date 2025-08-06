@@ -6,7 +6,7 @@ import "./deps.ts";
 import { container } from "./src/core/container.ts";
 import { configureContainer } from "./src/core/di.config.ts";
 import { TYPES } from "./src/core/types.ts";
-import { ICliService } from "./src/core/services/cli/ICliService.ts";
+import type { ICliService } from "./src/core/services/cli/ICliService.ts";
 
 async function main(): Promise<void> {
   try {

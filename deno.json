@@ -1,33 +1,23 @@
 {
   "version": "5.0.0",
   "name": "bmad-method",
-  "exports": "./src/cli/cli.ts",
+  "exports": "./mod.ts",
   "tasks": {
-    "build": "deno run --allow-read --allow-write --allow-env src/cli/cli.ts build",
-    "build:agents": "deno run --allow-read --allow-write --allow-env src/cli/cli.ts build --agents-only",
-    "build:teams": "deno run --allow-read --allow-write --allow-env src/cli/cli.ts build --teams-only",
-    "build:expansions": "deno run --allow-read --allow-write --allow-env src/cli/cli.ts build:expansions",
-    "list:agents": "deno run --allow-read src/cli/cli.ts list:agents",
-    "list:teams": "deno run --allow-read src/cli/cli.ts list:teams",
-    "list:expansions": "deno run --allow-read src/cli/cli.ts list:expansions",
-    "validate": "deno run --allow-read src/cli/cli.ts validate",
-    "upgrade": "deno run --allow-read --allow-write --allow-env src/cli/cli.ts upgrade",
-    "flatten": "deno run --allow-read --allow-write tooling/user-tools/flattener/main.ts",
-    "install:bmad": "deno run --allow-read --allow-write --allow-env --allow-run src/installers/bin/bmad.ts install",
+    // A primary task to run the main CLI application.
+    // All commands like 'install' and 'flatten' will be subcommands of this.
+    "start": "deno run --allow-read --allow-write --allow-env --allow-run mod.ts",
+
+    // Command-specific tasks now use the main entry point.
+    "install": "deno task start install",
+    "flatten": "deno task start flatten",
+    "test": "deno test --allow-read --allow-write --allow-env",
+    "release": "semantic-release",
     "version:patch": "deno run --allow-read --allow-write --allow-env --allow-run src/version-management/version-bump.ts patch",
     "version:minor": "deno run --allow-read --allow-write --allow-env --allow-run src/version-management/version-bump.ts minor",
     "version:major": "deno run --allow-read --allow-write --allow-env --allow-run src/version-management/version-bump.ts major",
     "version:expansion": "deno run --allow-read --allow-write --allow-env --allow-run src/version-management/bump-expansion-version.ts",
     "version:expansion:set": "deno run --allow-read --allow-write --allow-env --allow-run src/version-management/update-expansion-version.ts",
-    "version:all": "deno run --allow-read --allow-write --allow-env --allow-run src/version-management/bump-all-versions.ts",
-    "test": "deno test --allow-read --allow-write --allow-env",
-    "fmt": "deno fmt",
-    "lint": "deno lint",
-    "check": "deno check **/*.ts",
-    "release": "semantic-release",
-    "format": "deno fmt",
-    "format:check": "deno fmt --check",
-    "test:migration": "deno run --allow-read --allow-write --allow-env --allow-run src/scripts/test-migrated-files.ts"
+    "version:all": "deno run --allow-read --allow-write --allow-env --allow-run src/version-management/bump-all-versions.ts"
   },
   "imports": {
     "deps": "./deps.ts"
@@ -38,20 +28,5 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true
-  },
-  "fmt": {
-    "useTabs": false,
-    "lineWidth": 100,
-    "indentWidth": 2,
-    "semiColons": true,
-    "singleQuote": false,
-    "proseWrap": "preserve"
-  },
-  "lint": {
-    "rules": {
-      "tags": [
-        "recommended"
-      ]
-    }
   }
 }

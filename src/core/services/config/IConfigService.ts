@@ -5,9 +5,10 @@
 export interface IConfigService {
   /**
    * Load configuration from the configuration file.
+   * @param sources - Optional array of configuration sources (file paths, environment variables, etc.)
    * @returns A promise that resolves when the configuration is loaded.
    */
-  load(): Promise<unknown>;
+  load(sources?: string[]): Promise<unknown>;
 
   /**
    * Get a configuration value by key.

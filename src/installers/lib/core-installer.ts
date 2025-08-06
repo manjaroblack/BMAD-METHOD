@@ -34,26 +34,158 @@ export class CoreInstaller implements ICoreInstaller {
    * @param spinner - Spinner for progress indication
    */
   async installCore(installDir: string, spinner: ISpinner): Promise<void> {
+    console.log(`Starting core installation to: ${installDir}`);
     spinner.text = "Installing BMad core...";
 
-    const coreDestDir = join(installDir, ".bmad-core");
-    await this.fileManager.ensureDir(coreDestDir);
+    try {
+      const coreDestDir = join(installDir, ".bmad-core");
+      console.log(`Ensuring core directory: ${coreDestDir}`);
+      await this.fileManager.ensureDir(coreDestDir);
 
-    // Copy only configuration files from core, not TypeScript implementation files
-    const resourceLocator = new ResourceLocator();
-    const corePath = resourceLocator.getBmadCorePath();
-    // Note: copyConfigurationFiles would need to be implemented
-    console.log(`Copying core files from ${corePath} to ${coreDestDir}`);
-    // await this.copyConfigurationFiles(corePath, coreDestDir);
+      // Copy only configuration files from core, not TypeScript implementation files
+      const resourceLocator = new ResourceLocator();
+      const corePath = resourceLocator.getBmadCorePath();
+      console.log(`Copying core files from ${corePath} to ${coreDestDir}`);
+      
+      // Copy configuration files
+      await this.copyConfigurationFiles(corePath, coreDestDir);
 
-    // Generate agents from configs
-    // await this.generateAgentsFromConfigs(coreDestDir, spinner);
+      // Generate agents from configs
+      await this.generateAgentsFromConfigs(coreDestDir, spinner);
 
-    // Create install manifest
-    // await this.createInstallManifest(installDir);
+      // Create install manifest
+      await this.createInstallManifest(installDir);
+      console.log(`Core installation completed to: ${installDir}`);
+    } catch (error) {
+      console.error(`Failed to install core to ${installDir}:`, error);
+      throw error;
+    }
+  }
 
-    // Placeholder await to satisfy lint rule
-    await Promise.resolve();
+  /**
+   * Copy configuration files from source to destination
+   * @param sourceDir - Source directory
+   * @param destDir - Destination directory
+   */
+  private async copyConfigurationFiles(sourceDir: string, destDir: string): Promise<void> {
+    // Copy configuration files from source to destination
+    console.log(`Copying configuration files from ${sourceDir} to ${destDir}`);
+    
+    // Ensure destination directory exists
+    console.log(`Ensuring directory exists: ${destDir}`);
+    await this.fileManager.ensureDir(destDir);
+    console.log(`Directory ensured: ${destDir}`);
+    
+    // Copy all files and directories from source to destination
+    console.log(`Copying all files from ${sourceDir} to ${destDir}`);
+    await this.copyDirectoryRecursive(sourceDir, destDir);
+    console.log(`All files copied from ${sourceDir} to ${destDir}`);
+  }
+
+  /**
+   * Recursively copy directory contents
+   * @param src - Source directory
+   * @param dest - Destination directory
+   */
+  private async copyDirectoryRecursive(src: string, dest: string): Promise<void> {
+    console.log(`Copying directory contents from ${src} to ${dest}`);
+    
+    try {
+      // Read the source directory
+      for await (const entry of this.fileManager.readDir(src)) {
+        // Skip the agent-configs folder
+        if (entry.name === 'agent-configs') {
+          console.log(`Skipping agent-configs folder: ${entry.name}`);
+          continue;
+        }
+        
+        const srcPath = join(src, entry.name);
+        const destPath = join(dest, entry.name);
+        
+        if (entry.isDirectory) {
+          // Create the destination directory
+          await this.fileManager.ensureDir(destPath);
+          // Recursively copy subdirectory
+          await this.copyDirectoryRecursive(srcPath, destPath);
+        } else {
+          // Copy file
+          console.log(`Copying file ${srcPath} to ${destPath}`);
+          try {
+            await this.fileManager.copy(srcPath, destPath);
+            console.log(`Successfully copied ${srcPath} to ${destPath}`);
+          } catch (error) {
+            console.error(`Failed to copy file ${srcPath} to ${destPath}:`, error);
+            throw error;
+          }
+        }
+      }
+    } catch (error) {
+      console.error(`Failed to copy directory contents from ${src} to ${dest}:`, error);
+      throw error;
+    }
+  }
+
+  /**
+   * Generate agents from configuration files
+   * @param configDir - Configuration directory
+   * @param spinner - Spinner for progress indication
+   */
+  private async generateAgentsFromConfigs(configDir: string, spinner: ISpinner): Promise<void> {
+    // Generate agents from configuration files
+    spinner.text = `Generating agents from ${configDir}`;
+    console.log(`Generating agents from configs in: ${configDir}`);
+    
+    // For now, we'll copy the reference agents from the core directory
+    const agentsDir = join(configDir, "agents");
+    console.log(`Ensuring agents directory exists: ${agentsDir}`);
+    await this.fileManager.ensureDir(agentsDir);
+    console.log(`Agents directory ensured: ${agentsDir}`);
+    
+    // Copy reference agents from core directory
+    // Get the project root directory (where the core folder is located)
+    const projectRoot = Deno.cwd();
+    const coreAgentsDir = join(projectRoot, "core", "reference-agents");
+    console.log(`Copying reference agents from ${coreAgentsDir} to ${agentsDir}`);
+    
+    // Check if core agents directory exists
+    if (await this.fileManager.exists(coreAgentsDir)) {
+      console.log(`Core agents directory found, copying contents`);
+      await this.copyDirectoryRecursive(coreAgentsDir, agentsDir);
+    } else {
+      console.log(`Core agents directory not found at ${coreAgentsDir}`);
+      // Create a simple placeholder if no agents are found
+      const placeholderPath = join(agentsDir, "placeholder.md");
+      console.log(`Writing placeholder agent file to: ${placeholderPath}`);
+      await this.fileManager.writeTextFile(
+        placeholderPath, 
+        "# Placeholder Agent\n\nThis is a placeholder agent file."
+      );
+      console.log(`Placeholder agent file written to: ${placeholderPath}`);
+    }
+  }
+
+  /**
+   * Create installation manifest
+   * @param installDir - Installation directory
+   */
+  private async createInstallManifest(installDir: string): Promise<void> {
+    // Create installation manifest
+    console.log(`Creating install manifest in ${installDir}`);
+    
+    // Create a simple manifest file
+    const manifest = {
+      version: "1.0.0",
+      installedAt: new Date().toISOString(),
+      components: ["core"]
+    };
+    
+    const manifestPath = join(installDir, "bmad-manifest.json");
+    console.log(`Writing manifest file to: ${manifestPath}`);
+    await this.fileManager.writeTextFile(
+      manifestPath, 
+      JSON.stringify(manifest, null, 2)
+    );
+    console.log(`Manifest file written to: ${manifestPath}`);
   }
 
   /**

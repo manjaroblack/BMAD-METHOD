@@ -1,5 +1,8 @@
+import type { InstallConfig, IPromptHandler } from "deps";
+
 export interface IInstallerService {
-  install(options: { directory: string }): Promise<void>;
-  update(options: { directory: string }): Promise<void>;
-  repair(options: { directory: string }): Promise<void>;
+  install(config: InstallConfig): Promise<void>;
+  update(config: InstallConfig): Promise<void>;
+  repair(config: InstallConfig): Promise<void>;
+  promptHandler: IPromptHandler;
 }

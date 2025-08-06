@@ -2,10 +2,10 @@
 // Implements IResourceLocator interface
 
 import {
-  expandGlob as _expandGlob,
-  extractYamlFromAgent as _extractYamlFromAgent,
+  type expandGlob as _expandGlob,
+  type extractYamlFromAgent as _extractYamlFromAgent,
   join,
-  parseYaml as _parseYaml,
+  type parseYaml as _parseYaml,
   ProjectPaths,
 } from "deps";
 

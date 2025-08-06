@@ -81,7 +81,7 @@ class ExpansionVersionUpdater {
 }
 
 // Main execution
-function main() {
+function main(): void {
   const args = Deno.args;
 
   if (args.length < 2) {

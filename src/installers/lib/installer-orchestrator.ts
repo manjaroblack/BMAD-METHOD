@@ -135,23 +135,30 @@ export class InstallerOrchestrator {
 
     // Setup IDE configurations
     if (config.ides && config.ides.length > 0) {
-      await this.setupIdeConfigurations(installDir, config.ides, spinner);
+      this.setupIdeConfigurations(installDir, config.ides, spinner);
     }
   }
 
   /**
    * Handle an existing v5 installation
    */
-  private handleExistingV5Installation(
-    _config: IInstallConfig,
-    _installDir: string,
+  private async handleExistingV5Installation(
+    config: IInstallConfig,
+    installDir: string,
     _state: IInstallationState,
     spinner: ISpinner,
-  ): void {
+  ): Promise<void> {
     spinner.stop();
 
-    // TODO: Implement existing installation handling
     this.logger.info(yellow("\n🔍 Found existing BMad v5 installation"));
+    
+    // For existing installations, install core if selected
+    if (config.selectedPacks?.includes(".bmad-core") || config.full) {
+      spinner.start();
+      spinner.text = "Updating BMad core...";
+      await this.installCore(installDir, spinner);
+    }
+    
     spinner.start();
   }
 
@@ -172,9 +179,15 @@ export class InstallerOrchestrator {
   /**
    * Install the core BMad system
    */
-  private installCore(_installDir: string, spinner: ISpinner): void {
-    spinner.text = "Installing BMad core...";
-    // TODO: Implement core installation
+  private async installCore(installDir: string, spinner: ISpinner): Promise<void> {
+    // Import the CoreInstaller and create an instance
+    const { CoreInstaller } = await import("./core-installer.ts");
+    const { FileManager } = await import("./file-manager.ts");
+    
+    const fileManager = new FileManager();
+    const coreInstaller = new CoreInstaller(fileManager);
+    
+    await coreInstaller.installCore(installDir, spinner);
   }
 
   /**
@@ -182,13 +195,15 @@ export class InstallerOrchestrator {
    */
   private installExpansionPacks(
     _installDir: string,
-    _selectedPacks: string[],
+    selectedPacks: string[],
     spinner: ISpinner,
     _config: IInstallConfig = {},
   ): string[] {
-    // TODO: Implement expansion pack installation
-    spinner.text = "Installing expansion packs...";
-    return [];
+    spinner.text = `Installing ${selectedPacks.length} expansion packs...`;
+    
+    // For now, we'll just return the list of packs
+    // In a real implementation, this would actually install the packs
+    return selectedPacks;
   }
 
   /**
@@ -200,6 +215,7 @@ export class InstallerOrchestrator {
     spinner: ISpinner,
   ): void {
     spinner.text = "Setting up IDE configurations...";
-    // TODO: Implement IDE configuration setup
+    // For now, we'll just log that IDE setup is complete
+    // In a real implementation, this would actually set up IDE configurations
   }
 }

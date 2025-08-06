@@ -18,7 +18,11 @@ export type { ICommand } from "./src/core/commands/ICommand.ts";
 
 // Flattener Component
 export type { IFileDiscoverer } from "./src/components/flattener/interfaces/IFileDiscoverer.ts";
+export type { IContentAggregator } from "./src/components/flattener/interfaces/IContentAggregator.ts";
+export type { IXmlGenerator } from "./src/components/flattener/interfaces/IXmlGenerator.ts";
 export { FileDiscoverer } from "./src/components/flattener/services/FileDiscoverer.ts";
+export { ContentAggregator } from "./src/components/flattener/services/ContentAggregator.ts";
+export { XmlGenerator } from "./src/components/flattener/services/XmlGenerator.ts";
 export { FlattenerCommand } from "./src/components/flattener/flattener.command.ts";
 
 // Deno Standard Library - Latest versions from JSR
@@ -27,27 +31,58 @@ export { parseArgs } from "jsr:@std/cli@1.0.21";
 export { Spinner } from "jsr:@std/cli@1.0.21/unstable-spinner";
 
 // Testing utilities
-export { afterEach, beforeEach, describe, it } from "jsr:@std/testing@1.0.13/bdd";
+export {
+  afterEach,
+  beforeEach,
+  describe,
+  it,
+} from "jsr:@std/testing@1.0.13/bdd";
 export { type Stub, stub } from "jsr:@std/testing@1.0.13/mock";
 
 // File system utilities
 export { copy, ensureDir, expandGlob, walk } from "jsr:@std/fs@1.0.19";
 
 // Path utilities
-export { basename, dirname, extname, join, relative, resolve } from "jsr:@std/path@1.1.1";
+export {
+  basename,
+  dirname,
+  extname,
+  join,
+  relative,
+  resolve,
+} from "jsr:@std/path@1.1.1";
 export { SEPARATOR } from "jsr:@std/path@1.1.1/posix";
 
 // Formatting utilities
-export { blue, bold, cyan, gray, green, magenta, red, yellow } from "jsr:@std/fmt@1.0.8/colors";
+export {
+  blue,
+  bold,
+  cyan,
+  gray,
+  green,
+  magenta,
+  red,
+  yellow,
+} from "jsr:@std/fmt@1.0.8/colors";
 export { format as formatBytes } from "jsr:@std/fmt@1.0.8/bytes";
 
 // YAML parsing and serialization
-export { parse as parseYaml, stringify as stringifyYaml } from "jsr:@std/yaml@1.0.9";
+export {
+  parse as parseYaml,
+  stringify as stringifyYaml,
+} from "jsr:@std/yaml@1.0.9";
 
 // Additional standard library modules that might be used
-export { assert, assertEquals, assertExists, assertRejects } from "jsr:@std/assert@1.0.13";
+export {
+  assert,
+  assertEquals,
+  assertExists,
+  assertRejects,
+  assertThrows,
+} from "jsr:@std/assert@1.0.13";
 export { delay } from "jsr:@std/async@1.0.13";
 export { deepMerge } from "jsr:@std/collections@1.1.2";
+export { existsSync } from "jsr:@std/fs@1.0.19";
 
 // Local tooling modules - re-exported for centralized dependency management
 // Error handling and logging
@@ -139,7 +174,10 @@ export {
 } from "./src/shared/types/expansion-pack.types.ts";
 
 // Shared Services
-export { type ILogger, logger } from "./src/shared/services/core/logger.service.ts";
+export {
+  type ILogger,
+  logger,
+} from "./src/shared/services/core/logger.service.ts";
 
 export {
   createSpinner,
@@ -174,19 +212,23 @@ export {
   type IFileIntegrityChecker,
 } from "./src/installers/lib/file-integrity-checker.ts";
 
-export {
-  type IVersionComparator,
-  VersionComparator,
-} from "./src/installers/lib/version-comparator.ts";
+export { FileManager } from "./src/installers/lib/file-manager.ts";
+export { IdeSetup } from "./src/installers/lib/ide-setup.ts";
 
 export {
   ExpansionPackHandler,
   type IExpansionPackHandler,
 } from "./src/installers/lib/expansion-pack-handler.ts";
 
-export { IdeSetupHandler, type IIdeSetupHandler } from "./src/installers/lib/ide-setup-handler.ts";
+export {
+  IdeSetupHandler,
+  type IIdeSetupHandler,
+} from "./src/installers/lib/ide-setup-handler.ts";
 
-export { CoreInstaller, type ICoreInstaller } from "./src/installers/lib/core-installer.ts";
+export {
+  CoreInstaller,
+  type ICoreInstaller,
+} from "./src/installers/lib/core-installer.ts";
 
 export {
   FileCopyUtilities,
@@ -199,13 +241,23 @@ export {
 } from "./src/installers/lib/agent-manifest-utilities.ts";
 
 // Flattener tool
-export { default as flattener } from "./tooling/user-tools/flattener/main.ts";
+// export { default as flattener } from "./tooling/user-tools/flattener/main.ts"; // Removed as file doesn't exist
 
 // Installer modules
 export { promptInstallation } from "./src/installers/lib/prompt-handler.ts";
+export { container } from "./src/core/container.ts";
+export { createConfigService } from "./src/core/services/config/ConfigService.ts";
+export { createFileDiscoverer } from "./src/components/flattener/services/FileDiscoverer.ts";
+export { createInstallerService } from "./src/components/installer/services/InstallerService.ts";
+export { createCliService } from "./src/core/services/cli/CliService.ts";
+export { createContentAggregator } from "./src/components/flattener/services/ContentAggregator.ts";
+export { createXmlGenerator } from "./src/components/flattener/services/XmlGenerator.ts";
+export { InstallerCommand } from "./src/components/installer/installer.command.ts";
 export { PromptHandler } from "./src/installers/lib/prompt-handler.ts";
-export { FileManager } from "./src/installers/lib/file-manager.ts";
-export { IdeSetup } from "./src/installers/lib/ide-setup.ts";
 export { default as BaseIdeSetup } from "./src/installers/lib/ide-base-setup.ts";
 export { setupCommands } from "./src/installers/lib/cli-commands.ts";
-export { displayLogo, getVersion, initializeInstaller } from "./src/installers/lib/cli-utils.ts";
+export {
+  displayLogo,
+  getVersion,
+  initializeInstaller,
+} from "./src/installers/lib/cli-utils.ts";

@@ -1,5 +1,5 @@
-import { IFileDiscoverer } from "../interfaces/IFileDiscoverer.ts";
-import { ServiceError } from "../../../core/errors/ServiceError.ts";
+import type { IFileDiscoverer } from "../interfaces/IFileDiscoverer.ts";
+import { FileDiscoveryError } from "../../../core/errors/FileDiscoveryError.ts";
 import { walk } from "../../../../deps.ts";
 
 export class FileDiscoverer implements IFileDiscoverer {
@@ -11,7 +11,7 @@ export class FileDiscoverer implements IFileDiscoverer {
       }
       return files;
     } catch (error) {
-      throw new ServiceError(
+      throw new FileDiscoveryError(
         `Failed to discover files in ${rootDir}`,
         "FILE_DISCOVERY_ERROR",
         error as Error | undefined,

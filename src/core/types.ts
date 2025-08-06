@@ -7,6 +7,8 @@ export const TYPES = {
 
   // Flattener Component Services
   IFileDiscoverer: "IFileDiscoverer",
+  IContentAggregator: "IContentAggregator",
+  IXmlGenerator: "IXmlGenerator",
 
   // Installer Component Services
   IInstallerService: "IInstallerService",

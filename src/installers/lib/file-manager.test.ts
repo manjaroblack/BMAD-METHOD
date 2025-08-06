@@ -1,7 +1,7 @@
 import {
   afterEach,
   assertEquals,
-  assertRejects as _assertRejects,
+  type assertRejects as _assertRejects,
   beforeEach,
   describe,
   FileManager,
