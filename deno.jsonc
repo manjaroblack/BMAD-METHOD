@@ -1,0 +1,194 @@
+{
+  // Project-level Deno configuration aligned with docs/typescript-rules.md (2025)
+  "$schema": "https://deno.land/x/deno/cli/schemas/config-file.v1.json",
+
+  // Strict, modern TypeScript settings
+  "compilerOptions": {
+    "strict": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "exactOptionalPropertyTypes": true,
+    "useUnknownInCatchVariables": true,
+    "noImplicitOverride": true,
+    // JS type-checking (keep enabled unless the repo is TS-only)
+    "checkJs": true,
+    // JSX (adjust/import source per framework used)
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact"
+  },
+
+  // Prefer JSR and centralized deps.ts
+  "imports": {
+    "deps": "./deps.ts"
+  },
+
+  // Node compatibility stance: Web APIs first, no local node_modules
+  "nodeModulesDir": "none",
+  "npmRegistry": "https://registry.npmjs.org/",
+
+  // Formatting: opinionated, consistent
+  "fmt": {
+    "useTabs": false,
+    "lineWidth": 100,
+    "indentWidth": 2,
+    "semiColons": true,
+    "singleQuote": true,
+    "proseWrap": "always",
+    "include": [
+      "src/",
+      "tests/",
+      "scripts/",
+      "*.ts",
+      "*.tsx",
+      "*.js",
+      "*.jsx",
+      "*.json",
+      "*.md"
+    ],
+    "exclude": [
+      "dist/",
+      "coverage/",
+      "vendor/",
+      "node_modules/",
+      ".git/",
+      "*.min.js"
+    ]
+  },
+
+  // Lint: strict but practical; rely on recommended rules
+  "lint": {
+    "include": [
+      "src/",
+      "tests/",
+      "scripts/",
+      "*.ts",
+      "*.tsx",
+      "*.js",
+      "*.jsx"
+    ],
+    "exclude": [
+      "dist/",
+      "coverage/",
+      "vendor/",
+      "node_modules/",
+      ".git/",
+      "*.min.js"
+    ],
+    "rules": {
+      "tags": ["recommended", "react", "jsx", "fresh", "jsr"],
+      "include": [
+        "ban-untagged-todo",
+        "camelcase",
+        "default-param-last",
+        "eqeqeq",
+        "explicit-function-return-type",
+        "explicit-module-boundary-types",
+        "guard-for-in",
+        "no-await-in-loop",
+        "no-boolean-literal-for-arguments",
+        "no-const-assign",
+        "no-eval",
+        "no-implicit-declare-namespace-export",
+        "no-non-null-asserted-optional-chain",
+        "no-non-null-assertion",
+        "no-self-compare",
+        "no-sparse-arrays",
+        "no-sync-fn-in-async-fn",
+        "no-throw-literal",
+        "no-undef",
+        "no-useless-rename",
+        "triple-slash-reference"
+      ],
+      "exclude": [
+        "no-console",
+        "no-top-level-await",
+        "prefer-ascii",
+        "prefer-primordials",
+        "no-external-import",
+        "no-inferrable-types",
+        "single-var-declarator"
+      ]
+    }
+  },
+
+  // Tests & benches discovery (adjust glob patterns if needed)
+  "test": {
+    "include": [
+      "src/",
+      "tests/",
+      "**/*_test.ts",
+      "**/*_test.tsx",
+      "**/*.test.ts",
+      "**/*.test.tsx"
+    ],
+    "exclude": ["dist/", "coverage/", "node_modules/"]
+  },
+  "bench": {
+    "include": ["benches/", "**/*_bench.ts", "**/*.bench.ts"],
+    "exclude": ["dist/", "node_modules/"]
+  },
+
+  // Workspace configuration for monorepos
+  "workspace": [
+    "./packages/*",
+    "./apps/*",
+    "./tools/*"
+  ],
+
+  // Lockfile for reproducibility (freeze in CI)
+  "lock": { "path": "./deno.lock" },
+
+  // Unstable features - cutting edge
+  "unstable": [
+    "kv",
+    "cron",
+    "ffi",
+    "fs",
+    "net",
+    "worker-options",
+    "broadcast-channel",
+    "temporal"
+  ],
+
+  // Top-level excludes for CLI and LSP performance
+  "exclude": [
+    "**/.git/**",
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/build/**",
+    "**/coverage/**",
+    "**/*.min.js",
+    "**/*.bundle.js",
+    "vendor/"
+  ],
+
+  // Project tasks (framework-agnostic)
+  "tasks": {
+    "fmt": "deno fmt",
+    "fmt:check": "deno fmt --check",
+    "dev": "deno run --watch --allow-all main.ts",
+    "start": "deno run --allow-all main.ts",
+    "build": "deno compile --allow-all --output=dist/app main.ts",
+    "lint": "deno lint",
+    "lint:fix": "deno lint --fix",
+    "test": "deno test --fail-fast --coverage=coverage",
+    "test:watch": "deno test --watch --fail-fast --coverage=coverage",
+    "coverage": "deno coverage coverage --lcov > coverage.lcov",
+    "bench": "deno bench --fail-fast",
+    "check": "deno check **/*.ts **/*.tsx",
+    "types": "deno types > types.d.ts",
+    "info": "deno info",
+    "cache": "deno cache --reload deps.ts",
+    "upgrade": "deno task cache && deno upgrade",
+    "clean": "rm -rf .deno/ coverage/ dist/",
+    "deps:update": "deno run --allow-read --allow-write https://deno.land/x/udd/main.ts deps.ts",
+    "security": "deno run --allow-read https://deno.land/x/audit/mod.ts",
+    "lock:freeze": "deno lock --frozen",
+    "docs:shard": "deno run --allow-read --allow-write .bmad-core/utils/shard_markdown.ts",
+    "docs:shard:prd": "deno task docs:shard docs/developer/BMad-PRD.md docs/developer/prd"
+  }
+}

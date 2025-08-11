@@ -1,47 +1,60 @@
-# Dependencies
-node_modules/
-pnpm-lock.yaml
-bun.lock
-deno.lock
-pnpm-workspace.yaml
-package-lock.json
+# OS / system
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+Icon?
+._*
+Trashes
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Environment files (do not commit secrets)
+.env
+.env.*
+.env.local
+.envrc
+.direnv/
+*.env
 
 # Logs
 logs/
 *.log
+*.log.*
 npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 
-# Build output
-build/*.txt
-web-bundles/
+# Editor / IDE
+.idea/
+.vscode/*.code-workspace
+.vscode/.history/
+.vscode/ipch/
+.vscode/*.log
 
-# Environment variables
-.env
+# Deno
+# Note: keep deno.lock committed
+.deno/
+deno_dir/
+coverage/
 
-# System files
-.DS_Store
-Thumbs.db
+# Caches / temp
+.tmp/
+tmp/
+temp/
+.cache/
+.nyc_output/
 
-# Development tools and configs
-.prettierignore
-.prettierrc
-.husky/
+# Legacy Node project (scoped to legacy/)
+legacy/
 
-# IDE and editor configs
-.windsurf/
-.trae/
-.bmad*/.cursor/
+# Misc editor swap/backup files
+*.swp
+*.swo
+*.orig
 
-# AI assistant files
-CLAUDE.md
-.ai/*
-.claude
-.gemini
-
-# Project-specific
-.bmad-core
-.bmad-creator-tools
-test-project-install/*
-sample-project/*
-flattened-codebase.xml
-
+# Important: we intentionally DO NOT ignore vendor/
+# (See repo TS/Deno rules on vendoring & reproducibility)

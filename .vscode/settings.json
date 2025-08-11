@@ -1,44 +1,21 @@
 {
-  "cSpell.words": [
-    "Agentic",
-    "atlasing",
-    "Biostatistician",
-    "Cordova",
-    "customresourcedefinitions",
-    "dashboarded",
-    "Decisioning",
-    "eksctl",
-    "elicitations",
-    "filecomplete",
-    "fintech",
-    "fluxcd",
-    "gamedev",
-    "gitops",
-    "implementability",
-    "inclusivity",
-    "ingressgateway",
-    "istioctl",
-    "metroidvania",
-    "NACLs",
-    "nodegroup",
-    "platformconfigs",
-    "Playfocus",
-    "playtesting",
-    "pointerdown",
-    "pointerup",
-    "Polyrepo",
-    "replayability",
-    "roguelike",
-    "roomodes",
-    "Runbook",
-    "runbooks",
-    "Shardable",
-    "Softlock",
-    "speedrunner",
-    "tekton",
-    "tilemap",
-    "tileset",
-    "Trae",
-    "VNET"
-  ]
+  "deno.enable": true,
+  "deno.config": "deno.jsonc",
+  "deno.lint": true,
+  // Use Deno for TS/JS validation in this workspace
+  "typescript.validate.enable": false,
+  // Prefer Deno formatter
+  "editor.defaultFormatter": "denoland.vscode-deno",
+  "[typescript]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  }
 }
