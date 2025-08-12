@@ -1,0 +1,119 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deno:
+    name: Validate (fmt, lint, test, lock) - ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    timeout-minutes: 20
+    env:
+      DENO_NO_PROMPT: "1"
+      DENO_DIR: ${{ github.workspace }}/.deno_cache
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Deno v2
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v2.x
+
+      - name: Cache Deno dependencies
+        uses: actions/cache@v4
+        with:
+          path: .deno_cache
+          key: ${{ runner.os }}-deno-${{ hashFiles('deno.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-deno-
+
+      - name: Warm Deno cache
+        run: deno task cache
+
+      - name: Verify lock (frozen)
+        run: deno task lock:freeze
+
+      - name: Format check
+        run: deno task fmt:check
+
+      - name: Lint
+        run: deno task lint
+
+      - name: Test
+        run: deno task test
+
+      - name: Doctests (Markdown examples)
+        run: deno task docs:test
+
+      - name: API Docs Lint (deno doc)
+        run: deno task api:lint
+
+      - name: Coverage (lcov)
+        run: deno task coverage
+
+      - name: Enforce coverage >= 80% (Linux only)
+        if: ${{ runner.os == 'Linux' && always() }}
+        shell: bash
+        run: |
+          awk -F: '/^LF:/ {lf+=$2} /^LH:/ {lh+=$2} END { if (lf==0) {print "No lines found, skipping threshold"; exit 0} pct=(lh/lf)*100; printf "Total line coverage: %.2f%%\n", pct; if (pct < 80) { print "Coverage below threshold (80%)"; exit 1 } }' coverage.lcov
+
+      - name: Build Docs Site (Lume + Pagefind) [Linux optional]
+        if: ${{ runner.os == 'Linux' }}
+        run: deno task docs:build
+
+      - name: Generate API Docs Artifacts (optional) [Linux]
+        if: ${{ runner.os == 'Linux' }}
+        run: |
+          deno task api:html
+          deno task api:json
+
+      - name: Benchmarks
+        run: deno task bench
+
+      - name: Upload to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          files: coverage.lcov
+          flags: deno
+          fail_ci_if_error: true
+
+      - name: Upload coverage artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-artifacts
+          path: |
+            coverage.lcov
+
+      - name: Upload docs site (Lume) artifact [Linux]
+        if: ${{ runner.os == 'Linux' && always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: docs-site
+          path: |
+            docs/_site
+
+      - name: Upload API docs artifacts [Linux]
+        if: ${{ runner.os == 'Linux' && always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-docs
+          path: |
+            docs/api
+            docs/api.json

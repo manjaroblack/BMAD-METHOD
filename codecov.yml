@@ -1,0 +1,15 @@
+# Minimal Codecov config with flag-scoped status checks
+coverage:
+  status:
+    project:
+      deno:
+        flags: [deno]
+        target: 80%         # require overall project coverage >= 80% for the deno flag
+        threshold: 1%      # allow small fluctuations without failing
+        base: auto
+    patch:
+      deno:
+        flags: [deno]
+        target: 80%         # require changed-lines coverage >= 80% for the deno flag
+        threshold: 1%
+        base: auto
