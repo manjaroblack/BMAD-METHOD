@@ -1,0 +1,253 @@
+{
+  "version": 1,
+  "nodes": [
+    {
+      "name": "APP_NAME",
+      "isDefault": false,
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/main.ts",
+        "line": 12,
+        "col": 13,
+        "byteIndex": 320
+      },
+      "declarationKind": "export",
+      "jsDoc": {
+        "doc": "Canonical application name for CLI output.",
+        "tags": [
+          {
+            "kind": "since",
+            "doc": "0.1.0"
+          }
+        ]
+      },
+      "kind": "variable",
+      "variableDef": {
+        "tsType": {
+          "repr": "bmad-method",
+          "kind": "literal",
+          "literal": {
+            "kind": "string",
+            "string": "bmad-method"
+          }
+        },
+        "kind": "const"
+      }
+    },
+    {
+      "name": "VERSION",
+      "isDefault": false,
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/main.ts",
+        "line": 17,
+        "col": 13,
+        "byteIndex": 423
+      },
+      "declarationKind": "export",
+      "jsDoc": {
+        "doc": "Semantic version of the application.",
+        "tags": [
+          {
+            "kind": "since",
+            "doc": "0.1.0"
+          }
+        ]
+      },
+      "kind": "variable",
+      "variableDef": {
+        "tsType": {
+          "repr": "0.1.0",
+          "kind": "literal",
+          "literal": {
+            "kind": "string",
+            "string": "0.1.0"
+          }
+        },
+        "kind": "const"
+      }
+    },
+    {
+      "name": "getUsage",
+      "isDefault": false,
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/main.ts",
+        "line": 24,
+        "col": 0,
+        "byteIndex": 566
+      },
+      "declarationKind": "export",
+      "jsDoc": {
+        "doc": "Build a human-readable usage help string.",
+        "tags": [
+          {
+            "kind": "return",
+            "doc": "Usage text suitable for terminal display."
+          },
+          {
+            "kind": "since",
+            "doc": "0.1.0"
+          }
+        ]
+      },
+      "kind": "function",
+      "functionDef": {
+        "params": [],
+        "returnType": {
+          "repr": "string",
+          "kind": "keyword",
+          "keyword": "string"
+        },
+        "hasBody": true,
+        "isAsync": false,
+        "isGenerator": false,
+        "typeParams": []
+      }
+    },
+    {
+      "name": "main",
+      "isDefault": false,
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/main.ts",
+        "line": 47,
+        "col": 0,
+        "byteIndex": 1180
+      },
+      "declarationKind": "export",
+      "jsDoc": {
+        "doc": "Entry point for the BMAD-METHOD CLI.\n\nParses flags and handles common options like `--help` and `--version`.\nExposes a programmatic API for testing or embedding without spawning a process.\n",
+        "tags": [
+          {
+            "kind": "param",
+            "name": "opts",
+            "doc": "Optional overrides (e.g., custom print function for testing)"
+          },
+          {
+            "kind": "param",
+            "name": "args",
+            "doc": "Optional argv array; defaults to `Deno.args`"
+          },
+          {
+            "kind": "return",
+            "doc": "Numeric exit code (0 for success)"
+          },
+          {
+            "kind": "since",
+            "doc": "0.1.0"
+          }
+        ]
+      },
+      "kind": "function",
+      "functionDef": {
+        "params": [
+          {
+            "kind": "identifier",
+            "name": "opts",
+            "optional": true,
+            "tsType": {
+              "repr": "",
+              "kind": "typeLiteral",
+              "typeLiteral": {
+                "constructors": [],
+                "methods": [],
+                "properties": [
+                  {
+                    "name": "print",
+                    "location": {
+                      "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/main.ts",
+                      "line": 48,
+                      "col": 11,
+                      "byteIndex": 1213
+                    },
+                    "params": [],
+                    "computed": false,
+                    "optional": true,
+                    "tsType": {
+                      "repr": "",
+                      "kind": "fnOrConstructor",
+                      "fnOrConstructor": {
+                        "constructor": false,
+                        "tsType": {
+                          "repr": "void",
+                          "kind": "keyword",
+                          "keyword": "void"
+                        },
+                        "params": [
+                          {
+                            "kind": "identifier",
+                            "name": "msg",
+                            "optional": false,
+                            "tsType": {
+                              "repr": "string",
+                              "kind": "keyword",
+                              "keyword": "string"
+                            }
+                          }
+                        ],
+                        "typeParams": []
+                      }
+                    },
+                    "typeParams": []
+                  }
+                ],
+                "callSignatures": [],
+                "indexSignatures": []
+              }
+            }
+          },
+          {
+            "kind": "identifier",
+            "name": "args",
+            "optional": true,
+            "tsType": {
+              "repr": "",
+              "kind": "array",
+              "array": {
+                "repr": "string",
+                "kind": "keyword",
+                "keyword": "string"
+              }
+            }
+          }
+        ],
+        "returnType": {
+          "repr": "number",
+          "kind": "keyword",
+          "keyword": "number"
+        },
+        "hasBody": true,
+        "isAsync": false,
+        "isGenerator": false,
+        "typeParams": []
+      }
+    },
+    {
+      "name": "log",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/main.ts",
+        "line": 6,
+        "col": 0,
+        "byteIndex": 196
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/deps.ts",
+        "imported": "log"
+      }
+    },
+    {
+      "name": "parseFlags",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/main.ts",
+        "line": 6,
+        "col": 0,
+        "byteIndex": 196
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/deps.ts",
+        "imported": "parseFlags"
+      }
+    }
+  ]
+}

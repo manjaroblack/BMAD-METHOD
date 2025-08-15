@@ -77,6 +77,15 @@ jobs:
         if: ${{ runner.os == 'Linux' }}
         run: deno task docs:build
 
+      - name: Assert Pagefind index exists [Linux]
+        if: ${{ runner.os == 'Linux' }}
+        shell: bash
+        run: |
+          if [ ! -f "docs/_site/pagefind/manifest.json" ]; then
+            echo "Missing Pagefind manifest: docs/_site/pagefind/manifest.json" >&2
+            exit 1
+          fi
+
       - name: Generate API Docs Artifacts (optional) [Linux]
         if: ${{ runner.os == 'Linux' }}
         run: |

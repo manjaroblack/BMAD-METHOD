@@ -8,19 +8,27 @@ bmad-method-tui/
 ├── .github/  
 │   └── workflows/  
 │       └── ci.yaml  
+├── tools/              # Build tooling (non-runtime)
+│   └── docs/           # Documentation build tooling (Lume config, deps, docs-only Deno config)
+│       ├── _config.ts
+│       ├── deps.ts
+│       └── deno.docs.jsonc
 ├── docs/  
-│   ├── developer/        \# Guides for contributing to BMad  
-│   ├── project/          \# Docs for this TUI project (PRD, Architecture)  
-│   └── user/             \# Guides for end-users of the TUI  
-├── legacy/                 \# Archived legacy Node.js codebase  
+│   ├── developer/        # Guides for contributing to BMad  
+│   ├── project/          # Docs for this TUI project (PRD, Architecture)  
+│   └── user/             # Guides for end-users of the TUI  
+├── legacy/                 # Archived legacy Node.js codebase  
 ├── src/  
-│   ├── assets/             \# Source assets for the core BMad framework (tasks, templates, etc.)  
-│   ├── modules/            \# Source assets for third-party modules  
-│   ├── agents/             \# Source definitions for the CORE BMad agents  
-│   ├── services/           \# "Backend": Core logic services for the TUI  
-│   ├── tui/                \# "Frontend": All TUI-related components and views  
-│   ├── core/               \# Shared code, types, and manifest logic for the TUI  
-│   └── main.ts             \# Main application entry point  
+│   ├── assets/             # Source assets for the core BMad framework (tasks, templates, etc.)  
+│   ├── modules/            # Source assets for third-party modules  
+│   ├── agents/             # Source definitions for the CORE BMad agents  
+│   ├── services/           # "Backend": Core logic services for the TUI  
+│   ├── tui/                # "Frontend": All TUI-related components and views  
+│   ├── core/               # Shared code, types, and manifest logic for the TUI  
+│   └── main.ts             # Main application entry point  
+│   ├── tui/                # "Frontend": All TUI-related components and views  
+│   ├── core/               # Shared code, types, and manifest logic for the TUI  
+│   └── main.ts             # Main application entry point  
 ├── tests/  
 ├── .gitignore  
 ├── deno.json  

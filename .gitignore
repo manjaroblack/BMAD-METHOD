@@ -56,5 +56,8 @@ legacy/
 *.swo
 *.orig
 
+# Docs build output
+docs/_site/
+
 # Important: we intentionally DO NOT ignore vendor/
 # (See repo TS/Deno rules on vendoring & reproducibility)

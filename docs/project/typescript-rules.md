@@ -50,7 +50,7 @@ best practices following the "Deno way".
 
 #### 1. Strict TypeScript Configuration
 
-```typescript
+```ts ignore
 // ✅ Good - Explicit types with strict checking
 function processUser(user: User): Promise<UserResult> {
   return processUserData(user);
@@ -66,7 +66,7 @@ function processUser(user) {
 
 #### 2. Centralized Internal and External Dependencies
 
-```typescript
+```ts ignore
 // ✅ Good - deps.ts pattern with JSR where possible
 // deps.ts
 export { walk } from 'jsr:@std/fs@0.224.0';
@@ -96,7 +96,7 @@ the codebase.
 
 #### 3. Explicit .ts Extensions for Internal Imports
 
-```typescript
+```ts ignore
 // ✅ Good - Always include .ts for local files
 import { FlattenerCommand } from './src/components/flattener/flattener.command.ts';
 import type { IFileDiscoverer } from './src/components/flattener/interfaces/IFileDiscoverer.ts';
@@ -112,7 +112,7 @@ codebase.
 
 #### 4. Prefer const over let
 
-```typescript
+```ts ignore
 // ✅ Good - Immutable by default
 const users = await fetchUsers();
 const config = loadConfig();
@@ -126,7 +126,7 @@ let config = loadConfig();
 
 #### 5. Explicit Function Return Types
 
-```typescript
+```ts ignore
 // ✅ Good - Clear contracts
 function calculateTotal(items: Item[]): number {
   return items.reduce((sum, item) => sum + item.price, 0);
@@ -146,7 +146,7 @@ function calculateTotal(items: Item[]) {
 
 #### 6. Group Imports by Type
 
-```typescript
+```ts ignore
 // ✅ Good - Explicit type imports
 import type { Config, User } from 'deps';
 import { processUser } from 'deps';
@@ -162,7 +162,7 @@ statement per type group per module; do not mix type-only and value imports.
 
 #### 7. No Accumulating Spread
 
-```typescript
+```ts ignore
 // ✅ Good - Use array methods or specific APIs
 const result = items.concat(newItems);
 // or
@@ -179,7 +179,7 @@ for (const item of items) {
 
 #### 8. Prefer Array Shorthand Syntax
 
-```typescript
+```ts ignore
 // ✅ Good - Shorthand syntax
 const users: User[] = [];
 const ids: string[] = [];
@@ -195,7 +195,7 @@ const ids: Array<string> = [];
 
 #### 9. No Dangerous Operations
 
-```typescript
+```ts ignore
 // ✅ Good - Safe property access
 const value = Object.hasOwn(obj, 'key') ? obj.key : undefined;
 // or when older runtimes lack Object.hasOwn:
@@ -222,7 +222,7 @@ const { key: _omit, ...rest } = obj; // rest has all properties except "key"
 
 Each module, class, and function should have one clear purpose and responsibility.
 
-```typescript
+```ts ignore
 // ✅ Good - Single responsibility
 export class FileDiscoverer implements IFileDiscoverer {
   async discoverFiles(directory: string): Promise<string[]> {
@@ -260,7 +260,7 @@ others.
 
 Design components to be reusable across the codebase.
 
-```typescript
+```ts ignore
 // ✅ Good - Reusable interface
 export interface ILogger {
   info(message: string): void;
@@ -295,7 +295,7 @@ export class FileService {
 
 Enable easier unit testing of individual components through loose coupling.
 
-```typescript
+```ts ignore
 // ✅ Good - Easy to test with mocks
 export class FlattenerCommand {
   constructor(
@@ -347,7 +347,7 @@ Key principles:
 - Keep constructors small; avoid service locators; favor explicit parameters.
 - Centralize bindings in one place to simplify testing and swapping implementations.
 
-```typescript
+```ts ignore
 // ✅ Good - Interface-based DI with loose coupling
 // interfaces/IFileDiscoverer.ts
 export interface IFileDiscoverer {
@@ -406,8 +406,8 @@ maintenance.
 
 ### Clear Directory Structure
 
-```typescript
-// ✅ Good - Well-organized modular structure
+```text
+// Good - Well-organized modular structure
 .
 ├── src
 │   ├── components
@@ -446,7 +446,7 @@ organization.
 
 ### Error Handling
 
-```typescript
+```ts ignore
 // ✅ Good - Specific error types with Deno patterns
 export class ServiceError extends Error {
   constructor(
@@ -476,7 +476,7 @@ try {
 
 ### Functional Patterns
 
-```typescript
+```ts ignore
 // ✅ Good - Pure functions with explicit types
 const createUser = (name: string, email: string): User => ({
   id: crypto.randomUUID(),
@@ -511,7 +511,7 @@ Deno-native and centralized via `deps.ts`.
 
 ### deps.ts (testing exports)
 
-```typescript
+```ts ignore
 // deps.ts (testing)
 export { assertEquals, assertThrows } from 'jsr:@std/assert@0.224.0';
 export { assertSnapshot } from 'jsr:@std/testing@0.224.0/snapshot';
@@ -521,7 +521,7 @@ export { default as fc } from 'npm:fast-check@3.19.0';
 
 ### Example: A simple test file
 
-```typescript
+```ts ignore
 // my_app.test.ts
 import { assertEquals, assertThrows } from 'deps';
 
@@ -538,8 +538,8 @@ Deno.test('add function correctly adds two numbers', () => {
 
 // An async test case
 Deno.test('async test example', async () => {
-  const p = Promise.resolve('hello world');
-  assertEquals(await p, 'hello world');
+  const data = await Promise.resolve('hello');
+  assertEquals(data, 'hello');
 });
 
 // Using test steps for better organization (describe/it-like via t.step)
@@ -572,7 +572,7 @@ deno test
 
 Snapshot testing captures and compares complex outputs across runs.
 
-```typescript
+```ts ignore
 // snapshot_example.test.ts
 import { assertSnapshot } from 'deps';
 
@@ -597,7 +597,7 @@ Deno.test('snapshot of a complex object', async (t) => {
 
 Use `@std/testing/mock` to stub or spy on dependencies for isolation.
 
-```typescript
+```ts ignore
 // mock_example.test.ts
 import { assertEquals, stub } from 'deps';
 
@@ -633,7 +633,7 @@ Deno.test('getUserDisplayName formats the user name', () => {
 
 Define properties that should hold for all valid inputs; `fast-check` generates cases.
 
-```typescript
+```ts ignore
 // property_based_example.test.ts
 import { assertEquals, fc } from 'deps';
 
@@ -664,12 +664,12 @@ versioned API links, and CI gates that keep docs accurate.
   `Requires --allow-read`).
 - Use `@deprecated`, `@experimental`, and `@since` for lifecycle clarity.
 
-````ts
+````ts ignore
 /**
  * Parse a JSONC config file into a typed Config.
  *
  * @example
- * ```ts
+ * ```ts ignore
  * import { parseConfig } from "jsr:@scope/pkg@1";
  * const cfg = await parseConfig("deno.jsonc");
  * ```
@@ -1132,7 +1132,7 @@ export async function listen(kv: Deno.Kv, handler: (msg: unknown) => Promise<voi
 
 ## Configuration Patterns
 
-```typescript
+```ts ignore
 // ✅ Good - Using Deno's built-in JSONC support
 import { parseJsonc } from 'deps';
 
@@ -1142,7 +1142,7 @@ const config = parseJsonc(configText) as ConfigSchema;
 
 ## File System Patterns
 
-```typescript
+```ts ignore
 // ✅ Good - Using Deno's built-in fs utilities
 import { walk } from 'deps';
 

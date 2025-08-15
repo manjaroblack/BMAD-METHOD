@@ -15,7 +15,7 @@
     "useUnknownInCatchVariables": true,
     "noImplicitOverride": true,
     "checkJs": false,
-    // JSX (adjust/import source per framework used)
+    // JSX for the TUI app (docs use a separate config under docs/)
     "jsx": "react-jsx",
     "jsxImportSource": "preact"
   },
@@ -148,8 +148,8 @@
   "tasks": {
     "fmt": "deno fmt",
     "fmt:check": "deno fmt --check",
-    "dev": "deno run --watch --allow-all src/main.ts",
-    "start": "deno run --allow-all src/main.ts",
+    "dev": "deno run -A --watch src/main.ts",
+    "start": "deno run -A src/main.ts",
     "build": "deno compile --allow-all --output=dist/app src/main.ts",
     "lint": "deno lint",
     "lint:fix": "deno lint --fix",
@@ -170,13 +170,14 @@
     "docs:shard": "deno run --allow-read --allow-write bmad-core/utils/shard_markdown.ts",
     "docs:shard:prd": "deno task docs:shard docs/developer/BMad-PRD.md docs/developer/prd",
     // Docs-as-code tasks
-    "docs:test": "deno test --doc docs/**/*.md legacy/README.md",
+    "docs:test": "deno test --doc README.md docs/**/*.md",
     // API documentation tasks
-    "api:lint": "deno doc --lint src",
+    "api:lint": "deno doc --lint mod.ts src",
     "api:html": "deno doc --html --name=\"BMAD-METHOD\" --output=docs/api src",
     "api:json": "deno doc --json src > docs/api.json",
     // Lume static site (optional); consider pinning a Lume version for reproducibility
-    "docs:build": "deno run -A https://deno.land/x/lume/ci.ts -c docs/_config.ts",
-    "docs:serve": "deno run -A https://deno.land/x/lume/cli.ts -s -c docs/_config.ts"
+    "docs:build": "deno run -A --config=tools/docs/deno.docs.jsonc https://deno.land/x/lume@v3.0.6/cli.ts --config=tools/docs/_config.ts --src=docs --dest=docs/_site",
+    "docs:serve": "deno run -A --config=tools/docs/deno.docs.jsonc https://deno.land/x/lume@v3.0.6/cli.ts -s --config=tools/docs/_config.ts --src=docs --dest=docs/_site",
+    "tui": "deno run -A src/tui/cli.ts"
   }
 }

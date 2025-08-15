@@ -18,9 +18,11 @@ deno task api:lint
 deno task api:html
 deno task api:json
 
-# Optional: build and serve the Lume docs site with Pagefind search
-deno task docs:build
-deno task docs:serve
+  # Optional: build and serve the Lume docs site with Pagefind search
+  deno task docs:build
+  deno task docs:serve
 ```
+
+Docs build tooling (Lume config, deps, docs-only Deno config) lives in `tools/docs/` and is referenced by the tasks above. The `docs/` directory is content-only; output is written to `docs/_site/`.
 
 See also: `./documentation-strategy.md` and `../typescript-rules.md#documentation-patterns`.

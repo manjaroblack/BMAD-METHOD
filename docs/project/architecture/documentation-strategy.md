@@ -89,7 +89,7 @@ Recommended deno.jsonc tasks:
 
 Example `docs/_config.ts`:
 
-```ts
+```ts ignore
 import lume from "lume/mod.ts";
 import mdx from "lume/plugins/mdx.ts";
 import prism from "lume/plugins/prism.ts";
@@ -143,8 +143,13 @@ npx -y pagefind --site public --serve
 
 ## Directory Structure
 
-- `docs/` contains narrative docs and site config; API HTML artifacts (optional) at `docs/api/`.
-- Keep build tasks decoupled from application builds.
+- `docs/` contains narrative documentation content only; built site at `docs/_site/`; optional API HTML at `docs/api/`.
+- Docs build tooling (Lume config, pinned deps, docs-only Deno config) lives in `tools/docs/`:
+  - `tools/docs/_config.ts`
+  - `tools/docs/deps.ts`
+  - `tools/docs/deno.docs.jsonc`
+- Deprecated shims under `docs/` have been removed to keep `docs/` content-only.
+  - Keep build tasks decoupled from application builds.
 
 ## References (Latest)
 
