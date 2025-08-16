@@ -1,4 +1,6 @@
 markdownExploder: true
+qa:
+  qaLocation: docs/project/qa
 prd:
   prdFile: docs/project/BMad-PRD.md
   prdVersion: v4

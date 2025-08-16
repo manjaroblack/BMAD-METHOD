@@ -211,7 +211,11 @@ Tip: To produce a copy without a property (avoid `delete`), use destructuring to
 object:
 
 ```ts
-const { key: _omit, ...rest } = obj; // rest has all properties except "key"
+const obj = { key: 1, a: 2 } as const;
+// Create a shallow copy without the "key" property
+const { key: _omit, ...rest } = obj;
+// Use the rest object to satisfy type-checking and lint rules
+console.assert(!('key' in rest) && rest.a === 2);
 ```
 
 **Rationale**: Maintains object shape consistency, better performance, type safety.

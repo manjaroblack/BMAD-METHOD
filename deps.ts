@@ -13,6 +13,8 @@ export {
 export * as path from 'jsr:@std/path@1.0.0';
 // YAML is not yet available on JSR in stable form; use pinned URL import
 export { parse as parseYaml } from 'jsr:@std/yaml@0.224.0';
+// JSONC parser for reading commented JSON files like deno.jsonc
+export { parse as parseJsonc } from 'jsr:@std/jsonc@0.224.0';
 // CLI flags and logging
 export { parse as parseFlags } from 'jsr:@std/flags@0.224.0';
 export * as log from 'jsr:@std/log@0.224.14';
@@ -34,13 +36,5 @@ export { crayon } from 'https://deno.land/x/crayon@3.3.3/mod.ts';
 // Preact Signals (via Deno npm: specifier, pinned exact version)
 // Note: npm versions differ from esm.sh tags. Use a valid npm version.
 // Pinned: 1.3.0
-export {
-  signal,
-  computed,
-  effect,
-  batch,
-} from 'npm:@preact/signals-core@1.3.0';
-export type {
-  Signal,
-  ReadonlySignal,
-} from 'npm:@preact/signals-core@1.3.0';
+export { batch, computed, effect, signal } from 'npm:@preact/signals-core@1.3.0';
+export type { ReadonlySignal, Signal } from 'npm:@preact/signals-core@1.3.0';

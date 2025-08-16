@@ -1,7 +1,10 @@
 import '../shims/deno_compat.ts';
 import { parseFlags } from 'deps';
-import type { ManifestRepository, InstallationManifest } from '../core/state/manifest_repository.ts';
-import { createStubServices } from '../core/di.ts';
+import type {
+  InstallationManifest,
+  ManifestRepository,
+} from '../core/state/manifest_repository.ts';
+import { createServices } from '../core/di.ts';
 import { TuiApplication } from './TuiApplication.ts';
 
 class CliManifestRepository implements ManifestRepository {
@@ -31,7 +34,7 @@ class CliManifestRepository implements ManifestRepository {
 
 export async function runTui(options: { manifestPath?: string } = {}): Promise<void> {
   const repo = new CliManifestRepository(options.manifestPath);
-  const services = createStubServices();
+  const services = createServices();
   const app = new TuiApplication(repo, services);
   await app.start();
 }

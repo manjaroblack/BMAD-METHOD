@@ -1,4 +1,4 @@
-import { denoTui, denoTuiComponents, crayon, effect } from 'deps';
+import { crayon, denoTui, denoTuiComponents, effect } from 'deps';
 import type { InstallationState } from '../../core/state/installation_state.ts';
 import type { AppServices } from '../../core/di.ts';
 import { currentView, navigate } from '../router.ts';
@@ -24,7 +24,9 @@ export class MainMenuView {
     this.state = state;
     this.services = services;
 
-    const centerColumn = new denoTui.Computed(() => Math.max(1, Math.floor(this.tui.rectangle.value.width / 2 - 12)));
+    const centerColumn = new denoTui.Computed(() =>
+      Math.max(1, Math.floor(this.tui.rectangle.value.width / 2 - 12))
+    );
 
     const baseTheme = {
       base: crayon.bgBlue.white,

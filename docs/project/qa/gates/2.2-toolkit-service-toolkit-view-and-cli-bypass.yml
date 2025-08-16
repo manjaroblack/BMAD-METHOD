@@ -1,0 +1,10 @@
+schema: 1
+story: '2.2'
+story_title: 'Story 2.2: Toolkit Service, Toolkit View, and CLI Bypass'
+gate: PASS
+status_reason: 'All ACs met; tests and lint pass; no high-severity issues found.'
+reviewer: 'Quinn (Test Architect)'
+updated: '2025-08-15T23:00:11-05:00'
+
+top_issues: []
+waiver: { active: false }

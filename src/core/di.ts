@@ -5,7 +5,7 @@ import { UpdaterServiceStub } from '../services/updater_service.ts';
 import type { UninstallerService } from '../services/uninstaller_service.ts';
 import { UninstallerServiceStub } from '../services/uninstaller_service.ts';
 import type { ToolkitService } from '../services/toolkit_service.ts';
-import { ToolkitServiceStub } from '../services/toolkit_service.ts';
+import { ToolkitServiceImpl, ToolkitServiceStub } from '../services/toolkit_service.ts';
 
 export interface AppServices {
   installer: InstallerService;
@@ -21,5 +21,15 @@ export function createStubServices(): AppServices {
     updater: new UpdaterServiceStub(),
     uninstaller: new UninstallerServiceStub(),
     toolkit: new ToolkitServiceStub(),
+  };
+}
+
+/** DI container factory for production/runtime services. */
+export function createServices(): AppServices {
+  return {
+    installer: new InstallerServiceStub(),
+    updater: new UpdaterServiceStub(),
+    uninstaller: new UninstallerServiceStub(),
+    toolkit: new ToolkitServiceImpl(),
   };
 }

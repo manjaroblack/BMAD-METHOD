@@ -1,4 +1,4 @@
-import { signal, type Signal } from 'deps';
+import { type Signal, signal } from 'deps';
 import type { View } from './views/types.ts';
 import { DEFAULT_VIEW } from './views/types.ts';
 

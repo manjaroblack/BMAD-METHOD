@@ -4,6 +4,7 @@
 // - Exports `main` for tests to call without spawning a subprocess
 
 import { log, parseFlags } from 'deps';
+import { ToolkitServiceImpl } from './services/toolkit_service.ts';
 
 /**
  * Canonical application name for CLI output.
@@ -30,7 +31,8 @@ Usage:
 
 Options:
   -h, --help        Show help
-  -v, --version     Show version\n`;
+  -v, --version     Show version
+      --toolkit <task> [-- args...]  Run a deno task directly and exit with its code\n`;
 }
 
 /**
@@ -76,8 +78,62 @@ export function main(
   return 0;
 }
 
+/** Async CLI entry that supports toolkit bypass. */
+export async function mainAsync(
+  opts?: {
+    print?: (msg: string) => void;
+    toolkitExec?: (cmd: string, args: string[]) => Promise<{ code: number }>;
+    configProvider?: () => Promise<{ tasks?: Record<string, unknown> } | null>;
+  },
+  args?: string[],
+): Promise<number> {
+  const print = opts?.print ?? console.log;
+  const argv = args ?? Deno.args;
+  const flags = parseFlags(argv, {
+    boolean: ['help', 'version'],
+    string: ['toolkit'],
+    alias: { h: 'help', v: 'version' },
+  });
+
+  // minimal default logger
+  log.setup({
+    handlers: { console: new log.ConsoleHandler('INFO', { useColors: true }) },
+    loggers: { default: { level: 'INFO', handlers: ['console'] } },
+  });
+
+  if (flags.help) {
+    print(getUsage());
+    return 0;
+  }
+
+  if (flags.version) {
+    print(`${APP_NAME} v${VERSION}`);
+    return 0;
+  }
+
+  const taskName = typeof flags.toolkit === 'string' ? flags.toolkit : undefined;
+  if (taskName) {
+    // Capture pass-through args after "--" if present
+    const ddIndex = argv.indexOf('--');
+    const passArgs = ddIndex >= 0 ? ['--', ...argv.slice(ddIndex + 1)] : [];
+    try {
+      const svc = new ToolkitServiceImpl(opts?.toolkitExec, opts?.configProvider);
+      const { code } = await svc.runTask(taskName, passArgs);
+      print(`Toolkit task "${taskName}" exited with code ${code}`);
+      return code;
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      print(msg);
+      return 1;
+    }
+  }
+
+  // Default behavior for now is to show help
+  print(getUsage());
+  return 0;
+}
+
 if (import.meta.main) {
-  const code = main();
-  // Ensure explicit exit code consistency
+  const code = await mainAsync();
   Deno.exit(code);
 }

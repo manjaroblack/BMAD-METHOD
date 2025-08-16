@@ -3,7 +3,8 @@
  *
  * @since 0.2.0
  */
-import { computed, ReadonlySignal, signal } from 'deps';
+import { computed, signal } from 'deps';
+import type { ReadonlySignal } from 'deps';
 import type { ManifestRepository } from './manifest_repository.ts';
 
 export interface InstallationState {

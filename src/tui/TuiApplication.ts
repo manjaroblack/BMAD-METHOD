@@ -1,12 +1,16 @@
 import { effect } from 'deps';
-import { denoTui, denoTuiComponents, crayon } from 'deps';
+import { crayon, denoTui, denoTuiComponents } from 'deps';
 import { APP_NAME, VERSION } from '../main.ts';
 import type { ManifestRepository } from '../core/state/manifest_repository.ts';
-import { createInstallationState, type InstallationState } from '../core/state/installation_state.ts';
+import {
+  createInstallationState,
+  type InstallationState,
+} from '../core/state/installation_state.ts';
 import type { AppServices } from '../core/di.ts';
 import { currentView, navigate } from './router.ts';
 import type { View } from './views/types.ts';
 import { MainMenuView } from './views/MainMenuView.ts';
+import { ToolkitMenuView } from './views/ToolkitMenuView.ts';
 
 /**
  * TUI Application shell wiring Tui, dynamic header, and global keys.
@@ -30,6 +34,7 @@ export class TuiApplication {
     this.#mountHeader();
     // Mount views
     new MainMenuView({ tui: this.tui, state: this.state, services: this.services });
+    new ToolkitMenuView({ tui: this.tui, state: this.state, services: this.services });
     this.#wireGlobalKeys();
   }
 
@@ -40,7 +45,8 @@ export class TuiApplication {
     effect(() => {
       const view: View = currentView.value;
       const installed = this.state.installed.value ? 'Installed' : 'Not installed';
-      headerText.value = `${APP_NAME} v${VERSION} | View: ${view} | Status: ${installed} | [?] Help  [q] Quit`;
+      headerText.value =
+        `${APP_NAME} v${VERSION} | View: ${view} | Status: ${installed} | [?] Help  [q] Quit`;
     });
 
     // Simple header at top-left; auto-size based on text

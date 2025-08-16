@@ -1,7 +1,10 @@
 import { assert, assertEquals } from 'deps';
 import { denoTui } from 'deps';
 import { createStubServices } from '../../src/core/di.ts';
-import type { ManifestRepository, InstallationManifest } from '../../src/core/state/manifest_repository.ts';
+import type {
+  InstallationManifest,
+  ManifestRepository,
+} from '../../src/core/state/manifest_repository.ts';
 import { createInstallationState } from '../../src/core/state/installation_state.ts';
 import { MainMenuView } from '../../src/tui/views/MainMenuView.ts';
 import { currentView } from '../../src/tui/router.ts';
@@ -13,7 +16,11 @@ class StubManifestRepo implements ManifestRepository {
   }
 }
 
-Deno.test({ name: 'Main Menu visibility — fresh install', sanitizeOps: false, sanitizeResources: false }, async () => {
+Deno.test({
+  name: 'Main Menu visibility — fresh install',
+  sanitizeOps: false,
+  sanitizeResources: false,
+}, async () => {
   // Arrange: fresh system (no manifest)
   currentView.value = 'MainMenu';
   const repo = new StubManifestRepo(null);
@@ -38,10 +45,18 @@ Deno.test({ name: 'Main Menu visibility — fresh install', sanitizeOps: false, 
   }
 });
 
-Deno.test({ name: 'Routing updates — activate buttons changes currentView', sanitizeOps: false, sanitizeResources: false }, async () => {
+Deno.test({
+  name: 'Routing updates — activate buttons changes currentView',
+  sanitizeOps: false,
+  sanitizeResources: false,
+}, async () => {
   // Arrange: installed system
   currentView.value = 'MainMenu';
-  const repo = new StubManifestRepo({ id: 'x', version: '1.0.0', installedAt: new Date().toISOString() });
+  const repo = new StubManifestRepo({
+    id: 'x',
+    version: '1.0.0',
+    installedAt: new Date().toISOString(),
+  });
   const state = createInstallationState(repo);
   await state.refresh();
 
