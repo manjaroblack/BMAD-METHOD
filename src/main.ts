@@ -5,6 +5,7 @@
 
 import { log, parseFlags } from 'deps';
 import { ToolkitServiceImpl } from './services/toolkit_service.ts';
+import { type AppServices, createServices } from './core/di.ts';
 
 /**
  * Canonical application name for CLI output.
@@ -32,7 +33,8 @@ Usage:
 Options:
   -h, --help        Show help
   -v, --version     Show version
-      --toolkit <task> [-- args...]  Run a deno task directly and exit with its code\n`;
+      --toolkit <task> [-- args...]  Run a deno task directly and exit with its code
+      --open-config  Open bmad-core/core-config.yaml with system default application\n`;
 }
 
 /**
@@ -84,13 +86,14 @@ export async function mainAsync(
     print?: (msg: string) => void;
     toolkitExec?: (cmd: string, args: string[]) => Promise<{ code: number }>;
     configProvider?: () => Promise<{ tasks?: Record<string, unknown> } | null>;
+    servicesFactory?: () => AppServices;
   },
   args?: string[],
 ): Promise<number> {
   const print = opts?.print ?? console.log;
   const argv = args ?? Deno.args;
   const flags = parseFlags(argv, {
-    boolean: ['help', 'version'],
+    boolean: ['help', 'version', 'open-config'],
     string: ['toolkit'],
     alias: { h: 'help', v: 'version' },
   });
@@ -109,6 +112,23 @@ export async function mainAsync(
   if (flags.version) {
     print(`${APP_NAME} v${VERSION}`);
     return 0;
+  }
+
+  if (flags['open-config']) {
+    try {
+      const services = opts?.servicesFactory ? opts.servicesFactory() : createServices();
+      const { code } = await services.config.openCoreConfig();
+      if (code === 0) {
+        print('Opened core-config.yaml');
+        return 0;
+      }
+      print(`Failed to open core-config.yaml (code ${code})`);
+      return 1;
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      print(msg);
+      return 1;
+    }
   }
 
   const taskName = typeof flags.toolkit === 'string' ? flags.toolkit : undefined;

@@ -1,3 +1,8 @@
+---
+description: pm
+auto_execution_mode: 3
+---
+
 # pm
 
 ACTIVATION-NOTICE: This file contains your full agent operating guidelines. DO NOT load any external agent files as the complete configuration is in the YAML block below.

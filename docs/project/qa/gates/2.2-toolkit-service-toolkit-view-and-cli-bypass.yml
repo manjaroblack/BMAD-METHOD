@@ -4,7 +4,48 @@ story_title: 'Story 2.2: Toolkit Service, Toolkit View, and CLI Bypass'
 gate: PASS
 status_reason: 'All ACs met; tests and lint pass; no high-severity issues found.'
 reviewer: 'Quinn (Test Architect)'
-updated: '2025-08-15T23:00:11-05:00'
+updated: '2025-08-16T07:12:37-05:00'
 
 top_issues: []
 waiver: { active: false }
+
+risk_summary:
+  totals: { critical: 0, high: 0, medium: 0, low: 0 }
+  recommendations:
+    must_fix: []
+    monitor: []
+
+nfr_validation:
+  _assessed: [security, performance, reliability, maintainability]
+  security: { status: PASS, notes: 'Exec via deno task; explicit permissions; unknown tasks handled' }
+  performance: { status: PASS, notes: 'Minimal overhead; trivial CLI path' }
+  reliability: { status: PASS, notes: 'Exit codes and error paths covered by tests' }
+  maintainability: { status: PASS, notes: 'DI boundaries; centralized deps; tests present' }
+
+trace:
+  totals:
+    requirements: 4
+    full: 1
+    partial: 2
+    none: 1
+  planning_ref: 'docs/project/qa/assessments/2.2-test-design-20250816.md'
+  uncovered:
+    - ac: 'AC4'
+      reason: 'Policy enforcement not validated by tests'
+  notes: 'See docs/project/qa/assessments/2.2-trace-20250816.md'
+
+test_design:
+  scenarios_total: 10
+  by_level:
+    unit: 10
+    integration: 0
+    e2e: 0
+  by_priority:
+    p0: 2
+    p1: 6
+    p2: 2
+  coverage_gaps:
+    - ac: 'AC2'
+      gap: 'Back action behavior untested'
+    - ac: 'AC4'
+      gap: 'Centralized dependencies enforcement untested'

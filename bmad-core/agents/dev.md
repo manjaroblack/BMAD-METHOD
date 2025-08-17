@@ -66,11 +66,13 @@ commands:
       - blocking: 'HALT for: Unapproved deps needed, confirm with user | Ambiguous after story check | 3 failures attempting to implement or fix something repeatedly | Missing config | Failing regression'
       - ready-for-review: 'Code matches requirements + All validations pass + Follows standards + File List complete'
       - completion: "All Tasks and Subtasks marked [x] and have tests→Validations and full regression passes (DON'T BE LAZY, EXECUTE ALL TESTS and CONFIRM)→Ensure File List is Complete→run the task execute-checklist for the checklist story-dod-checklist→set story status: 'Ready for Review'→HALT"
+- review-qa: run task `apply-qa-fixes.md'
 
 dependencies:
   tasks:
     - execute-checklist.md
     - validate-next-story.md
+    - apply-qa-fixes.md
   checklists:
     - story-dod-checklist.md
 ```

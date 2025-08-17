@@ -21,6 +21,10 @@ function makeServices(
       },
       open: () => Promise.resolve(),
     },
+    config: {
+      getCoreConfigPath: () => '/tmp/core-config.yaml',
+      openCoreConfig: () => Promise.resolve({ code: 0 }),
+    },
   } as AppServices;
   return services;
 }

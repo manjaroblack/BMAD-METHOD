@@ -6,12 +6,15 @@ import type { UninstallerService } from '../services/uninstaller_service.ts';
 import { UninstallerServiceStub } from '../services/uninstaller_service.ts';
 import type { ToolkitService } from '../services/toolkit_service.ts';
 import { ToolkitServiceImpl, ToolkitServiceStub } from '../services/toolkit_service.ts';
+import type { ConfigService } from '../services/config_service.ts';
+import { ConfigServiceImpl, ConfigServiceStub } from '../services/config_service.ts';
 
 export interface AppServices {
   installer: InstallerService;
   updater: UpdaterService;
   uninstaller: UninstallerService;
   toolkit: ToolkitService;
+  config: ConfigService;
 }
 
 /** Simple DI container factory returning stub implementations. */
@@ -21,6 +24,7 @@ export function createStubServices(): AppServices {
     updater: new UpdaterServiceStub(),
     uninstaller: new UninstallerServiceStub(),
     toolkit: new ToolkitServiceStub(),
+    config: new ConfigServiceStub(),
   };
 }
 
@@ -31,5 +35,6 @@ export function createServices(): AppServices {
     updater: new UpdaterServiceStub(),
     uninstaller: new UninstallerServiceStub(),
     toolkit: new ToolkitServiceImpl(),
+    config: new ConfigServiceImpl(),
   };
 }
