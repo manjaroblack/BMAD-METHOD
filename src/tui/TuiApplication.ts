@@ -11,6 +11,7 @@ import { currentView, navigate } from './router.ts';
 import type { View } from './views/types.ts';
 import { MainMenuView } from './views/MainMenuView.ts';
 import { ToolkitMenuView } from './views/ToolkitMenuView.ts';
+import { HelpView } from './views/HelpView.ts';
 
 /**
  * TUI Application shell wiring Tui, dynamic header, and global keys.
@@ -18,10 +19,19 @@ import { ToolkitMenuView } from './views/ToolkitMenuView.ts';
  * @since 0.2.0
  */
 export class TuiApplication {
+  /** @internal Root TUI instance for rendering and input handling. */
   readonly tui: denoTui.Tui;
+  /** Installation state accessed by header and views. */
   readonly state: InstallationState;
+  /** Application service container used by views. */
   readonly services: AppServices;
 
+  /**
+   * Construct the TUI application and mount header and views.
+   *
+   * @param repo - Repository to read installation manifest from.
+   * @param services - Application services used by views.
+   */
   constructor(repo: ManifestRepository, services: AppServices) {
     this.services = services;
     this.state = createInstallationState(repo);
@@ -35,6 +45,7 @@ export class TuiApplication {
     // Mount views
     new MainMenuView({ tui: this.tui, state: this.state, services: this.services });
     new ToolkitMenuView({ tui: this.tui, state: this.state, services: this.services });
+    new HelpView({ tui: this.tui, state: this.state, services: this.services });
     this.#wireGlobalKeys();
   }
 
@@ -71,6 +82,13 @@ export class TuiApplication {
     });
   }
 
+  /**
+   * Start the TUI main loop after refreshing installation state.
+   *
+   * @example
+   * const app = new TuiApplication(repo, services);
+   * await app.start();
+   */
   async start(): Promise<void> {
     // Ensure state is up-to-date before run loop
     await this.state.refresh();

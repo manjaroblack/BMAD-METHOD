@@ -9,11 +9,21 @@ import { ToolkitServiceImpl, ToolkitServiceStub } from '../services/toolkit_serv
 import type { ConfigService } from '../services/config_service.ts';
 import { ConfigServiceImpl, ConfigServiceStub } from '../services/config_service.ts';
 
+/**
+ * Application services dependency container.
+ *
+ * @since 0.2.0
+ */
 export interface AppServices {
+  /** Installer workflow service. */
   installer: InstallerService;
+  /** Updater workflow service. */
   updater: UpdaterService;
+  /** Uninstaller workflow service. */
   uninstaller: UninstallerService;
+  /** Toolkit tasks service. */
   toolkit: ToolkitService;
+  /** Config file interactions service. */
   config: ConfigService;
 }
 

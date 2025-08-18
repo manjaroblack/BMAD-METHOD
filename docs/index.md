@@ -9,6 +9,11 @@ Welcome to the BMAD Method documentation site. Use the search below to find topi
 - Read the project PRD: `./project/prd/index.md`
 - Read the architecture docs: `./project/architecture/index.md`
 
+## Guides
+
+- TUI: `./guides/tui.md`
+- Toolkit: `./guides/toolkit.md`
+
 ## About
 
 This site is built with Lume and includes Pagefind for full‑text search.

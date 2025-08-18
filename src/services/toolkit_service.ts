@@ -38,12 +38,20 @@ import { parseJsonc, path } from 'deps';
 
 /** Concrete ToolkitService implementation. */
 export class ToolkitServiceImpl implements ToolkitService {
+  /**
+   * Create a ToolkitServiceImpl.
+   *
+   * @param exec - Optional runner to execute a command.
+   * @param configProvider - Optional provider for root config content.
+   * @param rootDir - Project root directory to search for deno.json(c).
+   */
   constructor(
     private readonly exec?: (cmd: string, args: string[]) => Promise<{ code: number }>,
     private readonly configProvider?: () => Promise<{ tasks?: Record<string, unknown> } | null>,
     private readonly rootDir: string = Deno.cwd(),
   ) {}
 
+  /** Discover available tasks from root deno.json/deno.jsonc. */
   async listTasks(): Promise<Array<{ name: string; command: string }>> {
     const cfg = await this.#readRootConfig();
     if (!cfg) return [];
@@ -56,6 +64,7 @@ export class ToolkitServiceImpl implements ToolkitService {
     return out;
   }
 
+  /** Run a known task using `deno task <name> [-- args...]`. */
   async runTask(name: string, args: string[] = []): Promise<{ code: number }> {
     const tasks = await this.listTasks();
     const known = new Set(tasks.map((t) => t.name));
@@ -84,6 +93,7 @@ export class ToolkitServiceImpl implements ToolkitService {
     return { code: result.code };
   }
 
+  /** Open toolkit UI (no-op, handled by TUI view). */
   async open(): Promise<void> {
     // No-op default for now; Toolkit UI handles rendering via view
   }
@@ -122,13 +132,21 @@ export class ToolkitServiceImpl implements ToolkitService {
   }
 }
 
+/**
+ * No-op stub for the ToolkitService.
+ *
+ * @since 0.3.0
+ */
 export class ToolkitServiceStub implements ToolkitService {
+  /** Return an empty tasks array. */
   listTasks(): Promise<Array<{ name: string; command: string }>> {
     return Promise.resolve([]);
   }
+  /** Always reject to indicate unknown task. */
   runTask(_name: string, _args: string[] = []): Promise<{ code: number }> {
     return Promise.reject(new Error('Unknown task'));
   }
+  /** Pretend to open toolkit UI (no-op). */
   async open(): Promise<void> {
     // no-op stub
   }

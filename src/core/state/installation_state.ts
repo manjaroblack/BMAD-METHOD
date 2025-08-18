@@ -7,6 +7,11 @@ import { computed, signal } from 'deps';
 import type { ReadonlySignal } from 'deps';
 import type { ManifestRepository } from './manifest_repository.ts';
 
+/**
+ * Public read-only installation state contract exposed to views.
+ *
+ * @since 0.2.0
+ */
 export interface InstallationState {
   /** Whether the application is considered installed. */
   installed: ReadonlySignal<boolean>;

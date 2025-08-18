@@ -9,7 +9,13 @@ export interface InstallerService {
   start(): Promise<void>;
 }
 
+/**
+ * No-op stub for `InstallerService` used in tests and placeholder runtime.
+ *
+ * @since 0.2.0
+ */
 export class InstallerServiceStub implements InstallerService {
+  /** Start installer workflow (no-op). */
   async start(): Promise<void> {
     // no-op stub
   }

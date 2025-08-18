@@ -3,22 +3,52 @@ import type { InstallationState } from '../../core/state/installation_state.ts';
 import type { AppServices } from '../../core/di.ts';
 import { currentView, navigate } from '../router.ts';
 
+/**
+ * Dependencies required to construct `MainMenuView`.
+ *
+ * @since 0.2.0
+ */
 export interface MainMenuDeps {
+  /** Root TUI instance. */
   tui: denoTui.Tui;
+  /** Installation state used to toggle button visibility. */
   state: InstallationState;
+  /** Application services used to invoke actions. */
   services: AppServices;
 }
 
+/**
+ * Main Menu View — entry point providing Install/Update/Uninstall/Toolkit.
+ *
+ * Visibility rules:
+ * - Install shown when not installed
+ * - Update/Uninstall shown when installed
+ * - Toolkit always shown
+ *
+ * @since 0.2.0
+ */
 export class MainMenuView {
+  /** @internal TUI instance this view renders into. */
   readonly tui: denoTui.Tui;
+  /** Installation state driving visibility. */
   readonly state: InstallationState;
+  /** Services used by button actions. */
   readonly services: AppServices;
 
+  /** @internal Install action button. */
   readonly installButton: denoTuiComponents.Button;
+  /** @internal Update action button. */
   readonly updateButton: denoTuiComponents.Button;
+  /** @internal Uninstall action button. */
   readonly uninstallButton: denoTuiComponents.Button;
+  /** @internal Open Toolkit view button. */
   readonly toolkitButton: denoTuiComponents.Button;
 
+  /**
+   * Create MainMenuView and mount all buttons.
+   *
+   * @param deps - Constructor dependencies.
+   */
   constructor({ tui, state, services }: MainMenuDeps) {
     this.tui = tui;
     this.state = state;

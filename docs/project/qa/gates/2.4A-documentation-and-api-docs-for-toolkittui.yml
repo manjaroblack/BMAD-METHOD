@@ -1,0 +1,27 @@
+schema: 1
+story: '2.4A'
+story_title: 'Documentation and API Docs for Toolkit/TUI'
+gate: PASS
+status_reason: 'Docs & API artifacts delivered; doctests and API lint pass; site builds and indexed.'
+reviewer: 'Quinn (Test Architect)'
+updated: '2025-08-17T20:17:39-05:00'
+
+top_issues: []
+
+risk_summary:
+  totals:
+    critical: 0
+    high: 0
+    medium: 0
+    low: 1
+  recommendations:
+    must_fix: []
+    monitor:
+      - 'Monitor docs build dependencies and Pagefind indexing in CI'
+
+nfr_validation:
+  _assessed: [security, performance, reliability, maintainability]
+  security: { status: PASS, notes: 'No runtime surfaces; documentation-focused change.' }
+  performance: { status: PASS, notes: 'Static site generation acceptable.' }
+  reliability: { status: PASS, notes: 'Deterministic builds; doctests guard examples.' }
+  maintainability: { status: PASS, notes: 'JSDoc coverage and guide structure.' }

@@ -2,13 +2,789 @@
   "version": 1,
   "nodes": [
     {
+      "name": "AppServices",
+      "isDefault": false,
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/di.ts",
+        "line": 17,
+        "col": 0,
+        "byteIndex": 828
+      },
+      "declarationKind": "export",
+      "jsDoc": {
+        "doc": "Application services dependency container.\n",
+        "tags": [
+          {
+            "kind": "since",
+            "doc": "0.2.0"
+          }
+        ]
+      },
+      "kind": "interface",
+      "interfaceDef": {
+        "extends": [],
+        "constructors": [],
+        "methods": [],
+        "properties": [
+          {
+            "name": "installer",
+            "jsDoc": {
+              "doc": "Installer workflow service."
+            },
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/di.ts",
+              "line": 19,
+              "col": 2,
+              "byteIndex": 898
+            },
+            "params": [],
+            "computed": false,
+            "optional": false,
+            "tsType": {
+              "repr": "InstallerService",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "InstallerService"
+              }
+            },
+            "typeParams": []
+          },
+          {
+            "name": "updater",
+            "jsDoc": {
+              "doc": "Updater workflow service."
+            },
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/di.ts",
+              "line": 21,
+              "col": 2,
+              "byteIndex": 964
+            },
+            "params": [],
+            "computed": false,
+            "optional": false,
+            "tsType": {
+              "repr": "UpdaterService",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "UpdaterService"
+              }
+            },
+            "typeParams": []
+          },
+          {
+            "name": "uninstaller",
+            "jsDoc": {
+              "doc": "Uninstaller workflow service."
+            },
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/di.ts",
+              "line": 23,
+              "col": 2,
+              "byteIndex": 1030
+            },
+            "params": [],
+            "computed": false,
+            "optional": false,
+            "tsType": {
+              "repr": "UninstallerService",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "UninstallerService"
+              }
+            },
+            "typeParams": []
+          },
+          {
+            "name": "toolkit",
+            "jsDoc": {
+              "doc": "Toolkit tasks service."
+            },
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/di.ts",
+              "line": 25,
+              "col": 2,
+              "byteIndex": 1097
+            },
+            "params": [],
+            "computed": false,
+            "optional": false,
+            "tsType": {
+              "repr": "ToolkitService",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "ToolkitService"
+              }
+            },
+            "typeParams": []
+          },
+          {
+            "name": "config",
+            "jsDoc": {
+              "doc": "Config file interactions service."
+            },
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/di.ts",
+              "line": 27,
+              "col": 2,
+              "byteIndex": 1167
+            },
+            "params": [],
+            "computed": false,
+            "optional": false,
+            "tsType": {
+              "repr": "ConfigService",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "ConfigService"
+              }
+            },
+            "typeParams": []
+          }
+        ],
+        "callSignatures": [],
+        "indexSignatures": [],
+        "typeParams": []
+      }
+    },
+    {
+      "name": "createStubServices",
+      "isDefault": false,
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/di.ts",
+        "line": 31,
+        "col": 0,
+        "byteIndex": 1260
+      },
+      "declarationKind": "export",
+      "jsDoc": {
+        "doc": "Simple DI container factory returning stub implementations."
+      },
+      "kind": "function",
+      "functionDef": {
+        "params": [],
+        "returnType": {
+          "repr": "AppServices",
+          "kind": "typeRef",
+          "typeRef": {
+            "typeParams": null,
+            "typeName": "AppServices"
+          }
+        },
+        "hasBody": true,
+        "isAsync": false,
+        "isGenerator": false,
+        "typeParams": []
+      }
+    },
+    {
+      "name": "createServices",
+      "isDefault": false,
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/di.ts",
+        "line": 42,
+        "col": 0,
+        "byteIndex": 1597
+      },
+      "declarationKind": "export",
+      "jsDoc": {
+        "doc": "DI container factory for production/runtime services."
+      },
+      "kind": "function",
+      "functionDef": {
+        "params": [],
+        "returnType": {
+          "repr": "AppServices",
+          "kind": "typeRef",
+          "typeRef": {
+            "typeParams": null,
+            "typeName": "AppServices"
+          }
+        },
+        "hasBody": true,
+        "isAsync": false,
+        "isGenerator": false,
+        "typeParams": []
+      }
+    },
+    {
+      "name": "InstallerService",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/di.ts",
+        "line": 1,
+        "col": 0,
+        "byteIndex": 0
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/installer_service.ts",
+        "imported": "InstallerService"
+      }
+    },
+    {
+      "name": "InstallerServiceStub",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/di.ts",
+        "line": 2,
+        "col": 0,
+        "byteIndex": 74
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/installer_service.ts",
+        "imported": "InstallerServiceStub"
+      }
+    },
+    {
+      "name": "UpdaterService",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/di.ts",
+        "line": 3,
+        "col": 0,
+        "byteIndex": 147
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/updater_service.ts",
+        "imported": "UpdaterService"
+      }
+    },
+    {
+      "name": "UpdaterServiceStub",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/di.ts",
+        "line": 4,
+        "col": 0,
+        "byteIndex": 217
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/updater_service.ts",
+        "imported": "UpdaterServiceStub"
+      }
+    },
+    {
+      "name": "UninstallerService",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/di.ts",
+        "line": 5,
+        "col": 0,
+        "byteIndex": 286
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/uninstaller_service.ts",
+        "imported": "UninstallerService"
+      }
+    },
+    {
+      "name": "UninstallerServiceStub",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/di.ts",
+        "line": 6,
+        "col": 0,
+        "byteIndex": 364
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/uninstaller_service.ts",
+        "imported": "UninstallerServiceStub"
+      }
+    },
+    {
+      "name": "ToolkitService",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/di.ts",
+        "line": 7,
+        "col": 0,
+        "byteIndex": 441
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/toolkit_service.ts",
+        "imported": "ToolkitService"
+      }
+    },
+    {
+      "name": "ToolkitServiceImpl",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/di.ts",
+        "line": 8,
+        "col": 0,
+        "byteIndex": 511
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/toolkit_service.ts",
+        "imported": "ToolkitServiceImpl"
+      }
+    },
+    {
+      "name": "ToolkitServiceStub",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/di.ts",
+        "line": 8,
+        "col": 0,
+        "byteIndex": 511
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/toolkit_service.ts",
+        "imported": "ToolkitServiceStub"
+      }
+    },
+    {
+      "name": "ConfigService",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/di.ts",
+        "line": 9,
+        "col": 0,
+        "byteIndex": 600
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/config_service.ts",
+        "imported": "ConfigService"
+      }
+    },
+    {
+      "name": "ConfigServiceImpl",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/di.ts",
+        "line": 10,
+        "col": 0,
+        "byteIndex": 668
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/config_service.ts",
+        "imported": "ConfigServiceImpl"
+      }
+    },
+    {
+      "name": "ConfigServiceStub",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/di.ts",
+        "line": 10,
+        "col": 0,
+        "byteIndex": 668
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/config_service.ts",
+        "imported": "ConfigServiceStub"
+      }
+    },
+    {
+      "name": "InstallationState",
+      "isDefault": false,
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/state/installation_state.ts",
+        "line": 15,
+        "col": 0,
+        "byteIndex": 351
+      },
+      "declarationKind": "export",
+      "jsDoc": {
+        "doc": "Public read-only installation state contract exposed to views.\n",
+        "tags": [
+          {
+            "kind": "since",
+            "doc": "0.2.0"
+          }
+        ]
+      },
+      "kind": "interface",
+      "interfaceDef": {
+        "extends": [],
+        "constructors": [],
+        "methods": [],
+        "properties": [
+          {
+            "name": "installed",
+            "jsDoc": {
+              "doc": "Whether the application is considered installed."
+            },
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/state/installation_state.ts",
+              "line": 17,
+              "col": 2,
+              "byteIndex": 448
+            },
+            "params": [],
+            "computed": false,
+            "optional": false,
+            "tsType": {
+              "repr": "ReadonlySignal",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": [
+                  {
+                    "repr": "boolean",
+                    "kind": "keyword",
+                    "keyword": "boolean"
+                  }
+                ],
+                "typeName": "ReadonlySignal"
+              }
+            },
+            "typeParams": []
+          },
+          {
+            "name": "refresh",
+            "jsDoc": {
+              "doc": "Manually refresh state from the repository."
+            },
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/state/installation_state.ts",
+              "line": 19,
+              "col": 2,
+              "byteIndex": 539
+            },
+            "params": [],
+            "computed": false,
+            "optional": false,
+            "tsType": {
+              "repr": "",
+              "kind": "fnOrConstructor",
+              "fnOrConstructor": {
+                "constructor": false,
+                "tsType": {
+                  "repr": "Promise",
+                  "kind": "typeRef",
+                  "typeRef": {
+                    "typeParams": [
+                      {
+                        "repr": "void",
+                        "kind": "keyword",
+                        "keyword": "void"
+                      }
+                    ],
+                    "typeName": "Promise"
+                  }
+                },
+                "params": [],
+                "typeParams": []
+              }
+            },
+            "typeParams": []
+          }
+        ],
+        "callSignatures": [],
+        "indexSignatures": [],
+        "typeParams": []
+      }
+    },
+    {
+      "name": "createInstallationState",
+      "isDefault": false,
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/state/installation_state.ts",
+        "line": 25,
+        "col": 0,
+        "byteIndex": 648
+      },
+      "declarationKind": "export",
+      "jsDoc": {
+        "doc": "Create read-only installation state from a `ManifestRepository`."
+      },
+      "kind": "function",
+      "functionDef": {
+        "params": [
+          {
+            "kind": "identifier",
+            "name": "repo",
+            "optional": false,
+            "tsType": {
+              "repr": "ManifestRepository",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "ManifestRepository"
+              }
+            }
+          }
+        ],
+        "returnType": {
+          "repr": "InstallationState",
+          "kind": "typeRef",
+          "typeRef": {
+            "typeParams": null,
+            "typeName": "InstallationState"
+          }
+        },
+        "hasBody": true,
+        "isAsync": false,
+        "isGenerator": false,
+        "typeParams": []
+      }
+    },
+    {
+      "name": "computed",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/state/installation_state.ts",
+        "line": 6,
+        "col": 0,
+        "byteIndex": 104
+      },
+      "declarationKind": "private",
+      "jsDoc": {
+        "doc": "Read-only state adapter mapping Installation Manifest to simple booleans.\n",
+        "tags": [
+          {
+            "kind": "since",
+            "doc": "0.2.0"
+          }
+        ]
+      },
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/deps.ts",
+        "imported": "computed"
+      }
+    },
+    {
+      "name": "signal",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/state/installation_state.ts",
+        "line": 6,
+        "col": 0,
+        "byteIndex": 104
+      },
+      "declarationKind": "private",
+      "jsDoc": {
+        "doc": "Read-only state adapter mapping Installation Manifest to simple booleans.\n",
+        "tags": [
+          {
+            "kind": "since",
+            "doc": "0.2.0"
+          }
+        ]
+      },
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/deps.ts",
+        "imported": "signal"
+      }
+    },
+    {
+      "name": "ReadonlySignal",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/state/installation_state.ts",
+        "line": 7,
+        "col": 0,
+        "byteIndex": 145
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/deps.ts",
+        "imported": "ReadonlySignal"
+      }
+    },
+    {
+      "name": "ManifestRepository",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/state/installation_state.ts",
+        "line": 8,
+        "col": 0,
+        "byteIndex": 189
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/state/manifest_repository.ts",
+        "imported": "ManifestRepository"
+      }
+    },
+    {
+      "name": "ManifestRepository",
+      "isDefault": false,
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/state/manifest_repository.ts",
+        "line": 7,
+        "col": 0,
+        "byteIndex": 155
+      },
+      "declarationKind": "export",
+      "jsDoc": {
+        "doc": "Read-only Installation Manifest access.\nImplementations should read from the filesystem or other sources without writing.\n",
+        "tags": [
+          {
+            "kind": "since",
+            "doc": "0.2.0"
+          }
+        ]
+      },
+      "kind": "interface",
+      "interfaceDef": {
+        "extends": [],
+        "constructors": [],
+        "methods": [
+          {
+            "name": "readManifest",
+            "jsDoc": {
+              "doc": "Read the current installation manifest if present.\nReturns null when not installed (fresh system)."
+            },
+            "kind": "method",
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/state/manifest_repository.ts",
+              "line": 12,
+              "col": 2,
+              "byteIndex": 316
+            },
+            "params": [],
+            "optional": false,
+            "returnType": {
+              "repr": "Promise",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": [
+                  {
+                    "repr": "",
+                    "kind": "union",
+                    "union": [
+                      {
+                        "repr": "InstallationManifest",
+                        "kind": "typeRef",
+                        "typeRef": {
+                          "typeParams": null,
+                          "typeName": "InstallationManifest"
+                        }
+                      },
+                      {
+                        "repr": "null",
+                        "kind": "keyword",
+                        "keyword": "null"
+                      }
+                    ]
+                  }
+                ],
+                "typeName": "Promise"
+              }
+            },
+            "typeParams": []
+          }
+        ],
+        "properties": [],
+        "callSignatures": [],
+        "indexSignatures": [],
+        "typeParams": []
+      }
+    },
+    {
+      "name": "InstallationManifest",
+      "isDefault": false,
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/state/manifest_repository.ts",
+        "line": 16,
+        "col": 0,
+        "byteIndex": 440
+      },
+      "declarationKind": "export",
+      "jsDoc": {
+        "doc": "Minimal shape to detect installation status for this story."
+      },
+      "kind": "interface",
+      "interfaceDef": {
+        "extends": [],
+        "constructors": [],
+        "methods": [],
+        "properties": [
+          {
+            "name": "id",
+            "jsDoc": {
+              "doc": "Unique id for the installation (optional for this story)."
+            },
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/state/manifest_repository.ts",
+              "line": 18,
+              "col": 2,
+              "byteIndex": 549
+            },
+            "params": [],
+            "computed": false,
+            "optional": true,
+            "tsType": {
+              "repr": "string",
+              "kind": "keyword",
+              "keyword": "string"
+            },
+            "typeParams": []
+          },
+          {
+            "name": "version",
+            "jsDoc": {
+              "doc": "Version of the installed toolkit/application."
+            },
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/state/manifest_repository.ts",
+              "line": 20,
+              "col": 2,
+              "byteIndex": 619
+            },
+            "params": [],
+            "computed": false,
+            "optional": true,
+            "tsType": {
+              "repr": "string",
+              "kind": "keyword",
+              "keyword": "string"
+            },
+            "typeParams": []
+          },
+          {
+            "name": "installedAt",
+            "jsDoc": {
+              "doc": "ISO timestamp for when install occurred."
+            },
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/state/manifest_repository.ts",
+              "line": 22,
+              "col": 2,
+              "byteIndex": 689
+            },
+            "params": [],
+            "computed": false,
+            "optional": true,
+            "tsType": {
+              "repr": "string",
+              "kind": "keyword",
+              "keyword": "string"
+            },
+            "typeParams": []
+          }
+        ],
+        "callSignatures": [],
+        "indexSignatures": [],
+        "typeParams": []
+      }
+    },
+    {
       "name": "APP_NAME",
       "isDefault": false,
       "location": {
         "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/main.ts",
-        "line": 12,
+        "line": 14,
         "col": 13,
-        "byteIndex": 320
+        "byteIndex": 453
       },
       "declarationKind": "export",
       "jsDoc": {
@@ -38,9 +814,9 @@
       "isDefault": false,
       "location": {
         "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/main.ts",
-        "line": 17,
+        "line": 19,
         "col": 13,
-        "byteIndex": 423
+        "byteIndex": 556
       },
       "declarationKind": "export",
       "jsDoc": {
@@ -70,9 +846,9 @@
       "isDefault": false,
       "location": {
         "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/main.ts",
-        "line": 24,
+        "line": 26,
         "col": 0,
-        "byteIndex": 566
+        "byteIndex": 699
       },
       "declarationKind": "export",
       "jsDoc": {
@@ -107,9 +883,9 @@
       "isDefault": false,
       "location": {
         "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/main.ts",
-        "line": 47,
+        "line": 51,
         "col": 0,
-        "byteIndex": 1180
+        "byteIndex": 1483
       },
       "declarationKind": "export",
       "jsDoc": {
@@ -153,9 +929,9 @@
                     "name": "print",
                     "location": {
                       "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/main.ts",
-                      "line": 48,
+                      "line": 52,
                       "col": 11,
-                      "byteIndex": 1213
+                      "byteIndex": 1516
                     },
                     "params": [],
                     "computed": false,
@@ -220,6 +996,314 @@
       }
     },
     {
+      "name": "mainAsync",
+      "isDefault": false,
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/main.ts",
+        "line": 84,
+        "col": 0,
+        "byteIndex": 2248
+      },
+      "declarationKind": "export",
+      "jsDoc": {
+        "doc": "Async CLI entry that supports toolkit bypass."
+      },
+      "kind": "function",
+      "functionDef": {
+        "params": [
+          {
+            "kind": "identifier",
+            "name": "opts",
+            "optional": true,
+            "tsType": {
+              "repr": "",
+              "kind": "typeLiteral",
+              "typeLiteral": {
+                "constructors": [],
+                "methods": [],
+                "properties": [
+                  {
+                    "name": "print",
+                    "location": {
+                      "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/main.ts",
+                      "line": 86,
+                      "col": 4,
+                      "byteIndex": 2296
+                    },
+                    "params": [],
+                    "computed": false,
+                    "optional": true,
+                    "tsType": {
+                      "repr": "",
+                      "kind": "fnOrConstructor",
+                      "fnOrConstructor": {
+                        "constructor": false,
+                        "tsType": {
+                          "repr": "void",
+                          "kind": "keyword",
+                          "keyword": "void"
+                        },
+                        "params": [
+                          {
+                            "kind": "identifier",
+                            "name": "msg",
+                            "optional": false,
+                            "tsType": {
+                              "repr": "string",
+                              "kind": "keyword",
+                              "keyword": "string"
+                            }
+                          }
+                        ],
+                        "typeParams": []
+                      }
+                    },
+                    "typeParams": []
+                  },
+                  {
+                    "name": "toolkitExec",
+                    "location": {
+                      "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/main.ts",
+                      "line": 87,
+                      "col": 4,
+                      "byteIndex": 2331
+                    },
+                    "params": [],
+                    "computed": false,
+                    "optional": true,
+                    "tsType": {
+                      "repr": "",
+                      "kind": "fnOrConstructor",
+                      "fnOrConstructor": {
+                        "constructor": false,
+                        "tsType": {
+                          "repr": "Promise",
+                          "kind": "typeRef",
+                          "typeRef": {
+                            "typeParams": [
+                              {
+                                "repr": "",
+                                "kind": "typeLiteral",
+                                "typeLiteral": {
+                                  "constructors": [],
+                                  "methods": [],
+                                  "properties": [
+                                    {
+                                      "name": "code",
+                                      "location": {
+                                        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/main.ts",
+                                        "line": 87,
+                                        "col": 61,
+                                        "byteIndex": 2388
+                                      },
+                                      "params": [],
+                                      "computed": false,
+                                      "optional": false,
+                                      "tsType": {
+                                        "repr": "number",
+                                        "kind": "keyword",
+                                        "keyword": "number"
+                                      },
+                                      "typeParams": []
+                                    }
+                                  ],
+                                  "callSignatures": [],
+                                  "indexSignatures": []
+                                }
+                              }
+                            ],
+                            "typeName": "Promise"
+                          }
+                        },
+                        "params": [
+                          {
+                            "kind": "identifier",
+                            "name": "cmd",
+                            "optional": false,
+                            "tsType": {
+                              "repr": "string",
+                              "kind": "keyword",
+                              "keyword": "string"
+                            }
+                          },
+                          {
+                            "kind": "identifier",
+                            "name": "args",
+                            "optional": false,
+                            "tsType": {
+                              "repr": "",
+                              "kind": "array",
+                              "array": {
+                                "repr": "string",
+                                "kind": "keyword",
+                                "keyword": "string"
+                              }
+                            }
+                          }
+                        ],
+                        "typeParams": []
+                      }
+                    },
+                    "typeParams": []
+                  },
+                  {
+                    "name": "configProvider",
+                    "location": {
+                      "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/main.ts",
+                      "line": 88,
+                      "col": 4,
+                      "byteIndex": 2409
+                    },
+                    "params": [],
+                    "computed": false,
+                    "optional": true,
+                    "tsType": {
+                      "repr": "",
+                      "kind": "fnOrConstructor",
+                      "fnOrConstructor": {
+                        "constructor": false,
+                        "tsType": {
+                          "repr": "Promise",
+                          "kind": "typeRef",
+                          "typeRef": {
+                            "typeParams": [
+                              {
+                                "repr": "",
+                                "kind": "union",
+                                "union": [
+                                  {
+                                    "repr": "",
+                                    "kind": "typeLiteral",
+                                    "typeLiteral": {
+                                      "constructors": [],
+                                      "methods": [],
+                                      "properties": [
+                                        {
+                                          "name": "tasks",
+                                          "location": {
+                                            "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/main.ts",
+                                            "line": 88,
+                                            "col": 37,
+                                            "byteIndex": 2442
+                                          },
+                                          "params": [],
+                                          "computed": false,
+                                          "optional": true,
+                                          "tsType": {
+                                            "repr": "Record",
+                                            "kind": "typeRef",
+                                            "typeRef": {
+                                              "typeParams": [
+                                                {
+                                                  "repr": "string",
+                                                  "kind": "keyword",
+                                                  "keyword": "string"
+                                                },
+                                                {
+                                                  "repr": "unknown",
+                                                  "kind": "keyword",
+                                                  "keyword": "unknown"
+                                                }
+                                              ],
+                                              "typeName": "Record"
+                                            }
+                                          },
+                                          "typeParams": []
+                                        }
+                                      ],
+                                      "callSignatures": [],
+                                      "indexSignatures": []
+                                    }
+                                  },
+                                  {
+                                    "repr": "null",
+                                    "kind": "keyword",
+                                    "keyword": "null"
+                                  }
+                                ]
+                              }
+                            ],
+                            "typeName": "Promise"
+                          }
+                        },
+                        "params": [],
+                        "typeParams": []
+                      }
+                    },
+                    "typeParams": []
+                  },
+                  {
+                    "name": "servicesFactory",
+                    "location": {
+                      "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/main.ts",
+                      "line": 89,
+                      "col": 4,
+                      "byteIndex": 2489
+                    },
+                    "params": [],
+                    "computed": false,
+                    "optional": true,
+                    "tsType": {
+                      "repr": "",
+                      "kind": "fnOrConstructor",
+                      "fnOrConstructor": {
+                        "constructor": false,
+                        "tsType": {
+                          "repr": "AppServices",
+                          "kind": "typeRef",
+                          "typeRef": {
+                            "typeParams": null,
+                            "typeName": "AppServices"
+                          }
+                        },
+                        "params": [],
+                        "typeParams": []
+                      }
+                    },
+                    "typeParams": []
+                  }
+                ],
+                "callSignatures": [],
+                "indexSignatures": []
+              }
+            }
+          },
+          {
+            "kind": "identifier",
+            "name": "args",
+            "optional": true,
+            "tsType": {
+              "repr": "",
+              "kind": "array",
+              "array": {
+                "repr": "string",
+                "kind": "keyword",
+                "keyword": "string"
+              }
+            }
+          }
+        ],
+        "returnType": {
+          "repr": "Promise",
+          "kind": "typeRef",
+          "typeRef": {
+            "typeParams": [
+              {
+                "repr": "number",
+                "kind": "keyword",
+                "keyword": "number"
+              }
+            ],
+            "typeName": "Promise"
+          }
+        },
+        "hasBody": true,
+        "isAsync": true,
+        "isGenerator": false,
+        "typeParams": []
+      }
+    },
+    {
       "name": "log",
       "location": {
         "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/main.ts",
@@ -247,6 +1331,4550 @@
       "importDef": {
         "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/deps.ts",
         "imported": "parseFlags"
+      }
+    },
+    {
+      "name": "ToolkitServiceImpl",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/main.ts",
+        "line": 7,
+        "col": 0,
+        "byteIndex": 236
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/toolkit_service.ts",
+        "imported": "ToolkitServiceImpl"
+      }
+    },
+    {
+      "name": "AppServices",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/main.ts",
+        "line": 8,
+        "col": 0,
+        "byteIndex": 304
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/di.ts",
+        "imported": "AppServices"
+      }
+    },
+    {
+      "name": "createServices",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/main.ts",
+        "line": 8,
+        "col": 0,
+        "byteIndex": 304
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/di.ts",
+        "imported": "createServices"
+      }
+    },
+    {
+      "name": "ConfigService",
+      "isDefault": false,
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/config_service.ts",
+        "line": 12,
+        "col": 0,
+        "byteIndex": 295
+      },
+      "declarationKind": "export",
+      "jsDoc": {
+        "doc": "Config Service for interacting with core configuration files.\n\nFocus: bmad-core/core-config.yaml\n\nPermissions:\n- getCoreConfigPath(): no permissions required\n- openCoreConfig(): requires --allow-read (existence check) and --allow-run (spawn opener)\n",
+        "tags": [
+          {
+            "kind": "since",
+            "doc": "0.3.0"
+          }
+        ]
+      },
+      "kind": "interface",
+      "interfaceDef": {
+        "extends": [],
+        "constructors": [],
+        "methods": [
+          {
+            "name": "getCoreConfigPath",
+            "jsDoc": {
+              "doc": "Absolute path to bmad-core/core-config.yaml resolved from repo root."
+            },
+            "kind": "method",
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/config_service.ts",
+              "line": 14,
+              "col": 2,
+              "byteIndex": 408
+            },
+            "params": [],
+            "optional": false,
+            "returnType": {
+              "repr": "string",
+              "kind": "keyword",
+              "keyword": "string"
+            },
+            "typeParams": []
+          },
+          {
+            "name": "openCoreConfig",
+            "jsDoc": {
+              "doc": "Open the core config file with the system default application.\n\nSuccess resolves with { code: 0 }\nFailures reject with an Error that contains an actionable message.\n",
+              "tags": [
+                {
+                  "kind": "example",
+                  "doc": "// deno run --allow-read --allow-run src/main.ts --open-config\nconst { code } = await config.openCoreConfig();"
+                }
+              ]
+            },
+            "kind": "method",
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/config_service.ts",
+              "line": 26,
+              "col": 2,
+              "byteIndex": 776
+            },
+            "params": [],
+            "optional": false,
+            "returnType": {
+              "repr": "Promise",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": [
+                  {
+                    "repr": "",
+                    "kind": "typeLiteral",
+                    "typeLiteral": {
+                      "constructors": [],
+                      "methods": [],
+                      "properties": [
+                        {
+                          "name": "code",
+                          "location": {
+                            "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/config_service.ts",
+                            "line": 26,
+                            "col": 30,
+                            "byteIndex": 804
+                          },
+                          "params": [],
+                          "computed": false,
+                          "optional": false,
+                          "tsType": {
+                            "repr": "number",
+                            "kind": "keyword",
+                            "keyword": "number"
+                          },
+                          "typeParams": []
+                        }
+                      ],
+                      "callSignatures": [],
+                      "indexSignatures": []
+                    }
+                  }
+                ],
+                "typeName": "Promise"
+              }
+            },
+            "typeParams": []
+          }
+        ],
+        "properties": [],
+        "callSignatures": [],
+        "indexSignatures": [],
+        "typeParams": []
+      }
+    },
+    {
+      "name": "ConfigServiceImpl",
+      "isDefault": false,
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/config_service.ts",
+        "line": 32,
+        "col": 0,
+        "byteIndex": 900
+      },
+      "declarationKind": "export",
+      "jsDoc": {
+        "doc": "Concrete ConfigService implementation."
+      },
+      "kind": "class",
+      "classDef": {
+        "isAbstract": false,
+        "constructors": [
+          {
+            "jsDoc": {
+              "doc": "Create a ConfigServiceImpl.\n",
+              "tags": [
+                {
+                  "kind": "param",
+                  "name": "opener",
+                  "doc": "- Optional function to open a target path."
+                },
+                {
+                  "kind": "param",
+                  "name": "existsFn",
+                  "doc": "- Optional function to check file existence."
+                },
+                {
+                  "kind": "param",
+                  "name": "platform",
+                  "doc": "- OS identifier (e.g. 'darwin', 'linux', 'windows')."
+                },
+                {
+                  "kind": "param",
+                  "name": "rootDir",
+                  "doc": "- Repository root directory."
+                }
+              ]
+            },
+            "accessibility": null,
+            "hasBody": true,
+            "name": "constructor",
+            "params": [
+              {
+                "accessibility": "private",
+                "kind": "identifier",
+                "name": "opener",
+                "optional": true,
+                "tsType": {
+                  "repr": "",
+                  "kind": "fnOrConstructor",
+                  "fnOrConstructor": {
+                    "constructor": false,
+                    "tsType": {
+                      "repr": "Promise",
+                      "kind": "typeRef",
+                      "typeRef": {
+                        "typeParams": [
+                          {
+                            "repr": "",
+                            "kind": "typeLiteral",
+                            "typeLiteral": {
+                              "constructors": [],
+                              "methods": [],
+                              "properties": [
+                                {
+                                  "name": "code",
+                                  "location": {
+                                    "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/config_service.ts",
+                                    "line": 42,
+                                    "col": 60,
+                                    "byteIndex": 1334
+                                  },
+                                  "params": [],
+                                  "computed": false,
+                                  "optional": false,
+                                  "tsType": {
+                                    "repr": "number",
+                                    "kind": "keyword",
+                                    "keyword": "number"
+                                  },
+                                  "typeParams": []
+                                }
+                              ],
+                              "callSignatures": [],
+                              "indexSignatures": []
+                            }
+                          }
+                        ],
+                        "typeName": "Promise"
+                      }
+                    },
+                    "params": [
+                      {
+                        "kind": "identifier",
+                        "name": "target",
+                        "optional": false,
+                        "tsType": {
+                          "repr": "string",
+                          "kind": "keyword",
+                          "keyword": "string"
+                        }
+                      }
+                    ],
+                    "typeParams": []
+                  }
+                },
+                "readonly": true
+              },
+              {
+                "accessibility": "private",
+                "kind": "identifier",
+                "name": "existsFn",
+                "optional": true,
+                "tsType": {
+                  "repr": "",
+                  "kind": "fnOrConstructor",
+                  "fnOrConstructor": {
+                    "constructor": false,
+                    "tsType": {
+                      "repr": "Promise",
+                      "kind": "typeRef",
+                      "typeRef": {
+                        "typeParams": [
+                          {
+                            "repr": "boolean",
+                            "kind": "keyword",
+                            "keyword": "boolean"
+                          }
+                        ],
+                        "typeName": "Promise"
+                      }
+                    },
+                    "params": [
+                      {
+                        "kind": "identifier",
+                        "name": "p",
+                        "optional": false,
+                        "tsType": {
+                          "repr": "string",
+                          "kind": "keyword",
+                          "keyword": "string"
+                        }
+                      }
+                    ],
+                    "typeParams": []
+                  }
+                },
+                "readonly": true
+              },
+              {
+                "accessibility": "private",
+                "kind": "assign",
+                "left": {
+                  "kind": "identifier",
+                  "name": "platform",
+                  "optional": false,
+                  "tsType": {
+                    "repr": "string",
+                    "kind": "keyword",
+                    "keyword": "string"
+                  }
+                },
+                "right": "[[Deno.build].os]",
+                "tsType": null,
+                "readonly": true
+              },
+              {
+                "accessibility": "private",
+                "kind": "assign",
+                "left": {
+                  "kind": "identifier",
+                  "name": "rootDir",
+                  "optional": false,
+                  "tsType": {
+                    "repr": "string",
+                    "kind": "keyword",
+                    "keyword": "string"
+                  }
+                },
+                "right": "[UNSUPPORTED]",
+                "tsType": null,
+                "readonly": true
+              }
+            ],
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/config_service.ts",
+              "line": 41,
+              "col": 2,
+              "byteIndex": 1261
+            }
+          }
+        ],
+        "properties": [],
+        "indexSignatures": [],
+        "methods": [
+          {
+            "jsDoc": {
+              "doc": "Absolute path to core config YAML within repo."
+            },
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "getCoreConfigPath",
+            "kind": "method",
+            "functionDef": {
+              "params": [],
+              "returnType": {
+                "repr": "string",
+                "kind": "keyword",
+                "keyword": "string"
+              },
+              "hasBody": true,
+              "isAsync": false,
+              "isGenerator": false,
+              "typeParams": []
+            },
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/config_service.ts",
+              "line": 49,
+              "col": 2,
+              "byteIndex": 1588
+            }
+          },
+          {
+            "jsDoc": {
+              "doc": "Open core config file with the system default application."
+            },
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "openCoreConfig",
+            "kind": "method",
+            "functionDef": {
+              "params": [],
+              "returnType": {
+                "repr": "Promise",
+                "kind": "typeRef",
+                "typeRef": {
+                  "typeParams": [
+                    {
+                      "repr": "",
+                      "kind": "typeLiteral",
+                      "typeLiteral": {
+                        "constructors": [],
+                        "methods": [],
+                        "properties": [
+                          {
+                            "name": "code",
+                            "location": {
+                              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/config_service.ts",
+                              "line": 54,
+                              "col": 36,
+                              "byteIndex": 1796
+                            },
+                            "params": [],
+                            "computed": false,
+                            "optional": false,
+                            "tsType": {
+                              "repr": "number",
+                              "kind": "keyword",
+                              "keyword": "number"
+                            },
+                            "typeParams": []
+                          }
+                        ],
+                        "callSignatures": [],
+                        "indexSignatures": []
+                      }
+                    }
+                  ],
+                  "typeName": "Promise"
+                }
+              },
+              "hasBody": true,
+              "isAsync": true,
+              "isGenerator": false,
+              "typeParams": []
+            },
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/config_service.ts",
+              "line": 54,
+              "col": 2,
+              "byteIndex": 1762
+            }
+          }
+        ],
+        "extends": null,
+        "implements": [
+          {
+            "repr": "ConfigService",
+            "kind": "typeRef",
+            "typeRef": {
+              "typeParams": null,
+              "typeName": "ConfigService"
+            }
+          }
+        ],
+        "typeParams": [],
+        "superTypeParams": []
+      }
+    },
+    {
+      "name": "ConfigServiceStub",
+      "isDefault": false,
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/config_service.ts",
+        "line": 98,
+        "col": 0,
+        "byteIndex": 3015
+      },
+      "declarationKind": "export",
+      "jsDoc": {
+        "doc": "No-op stub for ConfigService.\n",
+        "tags": [
+          {
+            "kind": "since",
+            "doc": "0.3.0"
+          }
+        ]
+      },
+      "kind": "class",
+      "classDef": {
+        "isAbstract": false,
+        "constructors": [],
+        "properties": [],
+        "indexSignatures": [],
+        "methods": [
+          {
+            "jsDoc": {
+              "doc": "Return a default core-config.yaml under current working directory."
+            },
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "getCoreConfigPath",
+            "kind": "method",
+            "functionDef": {
+              "params": [],
+              "returnType": {
+                "repr": "string",
+                "kind": "keyword",
+                "keyword": "string"
+              },
+              "hasBody": true,
+              "isAsync": false,
+              "isGenerator": false,
+              "typeParams": []
+            },
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/config_service.ts",
+              "line": 100,
+              "col": 2,
+              "byteIndex": 3151
+            }
+          },
+          {
+            "jsDoc": {
+              "doc": "Pretend to open config successfully, returning code 0."
+            },
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "openCoreConfig",
+            "kind": "method",
+            "functionDef": {
+              "params": [],
+              "returnType": {
+                "repr": "Promise",
+                "kind": "typeRef",
+                "typeRef": {
+                  "typeParams": [
+                    {
+                      "repr": "",
+                      "kind": "typeLiteral",
+                      "typeLiteral": {
+                        "constructors": [],
+                        "methods": [],
+                        "properties": [
+                          {
+                            "name": "code",
+                            "location": {
+                              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/config_service.ts",
+                              "line": 104,
+                              "col": 30,
+                              "byteIndex": 3346
+                            },
+                            "params": [],
+                            "computed": false,
+                            "optional": false,
+                            "tsType": {
+                              "repr": "number",
+                              "kind": "keyword",
+                              "keyword": "number"
+                            },
+                            "typeParams": []
+                          }
+                        ],
+                        "callSignatures": [],
+                        "indexSignatures": []
+                      }
+                    }
+                  ],
+                  "typeName": "Promise"
+                }
+              },
+              "hasBody": true,
+              "isAsync": false,
+              "isGenerator": false,
+              "typeParams": []
+            },
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/config_service.ts",
+              "line": 104,
+              "col": 2,
+              "byteIndex": 3318
+            }
+          }
+        ],
+        "extends": null,
+        "implements": [
+          {
+            "repr": "ConfigService",
+            "kind": "typeRef",
+            "typeRef": {
+              "typeParams": null,
+              "typeName": "ConfigService"
+            }
+          }
+        ],
+        "typeParams": [],
+        "superTypeParams": []
+      }
+    },
+    {
+      "name": "path",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/config_service.ts",
+        "line": 29,
+        "col": 0,
+        "byteIndex": 824
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/deps.ts",
+        "imported": "path"
+      }
+    },
+    {
+      "name": "InstallerService",
+      "isDefault": false,
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/installer_service.ts",
+        "line": 7,
+        "col": 0,
+        "byteIndex": 134
+      },
+      "declarationKind": "export",
+      "jsDoc": {
+        "doc": "Installer Service interface and stub.\nWires from Main Menu; implementation follows in later stories.\n",
+        "tags": [
+          {
+            "kind": "since",
+            "doc": "0.2.0"
+          }
+        ]
+      },
+      "kind": "interface",
+      "interfaceDef": {
+        "extends": [],
+        "constructors": [],
+        "methods": [
+          {
+            "name": "start",
+            "jsDoc": {
+              "doc": "Start installer wizard or workflow."
+            },
+            "kind": "method",
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/installer_service.ts",
+              "line": 9,
+              "col": 2,
+              "byteIndex": 217
+            },
+            "params": [],
+            "optional": false,
+            "returnType": {
+              "repr": "Promise",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": [
+                  {
+                    "repr": "void",
+                    "kind": "keyword",
+                    "keyword": "void"
+                  }
+                ],
+                "typeName": "Promise"
+              }
+            },
+            "typeParams": []
+          }
+        ],
+        "properties": [],
+        "callSignatures": [],
+        "indexSignatures": [],
+        "typeParams": []
+      }
+    },
+    {
+      "name": "InstallerServiceStub",
+      "isDefault": false,
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/installer_service.ts",
+        "line": 17,
+        "col": 0,
+        "byteIndex": 347
+      },
+      "declarationKind": "export",
+      "jsDoc": {
+        "doc": "No-op stub for `InstallerService` used in tests and placeholder runtime.\n",
+        "tags": [
+          {
+            "kind": "since",
+            "doc": "0.2.0"
+          }
+        ]
+      },
+      "kind": "class",
+      "classDef": {
+        "isAbstract": false,
+        "constructors": [],
+        "properties": [],
+        "indexSignatures": [],
+        "methods": [
+          {
+            "jsDoc": {
+              "doc": "Start installer workflow (no-op)."
+            },
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "start",
+            "kind": "method",
+            "functionDef": {
+              "params": [],
+              "returnType": {
+                "repr": "Promise",
+                "kind": "typeRef",
+                "typeRef": {
+                  "typeParams": [
+                    {
+                      "repr": "void",
+                      "kind": "keyword",
+                      "keyword": "void"
+                    }
+                  ],
+                  "typeName": "Promise"
+                }
+              },
+              "hasBody": true,
+              "isAsync": true,
+              "isGenerator": false,
+              "typeParams": []
+            },
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/installer_service.ts",
+              "line": 19,
+              "col": 2,
+              "byteIndex": 456
+            }
+          }
+        ],
+        "extends": null,
+        "implements": [
+          {
+            "repr": "InstallerService",
+            "kind": "typeRef",
+            "typeRef": {
+              "typeParams": null,
+              "typeName": "InstallerService"
+            }
+          }
+        ],
+        "typeParams": [],
+        "superTypeParams": []
+      }
+    },
+    {
+      "name": "ToolkitService",
+      "isDefault": false,
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/toolkit_service.ts",
+        "line": 6,
+        "col": 0,
+        "byteIndex": 66
+      },
+      "declarationKind": "export",
+      "jsDoc": {
+        "doc": "Toolkit Service interface and stub.\n",
+        "tags": [
+          {
+            "kind": "since",
+            "doc": "0.2.0"
+          }
+        ]
+      },
+      "kind": "interface",
+      "interfaceDef": {
+        "extends": [],
+        "constructors": [],
+        "methods": [
+          {
+            "name": "listTasks",
+            "jsDoc": {
+              "doc": "Discover project tasks from root deno.json/deno.jsonc.\n\nEdge cases:\n- Missing or unreadable config => returns []\n- Empty tasks map => returns []\n",
+              "tags": [
+                {
+                  "kind": "example",
+                  "doc": "// Requires --allow-read for discovery\nconst tasks = await toolkit.listTasks();\n"
+                },
+                {
+                  "kind": "return",
+                  "doc": "Array of task descriptors with name and mapped command"
+                }
+              ]
+            },
+            "kind": "method",
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/toolkit_service.ts",
+              "line": 20,
+              "col": 2,
+              "byteIndex": 466
+            },
+            "params": [],
+            "optional": false,
+            "returnType": {
+              "repr": "Promise",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": [
+                  {
+                    "repr": "Array",
+                    "kind": "typeRef",
+                    "typeRef": {
+                      "typeParams": [
+                        {
+                          "repr": "",
+                          "kind": "typeLiteral",
+                          "typeLiteral": {
+                            "constructors": [],
+                            "methods": [],
+                            "properties": [
+                              {
+                                "name": "name",
+                                "location": {
+                                  "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/toolkit_service.ts",
+                                  "line": 20,
+                                  "col": 31,
+                                  "byteIndex": 495
+                                },
+                                "params": [],
+                                "computed": false,
+                                "optional": false,
+                                "tsType": {
+                                  "repr": "string",
+                                  "kind": "keyword",
+                                  "keyword": "string"
+                                },
+                                "typeParams": []
+                              },
+                              {
+                                "name": "command",
+                                "location": {
+                                  "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/toolkit_service.ts",
+                                  "line": 20,
+                                  "col": 45,
+                                  "byteIndex": 509
+                                },
+                                "params": [],
+                                "computed": false,
+                                "optional": false,
+                                "tsType": {
+                                  "repr": "string",
+                                  "kind": "keyword",
+                                  "keyword": "string"
+                                },
+                                "typeParams": []
+                              }
+                            ],
+                            "callSignatures": [],
+                            "indexSignatures": []
+                          }
+                        }
+                      ],
+                      "typeName": "Array"
+                    }
+                  }
+                ],
+                "typeName": "Promise"
+              }
+            },
+            "typeParams": []
+          },
+          {
+            "name": "runTask",
+            "jsDoc": {
+              "doc": "Run a known task using `deno task <name> [-- args...]` and propagate exit code.\n\nUnknown task must reject with a clear error listing available tasks.\n",
+              "tags": [
+                {
+                  "kind": "example",
+                  "doc": "// Requires --allow-run to spawn and --allow-read for discovery\nconst { code } = await toolkit.runTask('test', ['--', '--fail-fast']);"
+                }
+              ]
+            },
+            "kind": "method",
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/toolkit_service.ts",
+              "line": 31,
+              "col": 2,
+              "byteIndex": 873
+            },
+            "params": [
+              {
+                "kind": "identifier",
+                "name": "name",
+                "optional": false,
+                "tsType": {
+                  "repr": "string",
+                  "kind": "keyword",
+                  "keyword": "string"
+                }
+              },
+              {
+                "kind": "identifier",
+                "name": "args",
+                "optional": true,
+                "tsType": {
+                  "repr": "",
+                  "kind": "array",
+                  "array": {
+                    "repr": "string",
+                    "kind": "keyword",
+                    "keyword": "string"
+                  }
+                }
+              }
+            ],
+            "optional": false,
+            "returnType": {
+              "repr": "Promise",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": [
+                  {
+                    "repr": "",
+                    "kind": "typeLiteral",
+                    "typeLiteral": {
+                      "constructors": [],
+                      "methods": [],
+                      "properties": [
+                        {
+                          "name": "code",
+                          "location": {
+                            "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/toolkit_service.ts",
+                            "line": 31,
+                            "col": 52,
+                            "byteIndex": 923
+                          },
+                          "params": [],
+                          "computed": false,
+                          "optional": false,
+                          "tsType": {
+                            "repr": "number",
+                            "kind": "keyword",
+                            "keyword": "number"
+                          },
+                          "typeParams": []
+                        }
+                      ],
+                      "callSignatures": [],
+                      "indexSignatures": []
+                    }
+                  }
+                ],
+                "typeName": "Promise"
+              }
+            },
+            "typeParams": []
+          },
+          {
+            "name": "open",
+            "jsDoc": {
+              "doc": "Open toolkit tasks UI or perform default action (used by TUI button)."
+            },
+            "kind": "method",
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/toolkit_service.ts",
+              "line": 34,
+              "col": 2,
+              "byteIndex": 1022
+            },
+            "params": [],
+            "optional": false,
+            "returnType": {
+              "repr": "Promise",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": [
+                  {
+                    "repr": "void",
+                    "kind": "keyword",
+                    "keyword": "void"
+                  }
+                ],
+                "typeName": "Promise"
+              }
+            },
+            "typeParams": []
+          }
+        ],
+        "properties": [],
+        "callSignatures": [],
+        "indexSignatures": [],
+        "typeParams": []
+      }
+    },
+    {
+      "name": "ToolkitServiceImpl",
+      "isDefault": false,
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/toolkit_service.ts",
+        "line": 40,
+        "col": 0,
+        "byteIndex": 1137
+      },
+      "declarationKind": "export",
+      "jsDoc": {
+        "doc": "Concrete ToolkitService implementation."
+      },
+      "kind": "class",
+      "classDef": {
+        "isAbstract": false,
+        "constructors": [
+          {
+            "jsDoc": {
+              "doc": "Create a ToolkitServiceImpl.\n",
+              "tags": [
+                {
+                  "kind": "param",
+                  "name": "exec",
+                  "doc": "- Optional runner to execute a command."
+                },
+                {
+                  "kind": "param",
+                  "name": "configProvider",
+                  "doc": "- Optional provider for root config content."
+                },
+                {
+                  "kind": "param",
+                  "name": "rootDir",
+                  "doc": "- Project root directory to search for deno.json(c)."
+                }
+              ]
+            },
+            "accessibility": null,
+            "hasBody": true,
+            "name": "constructor",
+            "params": [
+              {
+                "accessibility": "private",
+                "kind": "identifier",
+                "name": "exec",
+                "optional": true,
+                "tsType": {
+                  "repr": "",
+                  "kind": "fnOrConstructor",
+                  "fnOrConstructor": {
+                    "constructor": false,
+                    "tsType": {
+                      "repr": "Promise",
+                      "kind": "typeRef",
+                      "typeRef": {
+                        "typeParams": [
+                          {
+                            "repr": "",
+                            "kind": "typeLiteral",
+                            "typeLiteral": {
+                              "constructors": [],
+                              "methods": [],
+                              "properties": [
+                                {
+                                  "name": "code",
+                                  "location": {
+                                    "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/toolkit_service.ts",
+                                    "line": 49,
+                                    "col": 71,
+                                    "byteIndex": 1536
+                                  },
+                                  "params": [],
+                                  "computed": false,
+                                  "optional": false,
+                                  "tsType": {
+                                    "repr": "number",
+                                    "kind": "keyword",
+                                    "keyword": "number"
+                                  },
+                                  "typeParams": []
+                                }
+                              ],
+                              "callSignatures": [],
+                              "indexSignatures": []
+                            }
+                          }
+                        ],
+                        "typeName": "Promise"
+                      }
+                    },
+                    "params": [
+                      {
+                        "kind": "identifier",
+                        "name": "cmd",
+                        "optional": false,
+                        "tsType": {
+                          "repr": "string",
+                          "kind": "keyword",
+                          "keyword": "string"
+                        }
+                      },
+                      {
+                        "kind": "identifier",
+                        "name": "args",
+                        "optional": false,
+                        "tsType": {
+                          "repr": "",
+                          "kind": "array",
+                          "array": {
+                            "repr": "string",
+                            "kind": "keyword",
+                            "keyword": "string"
+                          }
+                        }
+                      }
+                    ],
+                    "typeParams": []
+                  }
+                },
+                "readonly": true
+              },
+              {
+                "accessibility": "private",
+                "kind": "identifier",
+                "name": "configProvider",
+                "optional": true,
+                "tsType": {
+                  "repr": "",
+                  "kind": "fnOrConstructor",
+                  "fnOrConstructor": {
+                    "constructor": false,
+                    "tsType": {
+                      "repr": "Promise",
+                      "kind": "typeRef",
+                      "typeRef": {
+                        "typeParams": [
+                          {
+                            "repr": "",
+                            "kind": "union",
+                            "union": [
+                              {
+                                "repr": "",
+                                "kind": "typeLiteral",
+                                "typeLiteral": {
+                                  "constructors": [],
+                                  "methods": [],
+                                  "properties": [
+                                    {
+                                      "name": "tasks",
+                                      "location": {
+                                        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/toolkit_service.ts",
+                                        "line": 50,
+                                        "col": 54,
+                                        "byteIndex": 1607
+                                      },
+                                      "params": [],
+                                      "computed": false,
+                                      "optional": true,
+                                      "tsType": {
+                                        "repr": "Record",
+                                        "kind": "typeRef",
+                                        "typeRef": {
+                                          "typeParams": [
+                                            {
+                                              "repr": "string",
+                                              "kind": "keyword",
+                                              "keyword": "string"
+                                            },
+                                            {
+                                              "repr": "unknown",
+                                              "kind": "keyword",
+                                              "keyword": "unknown"
+                                            }
+                                          ],
+                                          "typeName": "Record"
+                                        }
+                                      },
+                                      "typeParams": []
+                                    }
+                                  ],
+                                  "callSignatures": [],
+                                  "indexSignatures": []
+                                }
+                              },
+                              {
+                                "repr": "null",
+                                "kind": "keyword",
+                                "keyword": "null"
+                              }
+                            ]
+                          }
+                        ],
+                        "typeName": "Promise"
+                      }
+                    },
+                    "params": [],
+                    "typeParams": []
+                  }
+                },
+                "readonly": true
+              },
+              {
+                "accessibility": "private",
+                "kind": "assign",
+                "left": {
+                  "kind": "identifier",
+                  "name": "rootDir",
+                  "optional": false,
+                  "tsType": {
+                    "repr": "string",
+                    "kind": "keyword",
+                    "keyword": "string"
+                  }
+                },
+                "right": "[UNSUPPORTED]",
+                "tsType": null,
+                "readonly": true
+              }
+            ],
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/toolkit_service.ts",
+              "line": 48,
+              "col": 2,
+              "byteIndex": 1452
+            }
+          }
+        ],
+        "properties": [],
+        "indexSignatures": [],
+        "methods": [
+          {
+            "jsDoc": {
+              "doc": "Discover available tasks from root deno.json/deno.jsonc."
+            },
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "listTasks",
+            "kind": "method",
+            "functionDef": {
+              "params": [],
+              "returnType": {
+                "repr": "Promise",
+                "kind": "typeRef",
+                "typeRef": {
+                  "typeParams": [
+                    {
+                      "repr": "Array",
+                      "kind": "typeRef",
+                      "typeRef": {
+                        "typeParams": [
+                          {
+                            "repr": "",
+                            "kind": "typeLiteral",
+                            "typeLiteral": {
+                              "constructors": [],
+                              "methods": [],
+                              "properties": [
+                                {
+                                  "name": "name",
+                                  "location": {
+                                    "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/toolkit_service.ts",
+                                    "line": 55,
+                                    "col": 37,
+                                    "byteIndex": 1812
+                                  },
+                                  "params": [],
+                                  "computed": false,
+                                  "optional": false,
+                                  "tsType": {
+                                    "repr": "string",
+                                    "kind": "keyword",
+                                    "keyword": "string"
+                                  },
+                                  "typeParams": []
+                                },
+                                {
+                                  "name": "command",
+                                  "location": {
+                                    "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/toolkit_service.ts",
+                                    "line": 55,
+                                    "col": 51,
+                                    "byteIndex": 1826
+                                  },
+                                  "params": [],
+                                  "computed": false,
+                                  "optional": false,
+                                  "tsType": {
+                                    "repr": "string",
+                                    "kind": "keyword",
+                                    "keyword": "string"
+                                  },
+                                  "typeParams": []
+                                }
+                              ],
+                              "callSignatures": [],
+                              "indexSignatures": []
+                            }
+                          }
+                        ],
+                        "typeName": "Array"
+                      }
+                    }
+                  ],
+                  "typeName": "Promise"
+                }
+              },
+              "hasBody": true,
+              "isAsync": true,
+              "isGenerator": false,
+              "typeParams": []
+            },
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/toolkit_service.ts",
+              "line": 55,
+              "col": 2,
+              "byteIndex": 1777
+            }
+          },
+          {
+            "jsDoc": {
+              "doc": "Run a known task using `deno task <name> [-- args...]`."
+            },
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "runTask",
+            "kind": "method",
+            "functionDef": {
+              "params": [
+                {
+                  "kind": "identifier",
+                  "name": "name",
+                  "optional": false,
+                  "tsType": {
+                    "repr": "string",
+                    "kind": "keyword",
+                    "keyword": "string"
+                  }
+                },
+                {
+                  "kind": "assign",
+                  "left": {
+                    "kind": "identifier",
+                    "name": "args",
+                    "optional": false,
+                    "tsType": {
+                      "repr": "",
+                      "kind": "array",
+                      "array": {
+                        "repr": "string",
+                        "kind": "keyword",
+                        "keyword": "string"
+                      }
+                    }
+                  },
+                  "right": "[UNSUPPORTED]",
+                  "tsType": null
+                }
+              ],
+              "returnType": {
+                "repr": "Promise",
+                "kind": "typeRef",
+                "typeRef": {
+                  "typeParams": [
+                    {
+                      "repr": "",
+                      "kind": "typeLiteral",
+                      "typeLiteral": {
+                        "constructors": [],
+                        "methods": [],
+                        "properties": [
+                          {
+                            "name": "code",
+                            "location": {
+                              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/toolkit_service.ts",
+                              "line": 68,
+                              "col": 62,
+                              "byteIndex": 2375
+                            },
+                            "params": [],
+                            "computed": false,
+                            "optional": false,
+                            "tsType": {
+                              "repr": "number",
+                              "kind": "keyword",
+                              "keyword": "number"
+                            },
+                            "typeParams": []
+                          }
+                        ],
+                        "callSignatures": [],
+                        "indexSignatures": []
+                      }
+                    }
+                  ],
+                  "typeName": "Promise"
+                }
+              },
+              "hasBody": true,
+              "isAsync": true,
+              "isGenerator": false,
+              "typeParams": []
+            },
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/toolkit_service.ts",
+              "line": 68,
+              "col": 2,
+              "byteIndex": 2315
+            }
+          },
+          {
+            "jsDoc": {
+              "doc": "Open toolkit UI (no-op, handled by TUI view)."
+            },
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "open",
+            "kind": "method",
+            "functionDef": {
+              "params": [],
+              "returnType": {
+                "repr": "Promise",
+                "kind": "typeRef",
+                "typeRef": {
+                  "typeParams": [
+                    {
+                      "repr": "void",
+                      "kind": "keyword",
+                      "keyword": "void"
+                    }
+                  ],
+                  "typeName": "Promise"
+                }
+              },
+              "hasBody": true,
+              "isAsync": true,
+              "isGenerator": false,
+              "typeParams": []
+            },
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/toolkit_service.ts",
+              "line": 97,
+              "col": 2,
+              "byteIndex": 3320
+            }
+          }
+        ],
+        "extends": null,
+        "implements": [
+          {
+            "repr": "ToolkitService",
+            "kind": "typeRef",
+            "typeRef": {
+              "typeParams": null,
+              "typeName": "ToolkitService"
+            }
+          }
+        ],
+        "typeParams": [],
+        "superTypeParams": []
+      }
+    },
+    {
+      "name": "ToolkitServiceStub",
+      "isDefault": false,
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/toolkit_service.ts",
+        "line": 140,
+        "col": 0,
+        "byteIndex": 4558
+      },
+      "declarationKind": "export",
+      "jsDoc": {
+        "doc": "No-op stub for the ToolkitService.\n",
+        "tags": [
+          {
+            "kind": "since",
+            "doc": "0.3.0"
+          }
+        ]
+      },
+      "kind": "class",
+      "classDef": {
+        "isAbstract": false,
+        "constructors": [],
+        "properties": [],
+        "indexSignatures": [],
+        "methods": [
+          {
+            "jsDoc": {
+              "doc": "Return an empty tasks array."
+            },
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "listTasks",
+            "kind": "method",
+            "functionDef": {
+              "params": [],
+              "returnType": {
+                "repr": "Promise",
+                "kind": "typeRef",
+                "typeRef": {
+                  "typeParams": [
+                    {
+                      "repr": "Array",
+                      "kind": "typeRef",
+                      "typeRef": {
+                        "typeParams": [
+                          {
+                            "repr": "",
+                            "kind": "typeLiteral",
+                            "typeLiteral": {
+                              "constructors": [],
+                              "methods": [],
+                              "properties": [
+                                {
+                                  "name": "name",
+                                  "location": {
+                                    "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/toolkit_service.ts",
+                                    "line": 142,
+                                    "col": 31,
+                                    "byteIndex": 4687
+                                  },
+                                  "params": [],
+                                  "computed": false,
+                                  "optional": false,
+                                  "tsType": {
+                                    "repr": "string",
+                                    "kind": "keyword",
+                                    "keyword": "string"
+                                  },
+                                  "typeParams": []
+                                },
+                                {
+                                  "name": "command",
+                                  "location": {
+                                    "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/toolkit_service.ts",
+                                    "line": 142,
+                                    "col": 45,
+                                    "byteIndex": 4701
+                                  },
+                                  "params": [],
+                                  "computed": false,
+                                  "optional": false,
+                                  "tsType": {
+                                    "repr": "string",
+                                    "kind": "keyword",
+                                    "keyword": "string"
+                                  },
+                                  "typeParams": []
+                                }
+                              ],
+                              "callSignatures": [],
+                              "indexSignatures": []
+                            }
+                          }
+                        ],
+                        "typeName": "Array"
+                      }
+                    }
+                  ],
+                  "typeName": "Promise"
+                }
+              },
+              "hasBody": true,
+              "isAsync": false,
+              "isGenerator": false,
+              "typeParams": []
+            },
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/toolkit_service.ts",
+              "line": 142,
+              "col": 2,
+              "byteIndex": 4658
+            }
+          },
+          {
+            "jsDoc": {
+              "doc": "Always reject to indicate unknown task."
+            },
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "runTask",
+            "kind": "method",
+            "functionDef": {
+              "params": [
+                {
+                  "kind": "identifier",
+                  "name": "_name",
+                  "optional": false,
+                  "tsType": {
+                    "repr": "string",
+                    "kind": "keyword",
+                    "keyword": "string"
+                  }
+                },
+                {
+                  "kind": "assign",
+                  "left": {
+                    "kind": "identifier",
+                    "name": "_args",
+                    "optional": false,
+                    "tsType": {
+                      "repr": "",
+                      "kind": "array",
+                      "array": {
+                        "repr": "string",
+                        "kind": "keyword",
+                        "keyword": "string"
+                      }
+                    }
+                  },
+                  "right": "[UNSUPPORTED]",
+                  "tsType": null
+                }
+              ],
+              "returnType": {
+                "repr": "Promise",
+                "kind": "typeRef",
+                "typeRef": {
+                  "typeParams": [
+                    {
+                      "repr": "",
+                      "kind": "typeLiteral",
+                      "typeLiteral": {
+                        "constructors": [],
+                        "methods": [],
+                        "properties": [
+                          {
+                            "name": "code",
+                            "location": {
+                              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/toolkit_service.ts",
+                              "line": 146,
+                              "col": 58,
+                              "byteIndex": 4866
+                            },
+                            "params": [],
+                            "computed": false,
+                            "optional": false,
+                            "tsType": {
+                              "repr": "number",
+                              "kind": "keyword",
+                              "keyword": "number"
+                            },
+                            "typeParams": []
+                          }
+                        ],
+                        "callSignatures": [],
+                        "indexSignatures": []
+                      }
+                    }
+                  ],
+                  "typeName": "Promise"
+                }
+              },
+              "hasBody": true,
+              "isAsync": false,
+              "isGenerator": false,
+              "typeParams": []
+            },
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/toolkit_service.ts",
+              "line": 146,
+              "col": 2,
+              "byteIndex": 4810
+            }
+          },
+          {
+            "jsDoc": {
+              "doc": "Pretend to open toolkit UI (no-op)."
+            },
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "open",
+            "kind": "method",
+            "functionDef": {
+              "params": [],
+              "returnType": {
+                "repr": "Promise",
+                "kind": "typeRef",
+                "typeRef": {
+                  "typeParams": [
+                    {
+                      "repr": "void",
+                      "kind": "keyword",
+                      "keyword": "void"
+                    }
+                  ],
+                  "typeName": "Promise"
+                }
+              },
+              "hasBody": true,
+              "isAsync": true,
+              "isGenerator": false,
+              "typeParams": []
+            },
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/toolkit_service.ts",
+              "line": 150,
+              "col": 2,
+              "byteIndex": 4989
+            }
+          }
+        ],
+        "extends": null,
+        "implements": [
+          {
+            "repr": "ToolkitService",
+            "kind": "typeRef",
+            "typeRef": {
+              "typeParams": null,
+              "typeName": "ToolkitService"
+            }
+          }
+        ],
+        "typeParams": [],
+        "superTypeParams": []
+      }
+    },
+    {
+      "name": "parseJsonc",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/toolkit_service.ts",
+        "line": 37,
+        "col": 0,
+        "byteIndex": 1048
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/deps.ts",
+        "imported": "parseJsonc"
+      }
+    },
+    {
+      "name": "path",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/toolkit_service.ts",
+        "line": 37,
+        "col": 0,
+        "byteIndex": 1048
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/deps.ts",
+        "imported": "path"
+      }
+    },
+    {
+      "name": "UninstallerService",
+      "isDefault": false,
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/uninstaller_service.ts",
+        "line": 6,
+        "col": 0,
+        "byteIndex": 70
+      },
+      "declarationKind": "export",
+      "jsDoc": {
+        "doc": "Uninstaller Service interface and stub.\n",
+        "tags": [
+          {
+            "kind": "since",
+            "doc": "0.2.0"
+          }
+        ]
+      },
+      "kind": "interface",
+      "interfaceDef": {
+        "extends": [],
+        "constructors": [],
+        "methods": [
+          {
+            "name": "start",
+            "jsDoc": {
+              "doc": "Start uninstaller workflow."
+            },
+            "kind": "method",
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/uninstaller_service.ts",
+              "line": 8,
+              "col": 2,
+              "byteIndex": 147
+            },
+            "params": [],
+            "optional": false,
+            "returnType": {
+              "repr": "Promise",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": [
+                  {
+                    "repr": "void",
+                    "kind": "keyword",
+                    "keyword": "void"
+                  }
+                ],
+                "typeName": "Promise"
+              }
+            },
+            "typeParams": []
+          }
+        ],
+        "properties": [],
+        "callSignatures": [],
+        "indexSignatures": [],
+        "typeParams": []
+      }
+    },
+    {
+      "name": "UninstallerServiceStub",
+      "isDefault": false,
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/uninstaller_service.ts",
+        "line": 17,
+        "col": 0,
+        "byteIndex": 311
+      },
+      "declarationKind": "export",
+      "jsDoc": {
+        "doc": "No-op stub for `UninstallerService` used in tests and when uninstaller\nimplementation is not available.\n",
+        "tags": [
+          {
+            "kind": "since",
+            "doc": "0.2.0"
+          }
+        ]
+      },
+      "kind": "class",
+      "classDef": {
+        "isAbstract": false,
+        "constructors": [],
+        "properties": [],
+        "indexSignatures": [],
+        "methods": [
+          {
+            "jsDoc": {
+              "doc": "Start the uninstaller workflow (no-op in stub)."
+            },
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "start",
+            "kind": "method",
+            "functionDef": {
+              "params": [],
+              "returnType": {
+                "repr": "Promise",
+                "kind": "typeRef",
+                "typeRef": {
+                  "typeParams": [
+                    {
+                      "repr": "void",
+                      "kind": "keyword",
+                      "keyword": "void"
+                    }
+                  ],
+                  "typeName": "Promise"
+                }
+              },
+              "hasBody": true,
+              "isAsync": true,
+              "isGenerator": false,
+              "typeParams": []
+            },
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/uninstaller_service.ts",
+              "line": 19,
+              "col": 2,
+              "byteIndex": 438
+            }
+          }
+        ],
+        "extends": null,
+        "implements": [
+          {
+            "repr": "UninstallerService",
+            "kind": "typeRef",
+            "typeRef": {
+              "typeParams": null,
+              "typeName": "UninstallerService"
+            }
+          }
+        ],
+        "typeParams": [],
+        "superTypeParams": []
+      }
+    },
+    {
+      "name": "UpdaterService",
+      "isDefault": false,
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/updater_service.ts",
+        "line": 6,
+        "col": 0,
+        "byteIndex": 66
+      },
+      "declarationKind": "export",
+      "jsDoc": {
+        "doc": "Updater Service interface and stub.\n",
+        "tags": [
+          {
+            "kind": "since",
+            "doc": "0.2.0"
+          }
+        ]
+      },
+      "kind": "interface",
+      "interfaceDef": {
+        "extends": [],
+        "constructors": [],
+        "methods": [
+          {
+            "name": "start",
+            "jsDoc": {
+              "doc": "Start updater workflow or routine."
+            },
+            "kind": "method",
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/updater_service.ts",
+              "line": 8,
+              "col": 2,
+              "byteIndex": 146
+            },
+            "params": [],
+            "optional": false,
+            "returnType": {
+              "repr": "Promise",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": [
+                  {
+                    "repr": "void",
+                    "kind": "keyword",
+                    "keyword": "void"
+                  }
+                ],
+                "typeName": "Promise"
+              }
+            },
+            "typeParams": []
+          }
+        ],
+        "properties": [],
+        "callSignatures": [],
+        "indexSignatures": [],
+        "typeParams": []
+      }
+    },
+    {
+      "name": "UpdaterServiceStub",
+      "isDefault": false,
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/updater_service.ts",
+        "line": 16,
+        "col": 0,
+        "byteIndex": 262
+      },
+      "declarationKind": "export",
+      "jsDoc": {
+        "doc": "No-op stub for `UpdaterService` used for tests and wiring.\n",
+        "tags": [
+          {
+            "kind": "since",
+            "doc": "0.2.0"
+          }
+        ]
+      },
+      "kind": "class",
+      "classDef": {
+        "isAbstract": false,
+        "constructors": [],
+        "properties": [],
+        "indexSignatures": [],
+        "methods": [
+          {
+            "jsDoc": {
+              "doc": "Start the updater (no-op in stub)."
+            },
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "start",
+            "kind": "method",
+            "functionDef": {
+              "params": [],
+              "returnType": {
+                "repr": "Promise",
+                "kind": "typeRef",
+                "typeRef": {
+                  "typeParams": [
+                    {
+                      "repr": "void",
+                      "kind": "keyword",
+                      "keyword": "void"
+                    }
+                  ],
+                  "typeName": "Promise"
+                }
+              },
+              "hasBody": true,
+              "isAsync": true,
+              "isGenerator": false,
+              "typeParams": []
+            },
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/services/updater_service.ts",
+              "line": 18,
+              "col": 2,
+              "byteIndex": 368
+            }
+          }
+        ],
+        "extends": null,
+        "implements": [
+          {
+            "repr": "UpdaterService",
+            "kind": "typeRef",
+            "typeRef": {
+              "typeParams": null,
+              "typeName": "UpdaterService"
+            }
+          }
+        ],
+        "typeParams": [],
+        "superTypeParams": []
+      }
+    },
+    {
+      "name": "TuiApplication",
+      "isDefault": false,
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/TuiApplication.ts",
+        "line": 21,
+        "col": 0,
+        "byteIndex": 739
+      },
+      "declarationKind": "export",
+      "jsDoc": {
+        "doc": "TUI Application shell wiring Tui, dynamic header, and global keys.\n",
+        "tags": [
+          {
+            "kind": "since",
+            "doc": "0.2.0"
+          }
+        ]
+      },
+      "kind": "class",
+      "classDef": {
+        "isAbstract": false,
+        "constructors": [
+          {
+            "jsDoc": {
+              "doc": "Construct the TUI application and mount header and views.\n",
+              "tags": [
+                {
+                  "kind": "param",
+                  "name": "repo",
+                  "doc": "- Repository to read installation manifest from."
+                },
+                {
+                  "kind": "param",
+                  "name": "services",
+                  "doc": "- Application services used by views."
+                }
+              ]
+            },
+            "accessibility": null,
+            "hasBody": true,
+            "name": "constructor",
+            "params": [
+              {
+                "kind": "identifier",
+                "name": "repo",
+                "optional": false,
+                "tsType": {
+                  "repr": "ManifestRepository",
+                  "kind": "typeRef",
+                  "typeRef": {
+                    "typeParams": null,
+                    "typeName": "ManifestRepository"
+                  }
+                }
+              },
+              {
+                "kind": "identifier",
+                "name": "services",
+                "optional": false,
+                "tsType": {
+                  "repr": "AppServices",
+                  "kind": "typeRef",
+                  "typeRef": {
+                    "typeParams": null,
+                    "typeName": "AppServices"
+                  }
+                }
+              }
+            ],
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/TuiApplication.ts",
+              "line": 35,
+              "col": 2,
+              "byteIndex": 1260
+            }
+          }
+        ],
+        "properties": [
+          {
+            "jsDoc": {
+              "tags": [
+                {
+                  "kind": "internal"
+                }
+              ]
+            },
+            "tsType": {
+              "repr": "denoTui.Tui",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "denoTui.Tui"
+              }
+            },
+            "readonly": true,
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "tui",
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/TuiApplication.ts",
+              "line": 23,
+              "col": 2,
+              "byteIndex": 842
+            }
+          },
+          {
+            "jsDoc": {
+              "doc": "Installation state accessed by header and views."
+            },
+            "tsType": {
+              "repr": "InstallationState",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "InstallationState"
+              }
+            },
+            "readonly": true,
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "state",
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/TuiApplication.ts",
+              "line": 25,
+              "col": 2,
+              "byteIndex": 929
+            }
+          },
+          {
+            "jsDoc": {
+              "doc": "Application service container used by views."
+            },
+            "tsType": {
+              "repr": "AppServices",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "AppServices"
+              }
+            },
+            "readonly": true,
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "services",
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/TuiApplication.ts",
+              "line": 27,
+              "col": 2,
+              "byteIndex": 1020
+            }
+          }
+        ],
+        "indexSignatures": [],
+        "methods": [
+          {
+            "jsDoc": {
+              "doc": "Start the TUI main loop after refreshing installation state.\n",
+              "tags": [
+                {
+                  "kind": "example",
+                  "doc": "const app = new TuiApplication(repo, services);\nawait app.start();"
+                }
+              ]
+            },
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "start",
+            "kind": "method",
+            "functionDef": {
+              "params": [],
+              "returnType": {
+                "repr": "Promise",
+                "kind": "typeRef",
+                "typeRef": {
+                  "typeParams": [
+                    {
+                      "repr": "void",
+                      "kind": "keyword",
+                      "keyword": "void"
+                    }
+                  ],
+                  "typeName": "Promise"
+                }
+              },
+              "hasBody": true,
+              "isAsync": true,
+              "isGenerator": false,
+              "typeParams": []
+            },
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/TuiApplication.ts",
+              "line": 92,
+              "col": 2,
+              "byteIndex": 2976
+            }
+          }
+        ],
+        "extends": null,
+        "implements": [],
+        "typeParams": [],
+        "superTypeParams": []
+      }
+    },
+    {
+      "name": "effect",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/TuiApplication.ts",
+        "line": 1,
+        "col": 0,
+        "byteIndex": 0
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/deps.ts",
+        "imported": "effect"
+      }
+    },
+    {
+      "name": "crayon",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/TuiApplication.ts",
+        "line": 2,
+        "col": 0,
+        "byteIndex": 31
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/deps.ts",
+        "imported": "crayon"
+      }
+    },
+    {
+      "name": "denoTui",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/TuiApplication.ts",
+        "line": 2,
+        "col": 0,
+        "byteIndex": 31
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/deps.ts",
+        "imported": "denoTui"
+      }
+    },
+    {
+      "name": "denoTuiComponents",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/TuiApplication.ts",
+        "line": 2,
+        "col": 0,
+        "byteIndex": 31
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/deps.ts",
+        "imported": "denoTuiComponents"
+      }
+    },
+    {
+      "name": "APP_NAME",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/TuiApplication.ts",
+        "line": 3,
+        "col": 0,
+        "byteIndex": 90
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/main.ts",
+        "imported": "APP_NAME"
+      }
+    },
+    {
+      "name": "VERSION",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/TuiApplication.ts",
+        "line": 3,
+        "col": 0,
+        "byteIndex": 90
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/main.ts",
+        "imported": "VERSION"
+      }
+    },
+    {
+      "name": "ManifestRepository",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/TuiApplication.ts",
+        "line": 4,
+        "col": 0,
+        "byteIndex": 138
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/state/manifest_repository.ts",
+        "imported": "ManifestRepository"
+      }
+    },
+    {
+      "name": "createInstallationState",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/TuiApplication.ts",
+        "line": 5,
+        "col": 0,
+        "byteIndex": 218
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/state/installation_state.ts",
+        "imported": "createInstallationState"
+      }
+    },
+    {
+      "name": "InstallationState",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/TuiApplication.ts",
+        "line": 5,
+        "col": 0,
+        "byteIndex": 218
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/state/installation_state.ts",
+        "imported": "InstallationState"
+      }
+    },
+    {
+      "name": "AppServices",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/TuiApplication.ts",
+        "line": 9,
+        "col": 0,
+        "byteIndex": 326
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/di.ts",
+        "imported": "AppServices"
+      }
+    },
+    {
+      "name": "currentView",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/TuiApplication.ts",
+        "line": 10,
+        "col": 0,
+        "byteIndex": 376
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/router.ts",
+        "imported": "currentView"
+      }
+    },
+    {
+      "name": "navigate",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/TuiApplication.ts",
+        "line": 10,
+        "col": 0,
+        "byteIndex": 376
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/router.ts",
+        "imported": "navigate"
+      }
+    },
+    {
+      "name": "View",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/TuiApplication.ts",
+        "line": 11,
+        "col": 0,
+        "byteIndex": 429
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/types.ts",
+        "imported": "View"
+      }
+    },
+    {
+      "name": "MainMenuView",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/TuiApplication.ts",
+        "line": 12,
+        "col": 0,
+        "byteIndex": 475
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/MainMenuView.ts",
+        "imported": "MainMenuView"
+      }
+    },
+    {
+      "name": "ToolkitMenuView",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/TuiApplication.ts",
+        "line": 13,
+        "col": 0,
+        "byteIndex": 531
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/ToolkitMenuView.ts",
+        "imported": "ToolkitMenuView"
+      }
+    },
+    {
+      "name": "HelpView",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/TuiApplication.ts",
+        "line": 14,
+        "col": 0,
+        "byteIndex": 593
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/HelpView.ts",
+        "imported": "HelpView"
+      }
+    },
+    {
+      "name": "runTui",
+      "isDefault": false,
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/cli.ts",
+        "line": 43,
+        "col": 0,
+        "byteIndex": 1577
+      },
+      "declarationKind": "export",
+      "jsDoc": {
+        "doc": "Run the interactive TUI application.\n",
+        "tags": [
+          {
+            "kind": "param",
+            "name": "options",
+            "doc": "- Optional manifest path to seed installation state."
+          },
+          {
+            "kind": "example",
+            "doc": "// deno run -A src/tui/cli.ts --manifest=path/to/manifest.json\nawait runTui({ manifestPath: 'path/to/manifest.json' });"
+          }
+        ]
+      },
+      "kind": "function",
+      "functionDef": {
+        "params": [
+          {
+            "kind": "assign",
+            "left": {
+              "kind": "identifier",
+              "name": "options",
+              "optional": false,
+              "tsType": {
+                "repr": "",
+                "kind": "typeLiteral",
+                "typeLiteral": {
+                  "constructors": [],
+                  "methods": [],
+                  "properties": [
+                    {
+                      "name": "manifestPath",
+                      "location": {
+                        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/cli.ts",
+                        "line": 43,
+                        "col": 40,
+                        "byteIndex": 1617
+                      },
+                      "params": [],
+                      "computed": false,
+                      "optional": true,
+                      "tsType": {
+                        "repr": "string",
+                        "kind": "keyword",
+                        "keyword": "string"
+                      },
+                      "typeParams": []
+                    }
+                  ],
+                  "callSignatures": [],
+                  "indexSignatures": []
+                }
+              }
+            },
+            "right": "[UNSUPPORTED]",
+            "tsType": null
+          }
+        ],
+        "returnType": {
+          "repr": "Promise",
+          "kind": "typeRef",
+          "typeRef": {
+            "typeParams": [
+              {
+                "repr": "void",
+                "kind": "keyword",
+                "keyword": "void"
+              }
+            ],
+            "typeName": "Promise"
+          }
+        },
+        "hasBody": true,
+        "isAsync": true,
+        "isGenerator": false,
+        "typeParams": []
+      }
+    },
+    {
+      "name": "parseFlags",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/cli.ts",
+        "line": 2,
+        "col": 0,
+        "byteIndex": 34
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/deps.ts",
+        "imported": "parseFlags"
+      }
+    },
+    {
+      "name": "InstallationManifest",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/cli.ts",
+        "line": 3,
+        "col": 0,
+        "byteIndex": 69
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/state/manifest_repository.ts",
+        "imported": "InstallationManifest"
+      }
+    },
+    {
+      "name": "ManifestRepository",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/cli.ts",
+        "line": 3,
+        "col": 0,
+        "byteIndex": 69
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/state/manifest_repository.ts",
+        "imported": "ManifestRepository"
+      }
+    },
+    {
+      "name": "createServices",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/cli.ts",
+        "line": 7,
+        "col": 0,
+        "byteIndex": 176
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/di.ts",
+        "imported": "createServices"
+      }
+    },
+    {
+      "name": "TuiApplication",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/cli.ts",
+        "line": 8,
+        "col": 0,
+        "byteIndex": 224
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/TuiApplication.ts",
+        "imported": "TuiApplication"
+      }
+    },
+    {
+      "name": "currentView",
+      "isDefault": false,
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/router.ts",
+        "line": 6,
+        "col": 13,
+        "byteIndex": 201
+      },
+      "declarationKind": "export",
+      "jsDoc": {
+        "doc": "Global view signal used for TUI routing."
+      },
+      "kind": "variable",
+      "variableDef": {
+        "tsType": {
+          "repr": "Signal",
+          "kind": "typeRef",
+          "typeRef": {
+            "typeParams": [
+              {
+                "repr": "View",
+                "kind": "typeRef",
+                "typeRef": {
+                  "typeParams": null,
+                  "typeName": "View"
+                }
+              }
+            ],
+            "typeName": "Signal"
+          }
+        },
+        "kind": "const"
+      }
+    },
+    {
+      "name": "navigate",
+      "isDefault": false,
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/router.ts",
+        "line": 9,
+        "col": 0,
+        "byteIndex": 292
+      },
+      "declarationKind": "export",
+      "jsDoc": {
+        "doc": "Navigate to a target view."
+      },
+      "kind": "function",
+      "functionDef": {
+        "params": [
+          {
+            "kind": "identifier",
+            "name": "to",
+            "optional": false,
+            "tsType": {
+              "repr": "View",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "View"
+              }
+            }
+          }
+        ],
+        "returnType": {
+          "repr": "void",
+          "kind": "keyword",
+          "keyword": "void"
+        },
+        "hasBody": true,
+        "isAsync": false,
+        "isGenerator": false,
+        "typeParams": []
+      }
+    },
+    {
+      "name": "Signal",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/router.ts",
+        "line": 1,
+        "col": 0,
+        "byteIndex": 0
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/deps.ts",
+        "imported": "Signal"
+      }
+    },
+    {
+      "name": "signal",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/router.ts",
+        "line": 1,
+        "col": 0,
+        "byteIndex": 0
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/deps.ts",
+        "imported": "signal"
+      }
+    },
+    {
+      "name": "View",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/router.ts",
+        "line": 2,
+        "col": 0,
+        "byteIndex": 44
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/types.ts",
+        "imported": "View"
+      }
+    },
+    {
+      "name": "DEFAULT_VIEW",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/router.ts",
+        "line": 3,
+        "col": 0,
+        "byteIndex": 90
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/types.ts",
+        "imported": "DEFAULT_VIEW"
+      }
+    },
+    {
+      "name": "HelpViewDeps",
+      "isDefault": false,
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/HelpView.ts",
+        "line": 11,
+        "col": 0,
+        "byteIndex": 333
+      },
+      "declarationKind": "export",
+      "jsDoc": {
+        "doc": "Dependencies required to construct `HelpView`.\n",
+        "tags": [
+          {
+            "kind": "since",
+            "doc": "0.2.0"
+          }
+        ]
+      },
+      "kind": "interface",
+      "interfaceDef": {
+        "extends": [],
+        "constructors": [],
+        "methods": [],
+        "properties": [
+          {
+            "name": "tui",
+            "jsDoc": {
+              "doc": "Root TUI instance the view mounts its components into."
+            },
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/HelpView.ts",
+              "line": 13,
+              "col": 2,
+              "byteIndex": 431
+            },
+            "params": [],
+            "computed": false,
+            "optional": false,
+            "tsType": {
+              "repr": "denoTui.Tui",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "denoTui.Tui"
+              }
+            },
+            "typeParams": []
+          },
+          {
+            "name": "state",
+            "jsDoc": {
+              "doc": "Installation state; reserved for future conditional content/visibility."
+            },
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/HelpView.ts",
+              "line": 15,
+              "col": 2,
+              "byteIndex": 532
+            },
+            "params": [],
+            "computed": false,
+            "optional": false,
+            "tsType": {
+              "repr": "InstallationState",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "InstallationState"
+              }
+            },
+            "typeParams": []
+          },
+          {
+            "name": "services",
+            "jsDoc": {
+              "doc": "Application services; reserved for future actions triggered from Help."
+            },
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/HelpView.ts",
+              "line": 17,
+              "col": 2,
+              "byteIndex": 640
+            },
+            "params": [],
+            "computed": false,
+            "optional": false,
+            "tsType": {
+              "repr": "AppServices",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "AppServices"
+              }
+            },
+            "typeParams": []
+          }
+        ],
+        "callSignatures": [],
+        "indexSignatures": [],
+        "typeParams": []
+      }
+    },
+    {
+      "name": "HelpView",
+      "isDefault": false,
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/HelpView.ts",
+        "line": 48,
+        "col": 0,
+        "byteIndex": 1642
+      },
+      "declarationKind": "export",
+      "jsDoc": {
+        "doc": "Help View — in-app quick reference for navigation and shortcuts.\n\nBehavior:\n- Visible only when `currentView === 'Help'`\n- Shows title, sections (Keyboard, Navigation, Quick Commands), footer, and Back button\n- Back button navigates to `MainMenu`\n",
+        "tags": [
+          {
+            "kind": "example",
+            "doc": "```ts\nimport { denoTui } from 'deps';\nimport { signal } from 'deps';\nimport { currentView, navigate } from '../../src/tui/router.ts';\nimport { createInstallationState } from '../../src/core/state/installation_state.ts';\nimport { HelpView } from '../../src/tui/views/HelpView.ts';\n\n// Simulate environment\nconst tui = new denoTui.Tui({ refreshRate: 1000 / 60 });\ncurrentView.value = 'Help';\n// Minimal state stub\nconst state = { installed: signal(false), refresh: () => Promise.resolve() } as any;\nconst services = {} as any;\nconst view = new HelpView({ tui, state, services });\n// Navigate back\nnavigate('MainMenu');\n```"
+          },
+          {
+            "kind": "since",
+            "doc": "0.2.0"
+          }
+        ]
+      },
+      "kind": "class",
+      "classDef": {
+        "isAbstract": false,
+        "constructors": [
+          {
+            "jsDoc": {
+              "doc": "Create HelpView and mount its subcomponents.\n",
+              "tags": [
+                {
+                  "kind": "param",
+                  "name": "deps",
+                  "doc": "- Dependencies required to construct the view."
+                }
+              ]
+            },
+            "accessibility": null,
+            "hasBody": true,
+            "name": "constructor",
+            "params": [
+              {
+                "kind": "object",
+                "props": [
+                  {
+                    "kind": "assign",
+                    "key": "tui",
+                    "value": null
+                  },
+                  {
+                    "kind": "keyValue",
+                    "key": "state",
+                    "value": {
+                      "kind": "identifier",
+                      "name": "_state",
+                      "optional": false,
+                      "tsType": null
+                    }
+                  },
+                  {
+                    "kind": "assign",
+                    "key": "services",
+                    "value": null
+                  }
+                ],
+                "optional": false,
+                "tsType": {
+                  "repr": "HelpViewDeps",
+                  "kind": "typeRef",
+                  "typeRef": {
+                    "typeParams": null,
+                    "typeName": "HelpViewDeps"
+                  }
+                }
+              }
+            ],
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/HelpView.ts",
+              "line": 78,
+              "col": 2,
+              "byteIndex": 2760
+            }
+          }
+        ],
+        "properties": [
+          {
+            "jsDoc": {
+              "doc": "Underlying TUI instance used by this view."
+            },
+            "tsType": {
+              "repr": "denoTui.Tui",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "denoTui.Tui"
+              }
+            },
+            "readonly": true,
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "tui",
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/HelpView.ts",
+              "line": 50,
+              "col": 2,
+              "byteIndex": 1720
+            }
+          },
+          {
+            "jsDoc": {
+              "doc": "Application services container."
+            },
+            "tsType": {
+              "repr": "AppServices",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "AppServices"
+              }
+            },
+            "readonly": true,
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "services",
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/HelpView.ts",
+              "line": 52,
+              "col": 2,
+              "byteIndex": 1790
+            }
+          },
+          {
+            "jsDoc": {
+              "doc": "Title label component."
+            },
+            "tsType": {
+              "repr": "denoTuiComponents.Label",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "denoTuiComponents.Label"
+              }
+            },
+            "readonly": true,
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "title",
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/HelpView.ts",
+              "line": 55,
+              "col": 2,
+              "byteIndex": 1857
+            }
+          },
+          {
+            "jsDoc": {
+              "doc": "\"Keyboard Shortcuts\" section header."
+            },
+            "tsType": {
+              "repr": "denoTuiComponents.Label",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "denoTuiComponents.Label"
+              }
+            },
+            "readonly": true,
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "keyboardHeader",
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/HelpView.ts",
+              "line": 57,
+              "col": 2,
+              "byteIndex": 1946
+            }
+          },
+          {
+            "jsDoc": {
+              "doc": "Keyboard shortcuts list content."
+            },
+            "tsType": {
+              "repr": "denoTuiComponents.Label",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "denoTuiComponents.Label"
+              }
+            },
+            "readonly": true,
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "keyboardContent",
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/HelpView.ts",
+              "line": 59,
+              "col": 2,
+              "byteIndex": 2040
+            }
+          },
+          {
+            "jsDoc": {
+              "doc": "\"Navigation\" section header."
+            },
+            "tsType": {
+              "repr": "denoTuiComponents.Label",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "denoTuiComponents.Label"
+              }
+            },
+            "readonly": true,
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "navHeader",
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/HelpView.ts",
+              "line": 61,
+              "col": 2,
+              "byteIndex": 2131
+            }
+          },
+          {
+            "jsDoc": {
+              "doc": "Navigation description content."
+            },
+            "tsType": {
+              "repr": "denoTuiComponents.Label",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "denoTuiComponents.Label"
+              }
+            },
+            "readonly": true,
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "navContent",
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/HelpView.ts",
+              "line": 63,
+              "col": 2,
+              "byteIndex": 2219
+            }
+          },
+          {
+            "jsDoc": {
+              "doc": "\"Quick Commands\" section header."
+            },
+            "tsType": {
+              "repr": "denoTuiComponents.Label",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "denoTuiComponents.Label"
+              }
+            },
+            "readonly": true,
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "quickHeader",
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/HelpView.ts",
+              "line": 65,
+              "col": 2,
+              "byteIndex": 2309
+            }
+          },
+          {
+            "jsDoc": {
+              "doc": "CLI quick commands content."
+            },
+            "tsType": {
+              "repr": "denoTuiComponents.Label",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "denoTuiComponents.Label"
+              }
+            },
+            "readonly": true,
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "quickContent",
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/HelpView.ts",
+              "line": 67,
+              "col": 2,
+              "byteIndex": 2395
+            }
+          },
+          {
+            "jsDoc": {
+              "doc": "Footer label with guide hints."
+            },
+            "tsType": {
+              "repr": "denoTuiComponents.Label",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "denoTuiComponents.Label"
+              }
+            },
+            "readonly": true,
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "footer",
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/HelpView.ts",
+              "line": 69,
+              "col": 2,
+              "byteIndex": 2485
+            }
+          },
+          {
+            "jsDoc": {
+              "doc": "Back button which navigates to MainMenu."
+            },
+            "tsType": {
+              "repr": "denoTuiComponents.Button",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "denoTuiComponents.Button"
+              }
+            },
+            "readonly": true,
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "backButton",
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/HelpView.ts",
+              "line": 71,
+              "col": 2,
+              "byteIndex": 2579
+            }
+          }
+        ],
+        "indexSignatures": [],
+        "methods": [],
+        "extends": null,
+        "implements": [],
+        "typeParams": [],
+        "superTypeParams": []
+      }
+    },
+    {
+      "name": "crayon",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/HelpView.ts",
+        "line": 1,
+        "col": 0,
+        "byteIndex": 0
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/deps.ts",
+        "imported": "crayon"
+      }
+    },
+    {
+      "name": "denoTui",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/HelpView.ts",
+        "line": 1,
+        "col": 0,
+        "byteIndex": 0
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/deps.ts",
+        "imported": "denoTui"
+      }
+    },
+    {
+      "name": "denoTuiComponents",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/HelpView.ts",
+        "line": 1,
+        "col": 0,
+        "byteIndex": 0
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/deps.ts",
+        "imported": "denoTuiComponents"
+      }
+    },
+    {
+      "name": "effect",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/HelpView.ts",
+        "line": 1,
+        "col": 0,
+        "byteIndex": 0
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/deps.ts",
+        "imported": "effect"
+      }
+    },
+    {
+      "name": "InstallationState",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/HelpView.ts",
+        "line": 2,
+        "col": 0,
+        "byteIndex": 67
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/state/installation_state.ts",
+        "imported": "InstallationState"
+      }
+    },
+    {
+      "name": "AppServices",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/HelpView.ts",
+        "line": 3,
+        "col": 0,
+        "byteIndex": 148
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/di.ts",
+        "imported": "AppServices"
+      }
+    },
+    {
+      "name": "currentView",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/HelpView.ts",
+        "line": 4,
+        "col": 0,
+        "byteIndex": 201
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/router.ts",
+        "imported": "currentView"
+      }
+    },
+    {
+      "name": "navigate",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/HelpView.ts",
+        "line": 4,
+        "col": 0,
+        "byteIndex": 201
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/router.ts",
+        "imported": "navigate"
+      }
+    },
+    {
+      "name": "MainMenuDeps",
+      "isDefault": false,
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/MainMenuView.ts",
+        "line": 11,
+        "col": 0,
+        "byteIndex": 337
+      },
+      "declarationKind": "export",
+      "jsDoc": {
+        "doc": "Dependencies required to construct `MainMenuView`.\n",
+        "tags": [
+          {
+            "kind": "since",
+            "doc": "0.2.0"
+          }
+        ]
+      },
+      "kind": "interface",
+      "interfaceDef": {
+        "extends": [],
+        "constructors": [],
+        "methods": [],
+        "properties": [
+          {
+            "name": "tui",
+            "jsDoc": {
+              "doc": "Root TUI instance."
+            },
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/MainMenuView.ts",
+              "line": 13,
+              "col": 2,
+              "byteIndex": 399
+            },
+            "params": [],
+            "computed": false,
+            "optional": false,
+            "tsType": {
+              "repr": "denoTui.Tui",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "denoTui.Tui"
+              }
+            },
+            "typeParams": []
+          },
+          {
+            "name": "state",
+            "jsDoc": {
+              "doc": "Installation state used to toggle button visibility."
+            },
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/MainMenuView.ts",
+              "line": 15,
+              "col": 2,
+              "byteIndex": 481
+            },
+            "params": [],
+            "computed": false,
+            "optional": false,
+            "tsType": {
+              "repr": "InstallationState",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "InstallationState"
+              }
+            },
+            "typeParams": []
+          },
+          {
+            "name": "services",
+            "jsDoc": {
+              "doc": "Application services used to invoke actions."
+            },
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/MainMenuView.ts",
+              "line": 17,
+              "col": 2,
+              "byteIndex": 563
+            },
+            "params": [],
+            "computed": false,
+            "optional": false,
+            "tsType": {
+              "repr": "AppServices",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "AppServices"
+              }
+            },
+            "typeParams": []
+          }
+        ],
+        "callSignatures": [],
+        "indexSignatures": [],
+        "typeParams": []
+      }
+    },
+    {
+      "name": "MainMenuView",
+      "isDefault": false,
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/MainMenuView.ts",
+        "line": 30,
+        "col": 0,
+        "byteIndex": 825
+      },
+      "declarationKind": "export",
+      "jsDoc": {
+        "doc": "Main Menu View — entry point providing Install/Update/Uninstall/Toolkit.\n\nVisibility rules:\n- Install shown when not installed\n- Update/Uninstall shown when installed\n- Toolkit always shown\n",
+        "tags": [
+          {
+            "kind": "since",
+            "doc": "0.2.0"
+          }
+        ]
+      },
+      "kind": "class",
+      "classDef": {
+        "isAbstract": false,
+        "constructors": [
+          {
+            "jsDoc": {
+              "doc": "Create MainMenuView and mount all buttons.\n",
+              "tags": [
+                {
+                  "kind": "param",
+                  "name": "deps",
+                  "doc": "- Constructor dependencies."
+                }
+              ]
+            },
+            "accessibility": null,
+            "hasBody": true,
+            "name": "constructor",
+            "params": [
+              {
+                "kind": "object",
+                "props": [
+                  {
+                    "kind": "assign",
+                    "key": "tui",
+                    "value": null
+                  },
+                  {
+                    "kind": "assign",
+                    "key": "state",
+                    "value": null
+                  },
+                  {
+                    "kind": "assign",
+                    "key": "services",
+                    "value": null
+                  }
+                ],
+                "optional": false,
+                "tsType": {
+                  "repr": "MainMenuDeps",
+                  "kind": "typeRef",
+                  "typeRef": {
+                    "typeParams": null,
+                    "typeName": "MainMenuDeps"
+                  }
+                }
+              }
+            ],
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/MainMenuView.ts",
+              "line": 52,
+              "col": 2,
+              "byteIndex": 1594
+            }
+          }
+        ],
+        "properties": [
+          {
+            "jsDoc": {
+              "tags": [
+                {
+                  "kind": "internal"
+                }
+              ]
+            },
+            "tsType": {
+              "repr": "denoTui.Tui",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "denoTui.Tui"
+              }
+            },
+            "readonly": true,
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "tui",
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/MainMenuView.ts",
+              "line": 32,
+              "col": 2,
+              "byteIndex": 911
+            }
+          },
+          {
+            "jsDoc": {
+              "doc": "Installation state driving visibility."
+            },
+            "tsType": {
+              "repr": "InstallationState",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "InstallationState"
+              }
+            },
+            "readonly": true,
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "state",
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/MainMenuView.ts",
+              "line": 34,
+              "col": 2,
+              "byteIndex": 988
+            }
+          },
+          {
+            "jsDoc": {
+              "doc": "Services used by button actions."
+            },
+            "tsType": {
+              "repr": "AppServices",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "AppServices"
+              }
+            },
+            "readonly": true,
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "services",
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/MainMenuView.ts",
+              "line": 36,
+              "col": 2,
+              "byteIndex": 1067
+            }
+          },
+          {
+            "jsDoc": {
+              "tags": [
+                {
+                  "kind": "internal"
+                }
+              ]
+            },
+            "tsType": {
+              "repr": "denoTuiComponents.Button",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "denoTuiComponents.Button"
+              }
+            },
+            "readonly": true,
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "installButton",
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/MainMenuView.ts",
+              "line": 39,
+              "col": 2,
+              "byteIndex": 1144
+            }
+          },
+          {
+            "jsDoc": {
+              "tags": [
+                {
+                  "kind": "internal"
+                }
+              ]
+            },
+            "tsType": {
+              "repr": "denoTuiComponents.Button",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "denoTuiComponents.Button"
+              }
+            },
+            "readonly": true,
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "updateButton",
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/MainMenuView.ts",
+              "line": 41,
+              "col": 2,
+              "byteIndex": 1237
+            }
+          },
+          {
+            "jsDoc": {
+              "tags": [
+                {
+                  "kind": "internal"
+                }
+              ]
+            },
+            "tsType": {
+              "repr": "denoTuiComponents.Button",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "denoTuiComponents.Button"
+              }
+            },
+            "readonly": true,
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "uninstallButton",
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/MainMenuView.ts",
+              "line": 43,
+              "col": 2,
+              "byteIndex": 1332
+            }
+          },
+          {
+            "jsDoc": {
+              "tags": [
+                {
+                  "kind": "internal"
+                }
+              ]
+            },
+            "tsType": {
+              "repr": "denoTuiComponents.Button",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "denoTuiComponents.Button"
+              }
+            },
+            "readonly": true,
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "toolkitButton",
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/MainMenuView.ts",
+              "line": 45,
+              "col": 2,
+              "byteIndex": 1431
+            }
+          }
+        ],
+        "indexSignatures": [],
+        "methods": [],
+        "extends": null,
+        "implements": [],
+        "typeParams": [],
+        "superTypeParams": []
+      }
+    },
+    {
+      "name": "crayon",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/MainMenuView.ts",
+        "line": 1,
+        "col": 0,
+        "byteIndex": 0
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/deps.ts",
+        "imported": "crayon"
+      }
+    },
+    {
+      "name": "denoTui",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/MainMenuView.ts",
+        "line": 1,
+        "col": 0,
+        "byteIndex": 0
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/deps.ts",
+        "imported": "denoTui"
+      }
+    },
+    {
+      "name": "denoTuiComponents",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/MainMenuView.ts",
+        "line": 1,
+        "col": 0,
+        "byteIndex": 0
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/deps.ts",
+        "imported": "denoTuiComponents"
+      }
+    },
+    {
+      "name": "effect",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/MainMenuView.ts",
+        "line": 1,
+        "col": 0,
+        "byteIndex": 0
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/deps.ts",
+        "imported": "effect"
+      }
+    },
+    {
+      "name": "InstallationState",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/MainMenuView.ts",
+        "line": 2,
+        "col": 0,
+        "byteIndex": 67
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/state/installation_state.ts",
+        "imported": "InstallationState"
+      }
+    },
+    {
+      "name": "AppServices",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/MainMenuView.ts",
+        "line": 3,
+        "col": 0,
+        "byteIndex": 148
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/di.ts",
+        "imported": "AppServices"
+      }
+    },
+    {
+      "name": "currentView",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/MainMenuView.ts",
+        "line": 4,
+        "col": 0,
+        "byteIndex": 201
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/router.ts",
+        "imported": "currentView"
+      }
+    },
+    {
+      "name": "navigate",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/MainMenuView.ts",
+        "line": 4,
+        "col": 0,
+        "byteIndex": 201
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/router.ts",
+        "imported": "navigate"
+      }
+    },
+    {
+      "name": "ToolkitMenuDeps",
+      "isDefault": false,
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/ToolkitMenuView.ts",
+        "line": 11,
+        "col": 0,
+        "byteIndex": 340
+      },
+      "declarationKind": "export",
+      "jsDoc": {
+        "doc": "Dependencies required to construct `ToolkitMenuView`.\n",
+        "tags": [
+          {
+            "kind": "since",
+            "doc": "0.2.0"
+          }
+        ]
+      },
+      "kind": "interface",
+      "interfaceDef": {
+        "extends": [],
+        "constructors": [],
+        "methods": [],
+        "properties": [
+          {
+            "name": "tui",
+            "jsDoc": {
+              "doc": "Root TUI instance."
+            },
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/ToolkitMenuView.ts",
+              "line": 13,
+              "col": 2,
+              "byteIndex": 405
+            },
+            "params": [],
+            "computed": false,
+            "optional": false,
+            "tsType": {
+              "repr": "denoTui.Tui",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "denoTui.Tui"
+              }
+            },
+            "typeParams": []
+          },
+          {
+            "name": "state",
+            "jsDoc": {
+              "doc": "Installation state (reserved for future visibility/permissions)."
+            },
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/ToolkitMenuView.ts",
+              "line": 15,
+              "col": 2,
+              "byteIndex": 499
+            },
+            "params": [],
+            "computed": false,
+            "optional": false,
+            "tsType": {
+              "repr": "InstallationState",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "InstallationState"
+              }
+            },
+            "typeParams": []
+          },
+          {
+            "name": "services",
+            "jsDoc": {
+              "doc": "Application services providing Toolkit actions."
+            },
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/ToolkitMenuView.ts",
+              "line": 17,
+              "col": 2,
+              "byteIndex": 633
+            },
+            "params": [],
+            "computed": false,
+            "optional": false,
+            "tsType": {
+              "repr": "AppServices",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "AppServices"
+              }
+            },
+            "typeParams": []
+          }
+        ],
+        "callSignatures": [],
+        "indexSignatures": [],
+        "typeParams": []
+      }
+    },
+    {
+      "name": "ToolkitMenuView",
+      "isDefault": false,
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/ToolkitMenuView.ts",
+        "line": 30,
+        "col": 0,
+        "byteIndex": 993
+      },
+      "declarationKind": "export",
+      "jsDoc": {
+        "doc": "Toolkit Menu View — lists available \"deno task\" tasks and runs selection.\n\nBehavior:\n- When currentView === 'Toolkit', shows list or empty-state message\n- Selecting a task runs it via ToolkitService.runTask and prints a minimal status label\n- Provides a Back button to return to MainMenu\n",
+        "tags": [
+          {
+            "kind": "since",
+            "doc": "0.2.0"
+          }
+        ]
+      },
+      "kind": "class",
+      "classDef": {
+        "isAbstract": false,
+        "constructors": [
+          {
+            "jsDoc": {
+              "doc": "Create ToolkitMenuView and mount base components.\n",
+              "tags": [
+                {
+                  "kind": "param",
+                  "name": "deps",
+                  "doc": "- Constructor dependencies."
+                }
+              ]
+            },
+            "accessibility": null,
+            "hasBody": true,
+            "name": "constructor",
+            "params": [
+              {
+                "kind": "object",
+                "props": [
+                  {
+                    "kind": "assign",
+                    "key": "tui",
+                    "value": null
+                  },
+                  {
+                    "kind": "keyValue",
+                    "key": "state",
+                    "value": {
+                      "kind": "identifier",
+                      "name": "_state",
+                      "optional": false,
+                      "tsType": null
+                    }
+                  },
+                  {
+                    "kind": "assign",
+                    "key": "services",
+                    "value": null
+                  }
+                ],
+                "optional": false,
+                "tsType": {
+                  "repr": "ToolkitMenuDeps",
+                  "kind": "typeRef",
+                  "typeRef": {
+                    "typeParams": null,
+                    "typeName": "ToolkitMenuDeps"
+                  }
+                }
+              }
+            ],
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/ToolkitMenuView.ts",
+              "line": 56,
+              "col": 2,
+              "byteIndex": 1980
+            }
+          }
+        ],
+        "properties": [
+          {
+            "jsDoc": {
+              "tags": [
+                {
+                  "kind": "internal"
+                }
+              ]
+            },
+            "tsType": {
+              "repr": "denoTui.Tui",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "denoTui.Tui"
+              }
+            },
+            "readonly": true,
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "tui",
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/ToolkitMenuView.ts",
+              "line": 32,
+              "col": 2,
+              "byteIndex": 1082
+            }
+          },
+          {
+            "jsDoc": {
+              "doc": "Application services used by this view."
+            },
+            "tsType": {
+              "repr": "AppServices",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "AppServices"
+              }
+            },
+            "readonly": true,
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "services",
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/ToolkitMenuView.ts",
+              "line": 34,
+              "col": 2,
+              "byteIndex": 1160
+            }
+          },
+          {
+            "jsDoc": {
+              "tags": [
+                {
+                  "kind": "internal"
+                }
+              ]
+            },
+            "tsType": {
+              "repr": "denoTuiComponents.Label",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "denoTuiComponents.Label"
+              }
+            },
+            "readonly": true,
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "title",
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/ToolkitMenuView.ts",
+              "line": 37,
+              "col": 2,
+              "byteIndex": 1240
+            }
+          },
+          {
+            "jsDoc": {
+              "tags": [
+                {
+                  "kind": "internal"
+                }
+              ]
+            },
+            "tsType": {
+              "repr": "denoTuiComponents.Label",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "denoTuiComponents.Label"
+              }
+            },
+            "readonly": true,
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "status",
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/ToolkitMenuView.ts",
+              "line": 39,
+              "col": 2,
+              "byteIndex": 1347
+            }
+          },
+          {
+            "jsDoc": {
+              "tags": [
+                {
+                  "kind": "internal"
+                }
+              ]
+            },
+            "tsType": {
+              "repr": "denoTuiComponents.Button",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "denoTuiComponents.Button"
+              }
+            },
+            "readonly": true,
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "backButton",
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/ToolkitMenuView.ts",
+              "line": 41,
+              "col": 2,
+              "byteIndex": 1447
+            }
+          },
+          {
+            "jsDoc": {
+              "tags": [
+                {
+                  "kind": "internal"
+                }
+              ]
+            },
+            "tsType": {
+              "repr": "denoTuiComponents.Label",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": null,
+                "typeName": "denoTuiComponents.Label"
+              }
+            },
+            "readonly": true,
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "emptyLabel",
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/ToolkitMenuView.ts",
+              "line": 43,
+              "col": 2,
+              "byteIndex": 1558
+            }
+          },
+          {
+            "jsDoc": {
+              "tags": [
+                {
+                  "kind": "internal"
+                }
+              ]
+            },
+            "tsType": {
+              "repr": "",
+              "kind": "array",
+              "array": {
+                "repr": "denoTuiComponents.Button",
+                "kind": "typeRef",
+                "typeRef": {
+                  "typeParams": null,
+                  "typeName": "denoTuiComponents.Button"
+                }
+              }
+            },
+            "readonly": true,
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "taskButtons",
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/ToolkitMenuView.ts",
+              "line": 45,
+              "col": 2,
+              "byteIndex": 1659
+            }
+          },
+          {
+            "jsDoc": {
+              "doc": "Promise resolved when initial task discovery finishes (useful in tests)."
+            },
+            "tsType": {
+              "repr": "Promise",
+              "kind": "typeRef",
+              "typeRef": {
+                "typeParams": [
+                  {
+                    "repr": "void",
+                    "kind": "keyword",
+                    "keyword": "void"
+                  }
+                ],
+                "typeName": "Promise"
+              }
+            },
+            "readonly": true,
+            "accessibility": null,
+            "optional": false,
+            "isAbstract": false,
+            "isStatic": false,
+            "name": "ready",
+            "location": {
+              "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/ToolkitMenuView.ts",
+              "line": 48,
+              "col": 2,
+              "byteIndex": 1799
+            }
+          }
+        ],
+        "indexSignatures": [],
+        "methods": [],
+        "extends": null,
+        "implements": [],
+        "typeParams": [],
+        "superTypeParams": []
+      }
+    },
+    {
+      "name": "crayon",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/ToolkitMenuView.ts",
+        "line": 1,
+        "col": 0,
+        "byteIndex": 0
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/deps.ts",
+        "imported": "crayon"
+      }
+    },
+    {
+      "name": "denoTui",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/ToolkitMenuView.ts",
+        "line": 1,
+        "col": 0,
+        "byteIndex": 0
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/deps.ts",
+        "imported": "denoTui"
+      }
+    },
+    {
+      "name": "denoTuiComponents",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/ToolkitMenuView.ts",
+        "line": 1,
+        "col": 0,
+        "byteIndex": 0
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/deps.ts",
+        "imported": "denoTuiComponents"
+      }
+    },
+    {
+      "name": "effect",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/ToolkitMenuView.ts",
+        "line": 1,
+        "col": 0,
+        "byteIndex": 0
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/deps.ts",
+        "imported": "effect"
+      }
+    },
+    {
+      "name": "InstallationState",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/ToolkitMenuView.ts",
+        "line": 2,
+        "col": 0,
+        "byteIndex": 67
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/state/installation_state.ts",
+        "imported": "InstallationState"
+      }
+    },
+    {
+      "name": "AppServices",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/ToolkitMenuView.ts",
+        "line": 3,
+        "col": 0,
+        "byteIndex": 148
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/core/di.ts",
+        "imported": "AppServices"
+      }
+    },
+    {
+      "name": "currentView",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/ToolkitMenuView.ts",
+        "line": 4,
+        "col": 0,
+        "byteIndex": 201
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/router.ts",
+        "imported": "currentView"
+      }
+    },
+    {
+      "name": "navigate",
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/ToolkitMenuView.ts",
+        "line": 4,
+        "col": 0,
+        "byteIndex": 201
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/router.ts",
+        "imported": "navigate"
+      }
+    },
+    {
+      "name": "View",
+      "isDefault": false,
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/types.ts",
+        "line": 7,
+        "col": 0,
+        "byteIndex": 156
+      },
+      "declarationKind": "export",
+      "jsDoc": {
+        "doc": "View identifiers used by signal-based routing in the TUI app.\nKeep names stable for testing and future routing expansions.\n",
+        "tags": [
+          {
+            "kind": "since",
+            "doc": "0.2.0"
+          }
+        ]
+      },
+      "kind": "typeAlias",
+      "typeAliasDef": {
+        "tsType": {
+          "repr": "",
+          "kind": "union",
+          "union": [
+            {
+              "repr": "MainMenu",
+              "kind": "literal",
+              "literal": {
+                "kind": "string",
+                "string": "MainMenu"
+              }
+            },
+            {
+              "repr": "Help",
+              "kind": "literal",
+              "literal": {
+                "kind": "string",
+                "string": "Help"
+              }
+            },
+            {
+              "repr": "InstallerWizard",
+              "kind": "literal",
+              "literal": {
+                "kind": "string",
+                "string": "InstallerWizard"
+              }
+            },
+            {
+              "repr": "Updater",
+              "kind": "literal",
+              "literal": {
+                "kind": "string",
+                "string": "Updater"
+              }
+            },
+            {
+              "repr": "Uninstaller",
+              "kind": "literal",
+              "literal": {
+                "kind": "string",
+                "string": "Uninstaller"
+              }
+            },
+            {
+              "repr": "Toolkit",
+              "kind": "literal",
+              "literal": {
+                "kind": "string",
+                "string": "Toolkit"
+              }
+            }
+          ]
+        },
+        "typeParams": []
+      }
+    },
+    {
+      "name": "DEFAULT_VIEW",
+      "isDefault": false,
+      "location": {
+        "filename": "file:///Users/ds/dev/BMAD-Main/BMAD-METHOD/src/tui/views/types.ts",
+        "line": 20,
+        "col": 13,
+        "byteIndex": 354
+      },
+      "declarationKind": "export",
+      "jsDoc": {
+        "doc": "Default view shown when the TUI starts.\n",
+        "tags": [
+          {
+            "kind": "since",
+            "doc": "0.2.0"
+          }
+        ]
+      },
+      "kind": "variable",
+      "variableDef": {
+        "tsType": {
+          "repr": "View",
+          "kind": "typeRef",
+          "typeRef": {
+            "typeParams": null,
+            "typeName": "View"
+          }
+        },
+        "kind": "const"
       }
     }
   ]

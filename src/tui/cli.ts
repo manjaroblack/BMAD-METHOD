@@ -32,6 +32,14 @@ class CliManifestRepository implements ManifestRepository {
   }
 }
 
+/**
+ * Run the interactive TUI application.
+ *
+ * @param options - Optional manifest path to seed installation state.
+ * @example
+ * // deno run -A src/tui/cli.ts --manifest=path/to/manifest.json
+ * await runTui({ manifestPath: 'path/to/manifest.json' });
+ */
 export async function runTui(options: { manifestPath?: string } = {}): Promise<void> {
   const repo = new CliManifestRepository(options.manifestPath);
   const services = createServices();

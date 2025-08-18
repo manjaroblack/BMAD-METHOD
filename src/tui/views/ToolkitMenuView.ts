@@ -3,9 +3,17 @@ import type { InstallationState } from '../../core/state/installation_state.ts';
 import type { AppServices } from '../../core/di.ts';
 import { currentView, navigate } from '../router.ts';
 
+/**
+ * Dependencies required to construct `ToolkitMenuView`.
+ *
+ * @since 0.2.0
+ */
 export interface ToolkitMenuDeps {
+  /** Root TUI instance. */
   tui: denoTui.Tui;
+  /** Installation state (reserved for future visibility/permissions). */
   state: InstallationState; // reserved for future use (permissions, status)
+  /** Application services providing Toolkit actions. */
   services: AppServices;
 }
 
@@ -20,19 +28,31 @@ export interface ToolkitMenuDeps {
  * @since 0.2.0
  */
 export class ToolkitMenuView {
+  /** @internal TUI instance this view renders into. */
   readonly tui: denoTui.Tui;
+  /** Application services used by this view. */
   readonly services: AppServices;
 
+  /** @internal Title label for the view. */
   readonly title: denoTuiComponents.Label;
+  /** @internal Status label displaying last task exit code. */
   readonly status: denoTuiComponents.Label;
+  /** @internal Back button to navigate to MainMenu. */
   readonly backButton: denoTuiComponents.Button;
+  /** @internal Empty-state label when no tasks are found. */
   readonly emptyLabel: denoTuiComponents.Label;
+  /** @internal Dynamically created task buttons. */
   readonly taskButtons: denoTuiComponents.Button[] = [];
 
   /** Promise resolved when initial task discovery finishes (useful in tests). */
   readonly ready: Promise<void>;
   #resolveReady!: () => void;
 
+  /**
+   * Create ToolkitMenuView and mount base components.
+   *
+   * @param deps - Constructor dependencies.
+   */
   constructor({ tui, state: _state, services }: ToolkitMenuDeps) {
     this.tui = tui;
     this.services = services;

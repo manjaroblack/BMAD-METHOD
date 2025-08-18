@@ -30,6 +30,14 @@ import { path } from 'deps';
 
 /** Concrete ConfigService implementation. */
 export class ConfigServiceImpl implements ConfigService {
+  /**
+   * Create a ConfigServiceImpl.
+   *
+   * @param opener - Optional function to open a target path.
+   * @param existsFn - Optional function to check file existence.
+   * @param platform - OS identifier (e.g. 'darwin', 'linux', 'windows').
+   * @param rootDir - Repository root directory.
+   */
   constructor(
     private readonly opener?: (target: string) => Promise<{ code: number }>,
     private readonly existsFn?: (p: string) => Promise<boolean>,
@@ -37,10 +45,12 @@ export class ConfigServiceImpl implements ConfigService {
     private readonly rootDir: string = Deno.cwd(),
   ) {}
 
+  /** Absolute path to core config YAML within repo. */
   getCoreConfigPath(): string {
     return path.join(this.rootDir, 'bmad-core', 'core-config.yaml');
   }
 
+  /** Open core config file with the system default application. */
   async openCoreConfig(): Promise<{ code: number }> {
     const file = this.getCoreConfigPath();
 
@@ -80,10 +90,17 @@ export class ConfigServiceImpl implements ConfigService {
   }
 }
 
+/**
+ * No-op stub for ConfigService.
+ *
+ * @since 0.3.0
+ */
 export class ConfigServiceStub implements ConfigService {
+  /** Return a default core-config.yaml under current working directory. */
   getCoreConfigPath(): string {
     return path.join(Deno.cwd(), 'bmad-core', 'core-config.yaml');
   }
+  /** Pretend to open config successfully, returning code 0. */
   openCoreConfig(): Promise<{ code: number }> {
     // No-op success by default.
     return Promise.resolve({ code: 0 });

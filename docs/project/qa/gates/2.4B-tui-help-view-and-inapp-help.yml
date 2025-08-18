@@ -1,0 +1,27 @@
+schema: 1
+story: '2.4B'
+story_title: 'TUI Help View and In-App Help'
+gate: PASS
+status_reason: 'Help view implemented; global ? routing; tests pass and align with conventions.'
+reviewer: 'Quinn (Test Architect)'
+updated: '2025-08-17T20:17:39-05:00'
+
+top_issues: []
+
+risk_summary:
+  totals:
+    critical: 0
+    high: 0
+    medium: 0
+    low: 1
+  recommendations:
+    must_fix: []
+    monitor:
+      - 'Ensure Help readability at narrow widths; monitor for focus traps'
+
+nfr_validation:
+  _assessed: [security, performance, reliability, maintainability]
+  security: { status: PASS, notes: 'Local terminal UI change only.' }
+  performance: { status: PASS, notes: 'Minimal rendering cost.' }
+  reliability: { status: PASS, notes: 'Unit/integration tests cover navigation & visibility.' }
+  maintainability: { status: PASS, notes: 'Follows existing view patterns and deps.' }
